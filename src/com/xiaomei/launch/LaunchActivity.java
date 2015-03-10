@@ -1,5 +1,6 @@
 package com.xiaomei.launch;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +14,7 @@ import com.xiaomei.launch.control.LaunchControl;
 
 import java.util.logging.LogRecord;
 
-public class LaunchActivity extends BaseActiviy<LaunchControl> {
+public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +24,10 @@ public class LaunchActivity extends BaseActiviy<LaunchControl> {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), TabsActivity.class);
-                startActivity(intent);
+            	TabsActivity.launch(LaunchActivity.this);
+            	finish();
             }
-        },1000);
+        },3000);
     }
 
 }

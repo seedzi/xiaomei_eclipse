@@ -1,0 +1,27 @@
+package com.yuekuapp.media.proxy;
+/**
+ * 消息msg.what用作标识（不要随意使用） 消息 msg.arg1用作集中处理的消息(不要随意使用) 消息msg.arg2留作以后传递参数用
+ * 消息msg.obj用作传递数据
+ * 
+ * @author sunpengshuai
+ * 
+ */
+public class MessageArg {
+
+	/**
+	 * arg1参数
+	 * 
+	 * @author sunpengshuai
+	 * 
+	 */
+	public static class ARG1 {
+		public static final int TOAST_MESSAGE = 1;
+		public static final int CALL_BACKMETHOD = 2;
+
+	}
+
+	public static class WHAT {
+		public static final int UI_MESSAGE = 0;
+	}
+
+}

@@ -1,0 +1,44 @@
+package com.yuekuapp.media.proxy;
+import android.os.Handler;
+import android.os.Message;
+
+public class MessageProxy {
+
+	private Handler mHandler;
+
+	public MessageProxy(Handler handler) {
+		this.mHandler = handler;
+	}
+
+	public Message ObtionMessage(int what) {
+		return mHandler.obtainMessage(what);
+	}
+
+	public void sendMessage(Message msg){
+		mHandler.sendMessage(msg);
+	}
+
+    public void sendMessageDelay(Message msg,long delayMillis){
+        mHandler.sendMessageDelayed(msg,delayMillis);
+    }
+
+    public void postRunnableDelay(Runnable runnable,long delayMillis){
+    	mHandler.postDelayed(runnable, delayMillis);
+    }
+    
+    public void postRunnable(Runnable runnable){
+    	mHandler.post(runnable);
+    }
+    
+    public void removeRunnable(Runnable r){
+    	mHandler.removeCallbacks(r);
+    }
+    
+	/**
+	 * 删除当前Activity消息。 当当前Activity不可见时，应该清楚当前Activity的Message队列中的所有消息
+	 */
+	public void clearAllMessage() {
+		mHandler.removeMessages(MessageArg.WHAT.UI_MESSAGE);
+	}
+
+}
