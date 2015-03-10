@@ -19,7 +19,7 @@
 	    android:scrollbarStyle="outsideOverlay"
 	    android:dividerHeight="8.0dp"
 	    ptr:ptrMode="pullDownFromTop"
-	    android:visibility="gone"/> 
+	    android:visibility="visible"/> 
 	
 	<include  android:id="@+id/empty_view"
 	    layout="@layout/empty_layout"

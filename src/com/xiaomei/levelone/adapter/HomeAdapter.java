@@ -12,11 +12,14 @@ import com.xiaomei.util.ScreenUtils;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class HomeAdapter extends BaseAdapter {
@@ -68,7 +71,7 @@ public class HomeAdapter extends BaseAdapter {
 			switch (type) {
 			case 0:
 				convertView = mInflater.inflate(R.layout.home_item_banner, null);
-				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.view_page);
+//				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.view_page);
 				break;
 			case 1:
 				convertView = new View(mContext);
@@ -85,7 +88,8 @@ public class HomeAdapter extends BaseAdapter {
 					item.priceMarketView = (TextView) itemMiaoSha.findViewById(R.id.price_market);
 					item.priceXmView = (TextView) itemMiaoSha.findViewById(R.id.price_xm);
 					item.titleView = (TextView) itemMiaoSha.findViewById(R.id.title);
-					entitys.add(entity);
+//					LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//					itemMiaoSha.setLayoutParams(ll);
 					((ViewGroup)convertView).addView(itemMiaoSha);
 				}
 				break;
@@ -98,25 +102,26 @@ public class HomeAdapter extends BaseAdapter {
 			default:
 				break;
 			}
-		}else{
-			holder = (Holder) convertView.getTag();
-			int index = 0;
-			switch (type) {
-			case 0:
-				index = 0;
-				break;
-			case 1:
-				break;
-			case 2:
-				index = 0;
-				for(Holder.Item item :holder.itemList){
-					setItemData(entitys.get(index), item);
-					index ++;	
-				}
-				break;
-			default:
-				break;
+			convertView.setTag(holder);
+		}
+		holder = (Holder) convertView.getTag();
+		int index = 0;
+		switch (type) {
+		case 0:
+			index = 0;
+			break;
+		case 1:
+			break;
+		case 2:
+			holder.mTitle.setText("每日优惠");
+			index = 0;
+			for(Holder.Item item :holder.itemList){
+				setItemData(entitys.get(index), item);
+				index ++;	
 			}
+			break;
+		default:
+			break;
 		}
 		return convertView;
 	}
