@@ -7,6 +7,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Section;
 import com.xiaomei.bean.Section.Entity;
+import com.xiaomei.leveltwo.WebViewActivity;
 import com.xiaomei.util.ScreenUtils;
 
 import android.content.Context;
@@ -19,10 +20,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-public class HomeAdapter extends BaseAdapter {
+public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 
 	private List<Section> mData;
 	
@@ -77,27 +79,46 @@ public class HomeAdapter extends BaseAdapter {
 				convertView = new View(mContext);
 				break;
 			case 2:
-				convertView = mInflater.inflate(R.layout.home_section_tehui, null);
+				convertView = mInflater.inflate(R.layout.section_tehui, null);
 				holder.mTitle = (TextView) convertView.findViewById(R.id.title);
 				holder.itemList = new ArrayList<HomeAdapter.Holder.Item>();
 				for(Entity entity : entitys){
 					Holder.Item item = new Holder.Item();
-					ViewGroup itemMiaoSha = (ViewGroup) mInflater.inflate(R.layout.item_tehui, null);
-					item.addrView = (TextView) itemMiaoSha.findViewById(R.id.addr);
-					item.imgView = (ImageView) itemMiaoSha.findViewById(R.id.img);
-					item.priceMarketView = (TextView) itemMiaoSha.findViewById(R.id.price_market);
-					item.priceXmView = (TextView) itemMiaoSha.findViewById(R.id.price_xm);
-					item.titleView = (TextView) itemMiaoSha.findViewById(R.id.title);
-//					LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-//					itemMiaoSha.setLayoutParams(ll);
+					ViewGroup itemMiaoSha = (ViewGroup) mInflater.inflate(R.layout.item_type_tehui, null);
+					attachView2Holder(item, itemMiaoSha,ScreenUtils.getScreenWidth(mContext) ,ScreenUtils.getScreenWidth(mContext)/2 );
+					holder.itemList.add(item);
 					((ViewGroup)convertView).addView(itemMiaoSha);
+					itemMiaoSha.setTag(entity.getUrl());
+					itemMiaoSha.setOnClickListener(this);
 				}
 				break;
 			case 3:
-				convertView = new View(mContext);
+				convertView =  mInflater.inflate(R.layout.section_duxiang, null);
+				holder.mTitle = (TextView) convertView.findViewById(R.id.title);
+				holder.itemList = new ArrayList<HomeAdapter.Holder.Item>();
+				for(Entity entity : entitys){
+					Holder.Item item = new Holder.Item();
+					ViewGroup itemDuXiang = (ViewGroup) mInflater.inflate(R.layout.item_type_duxiang, null);
+					attachView2Holder(item, itemDuXiang,ScreenUtils.getScreenWidth(mContext) ,ScreenUtils.getScreenWidth(mContext)/2 );
+					holder.itemList.add(item);
+					((ViewGroup)convertView).addView(itemDuXiang);
+					itemDuXiang.setTag(entity.getUrl());
+					itemDuXiang.setOnClickListener(this);
+				}
 				break;
 			case 4:
-				convertView = new View(mContext);
+				convertView =  mInflater.inflate(R.layout.section_jingxuan, null);
+				holder.mTitle = (TextView) convertView.findViewById(R.id.title);
+				holder.itemList = new ArrayList<HomeAdapter.Holder.Item>();
+				for(Entity entity : entitys){
+					Holder.Item item = new Holder.Item();
+					ViewGroup itemJingXuan = (ViewGroup) mInflater.inflate(R.layout.item_type_jingxuan, null);
+					attachView2Holder(item, itemJingXuan,(int)mContext.getResources().getDimension(R.dimen.item_icon_size) ,(int)mContext.getResources().getDimension(R.dimen.item_icon_size));
+					holder.itemList.add(item);
+					((ViewGroup)convertView).addView(itemJingXuan);
+					itemJingXuan.setTag(entity.getUrl());
+					itemJingXuan.setOnClickListener(this);
+				}
 				break;
 			default:
 				break;
@@ -120,6 +141,22 @@ public class HomeAdapter extends BaseAdapter {
 				index ++;	
 			}
 			break;
+		case 3:
+			holder.mTitle.setText("新用户独享");
+			index = 0;
+			for(Holder.Item item :holder.itemList){
+				setItemData(entitys.get(index), item);
+				index ++;	
+			}
+			break;
+		case 4:
+			holder.mTitle.setText("精选");
+			index = 0;
+			for(Holder.Item item :holder.itemList){
+				setItemData(entitys.get(index), item);
+				index ++;	
+			}
+			break;
 		default:
 			break;
 		}
@@ -132,7 +169,6 @@ public class HomeAdapter extends BaseAdapter {
 		if(!TextUtils.isEmpty(entity.getAddr()) && holderItem.addrView!=null)
 			holderItem.addrView.setText(entity.getAddr());
 		if(!TextUtils.isEmpty(entity.getImg()) && holderItem.imgView!=null){
-			holderItem.addrView.setHeight(ScreenUtils.getScreenWidth(mContext)/3);
 			mImageLoader.displayImage(entity.getImg(), holderItem.imgView);
 		}
 		if(!TextUtils.isEmpty(entity.getPrice_market()) && holderItem.priceMarketView!=null)
@@ -141,6 +177,19 @@ public class HomeAdapter extends BaseAdapter {
 			holderItem.priceXmView.setText(entity.getPrice_xm());
 		if(!TextUtils.isEmpty(entity.getTitle()) && holderItem.titleView!=null)
 			holderItem.titleView.setText(entity.getTitle());
+		if(!TextUtils.isEmpty(entity.getPrice_market_h()) && holderItem.priceMarketHView!=null)
+			holderItem.priceMarketHView.setText(entity.getPrice_market());
+	}
+	
+	private void attachView2Holder(Holder.Item item,ViewGroup vGroup,int imageWidth,int imageHeight){
+		item.titleView = (TextView) vGroup.findViewById(R.id.title);
+		item.addrView = (TextView) vGroup.findViewById(R.id.addr);
+		item.imgView = (ImageView) vGroup.findViewById(R.id.img);
+		item.priceMarketView = (TextView) vGroup.findViewById(R.id.price_market);
+		item.priceMarketHView = (TextView) vGroup.findViewById(R.id.price_market_h);
+		item.priceXmView = (TextView) vGroup.findViewById(R.id.price_xm);
+		item.imgView.getLayoutParams().width = imageWidth;
+		item.imgView.getLayoutParams().height = imageHeight;
 	}
 	
 	
@@ -165,11 +214,18 @@ public class HomeAdapter extends BaseAdapter {
 			private TextView titleView;
 			private TextView priceXmView;
 			private TextView priceMarketView;
+			private TextView priceMarketHView;
 			private TextView saledView;
 			private TextView stockView;
 			private TextView addrView;
 		}
 		
+	}
+
+	@Override
+	public void onClick(View v) {
+		String url = (String) v.getTag();
+		WebViewActivity.startActivity(mContext, url);
 	}
 	
 

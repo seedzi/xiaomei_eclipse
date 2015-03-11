@@ -28,6 +28,12 @@
 	            android:label="TabsActivity" >
         </activity>
         
+        <activity
+            android:name=".leveltwo.WebViewActivity">
+        </activity>
+
+         com.xiaomei.leveltwo
+         
     </application>
     
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

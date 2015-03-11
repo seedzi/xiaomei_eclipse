@@ -4,20 +4,23 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.levelone.adapter.HomeAdapter;
 import com.xiaomei.levelone.control.HomeControl;
+import com.xiaomei.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class HomeFragment extends BaseFragment<HomeControl> {
+public class HomeFragment extends BaseFragment<HomeControl> implements OnRefreshListener{
 	
 	private ViewGroup mRootView;
 	private PullToRefreshListView mPullToRefreshListView;
@@ -32,6 +35,7 @@ public class HomeFragment extends BaseFragment<HomeControl> {
 		if(mRootView == null){
 			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_home_layout, null);
 			initView();
+			setListener();
 			initData();
 			showProgress();
 		}else{
@@ -47,6 +51,10 @@ public class HomeFragment extends BaseFragment<HomeControl> {
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 	}
 	
+	private void setListener(){
+		mPullToRefreshListView.setOnRefreshListener(this);
+	}
+	
 	private void initData(){
 		mAdapter = new HomeAdapter(null, getActivity(), ImageLoader.getInstance());
 		mListView.setAdapter(mAdapter);
@@ -55,6 +63,9 @@ public class HomeFragment extends BaseFragment<HomeControl> {
 	
 	private void showProgress(){
 		mLoadingView.setVisibility(View.VISIBLE);
+		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
+		if(!animationDrawable.isRunning())
+			animationDrawable.start();
 		mPullToRefreshListView.setVisibility(View.GONE);
 	}
 	
@@ -64,17 +75,24 @@ public class HomeFragment extends BaseFragment<HomeControl> {
 	}
 	
 	public void getHomeListEntityAsynCallBack(){
+		if(mPullToRefreshListView.isRefreshing())
+			mPullToRefreshListView.onRefreshComplete();
 		mAdapter.setData(mControl.getSectionList());
 		mAdapter.notifyDataSetChanged();
 		dissProgress();
-		Toast.makeText(getActivity(), "getHomeListEntityAsynCallBack", 0).show();
+		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
 	public void getHomeListEntityAsynCallBackNull(){
-		Toast.makeText(getActivity(), "getHomeListEntityAsynCallBackNull", 0).show();
+		Toast.makeText(getActivity(), "网络异常l", 0).show();
 	}
 	
 	public void getHomeListEntityAsynCallBackException(){
-		Toast.makeText(getActivity(), "getHomeListEntityAsynCallBackException", 0).show();
+		Toast.makeText(getActivity(), "网络异常", 0).show();
+	}
+
+	@Override
+	public void onRefresh() {
+		mControl.getHomeListEntityAsyn();
 	}
 }

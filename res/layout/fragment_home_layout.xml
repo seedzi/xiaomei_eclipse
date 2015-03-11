@@ -5,12 +5,17 @@
     android:layout_height="match_parent" >
     
 	<TextView 
-	android:layout_alignParentTop="true"
-	android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-	android:text="首页"    
-	android:textSize="20sp"
-	 android:gravity="center"/>
+	 android:id="@+id/title"   
+	 android:height="@dimen/title_bar_heigt"
+	 android:layout_alignParentTop="true"
+	 android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+	 android:text="小美医生"    
+	 android:textSize="@dimen/txt_max_big_size_sp"
+	 android:gravity="center"
+	 android:textColor="@color/color_white"
+	 android:background="@color/color_pink"/>
+	
 	<com.xiaomei.widget.pullrefreshview.PullToRefreshListView 
 	    android:id="@+id/list"
 	    android:layout_width="match_parent"
@@ -19,6 +24,7 @@
 	    android:scrollbarStyle="outsideOverlay"
 	    android:dividerHeight="8.0dp"
 	    ptr:ptrMode="pullDownFromTop"
+	    android:layout_below="@id/title"
 	    android:visibility="visible"/> 
 	
 	<include  android:id="@+id/empty_view"

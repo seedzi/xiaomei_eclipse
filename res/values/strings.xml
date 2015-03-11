@@ -8,4 +8,7 @@
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="title_activity_launcher">LauncherActivity</string>
     <string name="title_activity_xxxxxx">xxxxxx</string>
+    
+    <string name="ren_ming_bi">¥</string>
+    <string name="han_yuan">￦</string>
 </resources>

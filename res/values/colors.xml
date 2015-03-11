@@ -2,5 +2,15 @@
 <resources>
 
     <color name="home_allsub_child_topnews">#595959</color>
+    
+    <color name="color_pink">#FF6666</color>
 
+    <color name="color_black">#000000</color>
+    
+     <color name="color_gray">#cccccc</color>
+     
+     <color name="color_white">#FFFFFF</color>
+     
+     <color name="color_green">#66CC66</color>
+    
 </resources>

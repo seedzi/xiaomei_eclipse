@@ -50,6 +50,8 @@ public class Section {
 		
 		private String price_market;
 		
+		private String price_market_h;
+		
 		private String saled;
 		
 		private String stock;
@@ -118,6 +120,14 @@ public class Section {
 
 		public void setUrl(String url) {
 			this.url = url;
+		}
+
+		public String getPrice_market_h() {
+			return price_market_h;
+		}
+
+		public void setPrice_market_h(String price_market_h) {
+			this.price_market_h = price_market_h;
 		}
 		
 		

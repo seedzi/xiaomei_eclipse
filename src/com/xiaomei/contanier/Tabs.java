@@ -54,7 +54,7 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
             tab.setWidth(ScreenUtils.getScreenWidth(context)/tabs_names.length);
             tab.setHeight((int) context.getResources().getDimension(R.dimen.tabs_height_dp));
             tab.setGravity(Gravity.CENTER);
-            tab.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.txt_normal_size_sp));
+            tab.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.txt_small_size_sp));
             tab.setTextColor(Color.BLACK);
             tab.setTag(index);
             index ++;
