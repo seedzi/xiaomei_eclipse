@@ -46,6 +46,7 @@ public class TabsFragmentManager {
 		default:
 			break;
 		}
+        fragments.add(fragment);
         return fragment;
     }
 

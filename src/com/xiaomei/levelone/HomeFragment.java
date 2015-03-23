@@ -3,6 +3,8 @@ package com.xiaomei.levelone;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.levelone.adapter.HomeAdapter;
+import com.xiaomei.levelone.adapter.HomeBannerAdapter;
+import com.xiaomei.levelone.adapter.HomeBannerAdapter.BannerOnPageChangeListener;
 import com.xiaomei.levelone.control.HomeControl;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
@@ -12,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,9 @@ public class HomeFragment extends BaseFragment<HomeControl> implements OnRefresh
 	private HomeAdapter mAdapter;
 	private View mEmptyView;
 	private View mLoadingView; 
+	private ViewPager mHeadPager;
+	private HomeBannerAdapter mHomeBannerAdapter;
+	private HomeBannerAdapter.BannerOnPageChangeListener mOnPageChangeListener; 
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +55,16 @@ public class HomeFragment extends BaseFragment<HomeControl> implements OnRefresh
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mEmptyView= mRootView.findViewById(R.id.empty_view);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
+
+		// init list head
+		LayoutInflater inflater  = LayoutInflater.from(getActivity());
+		ViewGroup headView = (ViewGroup) inflater.inflate(R.layout.section_banner, null);
+		mListView.addHeaderView(headView, null, true);
+		
+		mHeadPager = (ViewPager) headView.findViewById(R.id.pager);
 	}
+	
+	
 	
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
@@ -75,11 +90,27 @@ public class HomeFragment extends BaseFragment<HomeControl> implements OnRefresh
 	}
 	
 	public void getHomeListEntityAsynCallBack(){
+		dissProgress();
+		
 		if(mPullToRefreshListView.isRefreshing())
 			mPullToRefreshListView.onRefreshComplete();
 		mAdapter.setData(mControl.getSectionList());
 		mAdapter.notifyDataSetChanged();
-		dissProgress();
+		
+		// set data for list head
+		mHomeBannerAdapter = new HomeBannerAdapter(getActivity());
+		mHomeBannerAdapter.setSection(mControl.getSectionList().get(0));
+		mHeadPager.setAdapter(mHomeBannerAdapter);
+		
+		mOnPageChangeListener = new BannerOnPageChangeListener(ImageLoader.getInstance());
+		mOnPageChangeListener.setListViews(mHomeBannerAdapter.getListViews());
+		mOnPageChangeListener.setSection(mControl.getSectionList().get(0));
+		mHeadPager.setOnPageChangeListener(mOnPageChangeListener);
+	
+		mHomeBannerAdapter.notifyDataSetChanged();
+		mHeadPager.setCurrentItem(1);
+		mHeadPager.setCurrentItem(0);
+		
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	

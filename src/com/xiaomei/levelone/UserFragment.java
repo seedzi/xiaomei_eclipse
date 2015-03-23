@@ -19,7 +19,10 @@ public class UserFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_layout, null);
+		
 		return mRootView;
 	}
+	
+	
 
 }

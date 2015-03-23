@@ -26,6 +26,8 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
 
 
     private Context mContext;
+    
+    private TabsFragmentManager mMTabsFragmentManager;
 
     public Tabs(Context context) {
         super(context);
@@ -45,6 +47,7 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
     @SuppressLint("ResourceAsColor")
 	private void init(Context context){
     	mContext = context;
+    	mMTabsFragmentManager = new TabsFragmentManager();
         String[] tabs_names = mContext.getResources().getStringArray(R.array.tabs_names);
         int index = 0;
         for(String tab_name : tabs_names){
@@ -67,8 +70,7 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
     @Override
     public void onClick(View v) {
     	int tag = (Integer) v.getTag();
-    	TabsFragmentManager manager = new TabsFragmentManager();
-    	manager.commitFragment(tag, (FragmentActivity)mContext);
+    	mMTabsFragmentManager.commitFragment(tag, (FragmentActivity)mContext);
     }
 
 

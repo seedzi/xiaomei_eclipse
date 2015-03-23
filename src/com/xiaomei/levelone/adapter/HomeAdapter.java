@@ -32,13 +32,10 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 	
 	private Context mContext;
 	
-	private ImageLoader mImageLoader;
-	
 	public HomeAdapter(List<Section> data,Context context,ImageLoader imageLoader){
 		mData = data;
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
-		mImageLoader = imageLoader;
 	}
 	
 	public void setData(List<Section> data){
@@ -85,7 +82,9 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				for(Entity entity : entitys){
 					Holder.Item item = new Holder.Item();
 					ViewGroup itemMiaoSha = (ViewGroup) mInflater.inflate(R.layout.item_type_tehui, null);
-					attachView2Holder(item, itemMiaoSha,ScreenUtils.getScreenWidth(mContext) ,ScreenUtils.getScreenWidth(mContext)/2 );
+					attachView2Holder(item, itemMiaoSha,
+							ScreenUtils.getScreenWidth(mContext),
+							ScreenUtils.getScreenWidth(mContext) / 2);
 					holder.itemList.add(item);
 					((ViewGroup)convertView).addView(itemMiaoSha);
 					itemMiaoSha.setTag(entity.getUrl());
@@ -99,7 +98,9 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				for(Entity entity : entitys){
 					Holder.Item item = new Holder.Item();
 					ViewGroup itemDuXiang = (ViewGroup) mInflater.inflate(R.layout.item_type_duxiang, null);
-					attachView2Holder(item, itemDuXiang,ScreenUtils.getScreenWidth(mContext) ,ScreenUtils.getScreenWidth(mContext)/2 );
+					attachView2Holder(item, itemDuXiang,
+							ScreenUtils.getScreenWidth(mContext),
+							ScreenUtils.getScreenWidth(mContext) / 2);
 					holder.itemList.add(item);
 					((ViewGroup)convertView).addView(itemDuXiang);
 					itemDuXiang.setTag(entity.getUrl());
@@ -113,7 +114,13 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				for(Entity entity : entitys){
 					Holder.Item item = new Holder.Item();
 					ViewGroup itemJingXuan = (ViewGroup) mInflater.inflate(R.layout.item_type_jingxuan, null);
-					attachView2Holder(item, itemJingXuan,(int)mContext.getResources().getDimension(R.dimen.item_icon_size) ,(int)mContext.getResources().getDimension(R.dimen.item_icon_size));
+					attachView2Holder(
+							item,
+							itemJingXuan,
+							(int) mContext.getResources().getDimension(
+									R.dimen.item_icon_size),
+							(int) mContext.getResources().getDimension(
+									R.dimen.item_icon_size));
 					holder.itemList.add(item);
 					((ViewGroup)convertView).addView(itemJingXuan);
 					itemJingXuan.setTag(entity.getUrl());
@@ -169,7 +176,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		if(!TextUtils.isEmpty(entity.getAddr()) && holderItem.addrView!=null)
 			holderItem.addrView.setText(entity.getAddr());
 		if(!TextUtils.isEmpty(entity.getImg()) && holderItem.imgView!=null){
-			mImageLoader.displayImage(entity.getImg(), holderItem.imgView);
+		
 		}
 		if(!TextUtils.isEmpty(entity.getPrice_market()) && holderItem.priceMarketView!=null)
 			holderItem.priceMarketView.setText(entity.getPrice_market());

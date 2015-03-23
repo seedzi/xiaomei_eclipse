@@ -32,7 +32,11 @@
             android:name=".leveltwo.WebViewActivity">
         </activity>
 
-         com.xiaomei.leveltwo
+		<activity 
+		    android:name="com.xiaomei.module.history.HistoryActivity">
+		</activity>
+		
+		
          
     </application>
     

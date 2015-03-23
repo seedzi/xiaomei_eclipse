@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
+import com.xiaomei.api.builder.UserLoginBuilder;
+import com.xiaomei.api.builder.UserRegisterBuilder;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.api.exception.XiaoMeiIOException;
 import com.xiaomei.api.exception.XiaoMeiJSONException;
@@ -15,7 +21,10 @@ import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.api.http.AbstractHttpApi;
 import com.xiaomei.api.http.HttpApi;
 import com.xiaomei.api.http.HttpApiWithSession;
+import com.xiaomei.bean.LoginResult;
+import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Section;
+import com.xiaomei.util.Security;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -37,5 +46,75 @@ public class XiaoMeiApi {
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getHomeListUrl(),null);
 		return mHttpApi.doHttpRequestObject(httpGet, new SectionBuilder());
 	}
+	
+	// ========================================================================================
+	// 用户注册与登录(NET)
+	// ========================================================================================
+	
+	/**
+	 * 注册
+	 */
+	public NetResult userRegister(String userid,String passwd,String rdcode) 
+			throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid) ,
+				new BasicNameValuePair("passwd", passwd),
+				new BasicNameValuePair("rdcode", rdcode),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserRegisterUrl(),
+				values[0],
+				values[1],
+				values[2],
+				values[3],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return  mHttpApi.doHttpRequestObject(httpPost, new UserRegisterBuilder());
+	}
     
+	/**
+	 * 登录
+	 */
+	public NetResult userLogin(String userid,String passwd) 
+			throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid) ,
+				new BasicNameValuePair("passwd", passwd),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserLoginUrl(),
+				values[0],
+				values[1],
+				values[2],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return  mHttpApi.doHttpRequestObject(httpPost, new UserLoginBuilder());
+	}
+	
+	/**
+	 * 获取验证码
+	 */
+	public void getVerificationCode(String telno)
+			throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+				BasicNameValuePair[] values = {new BasicNameValuePair("telno", telno) ,
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+				HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getVerificationCodeUrl(),
+						values[0],
+						values[1],
+						new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+				String responseCode =  mHttpApi.doHttpRequestString(httpPost);
+				Log.d("111", "responseCode = " + responseCode);
+	}
+	
+	/**
+	 *  找回密码
+	 */
+	public NetResult findPassword(String userid,String passwd,String rdcode)
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid) ,
+				new BasicNameValuePair("passwd", passwd),
+				new BasicNameValuePair("rdcode", rdcode),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getFindPwdUrl(),
+				values[0],
+				values[1],
+				values[2],
+				values[3],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return  mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+	}
 }

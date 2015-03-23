@@ -36,7 +36,7 @@ public class Constant {
 		public static final String KEY_AMUSEMENT = "vAmusement";
 		public static final String KEY_VARIETY = "vVariety";
 	}
-
+	
 	public static class VideoConstant{
 		public static final int MAX_CON_DOWNLOAD_SIZE = 5;
 	}
