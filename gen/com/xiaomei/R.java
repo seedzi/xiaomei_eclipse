@@ -72,7 +72,13 @@ containing a value of this type.
         public static final int item_icon_size=0x7f07000b;
         public static final int item_padding_dp=0x7f07000a;
         public static final int tabs_height_dp=0x7f070002;
+        /**    title bar  
+ title bar  高度 
+         */
         public static final int title_bar_heigt=0x7f07000c;
+        /**  title bar  2边的间距 
+         */
+        public static final int title_bar_padding_left_right=0x7f07000d;
         public static final int txt_big_size_sp=0x7f070004;
         public static final int txt_margin_dp=0x7f070009;
         public static final int txt_max_big_size_sp=0x7f070003;
@@ -93,74 +99,93 @@ containing a value of this type.
         public static final int pulltorefresh_up_arrow=0x7f02000a;
     }
     public static final class id {
-        public static final int addr=0x7f080012;
-        public static final int and_star=0x7f08000f;
-        public static final int back=0x7f080022;
+        public static final int addr=0x7f080020;
+        public static final int and_star=0x7f08001d;
+        public static final int back=0x7f080030;
         public static final int both=0x7f080002;
-        public static final int can_kao_jia=0x7f08001a;
+        public static final int can_kao_jia=0x7f080028;
+        public static final int center_container=0x7f080032;
         public static final int container_body_layout=0x7f080007;
         public static final int container_tabs=0x7f080006;
-        public static final int delete=0x7f08000e;
-        public static final int empty_text=0x7f080009;
-        public static final int empty_view=0x7f080008;
+        public static final int delete=0x7f08001c;
+        public static final int empty_text=0x7f080017;
+        public static final int empty_view=0x7f080016;
+        public static final int forget_password=0x7f080011;
         public static final int gridview=0x7f080000;
-        public static final int han_yuan=0x7f080018;
-        public static final int head=0x7f08000c;
-        public static final int icon=0x7f08000d;
-        public static final int imageView=0x7f080010;
-        public static final int img=0x7f080011;
-        public static final int iv=0x7f08001b;
+        public static final int han_yuan=0x7f080026;
+        public static final int head=0x7f08001a;
+        public static final int icon=0x7f08001b;
+        public static final int imageView=0x7f08001e;
+        public static final int img=0x7f08001f;
+        public static final int iv=0x7f080029;
+        public static final int launch=0x7f080012;
         public static final int list=0x7f080005;
-        public static final int loading_layout=0x7f08000b;
-        public static final int newspaper_header_desc=0x7f080021;
-        public static final int pager=0x7f080020;
-        public static final int price_market=0x7f080015;
-        public static final int price_market_h=0x7f080019;
-        public static final int price_xm=0x7f080013;
+        public static final int loading_layout=0x7f080019;
+        public static final int login=0x7f080033;
+        public static final int login_input_layout=0x7f08000a;
+        public static final int login_user_mobile=0x7f08000b;
+        public static final int login_user_password=0x7f08000c;
+        public static final int newspaper_header_desc=0x7f08002f;
+        public static final int pager=0x7f08002e;
+        public static final int price_market=0x7f080023;
+        public static final int price_market_h=0x7f080027;
+        public static final int price_xm=0x7f080021;
         public static final int pullDownFromTop=0x7f080003;
         public static final int pullUpFromBottom=0x7f080004;
-        public static final int pull_to_refresh_image=0x7f08001f;
-        public static final int pull_to_refresh_progress=0x7f08001e;
-        public static final int pull_to_refresh_text=0x7f08001c;
-        public static final int pull_to_refresh_time_text=0x7f08001d;
-        public static final int ren_ming_bi=0x7f080017;
-        public static final int ren_ming_bi_big=0x7f080016;
-        public static final int ren_ming_bi_samll=0x7f080014;
-        public static final int title=0x7f08000a;
+        public static final int pull_to_refresh_image=0x7f08002d;
+        public static final int pull_to_refresh_progress=0x7f08002c;
+        public static final int pull_to_refresh_text=0x7f08002a;
+        public static final int pull_to_refresh_time_text=0x7f08002b;
+        public static final int qq=0x7f080013;
+        public static final int register=0x7f080034;
+        public static final int register_input_layout=0x7f08000d;
+        public static final int register_user_mobile=0x7f08000e;
+        public static final int register_user_password=0x7f080010;
+        public static final int register_user_verification=0x7f08000f;
+        public static final int ren_ming_bi=0x7f080025;
+        public static final int ren_ming_bi_big=0x7f080024;
+        public static final int ren_ming_bi_samll=0x7f080022;
+        public static final int root=0x7f080009;
+        public static final int sina_weibo=0x7f080015;
+        public static final int title=0x7f080018;
+        public static final int title_bar_layout=0x7f080008;
+        public static final int titlebar=0x7f080031;
         public static final int webview=0x7f080001;
+        public static final int weixin=0x7f080014;
     }
     public static final class layout {
         public static final int activity_collection_layout=0x7f030000;
         public static final int activity_container_layout=0x7f030001;
-        public static final int activity_history_layout=0x7f030002;
-        public static final int activity_launcher=0x7f030003;
-        public static final int activity_login_register_layout=0x7f030004;
-        public static final int activity_main=0x7f030005;
-        public static final int activity_xxxxxx=0x7f030006;
-        public static final int activtiy_webview=0x7f030007;
-        public static final int empty_layout=0x7f030008;
-        public static final int fragment_beautifulring_layout=0x7f030009;
-        public static final int fragment_home_layout=0x7f03000a;
-        public static final int fragment_mail_layout=0x7f03000b;
-        public static final int fragment_mechanism_layout=0x7f03000c;
-        public static final int fragment_user_layout=0x7f03000d;
-        public static final int home_item_banner=0x7f03000e;
-        public static final int item_center_user_layout=0x7f03000f;
-        public static final int item_history=0x7f030010;
-        public static final int item_type_banner=0x7f030011;
-        public static final int item_type_duxiang=0x7f030012;
-        public static final int item_type_jingxuan=0x7f030013;
-        public static final int item_type_miaosha=0x7f030014;
-        public static final int item_type_tehui=0x7f030015;
-        public static final int loading_layout=0x7f030016;
-        public static final int pull_to_refresh_header=0x7f030017;
-        public static final int section_banner=0x7f030018;
-        public static final int section_duxiang=0x7f030019;
-        public static final int section_jingxuan=0x7f03001a;
-        public static final int section_miaosha=0x7f03001b;
-        public static final int section_tehui=0x7f03001c;
-        public static final int title_bar_layout=0x7f03001d;
-        public static final int title_bar_login_register_layout=0x7f03001e;
+        public static final int activity_find_password_layout=0x7f030002;
+        public static final int activity_history_layout=0x7f030003;
+        public static final int activity_launcher=0x7f030004;
+        public static final int activity_login_register_layout=0x7f030005;
+        public static final int activity_main=0x7f030006;
+        public static final int activity_xxxxxx=0x7f030007;
+        public static final int activtiy_webview=0x7f030008;
+        public static final int empty_layout=0x7f030009;
+        public static final int fragment_beautifulring_layout=0x7f03000a;
+        public static final int fragment_home_layout=0x7f03000b;
+        public static final int fragment_mail_layout=0x7f03000c;
+        public static final int fragment_mechanism_layout=0x7f03000d;
+        public static final int fragment_user_layout=0x7f03000e;
+        public static final int home_item_banner=0x7f03000f;
+        public static final int item_center_user_layout=0x7f030010;
+        public static final int item_history=0x7f030011;
+        public static final int item_type_banner=0x7f030012;
+        public static final int item_type_duxiang=0x7f030013;
+        public static final int item_type_jingxuan=0x7f030014;
+        public static final int item_type_miaosha=0x7f030015;
+        public static final int item_type_tehui=0x7f030016;
+        public static final int loading_layout=0x7f030017;
+        public static final int pull_to_refresh_header=0x7f030018;
+        public static final int section_banner=0x7f030019;
+        public static final int section_duxiang=0x7f03001a;
+        public static final int section_jingxuan=0x7f03001b;
+        public static final int section_miaosha=0x7f03001c;
+        public static final int section_tehui=0x7f03001d;
+        public static final int title_bar_layout=0x7f03001e;
+        public static final int title_bar_login_register_layout=0x7f03001f;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -168,8 +193,15 @@ containing a value of this type.
     public static final class string {
         public static final int action_settings=0x7f09000a;
         public static final int app_name=0x7f090008;
+        public static final int forget_password=0x7f090016;
         public static final int han_yuan=0x7f090010;
         public static final int hello_world=0x7f090009;
+        /**  用户 
+         */
+        public static final int login=0x7f090011;
+        public static final int please_input_your_mobile=0x7f090013;
+        public static final int please_input_your_password=0x7f090014;
+        public static final int please_input_your_verification_code=0x7f090015;
         public static final int pull_to_refresh_pull_label=0x7f090000;
         public static final int pull_to_refresh_refreshing_label=0x7f090003;
         public static final int pull_to_refresh_release_label=0x7f090001;
@@ -178,6 +210,7 @@ containing a value of this type.
         public static final int pull_up_refresh_refreshing_label=0x7f090006;
         public static final int pull_up_to_get_more=0x7f090004;
         public static final int pull_up_to_refresh_release_label=0x7f090005;
+        public static final int register=0x7f090012;
         public static final int ren_ming_bi=0x7f09000f;
         public static final int title_activity_launcher=0x7f09000d;
         public static final int title_activity_main=0x7f09000b;

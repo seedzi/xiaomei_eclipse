@@ -36,6 +36,10 @@
 		    android:name="com.xiaomei.module.history.HistoryActivity">
 		</activity>
 		
+		<activity 
+		    android:name="com.xiaomei.module.user.LoginAndRegisterActivity">
+		</activity>
+		
 		
          
     </application>

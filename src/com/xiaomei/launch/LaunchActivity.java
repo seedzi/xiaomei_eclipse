@@ -13,6 +13,7 @@ import com.xiaomei.api.exception.XiaoMeiJSONException;
 import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.launch.control.LaunchControl;
+import com.xiaomei.module.user.LoginAndRegisterActivity;
 
 public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 
@@ -20,7 +21,7 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-        
+    	/*
 		new Thread(new Runnable() {
 			
 			@Override
@@ -45,15 +46,15 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 					e.printStackTrace();
 				}
 			}
-		}).start();;
-		/*
+		}).start();*/
+	
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-            	TabsActivity.launch(LaunchActivity.this);
+            	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
             	finish();
             }
-        },3000);*/
+        },1000);
     }
 
 }
