@@ -1,4 +1,4 @@
-package com.xiaomei.module.history.user.center;
+package com.xiaomei.module.user.center;
 
 import android.os.Bundle;
 

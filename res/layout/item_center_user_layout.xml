@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-<RelativeLayout 
-    android:layout_width="match_parent"
-    android:layout_height="48dp">
-    <ImageView 
-		android:layout_alignParentLeft="true" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"      
-        />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_dp">
+        <ImageView 
+            android:layout_marginLeft="10dp"
+            android:id="@+id/icon"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/quicklaunch_addfunction_wallpaper"/>
+        <TextView 
+            android:layout_marginLeft="10dp"
+            android:id="@+id/title"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的订单"/>
+        <ImageView 
+            android:id="@+id/arrow"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next_icon"/>        
+            
+        <TextView 
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/arrow"
+            android:text="new"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <View 
+            android:id="@+id/division"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/icon"
+            android:background="@color/color_gray"
+            android:layout_height="1px"
+            android:layout_width="match_parent"
+            />
 </RelativeLayout>
-</LinearLayout>

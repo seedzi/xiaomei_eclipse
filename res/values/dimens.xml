@@ -18,6 +18,7 @@
     <dimen name="item_icon_size">100dp</dimen>
     
   
+    <dimen name="item_height_dp">40dp</dimen>
     
     
     <!--   title bar  -->

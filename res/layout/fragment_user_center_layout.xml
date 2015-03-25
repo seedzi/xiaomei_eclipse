@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+	<include 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    layout="@layout/title_bar_layout"
+	    />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp" >
+
+        <com.xiaomei.widget.XCRoundImageView
+            android:id="@+id/user_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/joke_channel_offline_icon" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/user_icon"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="美美达" />
+
+            <TextView
+                android:id="@+id/user_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="v2白金会员" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/next_icon" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="vertical" >
+
+        <include layout="@layout/item_center_user_layout" />
+
+        <include layout="@layout/item_center_user_layout" />
+
+        <View
+         	android:layout_width="match_parent"
+        	android:layout_height="40dp"           
+            android:background="@color/color_gray"/>
+        
+        <include android:id="@+id/line1"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/line2"  layout="@layout/item_center_user_layout" />
+        
+		<View
+         	android:layout_width="match_parent"
+        	android:layout_height="40dp"           
+            android:background="@color/color_gray"/>
+        
+        <include android:id="@+id/line3"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/line4"  layout="@layout/item_center_user_layout" />
+        
+		<View
+         	android:layout_width="match_parent"
+        	android:layout_height="40dp"           
+            android:background="@color/color_gray"/>
+        
+        <include android:id="@+id/line5"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/line6"  layout="@layout/item_center_user_layout" />
+    </LinearLayout>
+
+</LinearLayout>

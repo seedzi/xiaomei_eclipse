@@ -13,7 +13,8 @@ import com.xiaomei.R;
  */
 public class TabsActivity extends  BaseActiviy{
 
-    public static void launch(Context context){
+
+    public static void startActivity(Context context){
         Intent intent = new Intent(context,TabsActivity.class);
         context.startActivity(intent);
     }

@@ -51,7 +51,8 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-            	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
+//            	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
+            	TabsActivity.startActivity(LaunchActivity.this);
             	finish();
             }
         },1000);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.xiaomei.widget.TitleBar  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/title_bar_heigt"
     android:orientation="vertical" >
     
 <ImageButton 
@@ -10,11 +10,26 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"        
     />    
+    
+	<LinearLayout 
+	    android:id="@+id/center_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	    <Button 
+	        android:id="@+id/login"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+	    <Button 
+	        android:id="@+id/register"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>	    
+	</LinearLayout>
+
 <TextView 
     android:id="@+id/title"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"    
-    android:text="个人中心"/>
+    android:layout_height="wrap_content" />
     
 </com.xiaomei.widget.TitleBar>
