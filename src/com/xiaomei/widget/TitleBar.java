@@ -55,6 +55,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 	
 	public void setBackListener(View.OnClickListener listener){
 		mBackButton.setOnClickListener(listener);
+		mBackButton.setVisibility(View.VISIBLE);
 	}
 
 	/**

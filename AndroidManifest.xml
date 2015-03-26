@@ -33,15 +33,25 @@
         </activity>
 
 		<activity 
-		    android:name="com.xiaomei.module.history.HistoryActivity">
-		</activity>
-		
-		<activity 
 		    android:name="com.xiaomei.module.user.LoginAndRegisterActivity">
 		</activity>
+		<!-- 浏览记录 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.HistoryActivity">
+		</activity>
+		<!-- 我的订单 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.UserOrderActivity">
+		</activity>
+		<!-- 关于 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.AboutActivity">
+		</activity>
+		<!-- 我的收藏 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.CollectionActivity">
+		</activity>
 		
-		
-         
     </application>
     
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

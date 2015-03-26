@@ -10,7 +10,7 @@
      -->
 
    <!-- title bar -->
-    <include android:id="@+id/title_bar_layout"  layout="@layout/title_bar_login_register_layout"/> 
+    <include android:id="@+id/title_bar_layout"  layout="@layout/title_bar_layout"/> 
     
 
     <FrameLayout 

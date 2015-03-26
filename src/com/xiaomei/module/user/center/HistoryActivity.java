@@ -1,8 +1,9 @@
-package com.xiaomei.module.history;
+package com.xiaomei.module.user.center;
 
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,13 @@ import android.widget.TextView;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.bean.HistroyItem;
-import com.xiaomei.module.history.control.HistoryControl;
 
-public class HistoryActivity extends BaseActiviy<HistoryControl> {
+public class HistoryActivity extends BaseActiviy {
+	
+	public static void startActivity(Context context){
+		Intent intent = new Intent(context,HistoryActivity.class);
+		context.startActivity(intent);
+	}
 
 	private ListView mListView;
 	
@@ -53,7 +58,8 @@ public class HistoryActivity extends BaseActiviy<HistoryControl> {
 		
 		@Override
 		public int getCount() {
-			return mData == null ? 0 : mData.size();
+//			return mData == null ? 0 : mData.size();
+			return 10;
 		}
 
 		@Override

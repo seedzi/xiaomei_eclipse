@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/title_bar_layout"/>
+    
+	<com.xiaomei.widget.pullrefreshview.PullToRefreshListView 
+	    android:id="@+id/list"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="#ffe2e2e2"
+	    android:scrollbarStyle="outsideOverlay"
+	    android:dividerHeight="8.0dp"
+	    ptr:ptrMode="pullDownFromTop"
+	    android:visibility="visible"/> 
+    
+</LinearLayout>
