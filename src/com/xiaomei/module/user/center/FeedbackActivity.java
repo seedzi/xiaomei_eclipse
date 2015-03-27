@@ -9,26 +9,27 @@ import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 
-public class OrderDetailsActivity extends BaseActiviy implements View.OnClickListener{
+public class FeedbackActivity extends BaseActiviy {
+	
 	
 	public static void startActivity(Context context){
-		Intent intent = new Intent(context,OrderDetailsActivity.class);
+		Intent intent = new Intent(context,FeedbackActivity.class);
 		context.startActivity(intent);
 	}
 	
-	private TitleBar mTitlBar;
+	private TitleBar mTitleBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user_order_details_layout);
+		setContentView(R.layout.activity_feedback_layout);
 		setUpView();
 	}
 	
 	private void setUpView(){
-		mTitlBar = (TitleBar) findViewById(R.id.titlebar);
-		mTitlBar.setTitle(getResources().getString(R.string.order_details));
-		mTitlBar.setBackListener(new View.OnClickListener() {
+		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
+		mTitleBar.setTitle(getResources().getString(R.string.user_feedback));
+		mTitleBar.setBackListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
@@ -36,16 +37,4 @@ public class OrderDetailsActivity extends BaseActiviy implements View.OnClickLis
 		});
 	}
 
-	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		switch (id) {
-		case 1:
-			
-			break;
-
-		default:
-			break;
-		}
-	}
 }

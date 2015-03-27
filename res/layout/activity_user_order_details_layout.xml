@@ -5,6 +5,8 @@
     android:orientation="vertical" 
     android:background="@color/color_gray">
     
+    <include layout="@layout/title_bar_layout"/>
+        
     <include android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
     
     <include android:id="@+id/item2" layout="@layout/item_user_order_details_layout"/>

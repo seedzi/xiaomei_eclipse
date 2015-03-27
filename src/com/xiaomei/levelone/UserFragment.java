@@ -2,7 +2,10 @@ package com.xiaomei.levelone;
 
 import com.xiaomei.R;
 import com.xiaomei.module.user.center.AboutActivity;
+import com.xiaomei.module.user.center.CollectionActivity;
+import com.xiaomei.module.user.center.FeedbackActivity;
 import com.xiaomei.module.user.center.HistoryActivity;
+import com.xiaomei.module.user.center.MessageActivity;
 import com.xiaomei.module.user.center.UserOrderActivity;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
@@ -68,16 +71,16 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
 			UserOrderActivity.startActivity(getActivity());
 			break;
 		case R.id.line2: //我的消息
-			
+			MessageActivity.startActivity(getActivity());
 			break;
 		case R.id.line3: //我的收藏
-			
+			CollectionActivity.startActivity(getActivity());
 			break;
 		case R.id.line4: //浏览历史
 			HistoryActivity.startActivity(getActivity());
 			break;
 		case R.id.line5: //意见反馈
-			
+			FeedbackActivity.startActivity(getActivity());
 			break;
 		case R.id.line6: //关于我们
 			AboutActivity.startActivity(getActivity());

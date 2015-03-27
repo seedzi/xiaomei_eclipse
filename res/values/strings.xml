@@ -47,7 +47,9 @@
     <string name="pay_zhifubao_safety">支付宝账号安全支付</string>      
     
     
+    <string name="feedback_suggestions_txt">我们真诚的感谢您为我们提出宝贵的建议...</string>      
     
-    
-    
+    <string name="feedback_txt">请填写您的手机号或者邮箱（选填）</string>      
+       
+    <string name="submit">提交</string>        
 </resources>

@@ -41,7 +41,7 @@ public class UserOrderActivity extends BaseActiviy {
 		mList.getRefreshableView().setAdapter(mAdapter);
 	}
 	
-	private class OrderAdapter extends BaseAdapter{
+	private class OrderAdapter extends BaseAdapter implements View.OnClickListener{
 
 		private LayoutInflater mLayoutInflater;
 		
@@ -68,8 +68,14 @@ public class UserOrderActivity extends BaseActiviy {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_user_order_layout,null);
+				convertView.setOnClickListener(this);
 			}
 			return convertView;
+		}
+
+		@Override
+		public void onClick(View v) {
+			OrderDetailsActivity.startActivity(UserOrderActivity.this);
 		}
 		
 	}

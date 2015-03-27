@@ -51,6 +51,19 @@
 		<activity 
 		    android:name="com.xiaomei.module.user.center.CollectionActivity">
 		</activity>
+		<!-- 我的消息 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.MessageActivity">
+		</activity>
+		<!-- 我的反馈 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.FeedbackActivity">
+		</activity>
+		<!-- 订单详情 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.OrderDetailsActivity">
+		</activity>		
+
 		
     </application>
     

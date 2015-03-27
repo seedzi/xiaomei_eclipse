@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.bean.HistroyItem;
+import com.xiaomei.widget.TitleBar;
 
 public class HistoryActivity extends BaseActiviy {
 	
@@ -25,6 +26,8 @@ public class HistoryActivity extends BaseActiviy {
 		context.startActivity(intent);
 	}
 
+	private TitleBar mTitleBar;
+	
 	private ListView mListView;
 	
 	private HistoryAdapter mAdapter;
@@ -33,10 +36,18 @@ public class HistoryActivity extends BaseActiviy {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history_layout);
-		initView();
+		setUpView();
 	}
 	
-	private void initView(){
+	private void setUpView(){
+		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
+		mTitleBar.setTitle(getResources().getString(R.string.user_history));
+		mTitleBar.setBackListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		mListView = (ListView) findViewById(R.id.list);
 		mAdapter = new HistoryAdapter(this);
 		mListView.setAdapter(mAdapter);
@@ -76,7 +87,7 @@ public class HistoryActivity extends BaseActiviy {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder holder = null;
 			if(convertView == null){
-				convertView  = mInflater.inflate(R.layout.item_history, null);
+				convertView  = mInflater.inflate(R.layout.item_history_layout, null);
 				holder = new Holder();
 				holder.titleView = (TextView) convertView.findViewById(R.id.title);
 				holder.iconView = (ImageView) convertView.findViewById(R.id.icon);
