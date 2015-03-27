@@ -11,9 +11,7 @@ import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

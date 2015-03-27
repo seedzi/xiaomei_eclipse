@@ -4,13 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    
-        
-	<TextView 
-	android:layout_width="match_parent"
-    android:layout_height="match_parent"
-	android:text="商城"    
-	android:textSize="20sp"
-	 android:gravity="center"/>
-
+    <include  layout="@layout/title_bar_layout" />
+           
+	<GridView 
+	    android:id="@+id/grid"
+	    android:layout_height="match_parent"
+	    android:layout_width="match_parent"
+	    android:numColumns="3"/>
+	    
 </LinearLayout>
