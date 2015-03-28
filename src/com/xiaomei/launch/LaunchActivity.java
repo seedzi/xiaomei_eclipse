@@ -14,6 +14,7 @@ import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.launch.control.LaunchControl;
 import com.xiaomei.module.user.LoginAndRegisterActivity;
+import com.xiaomei.util.UserUtil;
 
 public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 
@@ -22,8 +23,8 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
     	/*
+    	 * Test
 		new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				try {
@@ -51,11 +52,20 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//            	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-            	TabsActivity.startActivity(LaunchActivity.this);
-            	finish();
+            	init();
             }
         },1000);
+    }
+    
+    private void  init(){
+    	TabsActivity.startActivity(LaunchActivity.this);
+    	/*
+    	if(UserUtil.isUserValid()){
+    		TabsActivity.startActivity(LaunchActivity.this);
+    	}else{
+    		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
+    	}*/
+    	finish();	
     }
 
 }

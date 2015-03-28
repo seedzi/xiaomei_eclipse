@@ -3,6 +3,7 @@
     android:id="@+id/titlebar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_heigt"
+    android:background="@color/color_titlebar_background"
     android:orientation="vertical" >
     
 <ImageButton 
@@ -10,13 +11,16 @@
     android:layout_gravity="center_vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"        
-    android:visibility="gone"/>    
+    android:layout_marginLeft="@dimen/item_margin_normal"
+    android:visibility="gone"
+    android:background="@drawable/back"/>    
     
 	<LinearLayout 
 	    android:id="@+id/center_container"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:orientation="horizontal">
+	    android:orientation="horizontal"
+	    android:visibility="gone">
 	    <Button 
 	        android:id="@+id/login"
 	        android:layout_width="wrap_content"
@@ -29,6 +33,8 @@
 
 <TextView 
     android:id="@+id/title"
+    android:textSize="25sp"
+    android:textColor="#727272"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />

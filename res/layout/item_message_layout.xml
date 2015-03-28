@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:background="@color/color_white" >
     
 	<ImageView 
 	    android:id="@+id/icon"
-	    android:layout_marginLeft="10dp"
-	    android:layout_marginTop="10dp"
-	    android:layout_marginBottom="10dp"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"	    
+	    android:layout_marginLeft="@dimen/item_margin_normal"
+	    android:layout_marginTop="@dimen/item_margin_normal"
+	    android:layout_marginBottom="@dimen/item_margin_normal"
+    	android:layout_width="@dimen/item_icon_size_smaill"
+    	android:layout_height="@dimen/item_icon_size_smaill"	    
     	android:layout_centerVertical="true"
-	    android:src="@drawable/share_weixin_contact_icon"/>
-    
+	    android:src="@drawable/icon_system_message"/>
 	<TextView 
 	    android:id="@+id/title"
-	  	android:layout_marginTop="10dp"
-	    android:layout_marginBottom="10dp"
-	    android:layout_marginLeft="5dp"
+	    android:textSize="24sp"
+	    android:textColor="#373737"
+	    android:layout_marginLeft="@dimen/item_margin_small"
 	    android:layout_toRightOf="@id/icon"
+	    android:layout_marginTop="@dimen/item_margin_small_most"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"	   	    
+    	android:layout_alignParentTop="true"
 	    android:text="系统消息"/>
 
 		<TextView 
 	    android:id="@+id/details_title"
-	   	android:layout_marginTop="10dp"
-	    android:layout_marginBottom="10dp"
+	    android:textSize="20sp"
+	    android:textColor="#aaaaaa"
+	    android:layout_alignParentBottom="true"
 	    android:layout_toRightOf="@id/icon"
-	    android:layout_marginLeft="5dp"
+	    android:layout_marginLeft="@dimen/item_margin_small"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"	   	   
-		android:layout_alignBottom="@id/icon"
+		android:layout_marginBottom="@dimen/item_margin_small_most"
 	    android:text="商品促销信息"/>	
-	    
-		<View
+
+		<!-- 		<View
 		android:layout_below="@id/details_title"
 		android:layout_toRightOf="@id/icon"    
-		android:layout_marginLeft="5dp"
+		android:layout_marginLeft="@dimen/item_margin_normal"
     	android:layout_width="match_parent"
-    	android:layout_height="1px"	   			    
-		android:background="@color/color_gray"/>
+    	android:layout_height="10px"	   			    
+		android:background="@color/color_gray"/> -->	    
+
 </RelativeLayout>

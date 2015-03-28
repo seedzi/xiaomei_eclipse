@@ -3,6 +3,7 @@ package com.xiaomei.levelone;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshExpandableListView;
+import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
@@ -20,7 +21,7 @@ public class MechanismFragment extends BaseFragment {
 	
 	private ViewGroup mRootView;
 	
-	private PullToRefreshExpandableListView mPullToRefreshExpandableListView;
+	private PullToRefreshListView mPullToRefreshListView;;
 	
 	private ListView mListView;
 	
@@ -37,8 +38,9 @@ public class MechanismFragment extends BaseFragment {
 	private void setUpView(){
 		mTitleBar = (TitleBar) mRootView.findViewById(R.id.titlebar);
 		mTitleBar.setTitle(getResources().getString(R.string.fragment_mechanism));
-		mPullToRefreshExpandableListView = (PullToRefreshExpandableListView) mRootView.findViewById(R.id.list);
-		mListView = mPullToRefreshExpandableListView.getRefreshableView();
+		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
+		mListView = mPullToRefreshListView.getRefreshableView();
+		mListView.setAdapter(new MechanismAdapter(getActivity()));
 	}
 	
 	private class MechanismAdapter extends BaseAdapter{
@@ -67,7 +69,7 @@ public class MechanismFragment extends BaseFragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if(convertView == null){
-				
+				convertView = mLayoutInflater.inflate(R.layout.item_mechanism_layout, null);
 			}
 			return convertView;
 		}

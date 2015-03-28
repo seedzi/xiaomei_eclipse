@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@color/color_gray">
+    android:background="@color/color_background">
     
     <include layout="@layout/title_bar_layout"/>
     
@@ -11,14 +11,24 @@
         android:id="@+id/txt_content"
 	    android:layout_width="match_parent"        
 	    android:layout_height="150dp"
-	    android:background="@color/color_white"
-	    android:layout_margin="10dp"
+	    android:textColor="#b4b4b4"
+	    android:textSize="20sp"
+	    android:background="@drawable/icon_feedback"
+	    android:layout_marginTop="18dp"
+	    android:layout_marginLeft="@dimen/item_margin_normal"
+	    android:layout_marginRight="@dimen/item_margin_normal"
 	    android:hint="@string/feedback_suggestions_txt"
 	    android:gravity="left|top"
-	    android:padding="10dp"/>
+	    android:paddingLeft="14dp"
+	    android:paddingTop="22dp"
+	    android:paddingBottom="22dp"
+	    android:paddingRight="14dp"/>
     
     <EditText 
         android:id="@+id/mobile"
+        android:textSize="18sp"
+        android:textColor="#ebebeb"
+        android:layout_marginTop="@dimen/item_margin_small"
         android:layout_width="match_parent"        
         android:layout_height="wrap_content"
         android:hint="@string/feedback_txt"
@@ -28,9 +38,10 @@
     
     <Button 
         android:id="@+id/submit"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="@dimen/item_margin_normal"
+        android:background="@drawable/payment_selector"
+        android:layout_marginRight="@dimen/item_margin_normal"
         android:layout_width="match_parent"        
         android:layout_height="wrap_content"
         android:text="@string/submit"/>

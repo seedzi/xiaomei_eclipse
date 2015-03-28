@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
@@ -41,20 +42,22 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
 		mTitleBar.setTitle(getResources().getString(R.string.user_center));
 		
 		line1 = (ViewGroup) mRootView.findViewById(R.id.line1);
-		setUpUserItem(line1, getResources().getString(R.string.user_order), this);
+		setUpUserItem(line1, getResources().getString(R.string.user_order), this,R.drawable.order);
 		line2 = (ViewGroup) mRootView.findViewById(R.id.line2);
-		setUpUserItem(line2,  getResources().getString(R.string.user_message), this);
+		setUpUserItem(line2,  getResources().getString(R.string.user_message), this,R.drawable.news);
 		line3 = (ViewGroup) mRootView.findViewById(R.id.line3);
-		setUpUserItem(line3, getResources().getString(R.string.user_collection), this);
+		setUpUserItem(line3, getResources().getString(R.string.user_collection), this,R.drawable.collection);
 		line4 = (ViewGroup) mRootView.findViewById(R.id.line4);
-		setUpUserItem(line4, getResources().getString(R.string.user_history), this);
+		setUpUserItem(line4, getResources().getString(R.string.user_history), this,R.drawable.browsing_history);
 		line5 = (ViewGroup) mRootView.findViewById(R.id.line5);
-		setUpUserItem(line5, getResources().getString(R.string.user_feedback), this);
+		setUpUserItem(line5, getResources().getString(R.string.user_feedback), this,R.drawable.feedback);
 		line6 = (ViewGroup) mRootView.findViewById(R.id.line6);
-		setUpUserItem(line6, getResources().getString(R.string.user_about), this);
+		setUpUserItem(line6, getResources().getString(R.string.user_about), this,R.drawable.about_us);
 	}
 	
-	private void setUpUserItem(ViewGroup rootView,String title,View.OnClickListener clickListener){
+	private void setUpUserItem(ViewGroup rootView,String title,View.OnClickListener clickListener,int drawableRes){
+		ImageView iv = (ImageView) rootView.findViewById(R.id.icon);
+		iv.setImageResource(drawableRes);
 		TextView tv = (TextView) rootView.findViewById(R.id.title);
 		tv.setText(title);
 		rootView.setOnClickListener(clickListener);

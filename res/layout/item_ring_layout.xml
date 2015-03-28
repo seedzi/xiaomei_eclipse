@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+	android:background="@color/color_white">
+    
+    <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        	android:paddingLeft="10dp"
+        	android:paddingRight="10dp"
+        	android:paddingTop="5dp"
+        	android:paddingBottom="5dp">
+        	
+        <com.xiaomei.widget.XCRoundImageView 
+            android:id="@+id/person_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/quicklaunch_addfunction_wallpaper"/>
+        
+        <TextView 
+            android:id="@+id/mechanism_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Seth Audley"
+            android:layout_toRightOf="@id/person_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"/>
+        
+        <TextView 
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="2015-03-05"
+            android:drawableLeft="@drawable/address_web"
+            android:gravity="center_vertical"/>
+        
+    </RelativeLayout>
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/novel_cover_default4"/>
+        
+        <TextView 
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鼻子"
+            android:textColor="@color/color_white"/>
+    </FrameLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        	       android:paddingLeft="10dp"
+	       android:paddingTop="5dp"
+	       android:paddingBottom="5dp"
+	       android:paddingRight="10dp">
+        	<TextView 
+	       android:text="韩国几种常见的隆鼻手术方法"
+
+           android:layout_width="match_parent"	    
+	       android:layout_height="wrap_content"/>
+        	<ImageView 
+           android:layout_alignParentRight="true"   
+           android:layout_centerVertical="true"
+           android:layout_height="wrap_content"
+           android:layout_width="wrap_content"	    
+           android:src="@drawable/next_icon"/>
+    </RelativeLayout>
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray"/>
+
+    <RelativeLayout 
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+        <TextView 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="134"/>	
+        <ImageView 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/address_web"/>	
+        <TextView 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="216"/>		                        
+    </RelativeLayout>
+</LinearLayout>

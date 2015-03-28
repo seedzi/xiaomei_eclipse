@@ -36,6 +36,13 @@ public class UserOrderActivity extends BaseActiviy {
 	private void setUpView(){
 		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
 		mTitleBar.setTitle(getResources().getString(R.string.user_order));
+		mTitleBar.setBackListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		
 		mList = (PullToRefreshListView) findViewById(R.id.list);
 		mAdapter = new OrderAdapter(this);
 		mList.getRefreshableView().setAdapter(mAdapter);

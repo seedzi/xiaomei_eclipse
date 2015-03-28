@@ -7,10 +7,24 @@
 
     <color name="color_black">#000000</color>
     
-     <color name="color_gray">#cccccc</color>
+     <color name="color_gray">#969696</color>
      
      <color name="color_white">#FFFFFF</color>
      
      <color name="color_green">#66CC66</color>
+     
+     <color name="color_pick_high">#850d85</color>
     
+     <color name="color_titlebar_background">#f9f9f9</color>
+     
+      <color name="color_titlebar_title">#1e1e1e</color>
+      
+      <color name="item_txt_color">#c1c1c1</color>
+      
+      
+      <color name="color_payment_cancel">#989898</color>
+      <color name="color_payment_cancel_press">#333333</color>
+      
+      <color name="color_background">#f2f2f2</color>
+     
 </resources>

@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="94dp"
     android:background="@color/color_white"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingLeft="@dimen/item_margin_normal"
+    android:paddingRight="@dimen/item_margin_normal"
+    android:paddingTop="@dimen/item_margin_small"
+    android:paddingBottom="@dimen/item_margin_small">
     <ImageView 
         android:id="@+id/icon"
-    	android:layout_width="wrap_content"        
-    	android:layout_height="wrap_content"
+    	android:layout_width="101dp"        
+    	android:layout_height="75dp"
         android:src="@drawable/share_weixin_moment_icon"/>
 	<TextView 
 	    android:id="@+id/title"
-	    android:layout_marginLeft="5dp"
+	    android:layout_marginLeft="@dimen/item_margin_small"
+	    android:textSize="20sp"
 	    android:layout_toRightOf="@id/icon"
     	android:layout_width="match_parent"        
     	android:layout_height="wrap_content"	    
 	    android:text="suhu尚惠唇膏精品体验价格快来抢购吧！" />
-    
-	<ImageButton 
-	    android:id="@+id/delete"
-	    android:layout_alignBottom="@id/icon"
-	    android:layout_alignParentRight="true"
-	    android:layout_width="wrap_content"        
-    	android:layout_height="wrap_content"
-	    />
 	
 	<ImageButton 
 	    android:id="@+id/and_star"
 	    android:layout_alignBottom="@id/icon"
-	    android:layout_toLeftOf="@id/delete"
-	    android:layout_width="wrap_content"        
-    	android:layout_height="wrap_content"
-	    android:layout_marginRight="10dp"/>
+	    android:src="@drawable/icon_collection"
+	    android:layout_alignParentRight="true"
+	    android:layout_width="14dp"        
+    	android:layout_height="14dp"/>
 </RelativeLayout>

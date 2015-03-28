@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height_dp">
+        android:layout_height="@dimen/item_height_normal"
+        android:background="@color/color_white">
         <ImageView 
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/item_margin_normal"
             android:id="@+id/icon"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
@@ -11,16 +12,18 @@
             android:layout_height="wrap_content"
             android:src="@drawable/quicklaunch_addfunction_wallpaper"/>
         <TextView 
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="17dp"
             android:id="@+id/title"
+            android:textSize="22.5sp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/color_gray"
             android:text="我的订单"/>
         <ImageView 
             android:id="@+id/arrow"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/item_margin_normal"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
@@ -32,15 +35,18 @@
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/arrow"
             android:text="new"
+            android:background="@drawable/new_icon"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="14.5sp"
+            android:textColor="@color/color_white"/>
         <View 
             android:id="@+id/division"
             android:layout_marginLeft="10dp"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/icon"
-            android:background="@color/color_gray"
+            android:background="#f2f2f2"
             android:layout_height="1px"
             android:layout_width="match_parent"
             />

@@ -13,7 +13,7 @@
 	    android:layout_height="match_parent"
 	    android:background="#ffe2e2e2"
 	    android:scrollbarStyle="outsideOverlay"
-	    android:dividerHeight="8.0dp"
+	    android:dividerHeight="10.0dp"
 	    ptr:ptrMode="pullDownFromTop"
 	    android:visibility="visible"/> 
     

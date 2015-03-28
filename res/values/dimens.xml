@@ -6,8 +6,8 @@
     <dimen name="tabs_height_dp">50dp</dimen>
     
     <dimen name="txt_max_big_size_sp">28sp</dimen>
-    <dimen name="txt_big_size_sp">22sp</dimen>
-    <dimen name="txt_normal_size_sp">18sp</dimen>
+    <dimen name="txt_big_size_sp">26sp</dimen>
+    <dimen name="txt_normal_size_sp">16sp</dimen>
     <dimen name="txt_small_size_sp">12sp</dimen>
     
     <dimen name="division_line_height">2dp</dimen>
@@ -21,9 +21,26 @@
     <dimen name="item_height_dp">40dp</dimen>
     
     
+    <!-- item 之间的间距 -->
+    <dimen name="item_margin_normal">15dp</dimen>
+    <dimen name="item_margin_small">12dp</dimen>
+     <dimen name="item_margin_small_most">5dp</dimen>
+    
+    <!-- icon 大小 -->
+    <dimen name="item_icon_size_normal">68dp</dimen>
+    
+     <dimen name="item_icon_size_smaill">42dp</dimen>
+    
+    <dimen name="item_icon_rect_width">101dp</dimen>
+    <dimen name="item_icon_rect_height">75dp</dimen>
+    
+    <!-- item的高度 -->
+    <dimen name="item_height_normal">50dp</dimen>
+     <dimen name="item_height_small">22dp</dimen>
+    
     <!--   title bar  -->
     <!-- title bar  高度 -->
-    <dimen name="title_bar_heigt">48dp</dimen>
+    <dimen name="title_bar_heigt">64dp</dimen>
     <!-- title bar  2边的间距 -->
     <dimen name="title_bar_padding_left_right">10dp</dimen>
 </resources>
