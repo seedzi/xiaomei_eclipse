@@ -4,8 +4,28 @@
     android:layout_height="match_parent">
     
     <ImageView 
+        android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        />
+        android:background="@drawable/novel_cover_default4"/>
 
+    <TextView 
+        android:id="@+id/title"
+        android:text="我们会让你成为一颗闪亮之星"
+        android:layout_width="match_parent"        
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@id/icon"
+        android:layout_marginBottom="10dp"/>
+    
+    <TextView 
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/title"
+        android:id="@+id/hospital"
+        android:text="J-Star整形外科医院"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
+    
 </RelativeLayout>
