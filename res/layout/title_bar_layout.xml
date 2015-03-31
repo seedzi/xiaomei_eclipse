@@ -39,4 +39,23 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
     
+<ImageButton 
+    android:id="@+id/share"
+    android:layout_gravity="center_vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"        
+    android:layout_marginLeft="@dimen/item_margin_normal"
+    android:visibility="gone"
+    android:background="@drawable/back"/>    
+
+<ImageButton 
+    android:id="@+id/like"
+    android:layout_gravity="center_vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"        
+    android:layout_marginLeft="@dimen/item_margin_normal"
+    android:visibility="gone"
+    android:background="@drawable/back"/>    
+
+
 </com.xiaomei.widget.TitleBar>

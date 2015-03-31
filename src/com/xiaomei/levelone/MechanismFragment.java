@@ -13,6 +13,7 @@ import com.yuekuapp.BaseFragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,12 @@ public class MechanismFragment extends BaseFragment<MechanismControl> implements
 
 	@Override
 	public void onRefresh() {
-		
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mPullToRefreshListView.onRefreshComplete();
+			}
+		}, 3000);
 	}
 	
 	private class MechanismAdapter extends BaseAdapter{

@@ -30,6 +30,7 @@
     <dimen name="item_icon_size_normal">68dp</dimen>
     
      <dimen name="item_icon_size_smaill">42dp</dimen>
+      <dimen name="item_icon_size_smaill_most">22dp</dimen>
     
     <dimen name="item_icon_rect_width">101dp</dimen>
     <dimen name="item_icon_rect_height">75dp</dimen>

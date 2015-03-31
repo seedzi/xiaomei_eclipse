@@ -7,7 +7,7 @@
     
     <RelativeLayout 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
         	android:paddingLeft="10dp"
         	android:paddingRight="10dp"
         	android:paddingTop="5dp"
@@ -15,8 +15,8 @@
         	
         <com.xiaomei.widget.XCRoundImageView 
             android:id="@+id/person_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/item_icon_size_smaill_most"
+            android:layout_height="@dimen/item_icon_size_smaill_most"
             android:layout_centerVertical="true"
             android:src="@drawable/quicklaunch_addfunction_wallpaper"/>
         
@@ -24,10 +24,12 @@
             android:id="@+id/mechanism_title"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:textColor="#1e1e1e"
             android:text="Seth Audley"
+            android:textSize="17sp"
             android:layout_toRightOf="@id/person_icon"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="6dp"/>
         
         <TextView 
             android:layout_alignParentRight="true"
@@ -35,7 +37,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="2015-03-05"
-            android:drawableLeft="@drawable/address_web"
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"
+            android:textColor="#f0f0f0"
+            android:drawableLeft="@drawable/clock_icon"
+            android:drawablePadding="6dp"
             android:gravity="center_vertical"/>
         
     </RelativeLayout>
@@ -46,28 +52,30 @@
         
         <ImageView 
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="212dp"
             android:scaleType="fitXY"
             android:src="@drawable/novel_cover_default4"/>
         
         <TextView 
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="59dp"
+            android:layout_height="22dp"
             android:text="鼻子"
+            android:layout_marginTop="17dp"
+            android:textSize="18sp"
+            android:gravity="center"
             android:textColor="@color/color_white"/>
     </FrameLayout>
     
     <RelativeLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        	       android:paddingLeft="10dp"
-	       android:paddingTop="5dp"
-	       android:paddingBottom="5dp"
-	       android:paddingRight="10dp">
+           android:layout_width="match_parent"
+           android:layout_height="45dp"
+           android:paddingLeft="15dp"
+	       android:paddingRight="15dp">
         	<TextView 
+           android:textSize="21sp"
+           android:textColor="#373737"	    
+           android:layout_centerVertical="true"
 	       android:text="韩国几种常见的隆鼻手术方法"
-
            android:layout_width="match_parent"	    
 	       android:layout_height="wrap_content"/>
         	<ImageView 
@@ -86,26 +94,46 @@
     <RelativeLayout 
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:paddingLeft="25dp"
+        android:paddingLeft="35dp"
         android:paddingRight="25dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
-        <TextView 
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+        <ImageView 
+            android:id="@+id/buble"
+            android:layout_alignParentLeft="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bubble_icon_selector"/>	        	
+        <TextView 
+            android:layout_toRightOf="@id/buble"
+            android:textColor="#d7d7d7"
+            android:layout_marginLeft="8dp"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:text="134"/>	
         <ImageView 
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/address_web"/>	
+            android:src="@drawable/share_icon_selector"/>	
         <TextView 
+            android:id="@+id/like_size"
+            android:textSize="16sp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="216"/>		                        
+         <ImageView 
+             android:id="@+id/like"
+            android:layout_marginRight="8dp" 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/like_size"
+            android:src="@drawable/like_icon_selector"/>	           
     </RelativeLayout>
 </LinearLayout>
