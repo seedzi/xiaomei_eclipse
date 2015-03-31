@@ -176,7 +176,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		if(!TextUtils.isEmpty(entity.getAddr()) && holderItem.addrView!=null)
 			holderItem.addrView.setText(entity.getAddr());
 		if(!TextUtils.isEmpty(entity.getImg()) && holderItem.imgView!=null){
-		
+			
 		}
 		if(!TextUtils.isEmpty(entity.getPrice_market()) && holderItem.priceMarketView!=null)
 			holderItem.priceMarketView.setText(entity.getPrice_market());

@@ -2,6 +2,7 @@ package com.xiaomei.levelone;
 
 
 import com.xiaomei.R;
+import com.xiaomei.levelone.control.MallControl;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
@@ -15,7 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 @SuppressLint("NewApi")
-public class MallFragment extends BaseFragment {
+public class MallFragment extends BaseFragment<MallControl> {
 
 	
 	private ViewGroup mRootView;
@@ -31,6 +32,7 @@ public class MallFragment extends BaseFragment {
 			Bundle savedInstanceState) {
 		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_mail_layout, null);
 		setUpView();
+		initData();
 		return mRootView;
 	}
 	
@@ -41,6 +43,18 @@ public class MallFragment extends BaseFragment {
 		mGridView = (GridView) mRootView.findViewById(R.id.grid);
 		mMailAdapter = new MailAdapter(getActivity());
 		mGridView.setAdapter(mMailAdapter);
+	}
+	
+	private void initData(){
+		mControl.getMallListFromNetAsyn();
+	}
+	
+	public void getMallListFromAsynCallBack(){
+		
+	}
+	
+	public void getMallListFromAsynExceptionCallBack(){
+		
 	}
 	
 	private class MailAdapter extends BaseAdapter implements View.OnClickListener{

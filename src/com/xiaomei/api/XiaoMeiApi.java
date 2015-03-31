@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.util.Log;
 
+import com.xiaomei.api.builder.HospitalBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
 import com.xiaomei.api.builder.UserLoginBuilder;
@@ -21,6 +22,7 @@ import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.api.http.AbstractHttpApi;
 import com.xiaomei.api.http.HttpApi;
 import com.xiaomei.api.http.HttpApiWithSession;
+import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
 import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Section;
@@ -40,11 +42,32 @@ public class XiaoMeiApi {
         urlManager = new HttpUrlManager();
     }
 
+	// ========================================================================================
+	// 一级页面(NET)
+	// ========================================================================================
+    
+    /**首页*/
 	public List<Section> getHomeListFromNet()
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getHomeListUrl(),null);
 		return mHttpApi.doHttpRequestObject(httpGet, new SectionBuilder());
+	}
+	
+	/**商城*/
+	public List getMallListFromNet()
+			throws XiaoMeiCredentialsException, XiaoMeiIOException,
+			XiaoMeiJSONException, XiaoMeiOtherException {
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),null);
+		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
+	}
+	
+	/**机构*/
+	public List<Hospital> getMechanismListFromNet()
+			throws XiaoMeiCredentialsException, XiaoMeiIOException,
+			XiaoMeiJSONException, XiaoMeiOtherException {
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMechanismListUrl(),null);
+		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
 	}
 	
 	// ========================================================================================

@@ -11,6 +11,7 @@
         android:id="@+id/icon"
     	android:layout_width="101dp"        
     	android:layout_height="75dp"
+    	android:scaleType="fitXY"
         android:src="@drawable/share_weixin_moment_icon"/>
 	<TextView 
 	    android:id="@+id/title"

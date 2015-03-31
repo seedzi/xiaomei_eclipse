@@ -11,6 +11,11 @@ public class UserControl extends BaseControl{
 	public UserControl(MessageProxy mMethodCallBack) {
 		super(mMethodCallBack);
 	}
+	
+	@AsynMethod
+	public void getUserOrdersAsyn(){
+		//TODO
+	}
 
 	@AsynMethod
 	public Message loginAsyn(String username ,String password){

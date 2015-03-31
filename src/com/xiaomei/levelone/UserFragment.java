@@ -1,6 +1,8 @@
 package com.xiaomei.levelone;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
+import com.xiaomei.levelone.control.UserControl;
 import com.xiaomei.module.user.center.AboutActivity;
 import com.xiaomei.module.user.center.CollectionActivity;
 import com.xiaomei.module.user.center.FeedbackActivity;
@@ -19,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
-public class UserFragment extends BaseFragment implements View.OnClickListener{
+public class UserFragment extends BaseFragment<UserControl> implements View.OnClickListener{
 	
 	private ViewGroup mRootView;
 	
@@ -27,11 +29,18 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
 	
 	private ViewGroup line1,line2,line3,line4,line5,line6;
 	
+	private ImageView mUserIconIv;
+	
+	private TextView mUserNameTv;
+	
+	private TextView mUserGradeTv;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_center_layout, null);
 		setUpView();
+		initData();
 		return mRootView;
 	}
 
@@ -53,6 +62,12 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
 		setUpUserItem(line5, getResources().getString(R.string.user_feedback), this,R.drawable.feedback);
 		line6 = (ViewGroup) mRootView.findViewById(R.id.line6);
 		setUpUserItem(line6, getResources().getString(R.string.user_about), this,R.drawable.about_us);
+		
+		
+		mUserIconIv = (ImageView) mRootView.findViewById(R.id.user_icon);
+		mUserNameTv = (TextView) mRootView.findViewById(R.id.user_name);
+		mUserGradeTv = (TextView) mRootView.findViewById(R.id.user_grade);
+		
 	}
 	
 	private void setUpUserItem(ViewGroup rootView,String title,View.OnClickListener clickListener,int drawableRes){
@@ -64,6 +79,26 @@ public class UserFragment extends BaseFragment implements View.OnClickListener{
 		rootView.findViewById(R.id.new_version_prompt).setVisibility(View.GONE);
 	}
 
+	private void initData(){
+		mControl.updateUserMessgaeAsyn();
+	}
+	
+	/**活取用戶信息成功*/
+	public void updateUserMessgaeAsynCallBack(){
+		String grade = mControl.getUserInfo().getGrade();
+		String iconUrl = mControl.getUserInfo().getIconUrl();
+		String userName = mControl.getUserInfo().getUsername();
+		
+		mUserNameTv.setText(userName);
+		mUserGradeTv.setText(grade);
+		ImageLoader.getInstance().displayImage(iconUrl, mUserIconIv);
+	}
+	
+	/**活取用戶信息失敗*/
+	public void updateUserMessgaeAsynExceptionCallBack(){
+		// TODO
+	}
+	
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();

@@ -4,8 +4,24 @@ public class HttpUrlManager {
 	
 	private static String HOST = "http://drxmapi.duapp.com"; 
 	
+	/**首页*/
 	String getHomeListUrl(){
 		return HOST + "/api/index.php";
+	}
+	
+	/**机构*/
+	String getMechanismListUrl(){
+		return HOST + "/api/hospital.php";
+	}
+	
+	/**圈子*/
+	String getRingListUrl(){
+		return HOST + "/api/goods.php";
+	}
+	
+	/**商城*/
+	String getMallListUrl(){
+		return HOST + "/api/share.php";
 	}
 	
 	String getUserRegisterUrl(){
@@ -23,5 +39,6 @@ public class HttpUrlManager {
 	String getFindPwdUrl(){
 		return HOST + "/server/user/findpwd.php";
 	}
+	
 }
 

@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
+import com.xiaomei.module.user.control.UserControl;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
+import com.yuekuapp.BaseActivity;
 
-public class UserOrderActivity extends BaseActiviy {
+public class UserOrderActivity extends BaseActivity<UserControl> {
 	
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,UserOrderActivity.class);
@@ -46,7 +47,18 @@ public class UserOrderActivity extends BaseActiviy {
 		mList = (PullToRefreshListView) findViewById(R.id.list);
 		mAdapter = new OrderAdapter(this);
 		mList.getRefreshableView().setAdapter(mAdapter);
+		
+		getUserOrders();
 	}
+	
+	private void getUserOrders(){
+		mControl.getUserOrdersAsyn();
+	}
+	
+	public void getUserOrdersCallBack(){
+		// TODO
+	}
+	
 	
 	private class OrderAdapter extends BaseAdapter implements View.OnClickListener{
 
