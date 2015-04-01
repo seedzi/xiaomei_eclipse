@@ -1,6 +1,7 @@
 package com.xiaomei.levelone;
 
 import com.xiaomei.R;
+import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.levelone.control.BeautifulRingControl;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
@@ -19,7 +20,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> implements OnRefreshListener,OnScrollListener{
@@ -108,17 +111,40 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> im
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Holder holder = null;
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_ring_layout, null);
+				holder = new Holder();
+				holder.userIconIv = (ImageView) convertView.findViewById(R.id.user_icon);
+				holder.userNaemTv = (TextView) convertView.findViewById(R.id.user_name);
+				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
+				holder.timeTv = (TextView) convertView.findViewById(R.id.time);
+				holder.bubleSizeTv = (TextView) convertView.findViewById(R.id.buble_size);
+				holder.likeSizeTv = (TextView) convertView.findViewById(R.id.like_size);
+				convertView.setTag(holder);
 				convertView.setOnClickListener(this);
 			}
+			holder = (Holder) convertView.getTag();
 			return convertView;
+		}
+		
+		private void setData(Holder holder,BeautifulRing data){
 		}
 
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent();
 			
+		}
+		
+		private class Holder{
+			private ImageView userIconIv;
+			private TextView userNaemTv;
+			private TextView timeTv;
+			private TextView titleTv;
+			private TextView descriptionTv;
+			private TextView likeSizeTv;
+			private TextView bubleSizeTv;
 		}
 		
 	}

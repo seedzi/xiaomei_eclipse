@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.util.Log;
 
+import com.xiaomei.api.builder.BeautifulRingBuilder;
 import com.xiaomei.api.builder.HospitalBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
@@ -22,6 +23,7 @@ import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.api.http.AbstractHttpApi;
 import com.xiaomei.api.http.HttpApi;
 import com.xiaomei.api.http.HttpApiWithSession;
+import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
 import com.xiaomei.bean.NetResult;
@@ -69,6 +71,15 @@ public class XiaoMeiApi {
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMechanismListUrl(),null);
 		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
 	}
+	
+	/**圈子*/
+	public List<BeautifulRing> getBeatifulRingListFromNet()
+			throws XiaoMeiCredentialsException, XiaoMeiIOException,
+			XiaoMeiJSONException, XiaoMeiOtherException {
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingListUrl(),null);
+		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulRingBuilder());
+	}
+	
 	
 	// ========================================================================================
 	// 用户注册与登录(NET)

@@ -16,12 +16,12 @@ public class HttpUrlManager {
 	
 	/**圈子*/
 	String getRingListUrl(){
-		return HOST + "/api/goods.php";
+		return HOST + "/api/share.php";
 	}
 	
 	/**商城*/
 	String getMallListUrl(){
-		return HOST + "/api/share.php";
+		return HOST + "/api/goods.php";
 	}
 	
 	String getUserRegisterUrl(){

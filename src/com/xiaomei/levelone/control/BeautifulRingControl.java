@@ -1,5 +1,6 @@
 package com.xiaomei.levelone.control;
 
+import com.xiaomei.XiaoMeiApplication;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
 import com.yuekuapp.proxy.MessageProxy;
@@ -12,10 +13,9 @@ public class BeautifulRingControl extends BaseControl {
 
 	@AsynMethod
 	public void getListDataFromNetAysn(){
-		// TODO
 		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
+			XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		sendMessage("xx");
