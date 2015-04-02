@@ -2,12 +2,9 @@ package com.xiaomei.levelone.control;
 
 import java.util.List;
 
+import android.util.Log;
+
 import com.xiaomei.XiaoMeiApplication;
-import com.xiaomei.api.XiaoMeiApi;
-import com.xiaomei.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.api.exception.XiaoMeiIOException;
-import com.xiaomei.api.exception.XiaoMeiJSONException;
-import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.Section;
 import com.xiaomei.levelone.model.HomeListModel;
 import com.yuekuapp.BaseControl;
@@ -25,7 +22,9 @@ public class HomeControl extends BaseControl {
 	
 	@AsynMethod
 	public void getHomeListEntityAsyn(){
+		Log.d("111", "HomeControl =" +Thread.currentThread().getName());
 		try {
+			XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet();
 			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet();
 			if(listNet!=null && listNet.size()>0){
 				mModel.setList(listNet);

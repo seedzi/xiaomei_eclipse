@@ -1,5 +1,7 @@
 package com.xiaomei.levelone.control;
 
+import android.util.Log;
+
 import com.android.dx.io.Code.Try;
 import com.xiaomei.XiaoMeiApplication;
 import com.yuekuapp.BaseControl;
@@ -14,6 +16,6 @@ public class MallControl extends BaseControl {
 	
 	@AsynMethod
 	public void getMallListFromNetAsyn(){
-		
+		Log.d("111", "MallControl = " + Thread.currentThread().getName());
 	}
 }

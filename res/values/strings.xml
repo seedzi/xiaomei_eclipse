@@ -57,4 +57,16 @@
     <string name="feedback_txt">请填写您的手机号或者邮箱（选填）</string>      
        
     <string name="submit">提交</string>        
+    
+    <!-- 商城 -->
+	<string name="mall_item_nam_1">肉毒素除皱</string>    
+	<string name="mall_item_nam_2">填充朔形</string>   
+	<string name="mall_item_nam_3">紧肤提升</string>  
+	<string name="mall_item_nam_4">肉毒素美形</string>  
+	<string name="mall_item_nam_5">填充凹形</string>  
+	<string name="mall_item_nam_6">激光美肤</string>  
+	<string name="mall_item_nam_7">韩国特色美容</string>  
+	<string name="mall_item_nam_8">激光除毛</string>  
+	<string name="mall_item_nam_9">体形雕塑</string>  
+    <string name="get_data_sucess">数据加载成功</string>
 </resources>

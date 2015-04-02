@@ -3,6 +3,8 @@ package com.xiaomei.levelone.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.bean.Hospital;
 import com.yuekuapp.BaseControl;
@@ -20,6 +22,7 @@ public class MechanismControl extends BaseControl {
 	
 	@AsynMethod
 	public void getMechanismListAsyn(){
+		Log.d("111", "MechanismControl = " +Thread.currentThread().getName());
 		try {
 			mData.clear();
 			mData.addAll(XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet());

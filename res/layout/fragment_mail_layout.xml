@@ -8,8 +8,12 @@
            
 	<GridView 
 	    android:id="@+id/grid"
+	    android:background="@color/color_gray"
 	    android:layout_height="match_parent"
 	    android:layout_width="match_parent"
+	    android:listSelector="@null" 
+        android:verticalSpacing="1.0px" 
+        android:horizontalSpacing="1.0px"
 	    android:numColumns="3"/>
 	    
 </LinearLayout>

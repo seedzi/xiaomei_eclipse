@@ -63,6 +63,11 @@
 		<activity 
 		    android:name="com.xiaomei.module.user.center.OrderDetailsActivity">
 		</activity>		
+		<!-- 商城二级 -->
+		<activity 
+		    android:name="com.xiaomei.leveltwo.MallSecondActivity">
+		</activity>		
+		
 
 		
     </application>

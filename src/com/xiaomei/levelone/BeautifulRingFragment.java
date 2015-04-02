@@ -1,5 +1,7 @@
 package com.xiaomei.levelone;
 
+import java.util.List;
+
 import com.xiaomei.R;
 import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.levelone.control.BeautifulRingControl;
@@ -14,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +26,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> implements OnRefreshListener,OnScrollListener{
+public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> 
+	implements OnRefreshListener,OnScrollListener{
 	
 	private boolean mIsRefresh;
 	
@@ -44,9 +49,14 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> im
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_beautifulring_layout, null);
-		setUpView();
-		setListener();
+		if(mRootView ==null){
+			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_beautifulring_layout, null);
+			setUpView();
+			setListener();
+			initdata();
+		} else {
+			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+		}
 		return mRootView;
 	}
 	
@@ -68,35 +78,80 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> im
 		mPullToRefreshListView.setOnScrollListener(this);
 	}
 	
+	private void initdata(){
+		mControl.getListDataFromNetAysn();
+	}
+	
 	@Override
 	public void onRefresh() {
 		mIsRefresh = true;
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mPullToRefreshListView.onRefreshComplete();
-			}
-		}, 3000);
+		mControl.getListDataFromNetAysn();
 	}
 	
-//	public void get
-	
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		int position = mListView.getLastVisiblePosition();
+		Log.d("111", "position = " + position + ",count = " + mAdapter.getCount());
+		if(!mIsRefresh && position == mAdapter.getCount()){
+			getMoreData();
+		}
+	}
 
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+	}
+	
+	private void getMoreData(){
+		if(mIsRefresh)
+			return;
+		if(!mRefreshLayout.isShown())
+			mRefreshLayout.setVisibility(View.VISIBLE);
+		mPullToRefreshListView.addFooterView(mRefreshLayout);
+		mControl.getMoreListDataFromNetAysn();
+		mIsRefresh = true;
+	}
+	
+	// ================================== Call back ==========================================
+	public void getListDataFromNetAysnCallBack(){
+		mIsRefresh = false;
+		mAdapter.setData(mControl.getData());
+		mAdapter.notifyDataSetChanged();
+		mPullToRefreshListView.onRefreshComplete();
+		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
+	}
+	
+	public void getListDataFromNetAysnExceptionCallBack(){
+		mIsRefresh = false;
+	}
+	
+	public void getMoreListDataFromNetAysnCallBack(){
+		mIsRefresh = false;
+		mAdapter.setData(mControl.getData());
+		mAdapter.notifyDataSetChanged();
+		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
+	}
+	
+	public void getMoreListDataFromNetAysnExceptionCallBack(){
+		mIsRefresh = false;
+		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+	}
+	// ================================== Call back ==========================================
+	
 	private class RingAdapter extends BaseAdapter implements View.OnClickListener{
 		
 		private LayoutInflater mLayoutInflater;
 
+		private List<BeautifulRing> mData;
+		
 		public RingAdapter(Context context) {
 			mLayoutInflater = LayoutInflater.from(context);
-		}
-		
-		public int getDataSize(){
-			return 10;
 		}
 
 		@Override
 		public int getCount() {
-			return 10;
+			return mData == null ? 0 : mData.size();
 		}
 
 		@Override
@@ -125,10 +180,16 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> im
 				convertView.setOnClickListener(this);
 			}
 			holder = (Holder) convertView.getTag();
+			attachDate(holder, mData.get(position));
 			return convertView;
 		}
 		
-		private void setData(Holder holder,BeautifulRing data){
+		private void attachDate(Holder holder,BeautifulRing bean){
+			//TODO
+		}
+		
+		private void setData(List<BeautifulRing> data){
+			mData = data;
 		}
 
 		@Override
@@ -149,25 +210,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> im
 		
 	}
 
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		int position = mListView.getLastVisiblePosition();
-		if(!mIsRefresh && position == mAdapter.getDataSize()){
-			mIsRefresh = true;
-			getMoreData();
-		}
-	}
 
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-	}
-	
-	private void getMoreData(){
-		if(mRefreshLayout.isShown())
-			mRefreshLayout.setVisibility(View.VISIBLE);
-		mPullToRefreshListView.addFooterView(mRefreshLayout);
-	}
 
 	
 

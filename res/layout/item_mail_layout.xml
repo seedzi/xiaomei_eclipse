@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <RelativeLayout    xmlns:android="http://schemas.android.com/apk/res/android"   
-         android:layout_height="wrap_content"   
+         android:layout_height="130dp"   
          android:padding="20dp"
-         android:layout_width="fill_parent">  
+         android:layout_width="fill_parent"
+         android:background="@color/color_white">  
          <ImageView   
+               android:id="@+id/item_icon"   
+               android:layout_marginTop="20dp"
                android:layout_height="wrap_content"   
-               android:id="@+id/ItemImage"   
                android:layout_width="wrap_content"   
-               android:layout_centerHorizontal="true"
-               android:src="@drawable/joke_channel_offline_icon">   
+               android:layout_centerHorizontal="true">   
          </ImageView>  
          <TextView   
+               android:id="@+id/item_text"
+               android:layout_marginTop="10dp"
                android:layout_width="wrap_content"   
-               android:layout_below="@+id/ItemImage"   
+               android:layout_below="@+id/item_icon"   
                android:layout_height="wrap_content"   
                android:text="TextView01"   
                android:layout_centerHorizontal="true"   
-               android:id="@+id/ItemText">  
+               >  
          </TextView>  
 </RelativeLayout>  
