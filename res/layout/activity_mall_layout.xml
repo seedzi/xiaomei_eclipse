@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/color_white">
     
         
     <include  layout="@layout/title_bar_layout" />
@@ -29,4 +30,11 @@
 			android:background="@drawable/pic_channel_navigation_bar_right" 
 			android:visibility="gone"/>  -->
 	</RelativeLayout>
+	
+	<com.xiaomei.widget.ViewPager 
+	    android:id="@+id/vpager"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="#ffffff"/><!-- android:background="#F3F3F3" -->
+	
 </LinearLayout>

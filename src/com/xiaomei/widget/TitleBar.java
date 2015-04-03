@@ -86,12 +86,14 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 		int id = v.getId();
 		switch (id) {
 		case R.id.login:
-			// TODO: 按钮颜色变化
+			mLoginButton.setBackgroundResource(R.drawable.login_button_press);
+			mRegisterButton.setBackgroundResource(R.drawable.register_button);
 			if(mListener!=null)
 				mListener.switchLogin();
 			break;
 		case R.id.register:
-			// TODO: 按钮颜色变化
+			mLoginButton.setBackgroundResource(R.drawable.login_button);
+			mRegisterButton.setBackgroundResource(R.drawable.register_button_press);
 			if(mListener!=null)
 				mListener.switchRegister();
 			break;

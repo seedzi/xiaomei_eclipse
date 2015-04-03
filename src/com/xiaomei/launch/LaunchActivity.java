@@ -1,6 +1,7 @@
 package com.xiaomei.launch;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -58,13 +59,12 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
     }
     
     private void  init(){
-    	TabsActivity.startActivity(LaunchActivity.this);
-    	/*
+//    	TabsActivity.startActivity(LaunchActivity.this);
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
     	}else{
     		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-    	}*/
+    	}
     	finish();	
     }
 

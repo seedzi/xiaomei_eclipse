@@ -122,7 +122,7 @@ public class XiaoMeiApi {
 	/**
 	 * 获取验证码
 	 */
-	public void getVerificationCode(String telno)
+	public String getVerificationCode(String telno)
 			throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 				BasicNameValuePair[] values = {new BasicNameValuePair("telno", telno) ,
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
@@ -131,7 +131,7 @@ public class XiaoMeiApi {
 						values[1],
 						new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 				String responseCode =  mHttpApi.doHttpRequestString(httpPost);
-				Log.d("111", "responseCode = " + responseCode);
+				return responseCode;
 	}
 	
 	/**

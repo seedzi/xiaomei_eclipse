@@ -14,21 +14,24 @@
     android:layout_marginLeft="@dimen/item_margin_normal"
     android:visibility="gone"
     android:background="@drawable/back"/>    
-    
 	<LinearLayout 
 	    android:id="@+id/center_container"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="match_parent"
 	    android:orientation="horizontal"
+	    android:gravity="center"
 	    android:visibility="gone">
 	    <Button 
 	        android:id="@+id/login"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"/>
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/login_button"
+	        android:text="@string/login"/>
 	    <Button 
 	        android:id="@+id/register"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"/>	    
+	        android:layout_height="wrap_content"
+	        android:text="@string/register"/>
 	</LinearLayout>
 
 <TextView 

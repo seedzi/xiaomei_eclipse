@@ -10,7 +10,7 @@ import com.yuekuapp.BaseControl;
 /**
  * Created by huzhi on 15-2-17.
  */
-public class BaseActiviy<BaseControl> extends BaseActivity{
+public class BaseActiviy<T extends BaseControl> extends BaseActivity<T>{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
