@@ -91,7 +91,6 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		int position = mListView.getLastVisiblePosition();
-		Log.d("111", "position = " + position + ",count = " + mAdapter.getCount());
 		if(!mIsRefresh && position == mAdapter.getCount()){
 			getMoreData();
 		}

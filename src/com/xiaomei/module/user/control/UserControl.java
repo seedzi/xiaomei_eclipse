@@ -25,27 +25,27 @@ public class UserControl extends BaseControl{
 	}
 
 	@AsynMethod
-	public Message loginAsyn(String username ,String password){
-		return null;
+	public void loginAsyn(String username ,String password){
 	}
 	
 	@AsynMethod
-	public Message register(String username,String password,String verificationCode){
+	public void register(String username,String password,String verificationCode){
 		try {
 			XiaoMeiApplication.getInstance().getApi().userRegister(username, password, verificationCode);
 		} catch (Exception e) {
+			sendMessage("registerExceptionCallBack");
 			e.printStackTrace();
 		} 
-		return null;
+		sendMessage("registerCallBack");
 	}
 	
 	@AsynMethod
 	public void getVerificationCodeAsyn(String telno){
 		try {
 			String respondCode = XiaoMeiApplication.getInstance().getApi().	getVerificationCode(telno);
-			Log.d("111", "respondCode = " + respondCode);
 		} catch (Exception e) {
 				sendMessage("getVerificationCodeAsynExceptionCallBack");
+				e.printStackTrace();
 		} 
 		sendMessage("getVerificationCodeAsynCallBack");
 	}

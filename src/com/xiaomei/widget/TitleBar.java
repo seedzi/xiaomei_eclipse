@@ -19,9 +19,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 	
 	private ViewGroup mCenterContainer;
 	
-	private Button mLoginButton;
+	private View mLoginButton;
 	
-	private Button mRegisterButton;
+	private View mRegisterButton;
 	
 	private Listener mListener;
 	
@@ -47,8 +47,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 		mTitleView = (TextView) findViewById(R.id.title);
 		mBackButton = (ImageButton)findViewById(R.id.back);
 		mCenterContainer = (ViewGroup) findViewById(R.id.center_container);
-		mLoginButton = (Button) findViewById(R.id.login);
-		mRegisterButton = (Button) findViewById(R.id.register);
+		mLoginButton =  findViewById(R.id.login);
+		mRegisterButton =  findViewById(R.id.register);
 		mLoginButton.setOnClickListener(this);
 		mRegisterButton.setOnClickListener(this);
 	}

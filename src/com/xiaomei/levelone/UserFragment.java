@@ -94,7 +94,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		ImageLoader.getInstance().displayImage(iconUrl, mUserIconIv);
 	}
 	
-	/**活取用戶信息失敗*/
+	/**获取用戶信息失敗*/
 	public void updateUserMessgaeAsynExceptionCallBack(){
 		// TODO
 	}

@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -76,12 +79,22 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		new Handler().post(new Runnable() {
 			@Override
 			public void run() {
+				
 				initView();
 			}
 		});
 	}
 
 	private void initView(){
+		
+//        DisplayMetrics metric = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metric);
+//        int width = metric.widthPixels;  // 屏幕宽度（像素）
+//        int height = metric.heightPixels;  // 屏幕高度（像素）
+//        float density = metric.density;  // 屏幕密度（0.75 / 1.0 / 1.5）
+//        int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+//        Log.d("111", "density = " + density);
+		
 		mTitleBar = (TitleBar) findViewById(R.id.title_bar_layout);
 		mTitleBar.setBackListener(LoginAndRegisterActivity.this);
 		mTitleBar.setListener(LoginAndRegisterActivity.this);
@@ -130,6 +143,11 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		switch (id) {
 		case R.id.launch:
 			clearMessge();
+			if(!checkInputData()){
+				Toast.makeText(LoginAndRegisterActivity.this, "请输入正确的数据", 0).show();
+				return;
+			}
+			
 			mControl.register(mRegisterUserMobileEdit.getText().toString(),
 					mRegisterUserPasswordEdit.getText().toString(),
 					mRegisterUserVerificationEdit.getEditableText().toString());
@@ -167,7 +185,11 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	}
 	
 	private boolean checkInputData(){
-		return false;
+		if(!MobileUtil.isMobileNO(mRegisterUserMobileEdit.getText().toString()))
+			return false;
+		if(TextUtils.isEmpty(mRegisterUserPasswordEdit.getText().toString()) || TextUtils.isEmpty(mRegisterUserVerificationEdit.getText().toString()) )
+			return false;
+		return true;
 		
 	}
 	
@@ -176,10 +198,17 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	public void getVerificationCodeAsynExceptionCallBack(){
 		
 	}
-	
 	public void getVerificationCodeAsynCallBack(){
 		
 	}
+	
+	public void registerCallBack(){
+		Toast.makeText(LoginAndRegisterActivity.this, "注册成功", 0).show();
+	}
+	public void registerExceptionCallBack(){
+		Toast.makeText(LoginAndRegisterActivity.this, "注册失败", 0).show();
+	}
+	
 	
 	
 }

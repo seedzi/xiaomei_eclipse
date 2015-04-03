@@ -41,7 +41,7 @@
     
     <!--   title bar  -->
     <!-- title bar  高度 -->
-    <dimen name="title_bar_heigt">64dp</dimen>
+    <dimen name="title_bar_heigt">48dp</dimen>
     <!-- title bar  2边的间距 -->
     <dimen name="title_bar_padding_left_right">10dp</dimen>
 </resources>

@@ -75,7 +75,6 @@ public class HomeBannerAdapter extends PagerAdapter {
 		}
 		return mListViews.get(position);
 	}
-
 	
 	public static class BannerOnPageChangeListener implements OnPageChangeListener{
 
