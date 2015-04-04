@@ -19,9 +19,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 	
 	private ViewGroup mCenterContainer;
 	
-	private View mLoginButton;
+	private TextView mLoginButton;
 	
-	private View mRegisterButton;
+	private TextView mRegisterButton;
 	
 	private Listener mListener;
 	
@@ -47,8 +47,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 		mTitleView = (TextView) findViewById(R.id.title);
 		mBackButton = (ImageButton)findViewById(R.id.back);
 		mCenterContainer = (ViewGroup) findViewById(R.id.center_container);
-		mLoginButton =  findViewById(R.id.login);
-		mRegisterButton =  findViewById(R.id.register);
+		mLoginButton =  (TextView) findViewById(R.id.login);
+		mRegisterButton =  (TextView) findViewById(R.id.register);
 		mLoginButton.setOnClickListener(this);
 		mRegisterButton.setOnClickListener(this);
 	}
@@ -88,12 +88,16 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 		case R.id.login:
 			mLoginButton.setBackgroundResource(R.drawable.login_button_press);
 			mRegisterButton.setBackgroundResource(R.drawable.register_button);
+			mLoginButton.setTextColor(getResources().getColor(R.color.color_button_checked));
+			mRegisterButton.setTextColor(getResources().getColor(R.color.color_button_normal));
 			if(mListener!=null)
 				mListener.switchLogin();
 			break;
 		case R.id.register:
 			mLoginButton.setBackgroundResource(R.drawable.login_button);
 			mRegisterButton.setBackgroundResource(R.drawable.register_button_press);
+			mLoginButton.setTextColor(getResources().getColor(R.color.color_button_normal));
+			mRegisterButton.setTextColor(getResources().getColor(R.color.color_button_checked));
 			if(mListener!=null)
 				mListener.switchRegister();
 			break;

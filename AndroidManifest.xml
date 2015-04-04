@@ -33,10 +33,18 @@
         <activity
             android:name=".leveltwo.WebViewActivity">
         </activity>
-
+        
+		<!-- 登陆注册 -->
 		<activity 
 		    android:name="com.xiaomei.module.user.LoginAndRegisterActivity">
 		</activity>
+		
+		<!-- 找回密碼 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.FindPasswordActivity">
+		</activity>
+		
+		
 		<!-- 浏览记录 -->
 		<activity 
 		    android:name="com.xiaomei.module.user.center.HistoryActivity">

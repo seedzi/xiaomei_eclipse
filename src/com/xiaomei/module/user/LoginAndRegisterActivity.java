@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
+import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.module.user.control.UserControl;
 import com.xiaomei.util.MobileUtil;
 import com.xiaomei.widget.TitleBar;
@@ -31,7 +33,6 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
     }
     
     private final int REFRESH_TIEM = 1;
-
 	private Handler mHandler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch (msg.arg1) {
@@ -41,7 +42,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 					mGetVerificationButton.setEnabled(true);
 					return;
 				}
-				mGetVerificationButton.setText(String.valueOf(msg.arg2));
+				mGetVerificationButton.setText(String.valueOf(msg.arg2) + "s");
 				Message msgNew = Message.obtain();
 				msgNew.arg1 = REFRESH_TIEM;
 				mGetVerificationButton.setEnabled(false);
@@ -54,6 +55,37 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		};
 	};
     
+	
+	LaunchListener LAUNCH_REGISTER = new LaunchListener(){
+		@Override
+		public void onLaunch() {
+			clearMessge();
+			if(!checkInputData4Registe()){
+				Toast.makeText(LoginAndRegisterActivity.this, "请输入正确的数据", 0).show();
+				return;
+			}
+			mControl.registeAsyn(mRegisterUserMobileEdit.getText().toString(),
+					mRegisterUserPasswordEdit.getText().toString(),
+					mRegisterUserVerificationEdit.getEditableText()
+							.toString());
+		}
+	};
+	LaunchListener LAUNCH_LOGIN = new LaunchListener(){
+		@Override
+		public void onLaunch() {
+			clearMessge();
+			if(!checkInputData4Login()){
+				Toast.makeText(LoginAndRegisterActivity.this, "请输入正确的数据", 0).show();
+				return;
+			}
+			mControl.loginAsyn(mLoginUserMobileEdit.getText().toString(),
+					mLoginUserPasswordEdit.getText().toString());
+		}
+	};
+	private LaunchListener mLaunchListener =  LAUNCH_LOGIN;
+	
+	
+	
 	private TitleBar mTitleBar;
 	
 	private View mLaunchButton;
@@ -62,72 +94,58 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	
 	private View forgetPassword;
 	
-	private Button mGetVerificationButton;
+	private TextView mGetVerificationButton;
 	/**注册手机号输入*/
 	private EditText mRegisterUserMobileEdit;
 	/**验证码输入*/
 	private EditText mRegisterUserVerificationEdit;
-	/**注册手机号输入*/
+	/**注册密码输入*/
 	private EditText mRegisterUserPasswordEdit;
 	
-//	private View qqButton, weixinButton, weiboButton;
+	/**注册手机号输入*/
+	private EditText mLoginUserMobileEdit;
+	/**注册密码号输入*/
+	private EditText mLoginUserPasswordEdit;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login_register_layout);
-		new Handler().post(new Runnable() {
-			@Override
-			public void run() {
-				
-				initView();
-			}
-		});
+		initView();
 	}
 
 	private void initView(){
 		
-//        DisplayMetrics metric = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metric);
-//        int width = metric.widthPixels;  // 屏幕宽度（像素）
-//        int height = metric.heightPixels;  // 屏幕高度（像素）
-//        float density = metric.density;  // 屏幕密度（0.75 / 1.0 / 1.5）
-//        int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
-//        Log.d("111", "density = " + density);
-		
 		mTitleBar = (TitleBar) findViewById(R.id.title_bar_layout);
-		mTitleBar.setBackListener(LoginAndRegisterActivity.this);
 		mTitleBar.setListener(LoginAndRegisterActivity.this);
-		
 		
 		mLoginInputLayout = (ViewGroup) findViewById(R.id.login_input_layout);
 		mRegisterInputLayout = (ViewGroup) findViewById(R.id.register_input_layout);
 		mLaunchButton = findViewById(R.id.launch);
 		mLaunchButton.setOnClickListener(this);
 		
-		mGetVerificationButton = (Button) findViewById(R.id.get_verification);
+		mGetVerificationButton =  (TextView) findViewById(R.id.get_verification);
 		mGetVerificationButton.setOnClickListener(this);
+		
+		mLoginUserMobileEdit = (EditText) findViewById(R.id.login_user_mobile);
+		mLoginUserPasswordEdit = (EditText) findViewById(R.id.login_user_password);
 		
 		mRegisterUserMobileEdit = (EditText) findViewById(R.id.register_user_mobile);
 		mRegisterUserVerificationEdit = (EditText) findViewById(R.id.register_user_verification);
-		mRegisterUserVerificationEdit = (EditText) findViewById(R.id.register_user_password);
+		mRegisterUserPasswordEdit = (EditText) findViewById(R.id.register_user_password);
 		
 		forgetPassword = findViewById(R.id.forget_password);
+		forgetPassword.setOnClickListener(this);
 		mTitleBar.findViewById(R.id.login).performClick();
 		
-//		qqButton = findViewById(R.id.qq);
-//		qqButton.setOnClickListener(this);
-//		weixinButton = findViewById(R.id.weixin);
-//		weixinButton.setOnClickListener(this);
-//		weiboButton = findViewById(R.id.sina_weibo);
-//		weiboButton.setOnClickListener(this);
 	}
-
+	
 	@Override
 	public void switchLogin() {
 		mLoginInputLayout.setVisibility(View.VISIBLE);
 		mRegisterInputLayout.setVisibility(View.GONE);
 		forgetPassword.setVisibility(View.VISIBLE);
+		mLaunchListener  = LAUNCH_LOGIN;
 	}
 
 	@Override
@@ -135,32 +153,22 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		mLoginInputLayout.setVisibility(View.GONE);
 		mRegisterInputLayout.setVisibility(View.VISIBLE);
 		forgetPassword.setVisibility(View.GONE);
+		mLaunchListener  = LAUNCH_REGISTER;
 	}
 
 	@Override
 	public void onClick(View v) {	
 		int id = v.getId();
 		switch (id) {
+		case R.id.forget_password:
+			FindPasswordActivity.startActivity(LoginAndRegisterActivity.this);
+			break;
 		case R.id.launch:
-			clearMessge();
-			if(!checkInputData()){
-				Toast.makeText(LoginAndRegisterActivity.this, "请输入正确的数据", 0).show();
-				return;
-			}
-			
-			mControl.register(mRegisterUserMobileEdit.getText().toString(),
-					mRegisterUserPasswordEdit.getText().toString(),
-					mRegisterUserVerificationEdit.getEditableText().toString());
+			mLaunchListener.onLaunch();
 			break;
 		case	R.id.get_verification:
 			getVerification(mRegisterUserMobileEdit.getText().toString());
 			break;
-//		case R.id.qq:
-//			break;
-//		case R.id.weixin:
-//			break;
-//		case R.id.sina_weibo:
-//			break;
 		default:
 			break;
 		}
@@ -184,13 +192,24 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		mGetVerificationButton.setEnabled(true);
 	}
 	
-	private boolean checkInputData(){
+	private boolean checkInputData4Registe(){
 		if(!MobileUtil.isMobileNO(mRegisterUserMobileEdit.getText().toString()))
 			return false;
 		if(TextUtils.isEmpty(mRegisterUserPasswordEdit.getText().toString()) || TextUtils.isEmpty(mRegisterUserVerificationEdit.getText().toString()) )
 			return false;
 		return true;
-		
+	}
+	
+	private boolean checkInputData4Login(){
+		if(!MobileUtil.isMobileNO(mLoginUserMobileEdit.getText().toString()))
+			return false;
+		if(TextUtils.isEmpty(mLoginUserMobileEdit.getText().toString()) )
+			return false;
+		return true;
+	}
+	
+	private  interface LaunchListener{
+		public void onLaunch();
 	}
 	
 	// ===============================  Call Back =======================================
@@ -202,11 +221,20 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		
 	}
 	
-	public void registerCallBack(){
+	public void registeAsynCallBack(){
 		Toast.makeText(LoginAndRegisterActivity.this, "注册成功", 0).show();
 	}
-	public void registerExceptionCallBack(){
+	public void registeAsynExceptionCallBack(){
 		Toast.makeText(LoginAndRegisterActivity.this, "注册失败", 0).show();
+	}
+	
+	public void loginAsynCallBack(){
+		Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
+		TabsActivity.startActivity(getApplicationContext());
+	}
+	
+	public void loginAsynExceptionCallBack(){
+		Toast.makeText(LoginAndRegisterActivity.this, "登录失败", 0).show();
 	}
 	
 	

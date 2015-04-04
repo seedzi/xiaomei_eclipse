@@ -60,7 +60,7 @@ public class TabsFragmentManager {
         }
         fragmentTransaction.replace(R.id.container_body_layout,fragment,String.valueOf(position));
         fragmentTransaction.show(fragment);
-        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 

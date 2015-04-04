@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
+import android.view.KeyCharacterMap.KeyData;
 
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
@@ -25,5 +27,21 @@ public class TabsActivity extends  BaseActiviy{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_layout);
     }
-
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//    	if(keyCode == KeyEvent.KEYCODE_BACK){
+//    		finish();
+//    		return true;
+//    	}
+//    		
+//    	return super.onKeyDown(keyCode, event);
+//    }
+    
+    @Override
+    public void onBackPressed() {
+    	android.util.Log.d("111", "onBackPressed");
+    	super.onBackPressed();
+    }
+    
 }

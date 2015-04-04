@@ -1,19 +1,18 @@
 package com.xiaomei.module.user.control;
 
-import android.os.Message;
+
 import android.util.Log;
 
 import com.xiaomei.XiaoMeiApplication;
-import com.xiaomei.api.XiaoMeiApi;
-import com.xiaomei.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.api.exception.XiaoMeiIOException;
-import com.xiaomei.api.exception.XiaoMeiJSONException;
-import com.xiaomei.api.exception.XiaoMeiOtherException;
+import com.xiaomei.bean.NetResult;
+import com.xiaomei.util.UserUtil;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
 import com.yuekuapp.proxy.MessageProxy;
 
 public class UserControl extends BaseControl{
+	
+	private static boolean DEBUG = true;
 
 	public UserControl(MessageProxy mMethodCallBack) {
 		super(mMethodCallBack);
@@ -26,26 +25,46 @@ public class UserControl extends BaseControl{
 
 	@AsynMethod
 	public void loginAsyn(String username ,String password){
+		try {
+			NetResult result = XiaoMeiApplication.getInstance().getApi().userLogin(username, password);
+			if(DEBUG)
+				Log.d("111", "loginAsyn()  msg = " + result.getMsg());
+		} catch (Exception e) {
+			sendMessage("loginAsynExceptionCallBack");
+			e.printStackTrace();
+			Log.d("111", "loginAsyn()  exception e = " + e.getMessage());
+			return;
+		} 
+		UserUtil.userloginSuccess(username, password);
+		sendMessage("loginAsynCallBack");
 	}
 	
 	@AsynMethod
-	public void register(String username,String password,String verificationCode){
+	public void registeAsyn(String username,String password,String verificationCode){
 		try {
-			XiaoMeiApplication.getInstance().getApi().userRegister(username, password, verificationCode);
+			NetResult result = XiaoMeiApplication.getInstance().getApi().userRegister(username, password, verificationCode);
+			if(DEBUG)
+				Log.d("111", "registeAsyn()  msg = " + result.getMsg());
 		} catch (Exception e) {
-			sendMessage("registerExceptionCallBack");
+			sendMessage("registeAsynExceptionCallBack");
 			e.printStackTrace();
+			Log.d("111", "registeAsyn()  exception e = " + e.getMessage());
+			return;
 		} 
-		sendMessage("registerCallBack");
+		sendMessage("registeAsynCallBack");
 	}
 	
 	@AsynMethod
 	public void getVerificationCodeAsyn(String telno){
 		try {
 			String respondCode = XiaoMeiApplication.getInstance().getApi().	getVerificationCode(telno);
+			if(DEBUG)
+				Log.d("111", "getVerificationCodeAsyn()  respondCode= " + respondCode);
 		} catch (Exception e) {
 				sendMessage("getVerificationCodeAsynExceptionCallBack");
 				e.printStackTrace();
+				Log.d("111", "getVerificationCodeAsynExceptionCallBack()  exception e = " + e.getMessage());
+				return;
 		} 
 		sendMessage("getVerificationCodeAsynCallBack");
 	}

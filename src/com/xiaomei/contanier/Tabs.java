@@ -101,11 +101,13 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
     	        Drawable topDrawable =  getResources().getDrawable(tabs_drawable_res[index]);
     	        topDrawable.setBounds(0, 0, topDrawable.getMinimumWidth(), topDrawable.getMinimumHeight());
     	        tab.setCompoundDrawables(null,topDrawable , null, null);
+    	        tab.setTextColor(getResources().getColor(R.color.color_gray));
     	        index ++;
     		}
 	        Drawable topDrawable =  getResources().getDrawable(tabs_drawable_res_checked[tag]);
 	        topDrawable.setBounds(0, 0, topDrawable.getMinimumWidth(), topDrawable.getMinimumHeight());
 	        ((Tab)v).setCompoundDrawables(null,topDrawable , null, null);
+	        ((Tab)v).setTextColor(getResources().getColor(R.color.color_button_normal));
     	}
     	mMTabsFragmentManager.commitFragment(tag, (FragmentActivity)mContext);
     }
