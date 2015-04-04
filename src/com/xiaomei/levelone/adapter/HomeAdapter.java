@@ -49,83 +49,48 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return position;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		int type = getItemViewType(position);
 		Section section = mData.get(position);
-		List<Entity> entitys = section.getList();
 		Holder holder = null;
 		if(convertView == null){
 			holder = new Holder();
 			switch (type) {
-			case 0:
-				convertView = mInflater.inflate(R.layout.home_item_banner, null);
-//				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.view_page);
+			case 0:  // 热点
+				convertView = mInflater.inflate(R.layout.section_topic, null);
+				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
-			case 1:
-				convertView = new View(mContext);
+			case 1:  // 导航
+				convertView = mInflater.inflate(R.layout.section_nav, null);
+				convertView.findViewById(R.id.youhui).setOnClickListener(this);
+				convertView.findViewById(R.id.youhui).setTag(section.getList().get(0).getUrl());
+				convertView.findViewById(R.id.payment).setOnClickListener(this);
+				convertView.findViewById(R.id.payment).setTag(section.getList().get(1).getUrl());
+				convertView.findViewById(R.id.riji).setOnClickListener(this);
+				convertView.findViewById(R.id.riji).setTag(section.getList().get(2).getUrl());
+				convertView.findViewById(R.id.jiangli).setOnClickListener(this);
+				convertView.findViewById(R.id.jiangli).setTag(section.getList().get(3).getUrl());
 				break;
-			case 2:
-				convertView = mInflater.inflate(R.layout.section_tehui, null);
-				holder.mTitle = (TextView) convertView.findViewById(R.id.title);
-				holder.itemList = new ArrayList<HomeAdapter.Holder.Item>();
-				for(Entity entity : entitys){
-					Holder.Item item = new Holder.Item();
-					ViewGroup itemMiaoSha = (ViewGroup) mInflater.inflate(R.layout.item_type_tehui, null);
-					attachView2Holder(item, itemMiaoSha,
-							ScreenUtils.getScreenWidth(mContext),
-							ScreenUtils.getScreenWidth(mContext) / 2);
-					holder.itemList.add(item);
-					((ViewGroup)convertView).addView(itemMiaoSha);
-					itemMiaoSha.setTag(entity.getUrl());
-					itemMiaoSha.setOnClickListener(this);
-				}
+			case 2:  // 商品精选		if(holder.commontNumView!=null && en)
+				convertView = mInflater.inflate(R.layout.section_jingxuan, null);
+				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
-			case 3:
-				convertView =  mInflater.inflate(R.layout.section_duxiang, null);
-				holder.mTitle = (TextView) convertView.findViewById(R.id.title);
-				holder.itemList = new ArrayList<HomeAdapter.Holder.Item>();
-				for(Entity entity : entitys){
-					Holder.Item item = new Holder.Item();
-					ViewGroup itemDuXiang = (ViewGroup) mInflater.inflate(R.layout.item_type_duxiang, null);
-					attachView2Holder(item, itemDuXiang,
-							ScreenUtils.getScreenWidth(mContext),
-							ScreenUtils.getScreenWidth(mContext) / 2);
-					holder.itemList.add(item);
-					((ViewGroup)convertView).addView(itemDuXiang);
-					itemDuXiang.setTag(entity.getUrl());
-					itemDuXiang.setOnClickListener(this);
-				}
+			case 3:  // 分享
+				convertView =  mInflater.inflate(R.layout.section_share, null);
+				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
-			case 4:
-				convertView =  mInflater.inflate(R.layout.section_jingxuan, null);
-				holder.mTitle = (TextView) convertView.findViewById(R.id.title);
-				holder.itemList = new ArrayList<HomeAdapter.Holder.Item>();
-				for(Entity entity : entitys){
-					Holder.Item item = new Holder.Item();
-					ViewGroup itemJingXuan = (ViewGroup) mInflater.inflate(R.layout.item_type_jingxuan, null);
-					attachView2Holder(
-							item,
-							itemJingXuan,
-							(int) mContext.getResources().getDimension(
-									R.dimen.item_icon_size),
-							(int) mContext.getResources().getDimension(
-									R.dimen.item_icon_size));
-					holder.itemList.add(item);
-					((ViewGroup)convertView).addView(itemJingXuan);
-					itemJingXuan.setTag(entity.getUrl());
-					itemJingXuan.setOnClickListener(this);
-				}
+			case 4:   //会员活动
+				convertView =  mInflater.inflate(R.layout.section_vip, null);
+				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
 			default:
 				break;
@@ -133,72 +98,48 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			convertView.setTag(holder);
 		}
 		holder = (Holder) convertView.getTag();
-		int index = 0;
-		switch (type) {
-		case 0:
-			index = 0;
-			break;
+		attachData2Holder(position, section, holder);	
+		return convertView;
+	}
+
+	private void attachData2Holder(int position ,Section section ,Holder holder){
+		Section.Entity entity = null;
+		if(section==null || holder == null)
+			return;
+		switch (position) {
 		case 1:
+			
 			break;
+		case 3:  //分享
+			entity =  section.getList().get(0);
+			if(holder.personIconView!=null && !TextUtils.isEmpty( entity.getNumcomment()))
+//				ImageLoader.getInstance().displayImage(entity.get, holder.personIconView); //TODO
+			if(holder.personnameView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
+				holder.personnameView.setText(entity.getNumfavorite());
+			if(holder.timeView!=null && !TextUtils.isEmpty( entity.getDate()))
+				holder.timeView.setText(entity.getDate());
+			if(holder.imgView!=null && !TextUtils.isEmpty( entity.getImg()))
+				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+			if(holder.titleView!=null && !TextUtils.isEmpty( entity.getTitle()))
+				holder.titleView.setText(entity.getTitle());
+			if(holder.commontNumView!=null && !TextUtils.isEmpty( entity.getNumcomment()))
+				holder.commontNumView.setText(entity.getNumcomment());
+			if(holder.favoriteNumView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
+				holder.favoriteNumView.setText(entity.getNumfavorite());
+			break;
+		case 0:
 		case 2:
-			holder.mTitle.setText("每日优惠");
-			index = 0;
-			for(Holder.Item item :holder.itemList){
-				setItemData(entitys.get(index), item);
-				index ++;	
-			}
-			break;
-		case 3:
-			holder.mTitle.setText("新用户独享");
-			index = 0;
-			for(Holder.Item item :holder.itemList){
-				setItemData(entitys.get(index), item);
-				index ++;	
-			}
-			break;
 		case 4:
-			holder.mTitle.setText("精选");
-			index = 0;
-			for(Holder.Item item :holder.itemList){
-				setItemData(entitys.get(index), item);
-				index ++;	
-			}
+			entity =  section.getList().get(0);
+//			if(holder.titleView!=null && !TextUtils.isEmpty(section.getTitle()))
+//				holder.titleView.setText(section.getTitle()); //TODO
+			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg()))
+				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
 			break;
 		default:
 			break;
 		}
-		return convertView;
 	}
-
-	private void setItemData(Entity entity,Holder.Item holderItem){
-		if(entity==null || holderItem == null)
-			return;
-		if(!TextUtils.isEmpty(entity.getAddr()) && holderItem.addrView!=null)
-			holderItem.addrView.setText(entity.getAddr());
-		if(!TextUtils.isEmpty(entity.getImg()) && holderItem.imgView!=null){
-			
-		}
-		if(!TextUtils.isEmpty(entity.getPrice_market()) && holderItem.priceMarketView!=null)
-			holderItem.priceMarketView.setText(entity.getPrice_market());
-		if(!TextUtils.isEmpty(entity.getPrice_xm()) && holderItem.priceXmView!=null)
-			holderItem.priceXmView.setText(entity.getPrice_xm());
-		if(!TextUtils.isEmpty(entity.getTitle()) && holderItem.titleView!=null)
-			holderItem.titleView.setText(entity.getTitle());
-		if(!TextUtils.isEmpty(entity.getPrice_market_h()) && holderItem.priceMarketHView!=null)
-			holderItem.priceMarketHView.setText(entity.getPrice_market());
-	}
-	
-	private void attachView2Holder(Holder.Item item,ViewGroup vGroup,int imageWidth,int imageHeight){
-		item.titleView = (TextView) vGroup.findViewById(R.id.title);
-		item.addrView = (TextView) vGroup.findViewById(R.id.addr);
-		item.imgView = (ImageView) vGroup.findViewById(R.id.img);
-		item.priceMarketView = (TextView) vGroup.findViewById(R.id.price_market);
-		item.priceMarketHView = (TextView) vGroup.findViewById(R.id.price_market_h);
-		item.priceXmView = (TextView) vGroup.findViewById(R.id.price_xm);
-		item.imgView.getLayoutParams().width = imageWidth;
-		item.imgView.getLayoutParams().height = imageHeight;
-	}
-	
 	
 	@Override
 	public int getViewTypeCount() {
@@ -207,33 +148,47 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 	
 	@Override
 	public int getItemViewType(int position) {
-		return position;
+		Section section = mData.get(position);
+		if(section.getKey().equals("topic"))
+			return 0;
+		if(section.getKey().equals("nav"))
+			return 1;
+		if(section.getKey().equals("jingxua"))
+			return 2;
+		if(section.getKey().equals("share"))
+			return 3;
+		if(section.getKey().equals("vip"))
+			return 4;
+		return 4;
+	}
+	
+	
+	private void attachView2Holder(Holder holder,ViewGroup vGroup,int imageWidth,int imageHeight){
+		holder.personIconView =  (ImageView) vGroup.findViewById(R.id.person_icon);
+		holder.personnameView = (TextView) vGroup.findViewById(R.id.person_name);
+		holder.timeView = (TextView) vGroup.findViewById(R.id.time);
+		holder.imgView = (ImageView) vGroup.findViewById(R.id.icon);
+		holder.titleView = (TextView) vGroup.findViewById(R.id.title);
+		holder.commontNumView = (TextView) vGroup.findViewById(R.id.like_size);
+		//TODO :处理图片大小
+//		holder.favoriteNumView.getLayoutParams().width = imageWidth;
 	}
 	
 	private static class Holder{
-		
-		private ViewPager mViewPager;
-		private TextView mTitle;
-		private List<Item> itemList;
-		
-		static class Item{
-			private ImageView imgView;
-			private TextView titleView;
-			private TextView priceXmView;
-			private TextView priceMarketView;
-			private TextView priceMarketHView;
-			private TextView saledView;
-			private TextView stockView;
-			private TextView addrView;
-		}
-		
+//		List<Item> itemList;
+//		static class Item{
+			private ImageView personIconView; //用户icon
+			private TextView personnameView;  //用户名
+			private TextView timeView;  //时间
+			private ImageView imgView;  //icon图
+			private TextView titleView; //标题
+			private TextView commontNumView;  //评论数
+			private TextView favoriteNumView; //点赞
+//		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		String url = (String) v.getTag();
-		WebViewActivity.startActivity(mContext, url);
+		
 	}
-	
-
 }

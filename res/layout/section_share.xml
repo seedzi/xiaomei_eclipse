@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:textColor="#1e1e1e"
             android:text="Seth Audley"
-            android:textSize="17sp"
+            android:textSize="13sp"
             android:layout_toRightOf="@id/person_icon"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"/>
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="2015-03-05"
-            android:textSize="15sp"
+            android:textSize="11sp"
             android:layout_marginRight="15dp"
             android:textColor="#f0f0f0"
             android:drawableLeft="@drawable/clock_icon"
@@ -52,21 +52,11 @@
         android:layout_height="wrap_content">
         
         <ImageView 
-            android:id="@+id/share_img"
+            android:id="@+id/icon"
             android:layout_width="match_parent"
-            android:layout_height="212dp"
+            android:layout_height="200dp"
             android:scaleType="fitXY"
-            android:src="@drawable/novel_cover_default4"/>
-        
-        <TextView 
-            android:id="@+id/title"
-            android:layout_width="59dp"
-            android:layout_height="22dp"
-            android:text="鼻子"
-            android:layout_marginTop="17dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="@color/color_white"/>
+            android:src="@drawable/novel_cover_default4"/><!--  212dp -->
     </FrameLayout>
     
     <RelativeLayout 
@@ -75,8 +65,8 @@
            android:paddingLeft="15dp"
 	       android:paddingRight="15dp">
         	<TextView 
-           android:id="@+id/description"	    
-           android:textSize="21sp"
+           android:id="@+id/title"	    
+           android:textSize="16sp"
            android:textColor="#373737"	    
            android:layout_centerVertical="true"
 	       android:text="韩国几种常见的隆鼻手术方法"
@@ -114,7 +104,7 @@
             android:layout_toRightOf="@id/buble"
             android:textColor="#d7d7d7"
             android:layout_marginLeft="8dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
@@ -127,7 +117,7 @@
             android:src="@drawable/share_icon_selector"/>	
         <TextView 
             android:id="@+id/like_size"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"

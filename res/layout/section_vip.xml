@@ -5,19 +5,19 @@
 	<ImageView 
 	    android:id="@+id/icon"
 	    android:layout_width="match_parent"
-	    android:layout_height="200dp"
-	    android:scaleType="fitXY"/><!--213dp -->
+	    android:layout_height="213dp"
+	    android:scaleType="fitXY"/>
 	<TextView 
 	    android:id="@+id/title"
+	    android:textColor="@color/color_white"
 	    android:layout_marginLeft="8dp"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:text="商\n品\n精\n选"
-    	android:textColor="@color/color_white"
+    	android:text="会\n员\n活\n动"
     	android:gravity="center"
-    	android:paddingLeft="4dp"
-    	android:paddingRight="4dp"
     	android:paddingBottom="15dp"
+    	 android:paddingLeft="4dp"
+    	android:paddingRight="4dp"
     	android:background="@drawable/home_label"/>
 </FrameLayout>
     

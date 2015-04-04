@@ -22,6 +22,21 @@ public class UserControl extends BaseControl{
 	public void getUserOrdersAsyn(){
 		//TODO
 	}
+	
+	@AsynMethod
+	public void findPasswordAsyn(String username,String password,String verificationCode){
+		try {
+			NetResult result = XiaoMeiApplication.getInstance().getApi().findPassword(username, password, verificationCode);
+			if(DEBUG)
+				Log.d("111", "findPasswordAsyn()  msg = " + result.getMsg());
+		} catch (Exception e) {
+			sendMessage("findPasswordAsynExceptionCallBack");
+			e.printStackTrace();
+			return;
+		} 
+		sendMessage("findPasswordAsynCallBack");
+	}
+
 
 	@AsynMethod
 	public void loginAsyn(String username ,String password){
@@ -32,7 +47,6 @@ public class UserControl extends BaseControl{
 		} catch (Exception e) {
 			sendMessage("loginAsynExceptionCallBack");
 			e.printStackTrace();
-			Log.d("111", "loginAsyn()  exception e = " + e.getMessage());
 			return;
 		} 
 		UserUtil.userloginSuccess(username, password);
@@ -48,7 +62,6 @@ public class UserControl extends BaseControl{
 		} catch (Exception e) {
 			sendMessage("registeAsynExceptionCallBack");
 			e.printStackTrace();
-			Log.d("111", "registeAsyn()  exception e = " + e.getMessage());
 			return;
 		} 
 		sendMessage("registeAsynCallBack");
@@ -63,7 +76,6 @@ public class UserControl extends BaseControl{
 		} catch (Exception e) {
 				sendMessage("getVerificationCodeAsynExceptionCallBack");
 				e.printStackTrace();
-				Log.d("111", "getVerificationCodeAsynExceptionCallBack()  exception e = " + e.getMessage());
 				return;
 		} 
 		sendMessage("getVerificationCodeAsynCallBack");

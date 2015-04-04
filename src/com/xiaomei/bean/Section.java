@@ -8,6 +8,8 @@ public class Section {
 	
 	private int ordering;
 	
+	private String title;
+	
 	private List<Entity> list = null;
 	
 	
@@ -26,6 +28,14 @@ public class Section {
 	public void setOrdering(int ordering) {
 		this.ordering = ordering;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public List<Entity> getList() {
 		return list;
@@ -35,28 +45,23 @@ public class Section {
 		this.list = list;
 	}
 
-
-
-
 	public static class Entity{
 		
 		private String title;
 		
 		private String img;
 		
-		private String addr;
-		
-		private String price_xm;
-		
-		private String price_market;
-		
-		private String price_market_h;
-		
-		private String saled;
-		
-		private String stock;
-		
 		private String url;
+		
+		private String numfavorite;
+		
+		private String date;
+		
+		private String username;
+		
+		private String numcomment;
+		
+		private String avator;
 
 		public String getTitle() {
 			return title;
@@ -74,44 +79,44 @@ public class Section {
 			this.img = img;
 		}
 
-		public String getAddr() {
-			return addr;
+		public String getNumfavorite() {
+			return numfavorite;
 		}
 
-		public void setAddr(String addr) {
-			this.addr = addr;
+		public void setNumfavorite(String numfavorite) {
+			this.numfavorite = numfavorite;
 		}
 
-		public String getPrice_xm() {
-			return price_xm;
+		public String getDate() {
+			return date;
 		}
 
-		public void setPrice_xm(String price_xm) {
-			this.price_xm = price_xm;
+		public void setDate(String date) {
+			this.date = date;
 		}
 
-		public String getPrice_market() {
-			return price_market;
+		public String getUsername() {
+			return username;
 		}
 
-		public void setPrice_market(String price_market) {
-			this.price_market = price_market;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 
-		public String getSaled() {
-			return saled;
+		public String getNumcomment() {
+			return numcomment;
 		}
 
-		public void setSaled(String saled) {
-			this.saled = saled;
+		public void setNumcomment(String numcomment) {
+			this.numcomment = numcomment;
 		}
 
-		public String getStock() {
-			return stock;
+		public String getAvator() {
+			return avator;
 		}
 
-		public void setStock(String stock) {
-			this.stock = stock;
+		public void setAvator(String avator) {
+			this.avator = avator;
 		}
 
 		public String getUrl() {
@@ -122,13 +127,13 @@ public class Section {
 			this.url = url;
 		}
 
-		public String getPrice_market_h() {
-			return price_market_h;
-		}
-
-		public void setPrice_market_h(String price_market_h) {
-			this.price_market_h = price_market_h;
-		}
+//		public String getPrice_market_h() {
+//			return price_market_h;
+//		}
+//
+//		public void setPrice_market_h(String price_market_h) {
+//			this.price_market_h = price_market_h;
+//		}
 		
 		
 		

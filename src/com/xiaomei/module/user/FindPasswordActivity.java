@@ -59,7 +59,7 @@ public class FindPasswordActivity extends BaseActiviy<UserControl>
 				Toast.makeText(FindPasswordActivity.this, "请输入正确的数据", 0).show();
 				return;
 			}
-			mControl.registeAsyn(mRegisterUserMobileEdit.getText().toString(),
+			mControl.findPasswordAsyn(mRegisterUserMobileEdit.getText().toString(),
 					mRegisterUserPasswordEdit.getText().toString(),
 					mRegisterUserVerificationEdit.getEditableText()
 							.toString());
@@ -99,6 +99,8 @@ public class FindPasswordActivity extends BaseActiviy<UserControl>
 		mRegisterUserMobileEdit = (EditText) findViewById(R.id.register_user_mobile);
 		mRegisterUserVerificationEdit = (EditText) findViewById(R.id.register_user_verification);
 		mRegisterUserPasswordEdit = (EditText) findViewById(R.id.register_user_password);
+		
+		findViewById(R.id.launch).setOnClickListener(this);
 	}
 	
 	private boolean checkInputData4Registe(){
@@ -153,14 +155,14 @@ public class FindPasswordActivity extends BaseActiviy<UserControl>
 		public void getVerificationCodeAsynExceptionCallBack(){
 			
 		}
-		public void getVerificationCodeAsynCallBack(){
+		public void getVerificatiolnCodeAsynCallBack(){
 			
 		}
 		
-		public void registeAsynCallBack(){
+		public void findPasswordAsynCallBack(){
 			Toast.makeText(FindPasswordActivity.this, "找回密码成功", 0).show();
 		}
-		public void registeAsynExceptionCallBack(){
+		public void findPasswordAsynExceptionCallBack(){
 			Toast.makeText(FindPasswordActivity.this, "找回密码失败", 0).show();
 		}
 

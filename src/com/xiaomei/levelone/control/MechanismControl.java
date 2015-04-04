@@ -22,7 +22,6 @@ public class MechanismControl extends BaseControl {
 	
 	@AsynMethod
 	public void getMechanismListAsyn(){
-		Log.d("111", "MechanismControl = " +Thread.currentThread().getName());
 		try {
 			mData.clear();
 			mData.addAll(XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet());

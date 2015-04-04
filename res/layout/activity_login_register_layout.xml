@@ -146,6 +146,30 @@
         android:textSize="16sp"/>
 
 
+    <LinearLayout 
+        android:id="@+id/sns"
+        android:layout_marginTop="61dp"
+        android:layout_below="@id/launch"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+        <ImageView 
+            android:id="@+id/login_qq"
+            android:layout_alignParentLeft="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_qq"/>
+        <ImageView 
+            android:id="@+id/login_weixin"
+            android:layout_centerInParent="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+  			android:src="@drawable/login_weixin"/>
+    </LinearLayout> 
+    
     <!--  SNS  -->
     <!-- 
         

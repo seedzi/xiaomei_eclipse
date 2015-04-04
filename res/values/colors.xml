@@ -25,6 +25,7 @@
       <color name="color_payment_cancel">#989898</color>
       <color name="color_payment_cancel_press">#333333</color>
       
+      <!-- 全局背景 -->
       <color name="color_background">#f2f2f2</color>
      
       <!-- 登陆与注册 -->

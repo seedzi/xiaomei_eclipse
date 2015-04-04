@@ -2,6 +2,7 @@ package com.xiaomei.levelone;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.levelone.control.BeautifulRingControl;
@@ -175,6 +176,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 				holder.timeTv = (TextView) convertView.findViewById(R.id.time);
 				holder.bubleSizeTv = (TextView) convertView.findViewById(R.id.buble_size);
 				holder.likeSizeTv = (TextView) convertView.findViewById(R.id.like_size);
+				holder.shareImg = (ImageView) convertView.findViewById(R.id.share_img);
 				convertView.setTag(holder);
 				convertView.setOnClickListener(this);
 			}
@@ -184,7 +186,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		}
 		
 		private void attachDate(Holder holder,BeautifulRing bean){
-			//TODO
+			ImageLoader.getInstance().displayImage(bean.getShareFile(), holder.shareImg);
 		}
 		
 		private void setData(List<BeautifulRing> data){
@@ -198,6 +200,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		}
 		
 		private class Holder{
+			private ImageView shareImg;
 			private ImageView userIconIv;
 			private TextView userNaemTv;
 			private TextView timeTv;

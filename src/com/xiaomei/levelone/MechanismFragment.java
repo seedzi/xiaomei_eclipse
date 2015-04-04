@@ -2,6 +2,7 @@ package com.xiaomei.levelone;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.levelone.control.MechanismControl;
@@ -14,11 +15,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class MechanismFragment extends BaseFragment<MechanismControl> implements OnRefreshListener{
@@ -72,12 +76,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl> implements
 
 	@Override
 	public void onRefresh() {
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mPullToRefreshListView.onRefreshComplete();
-			}
-		}, 3000);
+		mControl.getMechanismListAsyn();
 	}
 	
 	private class MechanismAdapter extends BaseAdapter{
@@ -110,10 +109,28 @@ public class MechanismFragment extends BaseFragment<MechanismControl> implements
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Holder holder = null;
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_mechanism_layout, null);
+				holder = new Holder();
+				holder.iconIv = (ImageView) convertView.findViewById(R.id.icon);
+				convertView.setTag(holder);
 			}
+			holder = (Holder) convertView.getTag();
+			attachData2UI(holder, position);
 			return convertView;
+		}
+		
+		private void attachData2UI(Holder holder ,int position){
+			Log.d("111", "mData.get(position).getFile() = " + mData.get(position).getFile());
+			ImageLoader.getInstance().displayImage(mData.get(position).getFile(), holder.iconIv);
+		}
+		
+		private class Holder{
+			private ImageView iconIv;
+			private TextView titleTv;
+			private TextView hospitalTv;
+			private TextView locationTv;
 		}
 		
 	}

@@ -1,5 +1,8 @@
 package com.xiaomei.module.user;
 
+import java.util.Map;
+import java.util.Set;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +58,6 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 			}
 		};
 	};
-    
 	
 	LaunchListener LAUNCH_REGISTER = new LaunchListener(){
 		@Override
@@ -107,11 +110,16 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	/**注册密码号输入*/
 	private EditText mLoginUserPasswordEdit;
 	
+	// ====================  sns 分享   ========================
+	private ImageView mQqLogin;
+	private ImageView mWeixinLogin;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login_register_layout);
 		initView();
+		initSns();
 	}
 
 	private void initView(){
@@ -137,8 +145,22 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		forgetPassword = findViewById(R.id.forget_password);
 		forgetPassword.setOnClickListener(this);
 		mTitleBar.findViewById(R.id.login).performClick();
-		
 	}
+	
+	private void initSns(){
+		
+		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+		/*
+		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(LoginAndRegisterActivity.this, "100424468",
+	                    "c7394704798a158208a74ab60104f0ba");
+	    qqSsoHandler.addToSocialSDK();
+	    */
+	    mQqLogin = (ImageView) findViewById(R.id.login_qq);
+	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
+	    mQqLogin.setOnClickListener(this);
+	    mWeixinLogin.setOnClickListener(this);
+	}
+	
 	
 	@Override
 	public void switchLogin() {
@@ -168,6 +190,11 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 			break;
 		case	R.id.get_verification:
 			getVerification(mRegisterUserMobileEdit.getText().toString());
+			break;
+		case R.id.login_qq:
+//			loginQq(getApplicationContext());
+			break;
+		case R.id.login_weixin:
 			break;
 		default:
 			break;
@@ -230,13 +257,57 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	
 	public void loginAsynCallBack(){
 		Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
-		TabsActivity.startActivity(getApplicationContext());
+		TabsActivity.startActivity(LoginAndRegisterActivity.this);
+		finish();
 	}
 	
 	public void loginAsynExceptionCallBack(){
 		Toast.makeText(LoginAndRegisterActivity.this, "登录失败", 0).show();
 	}
 	
+	// ===============================  Sns =======================================
+	/*
+	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
+	private void loginQq(final Context mContext){
+		mController.doOauthVerify(mContext, SHARE_MEDIA.QQ, new UMAuthListener() {
+		    @Override
+		    public void onStart(SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
+		    }
+		    @Override
+		    public void onError(SocializeException e, SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
+		    }
+		    @Override
+		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
+		        //获取相关授权信息
+		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.QQ, new UMDataListener() {
+				    @Override
+				    public void onStart() {
+				        Toast.makeText(LoginAndRegisterActivity.this, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
+				    }                                              
+				    @Override
+			        public void onComplete(int status, Map<String, Object> info) {
+			            if(status == 200 && info != null){
+			                StringBuilder sb = new StringBuilder();
+			                Set<String> keys = info.keySet();
+			                for(String key : keys){
+			                   sb.append(key+"="+info.get(key).toString()+"\r\n");
+			                }
+			                Log.d("TestData",sb.toString());
+			            }else{
+			               Log.d("TestData","发生错误："+status);
+			           }
+			        }
+				});
+		    }
+		    @Override
+		    public void onCancel(SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
+		    }
+		} );
+	}
 	
-	
+	*/
 }

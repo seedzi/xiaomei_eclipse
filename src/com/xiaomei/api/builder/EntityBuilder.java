@@ -10,23 +10,22 @@ public class EntityBuilder extends AbstractJSONBuilder<Entity> {
 	@Override
 	protected Entity builder(JSONObject jsonObject) throws JSONException {
 		Entity entity = new Entity();
-		if(jsonObject.has("addr"))
-			entity.setAddr(jsonObject.getString("addr"));
 		if(jsonObject.has("img"))
 			entity.setImg(jsonObject.getString("img"));
-		if(jsonObject.has("price_market"))
-			entity.setPrice_market(jsonObject.getString("price_market"));
-		if(jsonObject.has("price_xm"))
-			entity.setPrice_xm(jsonObject.getString("price_xm"));
-		if(jsonObject.has("saled"))
-			entity.setSaled(jsonObject.getString("saled"));
-		if(jsonObject.has("stock"))
-			entity.setStock(jsonObject.getString("stock"));
 		if(jsonObject.has("title"))
 			entity.setTitle(jsonObject.getString("title"));
 		if(jsonObject.has("url"))
 			entity.setUrl(jsonObject.getString("url"));
+		if(jsonObject.has("num_favorite"))
+			entity.setNumfavorite(jsonObject.getString("num_favorite"));
+		if(jsonObject.has("username"))
+			entity.setUsername(jsonObject.getString("username"));
+		if(jsonObject.has("num_comment"))
+			entity.setNumcomment(jsonObject.getString("num_comment"));
+		if(jsonObject.has("date"))
+			entity.setDate(jsonObject.getString("date"));
+		if(jsonObject.has("avator"))
+			entity.setAvator(jsonObject.getString("avator"));
 		return entity;
 	}
-
 }

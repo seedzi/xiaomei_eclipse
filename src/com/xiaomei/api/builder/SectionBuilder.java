@@ -22,22 +22,43 @@ public class SectionBuilder extends AbstractJSONBuilder<List<Section>> {
 		JSONArray jsonArray = jsonObject.getJSONArray("sections");
 		for( int i=0 ;i< jsonArray.length();i++){
 			JSONObject jobject = jsonArray.getJSONObject(i);
-			Section section = new Section();
-			section.setKey(jobject.getString("key"));
-			section.setOrdering(jobject.getInt("ordering"));
-			JSONArray jA  =  jobject.getJSONArray("data");
-			List<Entity> entityList = new ArrayList<Section.Entity>();
-			for( int j=0 ;j< jA.length();j++){
-				JSONObject jO =  jA.getJSONObject(j);
-				try {
-					Entity entity = new EntityBuilder().build(jO);
-					entityList.add(entity);
-				} catch (XiaoMeiJSONException e) {
-					throw new JSONException(e.getMessage());
+			if(jobject.getString("key").equals("nav")){ //如果是导航
+				Section section = new Section();
+				section.setKey(jobject.getString("key"));
+				section.setOrdering(jobject.getInt("ordering"));
+				section.setTitle(jobject.getString("title"));
+				JSONArray jA  =  jobject.getJSONArray("data");
+				List<Entity> entityList = new ArrayList<Section.Entity>();
+				for( int j=0 ;j< jA.length();j++){
+					JSONObject jO =  jA.getJSONObject(j);
+					try {
+						Entity entity = new EntityBuilder().build(jO);
+						entityList.add(entity);
+					} catch (XiaoMeiJSONException e) {
+						throw new JSONException(e.getMessage());
+					}
+				}
+				section.setList(entityList);
+				list.add(section);
+			} else{ 
+				JSONArray jA  =  jobject.getJSONArray("data");
+				for( int j=0 ;j< jA.length();j++){
+					Section section = new Section();
+					section.setKey(jobject.getString("key"));
+					section.setOrdering(jobject.getInt("ordering"));
+					section.setTitle(jobject.getString("title"));
+					List<Entity> entityList = new ArrayList<Section.Entity>();
+					JSONObject jO =  jA.getJSONObject(j);
+					try {
+						Entity entity = new EntityBuilder().build(jO);
+						entityList.add(entity);
+						section.setList(entityList);
+						list.add(section);
+					} catch (XiaoMeiJSONException e) {
+						throw new JSONException(e.getMessage());
+					}
 				}
 			}
-			section.setList(entityList);
-			list.add(section);
 		}
 		return list;
 	}

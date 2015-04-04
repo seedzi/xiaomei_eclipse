@@ -11,7 +11,7 @@ public class UserUtil {
 	 */
 	public static boolean isUserValid(){
 		SharePreferenceWrap sharePreferenceWrap = new SharePreferenceWrap();
-		return false;//sharePreferenceWrap.getBoolean(SharePreferenceKey.USER_VALID, false);
+		return sharePreferenceWrap.getBoolean(SharePreferenceKey.USER_VALID, false);
 	}
 	
 	
