@@ -6,6 +6,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.levelone.control.BeautifulRingControl;
+import com.xiaomei.leveltwo.BeautifulRingDetailsActivity;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -195,8 +196,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent();
-			
+			BeautifulRingDetailsActivity.startActivity(getActivity());
 		}
 		
 		private class Holder{

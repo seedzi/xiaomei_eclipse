@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+<ImageView 
+    android:id="@+id/item_img"
+    android:layout_width="302dp"
+    android:layout_height="303dp"
+    android:scaleType="fitXY"
+    android:src="@drawable/sex_1"/>
+	<TextView
+	    android:layout_marginTop="22dp"
+        android:id="@+id/item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="尽管看不到她刘海下的容貌，却也可以清楚的看见她两边脸颊连同后面修长白皙的脖颈整个都红了，嫣红透白的煞是好看。这时才注意到女孩的打扮，上身穿着一件可爱的卡通T恤，下身是雪白的七分裤，裤脚裁剪成今年最流行的玉米穗式样；脚上穿着一双鞋跟足有五公分厚胖头小皮靴。"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+</LinearLayout>

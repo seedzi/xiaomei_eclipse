@@ -31,4 +31,6 @@
       <!-- 登陆与注册 -->
       <color name="color_button_normal">#c96cf1</color>
       <color name="color_button_checked">#ffffff</color>
+      
+      <color name="color_transparent">#00000000</color>
 </resources>

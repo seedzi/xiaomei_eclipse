@@ -77,6 +77,10 @@
 		<activity 
 		    android:name="com.xiaomei.leveltwo.MallSecondActivity">
 		</activity>		
+		<!-- 圈子详情页 -->
+		<activity 
+		    android:name="com.xiaomei.leveltwo.BeautifulRingDetailsActivity">
+		</activity>		
 		
 		
 		<!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
