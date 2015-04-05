@@ -1,5 +1,6 @@
 package com.xiaomei.module.user;
 
+
 import java.util.Map;
 import java.util.Set;
 
@@ -9,16 +10,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.contanier.TabsActivity;
@@ -150,11 +156,9 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	private void initSns(){
 		
 		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-		/*
 		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(LoginAndRegisterActivity.this, "100424468",
 	                    "c7394704798a158208a74ab60104f0ba");
 	    qqSsoHandler.addToSocialSDK();
-	    */
 	    mQqLogin = (ImageView) findViewById(R.id.login_qq);
 	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
 	    mQqLogin.setOnClickListener(this);
@@ -192,7 +196,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 			getVerification(mRegisterUserMobileEdit.getText().toString());
 			break;
 		case R.id.login_qq:
-//			loginQq(getApplicationContext());
+			loginQq(getApplicationContext());
 			break;
 		case R.id.login_weixin:
 			break;
@@ -266,7 +270,6 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	}
 	
 	// ===============================  Sns =======================================
-	/*
 	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 	private void loginQq(final Context mContext){
 		mController.doOauthVerify(mContext, SHARE_MEDIA.QQ, new UMAuthListener() {
@@ -309,5 +312,4 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		} );
 	}
 	
-	*/
 }

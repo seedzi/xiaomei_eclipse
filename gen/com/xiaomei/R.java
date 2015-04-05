@@ -10,6 +10,12 @@ package com.xiaomei;
 public final class R {
     public static final class anim {
         public static final int progress_round=0x7f040000;
+        public static final int umeng_socialize_fade_in=0x7f040001;
+        public static final int umeng_socialize_fade_out=0x7f040002;
+        public static final int umeng_socialize_shareboard_animation_in=0x7f040003;
+        public static final int umeng_socialize_shareboard_animation_out=0x7f040004;
+        public static final int umeng_socialize_slide_in_from_bottom=0x7f040005;
+        public static final int umeng_socialize_slide_out_from_bottom=0x7f040006;
     }
     public static final class array {
         public static final int tabs_names=0x7f060000;
@@ -183,6 +189,19 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int color_white=0x7f070004;
         public static final int home_allsub_child_topnews=0x7f070000;
         public static final int item_txt_color=0x7f070009;
+        public static final int umeng_socialize_color_group=0x7f070011;
+        public static final int umeng_socialize_comments_bg=0x7f070010;
+        public static final int umeng_socialize_divider=0x7f070014;
+        public static final int umeng_socialize_edit_bg=0x7f07001b;
+        public static final int umeng_socialize_grid_divider_line=0x7f07001c;
+        public static final int umeng_socialize_list_item_bgcolor=0x7f070013;
+        public static final int umeng_socialize_list_item_textcolor=0x7f070012;
+        public static final int umeng_socialize_text_friends_list=0x7f070017;
+        public static final int umeng_socialize_text_share_content=0x7f070018;
+        public static final int umeng_socialize_text_time=0x7f070015;
+        public static final int umeng_socialize_text_title=0x7f070016;
+        public static final int umeng_socialize_text_ucenter=0x7f07001a;
+        public static final int umeng_socialize_ucenter_bg=0x7f070019;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -194,6 +213,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int activity_horizontal_margin=0x7f080000;
         public static final int activity_vertical_margin=0x7f080001;
+        public static final int alphabet_size=0x7f080019;
         public static final int division_line_height=0x7f080007;
         public static final int img_margin_dp=0x7f080008;
         public static final int item_height_dp=0x7f08000c;
@@ -228,6 +248,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int txt_max_big_size_sp=0x7f080003;
         public static final int txt_normal_size_sp=0x7f080005;
         public static final int txt_small_size_sp=0x7f080006;
+        public static final int umeng_socialize_pad_window_height=0x7f08001a;
+        public static final int umeng_socialize_pad_window_width=0x7f08001b;
     }
     public static final class drawable {
         public static final int aaa_1=0x7f020000;
@@ -359,13 +381,91 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tabs_shopping=0x7f02007e;
         public static final int tabs_shopping_gary=0x7f02007f;
         public static final int title_bg_common=0x7f020080;
-        public static final int user_centre_info_portrait_default=0x7f020081;
-        public static final int user_login_button=0x7f020082;
-        public static final int user_login_button_selector=0x7f020083;
-        public static final int user_verification_button=0x7f020084;
-        public static final int user_verification_button_press=0x7f020085;
-        public static final int user_verification_button_selector=0x7f020086;
-        public static final int video_sniffer_art_more_icon_normal=0x7f020087;
+        public static final int umeng_socialize_action_back=0x7f020081;
+        public static final int umeng_socialize_action_back_normal=0x7f020082;
+        public static final int umeng_socialize_action_back_selected=0x7f020083;
+        public static final int umeng_socialize_at_button=0x7f020084;
+        public static final int umeng_socialize_at_normal=0x7f020085;
+        public static final int umeng_socialize_at_selected=0x7f020086;
+        public static final int umeng_socialize_bind_bg=0x7f020087;
+        public static final int umeng_socialize_button_blue=0x7f020088;
+        public static final int umeng_socialize_button_grey=0x7f020089;
+        public static final int umeng_socialize_button_grey_blue=0x7f02008a;
+        public static final int umeng_socialize_button_login=0x7f02008b;
+        public static final int umeng_socialize_button_login_normal=0x7f02008c;
+        public static final int umeng_socialize_button_login_pressed=0x7f02008d;
+        public static final int umeng_socialize_button_red=0x7f02008e;
+        public static final int umeng_socialize_button_red_blue=0x7f02008f;
+        public static final int umeng_socialize_button_white=0x7f020090;
+        public static final int umeng_socialize_button_white_blue=0x7f020091;
+        public static final int umeng_socialize_default_avatar=0x7f020092;
+        public static final int umeng_socialize_douban_off=0x7f020093;
+        public static final int umeng_socialize_douban_on=0x7f020094;
+        public static final int umeng_socialize_facebook=0x7f020095;
+        public static final int umeng_socialize_fetch_image=0x7f020096;
+        public static final int umeng_socialize_follow_check=0x7f020097;
+        public static final int umeng_socialize_follow_off=0x7f020098;
+        public static final int umeng_socialize_follow_on=0x7f020099;
+        public static final int umeng_socialize_google=0x7f02009a;
+        public static final int umeng_socialize_light_bar_bg=0x7f02009b;
+        public static final int umeng_socialize_light_bar_bg_pad=0x7f02009c;
+        public static final int umeng_socialize_location_ic=0x7f02009d;
+        public static final int umeng_socialize_location_off=0x7f02009e;
+        public static final int umeng_socialize_location_on=0x7f02009f;
+        public static final int umeng_socialize_nav_bar_bg=0x7f0200a0;
+        public static final int umeng_socialize_nav_bar_bg_pad=0x7f0200a1;
+        public static final int umeng_socialize_oauth_check=0x7f0200a2;
+        public static final int umeng_socialize_oauth_check_off=0x7f0200a3;
+        public static final int umeng_socialize_oauth_check_on=0x7f0200a4;
+        public static final int umeng_socialize_qq_off=0x7f0200a5;
+        public static final int umeng_socialize_qq_on=0x7f0200a6;
+        public static final int umeng_socialize_qzone_off=0x7f0200a7;
+        public static final int umeng_socialize_qzone_on=0x7f0200a8;
+        public static final int umeng_socialize_refersh=0x7f0200a9;
+        public static final int umeng_socialize_renren_off=0x7f0200aa;
+        public static final int umeng_socialize_renren_on=0x7f0200ab;
+        public static final int umeng_socialize_search_icon=0x7f0200ac;
+        public static final int umeng_socialize_shape_solid_black=0x7f0200ad;
+        public static final int umeng_socialize_shape_solid_grey=0x7f0200ae;
+        public static final int umeng_socialize_share_music=0x7f0200af;
+        public static final int umeng_socialize_share_pic=0x7f0200b0;
+        public static final int umeng_socialize_share_to_button=0x7f0200b1;
+        public static final int umeng_socialize_share_transparent_corner=0x7f0200b2;
+        public static final int umeng_socialize_share_video=0x7f0200b3;
+        public static final int umeng_socialize_shareboard_item_background=0x7f0200b4;
+        public static final int umeng_socialize_sidebar_normal=0x7f0200b5;
+        public static final int umeng_socialize_sidebar_selected=0x7f0200b6;
+        public static final int umeng_socialize_sidebar_selector=0x7f0200b7;
+        public static final int umeng_socialize_sina_off=0x7f0200b8;
+        public static final int umeng_socialize_sina_on=0x7f0200b9;
+        public static final int umeng_socialize_title_back_bt=0x7f0200ba;
+        public static final int umeng_socialize_title_back_bt_normal=0x7f0200bb;
+        public static final int umeng_socialize_title_back_bt_selected=0x7f0200bc;
+        public static final int umeng_socialize_title_right_bt=0x7f0200bd;
+        public static final int umeng_socialize_title_right_bt_normal=0x7f0200be;
+        public static final int umeng_socialize_title_right_bt_selected=0x7f0200bf;
+        public static final int umeng_socialize_title_tab_button_left=0x7f0200c0;
+        public static final int umeng_socialize_title_tab_button_right=0x7f0200c1;
+        public static final int umeng_socialize_title_tab_left_normal=0x7f0200c2;
+        public static final int umeng_socialize_title_tab_left_pressed=0x7f0200c3;
+        public static final int umeng_socialize_title_tab_right_normal=0x7f0200c4;
+        public static final int umeng_socialize_title_tab_right_pressed=0x7f0200c5;
+        public static final int umeng_socialize_twitter=0x7f0200c6;
+        public static final int umeng_socialize_tx_off=0x7f0200c7;
+        public static final int umeng_socialize_tx_on=0x7f0200c8;
+        public static final int umeng_socialize_wechat=0x7f0200c9;
+        public static final int umeng_socialize_wechat_gray=0x7f0200ca;
+        public static final int umeng_socialize_window_shadow_pad=0x7f0200cb;
+        public static final int umeng_socialize_wxcircle=0x7f0200cc;
+        public static final int umeng_socialize_wxcircle_gray=0x7f0200cd;
+        public static final int umeng_socialize_x_button=0x7f0200ce;
+        public static final int user_centre_info_portrait_default=0x7f0200cf;
+        public static final int user_login_button=0x7f0200d0;
+        public static final int user_login_button_selector=0x7f0200d1;
+        public static final int user_verification_button=0x7f0200d2;
+        public static final int user_verification_button_press=0x7f0200d3;
+        public static final int user_verification_button_selector=0x7f0200d4;
+        public static final int video_sniffer_art_more_icon_normal=0x7f0200d5;
     }
     public static final class id {
         public static final int addr=0x7f050062;
@@ -401,6 +501,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int gridview=0x7f050001;
         public static final int han_yuan=0x7f050068;
         public static final int head=0x7f050042;
+        public static final int header=0x7f0500a0;
         public static final int hospital=0x7f05004e;
         public static final int icon=0x7f05000b;
         public static final int imageView=0x7f050060;
@@ -428,6 +529,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int line5=0x7f050040;
         public static final int line6=0x7f050041;
         public static final int list=0x7f050010;
+        public static final int listView=0x7f050092;
         public static final int list_view=0x7f050051;
         public static final int loading_layout=0x7f050037;
         public static final int location=0x7f050052;
@@ -455,6 +557,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int price_market=0x7f050065;
         public static final int price_market_h=0x7f050069;
         public static final int price_xm=0x7f050063;
+        public static final int progress_bar_parent=0x7f0500ab;
         public static final int pullDownFromTop=0x7f050009;
         public static final int pullUpFromBottom=0x7f05000a;
         public static final int pull_to_refresh_image=0x7f050076;
@@ -472,11 +575,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int right=0x7f050004;
         public static final int riji=0x7f050079;
         public static final int root=0x7f050017;
+        public static final int search_text=0x7f050091;
+        public static final int section=0x7f05008f;
         public static final int selected_view=0x7f050000;
         public static final int server=0x7f050053;
         public static final int share=0x7f05005d;
         public static final int share_img=0x7f05005a;
         public static final int size=0x7f05004f;
+        public static final int slideBar=0x7f050093;
         public static final int slidingmenulayout=0x7f05002d;
         public static final int slidingmenumain=0x7f05007b;
         public static final int sns=0x7f050022;
@@ -489,12 +595,74 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_bar_layout=0x7f050016;
         public static final int titlebar=0x7f05007c;
         public static final int txt_content=0x7f050013;
+        public static final int umeng_socialize_alert_body=0x7f050096;
+        public static final int umeng_socialize_alert_button=0x7f050098;
+        public static final int umeng_socialize_alert_footer=0x7f050097;
+        public static final int umeng_socialize_avatar_imv=0x7f050086;
+        public static final int umeng_socialize_bind_cancel=0x7f05009f;
+        public static final int umeng_socialize_bind_douban=0x7f05009d;
+        public static final int umeng_socialize_bind_no_tip=0x7f05009e;
+        public static final int umeng_socialize_bind_qzone=0x7f050099;
+        public static final int umeng_socialize_bind_renren=0x7f05009c;
+        public static final int umeng_socialize_bind_sina=0x7f05009b;
+        public static final int umeng_socialize_bind_tel=0x7f05009a;
+        public static final int umeng_socialize_first_area=0x7f0500a3;
+        public static final int umeng_socialize_first_area_title=0x7f0500a2;
+        public static final int umeng_socialize_follow=0x7f0500a8;
+        public static final int umeng_socialize_follow_check=0x7f0500a9;
+        public static final int umeng_socialize_follow_layout=0x7f0500af;
+        public static final int umeng_socialize_full_alert_dialog_divider=0x7f0500a6;
+        public static final int umeng_socialize_full_alert_dialog_item_icon=0x7f050088;
+        public static final int umeng_socialize_full_alert_dialog_item_status=0x7f05008a;
+        public static final int umeng_socialize_full_alert_dialog_item_text=0x7f050089;
+        public static final int umeng_socialize_line_serach=0x7f050090;
+        public static final int umeng_socialize_list_fds=0x7f050083;
+        public static final int umeng_socialize_list_fds_root=0x7f050085;
+        public static final int umeng_socialize_list_progress=0x7f050084;
+        public static final int umeng_socialize_list_recently_fds_root=0x7f050082;
+        public static final int umeng_socialize_location_ic=0x7f0500b1;
+        public static final int umeng_socialize_location_progressbar=0x7f0500b2;
+        public static final int umeng_socialize_platforms_lv=0x7f05008d;
+        public static final int umeng_socialize_platforms_lv_second=0x7f05008e;
+        public static final int umeng_socialize_post_fetch_image=0x7f0500b9;
+        public static final int umeng_socialize_progress=0x7f050094;
+        public static final int umeng_socialize_second_area=0x7f0500a5;
+        public static final int umeng_socialize_second_area_title=0x7f0500a4;
+        public static final int umeng_socialize_share_at=0x7f0500b3;
+        public static final int umeng_socialize_share_bottom_area=0x7f0500ae;
+        public static final int umeng_socialize_share_edittext=0x7f0500b7;
+        public static final int umeng_socialize_share_info=0x7f05008c;
+        public static final int umeng_socialize_share_location=0x7f0500b0;
+        public static final int umeng_socialize_share_previewImg=0x7f0500b4;
+        public static final int umeng_socialize_share_previewImg_progressbar=0x7f0500b6;
+        public static final int umeng_socialize_share_previewImg_remove=0x7f0500b5;
+        public static final int umeng_socialize_share_root=0x7f0500ac;
+        public static final int umeng_socialize_share_titlebar=0x7f0500ad;
+        public static final int umeng_socialize_share_word_num=0x7f0500b8;
+        public static final int umeng_socialize_shareboard_image=0x7f0500ba;
+        public static final int umeng_socialize_shareboard_pltform_name=0x7f0500bb;
+        public static final int umeng_socialize_spinner_img=0x7f0500bc;
+        public static final int umeng_socialize_spinner_txt=0x7f0500bd;
+        public static final int umeng_socialize_switcher=0x7f050081;
+        public static final int umeng_socialize_text_view=0x7f050087;
+        public static final int umeng_socialize_tipinfo=0x7f050095;
+        public static final int umeng_socialize_title=0x7f05008b;
+        public static final int umeng_socialize_title_bar_leftBt=0x7f0500be;
+        public static final int umeng_socialize_title_bar_middleTv=0x7f0500bf;
+        public static final int umeng_socialize_title_bar_middle_tab=0x7f0500c0;
+        public static final int umeng_socialize_title_bar_rightBt=0x7f0500c3;
+        public static final int umeng_socialize_title_bar_rightBt_progress=0x7f0500c4;
+        public static final int umeng_socialize_title_middle_left=0x7f0500c1;
+        public static final int umeng_socialize_title_middle_right=0x7f0500c2;
+        public static final int umeng_socialize_titlebar=0x7f0500a7;
+        public static final int umeng_xp_ScrollView=0x7f0500a1;
         public static final int user_grade=0x7f05003b;
         public static final int user_icon=0x7f050039;
         public static final int user_name=0x7f05003a;
         public static final int user_tag=0x7f05006e;
         public static final int value=0x7f05006b;
         public static final int vpager=0x7f050027;
+        public static final int webView=0x7f0500aa;
         public static final int webview=0x7f050002;
         public static final int youhui=0x7f050077;
     }
@@ -555,13 +723,34 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int section_vip=0x7f030035;
         public static final int slidingmenumain=0x7f030036;
         public static final int title_bar_layout=0x7f030037;
+        public static final int umeng_bak_at_list=0x7f030038;
+        public static final int umeng_bak_at_list_item=0x7f030039;
+        public static final int umeng_bak_platform_item_simple=0x7f03003a;
+        public static final int umeng_bak_platform_selector_dialog=0x7f03003b;
+        public static final int umeng_socialize_at_item=0x7f03003c;
+        public static final int umeng_socialize_at_overlay=0x7f03003d;
+        public static final int umeng_socialize_at_view=0x7f03003e;
+        public static final int umeng_socialize_base_alert_dialog=0x7f03003f;
+        public static final int umeng_socialize_base_alert_dialog_button=0x7f030040;
+        public static final int umeng_socialize_bind_select_dialog=0x7f030041;
+        public static final int umeng_socialize_composer_header=0x7f030042;
+        public static final int umeng_socialize_failed_load_page=0x7f030043;
+        public static final int umeng_socialize_full_alert_dialog=0x7f030044;
+        public static final int umeng_socialize_full_alert_dialog_item=0x7f030045;
+        public static final int umeng_socialize_full_curtain=0x7f030046;
+        public static final int umeng_socialize_oauth_dialog=0x7f030047;
+        public static final int umeng_socialize_post_share=0x7f030048;
+        public static final int umeng_socialize_shareboard_item=0x7f030049;
+        public static final int umeng_socialize_simple_spinner_item=0x7f03004a;
+        public static final int umeng_socialize_titile_bar=0x7f03004b;
     }
     public static final class menu {
-        public static final int main=0x7f0a0000;
+        public static final int main=0x7f0b0000;
     }
     public static final class string {
         public static final int action_settings=0x7f09000a;
         public static final int app_name=0x7f090008;
+        public static final int com_facebook_loading=0x7f090070;
         /**  用户 
          */
         public static final int commit=0x7f090016;
@@ -614,6 +803,63 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_activity_main=0x7f09000b;
         public static final int title_activity_main_activity2=0x7f09000c;
         public static final int title_activity_xxxxxx=0x7f09000e;
+        public static final int umeng_example_home_btn_plus=0x7f090069;
+        public static final int umeng_socialize_back=0x7f09003c;
+        public static final int umeng_socialize_cancel_btn_str=0x7f09006c;
+        public static final int umeng_socialize_comment=0x7f09003a;
+        public static final int umeng_socialize_comment_detail=0x7f09003b;
+        public static final int umeng_socialize_content_hint=0x7f09006b;
+        public static final int umeng_socialize_friends=0x7f09003e;
+        public static final int umeng_socialize_img_des=0x7f09006e;
+        public static final int umeng_socialize_login=0x7f090049;
+        public static final int umeng_socialize_login_qq=0x7f090048;
+        public static final int umeng_socialize_msg_hor=0x7f090044;
+        public static final int umeng_socialize_msg_min=0x7f090043;
+        public static final int umeng_socialize_msg_sec=0x7f090042;
+        public static final int umeng_socialize_near_At=0x7f09003d;
+        public static final int umeng_socialize_network_break_alert=0x7f090039;
+        public static final int umeng_socialize_send=0x7f09003f;
+        public static final int umeng_socialize_send_btn_str=0x7f09006d;
+        public static final int umeng_socialize_share=0x7f09006f;
+        public static final int umeng_socialize_share_content=0x7f090047;
+        public static final int umeng_socialize_text_add_custom_platform=0x7f090068;
+        public static final int umeng_socialize_text_authorize=0x7f09004b;
+        public static final int umeng_socialize_text_choose_account=0x7f09004a;
+        public static final int umeng_socialize_text_comment_hint=0x7f09004f;
+        public static final int umeng_socialize_text_douban_key=0x7f090065;
+        public static final int umeng_socialize_text_friend_list=0x7f090050;
+        public static final int umeng_socialize_text_loading_message=0x7f09005f;
+        public static final int umeng_socialize_text_login_fail=0x7f09004e;
+        public static final int umeng_socialize_text_qq_key=0x7f090062;
+        public static final int umeng_socialize_text_qq_zone_key=0x7f090063;
+        public static final int umeng_socialize_text_renren_key=0x7f090064;
+        public static final int umeng_socialize_text_sina_key=0x7f090061;
+        /**  平台名称 
+         */
+        public static final int umeng_socialize_text_tencent_key=0x7f090060;
+        public static final int umeng_socialize_text_tencent_no_connection=0x7f090052;
+        public static final int umeng_socialize_text_tencent_no_install=0x7f090055;
+        public static final int umeng_socialize_text_tencent_oauth_login_fail=0x7f090053;
+        public static final int umeng_socialize_text_tencent_version_no_match=0x7f090054;
+        public static final int umeng_socialize_text_ucenter=0x7f09004d;
+        public static final int umeng_socialize_text_unauthorize=0x7f09004c;
+        public static final int umeng_socialize_text_visitor=0x7f090051;
+        public static final int umeng_socialize_text_waitting=0x7f090056;
+        public static final int umeng_socialize_text_waitting_message=0x7f09005e;
+        public static final int umeng_socialize_text_waitting_qq=0x7f09005b;
+        public static final int umeng_socialize_text_waitting_qzone=0x7f09005c;
+        public static final int umeng_socialize_text_waitting_redirect=0x7f09005d;
+        public static final int umeng_socialize_text_waitting_share=0x7f09006a;
+        public static final int umeng_socialize_text_waitting_weixin=0x7f090057;
+        public static final int umeng_socialize_text_waitting_weixin_circle=0x7f090058;
+        public static final int umeng_socialize_text_waitting_yixin=0x7f090059;
+        public static final int umeng_socialize_text_waitting_yixin_circle=0x7f09005a;
+        public static final int umeng_socialize_text_weixin_circle_key=0x7f090067;
+        public static final int umeng_socialize_text_weixin_key=0x7f090066;
+        public static final int umeng_socialize_tip_blacklist=0x7f090040;
+        public static final int umeng_socialize_tip_loginfailed=0x7f090041;
+        public static final int umeng_socialize_ucenter_login_title_guide=0x7f090045;
+        public static final int umeng_socialize_ucenter_login_title_platform=0x7f090046;
         public static final int user_about=0x7f09001f;
         public static final int user_center=0x7f090019;
         public static final int user_collection=0x7f09001c;
@@ -621,6 +867,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int user_history=0x7f09001d;
         public static final int user_message=0x7f09001b;
         public static final int user_order=0x7f09001a;
+    }
+    public static final class style {
+        public static final int Theme_UMDefault=0x7f0a0009;
+        public static final int Theme_UMDialog=0x7f0a0008;
+        public static final int umeng_socialize_action_bar_item_im=0x7f0a0001;
+        public static final int umeng_socialize_action_bar_item_tv=0x7f0a0002;
+        public static final int umeng_socialize_action_bar_itemlayout=0x7f0a0000;
+        public static final int umeng_socialize_dialog_anim_fade=0x7f0a0006;
+        public static final int umeng_socialize_dialog_animations=0x7f0a0005;
+        public static final int umeng_socialize_divider=0x7f0a000a;
+        public static final int umeng_socialize_edit_padding=0x7f0a000c;
+        public static final int umeng_socialize_list_item=0x7f0a000b;
+        public static final int umeng_socialize_popup_dialog=0x7f0a0004;
+        public static final int umeng_socialize_popup_dialog_anim=0x7f0a0003;
+        public static final int umeng_socialize_shareboard_animation=0x7f0a0007;
     }
     public static final class styleable {
         /** Attributes that can be used with a PullToRefresh.
