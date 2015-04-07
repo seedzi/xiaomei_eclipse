@@ -14,6 +14,7 @@ import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.launch.control.LaunchControl;
 import com.xiaomei.module.user.LoginAndRegisterActivity;
+import com.xiaomei.test.PhoneGapAc;
 import com.xiaomei.util.UserUtil;
 
 public class LaunchActivity extends  BaseActiviy<LaunchControl>{
@@ -48,6 +49,7 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 			}
 		}).start();*/
 	
+        
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -59,11 +61,13 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
     private void  init(){
 //    	TabsActivity.startActivity(LaunchActivity.this);
 //		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
+    	
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
     	}else{
     		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-    	}
+    	}/**/
+//    	PhoneGapAc.startActivity(LaunchActivity.this);
     	finish();	
     }
 

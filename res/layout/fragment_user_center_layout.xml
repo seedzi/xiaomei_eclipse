@@ -13,6 +13,7 @@
 	    />
 
     <RelativeLayout
+        android:id="@+id/user_info_layout"
         android:layout_width="match_parent"
         android:layout_height="124dp" 
         android:background="@drawable/gr_banner">

@@ -81,8 +81,16 @@
 		<activity 
 		    android:name="com.xiaomei.leveltwo.BeautifulRingDetailsActivity">
 		</activity>		
+		<!-- 用户详情页 -->
+		<activity 
+		    android:name="com.xiaomei.module.user.center.UserInfoActivity">
+		</activity>
 		
-		
+		<!-- 测试 phonegap -->
+		<activity 
+		    android:name="com.xiaomei.test.PhoneGapAc"
+		    android:configChanges="orientation|keyboardHidden">
+		</activity>
 		<!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -106,5 +114,29 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS"/>
+    
+    <!-- phonegap -->
+    <supports-screens  
+       android:largeScreens="true"  
+       android:normalScreens="true"  
+       android:smallScreens="true"  
+       android:resizeable="true"  
+       android:anyDensity="true"/>  
+   <uses-permission android:name="android.permission.CAMERA" />  
+   <uses-permission android:name="android.permission.VIBRATE" />  
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />  
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />  
+   <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />  
+   <uses-permission android:name="android.permission.INTERNET" />  
+   <uses-permission android:name="android.permission.RECEIVE_SMS" />  
+   <uses-permission android:name="android.permission.RECORD_AUDIO" />  
+   <uses-permission android:name="android.permission.RECORD_VIDEO"/>  
+   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />  
+   <uses-permission android:name="android.permission.READ_CONTACTS" />  
+   <uses-permission android:name="android.permission.WRITE_CONTACTS" />     
+   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />     
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+   <uses-permission android:name="android.permission.GET_ACCOUNTS" />  
+   <uses-permission android:name="android.permission.BROADCAST_STICKY" />  
 
 </manifest>

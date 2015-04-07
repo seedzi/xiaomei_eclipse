@@ -3,15 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/color_white"
-    android:weightSum="4" >
+    android:background="@color/color_background"
+    android:weightSum="4" 
+    android:paddingBottom="10dp">
     
     <!--限时特惠  -->
     <LinearLayout 
         android:layout_width="0dp"
         android:layout_weight="1"
     	android:layout_height="wrap_content"
-    	android:orientation="vertical">
+    	android:orientation="vertical"
+    	android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/youhui"
 	        android:layout_marginTop="18dp"
@@ -35,7 +37,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
     	android:layout_height="wrap_content"
-    	android:orientation="vertical">
+    	android:orientation="vertical"
+    		android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/payment"
 	        android:layout_marginTop="18dp"
@@ -58,7 +61,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
     	android:layout_height="wrap_content"
-    	android:orientation="vertical">
+    	android:orientation="vertical"
+    		android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/riji"
 	        android:layout_marginTop="18dp"
@@ -81,7 +85,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
     	android:layout_height="wrap_content"
-    	android:orientation="vertical">
+    	android:orientation="vertical"
+    		android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/jiangli"
 	        android:layout_marginTop="18dp"

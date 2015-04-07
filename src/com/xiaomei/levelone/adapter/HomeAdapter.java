@@ -1,27 +1,18 @@
 package com.xiaomei.levelone.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Section;
-import com.xiaomei.bean.Section.Entity;
-import com.xiaomei.leveltwo.WebViewActivity;
-import com.xiaomei.util.ScreenUtils;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class HomeAdapter extends BaseAdapter implements View.OnClickListener{

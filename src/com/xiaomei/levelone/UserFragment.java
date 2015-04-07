@@ -8,6 +8,7 @@ import com.xiaomei.module.user.center.CollectionActivity;
 import com.xiaomei.module.user.center.FeedbackActivity;
 import com.xiaomei.module.user.center.HistoryActivity;
 import com.xiaomei.module.user.center.MessageActivity;
+import com.xiaomei.module.user.center.UserInfoActivity;
 import com.xiaomei.module.user.center.UserOrderActivity;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
@@ -68,6 +69,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		mUserNameTv = (TextView) mRootView.findViewById(R.id.user_name);
 		mUserGradeTv = (TextView) mRootView.findViewById(R.id.user_grade);
 		
+		mRootView.findViewById(R.id.user_info_layout).setOnClickListener(this);
 	}
 	
 	private void setUpUserItem(ViewGroup rootView,String title,View.OnClickListener clickListener,int drawableRes){
@@ -120,6 +122,9 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 			break;
 		case R.id.line6: //关于我们
 			AboutActivity.startActivity(getActivity());
+			break;
+		case R.id.user_info_layout:
+			UserInfoActivity.startActivity(getActivity());
 			break;
 		default:
 			break;

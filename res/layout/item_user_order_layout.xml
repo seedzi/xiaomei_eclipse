@@ -23,7 +23,7 @@
             android:textColor="@color/item_txt_color"
             android:layout_marginLeft="@dimen/item_margin_small_most"
             android:layout_toRightOf="@id/tag"
-            android:textSize="@dimen/txt_normal_size_sp"
+            android:textSize="12sp"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textSize="12sp"
             android:text="美哈哈"/>         
                       
         <TextView 
@@ -59,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textSize="12sp"
             android:layout_marginRight="@dimen/item_margin_normal"
             android:text="刚刚"/>                
             
@@ -91,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#333333" 
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:text="suhu尚惠"/>
          <TextView 
             android:id="@+id/status"
@@ -100,7 +102,7 @@
 			android:layout_toRightOf="@id/icon"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
-            android:textSize="@dimen/txt_normal_size_sp"
+            android:textSize="12sp"
             android:textColor="#aaaaaa"
             android:text="未付款"/>       
             
@@ -111,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#d366f3" 
-            android:textSize="@dimen/txt_max_big_size_sp"
+            android:textSize="21sp"
             android:text="￥ 599"/>                
     </RelativeLayout>
     
@@ -134,7 +136,7 @@
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@drawable/payment_selector"/>
@@ -142,7 +144,7 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/pay_button"
             android:text="取消订单"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/color_payment_cancel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
