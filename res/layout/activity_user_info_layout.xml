@@ -22,7 +22,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
         
-        <com.xiaomei.widget.XCRoundImageView 
+        <com.xiaomei.widget.CircleImageView 
             android:id="@+id/user_icon"
         	android:layout_width="50dp"
             android:layout_height="50dp"           
@@ -168,20 +168,28 @@
 		     	android:paddingTop="15dp"
 		    	android:paddingBottom="15dp">
 		        <TextView 
+		            android:id="@+id/nick_txt"
 		            android:text="昵称"
 		            android:textColor="#373737"
 		            android:textSize="16sp"
+		            android:layout_centerVertical="true"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
 		            android:layout_alignParentLeft="true"/>
 		        
-			 	<TextView 
+			 	<EditText
+			 	    android:id="@+id/nick_name"
+			 	    android:layout_centerVertical="true"
+			 	    android:gravity="right"
+			 	    android:layout_toRightOf="@id/nick_txt" 
 		            android:text="美美嗒"
 		            android:textColor="#969696"
 		            android:textSize="15sp"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
-		            android:layout_alignParentRight="true"/>
+		            android:layout_alignParentRight="true"
+		             android:maxLines="1" 
+		             android:background="@null"/>
 		    </RelativeLayout>
 		        <View  
 		        android:layout_height="1px"       
@@ -194,6 +202,8 @@
 		     	android:paddingTop="15dp"
 		    	android:paddingBottom="15dp">
 		        <TextView 
+                    android:layout_centerVertical="true"
+		            android:id="@+id/link_txt"
 		            android:text="联系方式"
 		            android:textColor="#373737"
 		            android:textSize="16sp"
@@ -201,13 +211,19 @@
 		            android:layout_width="wrap_content"
 		            android:layout_alignParentLeft="true"/>
 		        
-			 	<TextView 
+			 	<EditText 
+			 	    android:layout_centerVertical="true"
+			 	    android:id="@+id/link"
+			 	    android:layout_toRightOf="@id/link_txt" 
 		            android:text="152-1456-2395"
 		            android:textColor="#969696"
 		            android:textSize="15sp"
+		            android:gravity="right"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
-		            android:layout_alignParentRight="true"/>
+		            android:layout_alignParentRight="true"
+		            android:maxLines="1" 
+		            android:background="@null"/>
 		    </RelativeLayout>
 		            <View  
 		        android:layout_height="1px"       
@@ -221,20 +237,27 @@
 		     	android:paddingTop="15dp"
 		    	android:paddingBottom="15dp">
 		        <TextView 
+		            android:id="@+id/sheng_fen_zheng_hao_txt"
 		            android:text="身份证号"
 		            android:textColor="#373737"
 		            android:textSize="16sp"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
-		            android:layout_alignParentLeft="true"/>
+		            android:layout_alignParentLeft="true"
+		            android:layout_centerVertical="true"/>
 		        
-			 	<TextView 
+			 	<EditText
+			 	    android:id="@+id/sheng_fen_zheng_hao" 
 		            android:text="34237×××××984855"
 		            android:textColor="#969696"
 		            android:textSize="15sp"
+		            android:gravity="right"
+		            android:layout_toRightOf="@id/sheng_fen_zheng_hao_txt"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
-		            android:layout_alignParentRight="true"/>
+		            android:layout_alignParentRight="true"
+		            android:layout_centerVertical="true"
+		            android:background="@null"/>
 		    </RelativeLayout>
 		              <View  
 		        android:layout_height="1px"       
@@ -248,26 +271,34 @@
 		     	android:paddingTop="15dp"
 		    	android:paddingBottom="15dp">
 		        <TextView 
+		            android:id="@+id/location_txt"
 		            android:text="详细地址"
+		            android:layout_centerVertical="true"
 		            android:textColor="#373737"
 		            android:textSize="16sp"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
 		            android:layout_alignParentLeft="true"/>
 		        
-			 	<TextView 
+			 	<EditText 
+			 	    android:id="@+id/location"
+			 	    android:layout_centerVertical="true"
+			 	    android:gravity="right"
+			 	    android:layout_toRightOf="@id/location_txt"
 		            android:text="北京市海淀区清..."
 		            android:textColor="#969696"
 		            android:textSize="15sp"
 		            android:layout_height="wrap_content"
 		            android:layout_width="wrap_content"
-		            android:layout_alignParentRight="true"/>
+		            android:layout_alignParentRight="true"
+		            android:background="@null"/>
 		    </RelativeLayout>
 		       
 		</LinearLayout>
     
 		  <!-- 第三部分 -->
 			<TextView 
+			    android:id="@+id/loginout"
 			    android:layout_marginTop="10dp"
 			    android:paddingLeft="15dp"
 			    android:paddingTop="15dp"

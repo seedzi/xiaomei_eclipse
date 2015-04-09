@@ -10,10 +10,12 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.util.Log;
 
+import com.xiaomei.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.api.builder.BeautifulRingBuilder;
 import com.xiaomei.api.builder.HospitalBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
+import com.xiaomei.api.builder.UserInfoBuilder;
 import com.xiaomei.api.builder.UserLoginBuilder;
 import com.xiaomei.api.builder.UserRegisterBuilder;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
@@ -24,10 +26,12 @@ import com.xiaomei.api.http.AbstractHttpApi;
 import com.xiaomei.api.http.HttpApi;
 import com.xiaomei.api.http.HttpApiWithSession;
 import com.xiaomei.bean.BeautifulRing;
+import com.xiaomei.bean.BeautifulRingDetail;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
 import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Section;
+import com.xiaomei.bean.User;
 import com.xiaomei.util.Security;
 
 /**
@@ -80,6 +84,13 @@ public class XiaoMeiApi {
 		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulRingBuilder());
 	}
 	
+	/**圈子详情*/
+	public BeautifulRingDetail getBeatifulRingDetailFromNet()
+			throws XiaoMeiCredentialsException, XiaoMeiIOException,
+			XiaoMeiJSONException, XiaoMeiOtherException {
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingDetailUrl(),null);
+		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulDetailBuilder());
+	}
 	
 	// ========================================================================================
 	// 用户注册与登录(NET)
@@ -106,7 +117,7 @@ public class XiaoMeiApi {
 	/**
 	 * 登录
 	 */
-	public NetResult userLogin(String userid,String passwd) 
+	public User userLogin(String userid,String passwd) 
 			throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid) ,
 				new BasicNameValuePair("passwd", passwd),
@@ -151,4 +162,28 @@ public class XiaoMeiApi {
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return  mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
+	
+	// ========================================================================================
+	// 用户信息
+	// ========================================================================================
+	/**
+	 * 获取用户信息
+	 */
+	public void getUserInfo(String userid,String token)
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),new BasicNameValuePair("token", token)} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserInfoUrl(),
+				values[0],
+				values[1],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		mHttpApi.doHttpRequestObject(httpPost, new UserInfoBuilder());
+	}
+	/**
+	 * 更新用户信息
+	 */
+	public void updateUserInfo()
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		
+	}
+	
 }

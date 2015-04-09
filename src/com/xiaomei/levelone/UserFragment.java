@@ -87,6 +87,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	
 	/**活取用戶信息成功*/
 	public void updateUserMessgaeAsynCallBack(){
+		/*
 		String grade = mControl.getUserInfo().getGrade();
 		String iconUrl = mControl.getUserInfo().getIconUrl();
 		String userName = mControl.getUserInfo().getUsername();
@@ -94,6 +95,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		mUserNameTv.setText(userName);
 		mUserGradeTv.setText(grade);
 		ImageLoader.getInstance().displayImage(iconUrl, mUserIconIv);
+		*/
 	}
 	
 	/**获取用戶信息失敗*/

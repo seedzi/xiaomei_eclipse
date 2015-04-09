@@ -27,9 +27,11 @@ import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
+import com.xiaomei.bean.User;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.module.user.control.UserControl;
 import com.xiaomei.util.MobileUtil;
+import com.xiaomei.util.UserUtil;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.TitleBar.Listener;
 
@@ -153,19 +155,6 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		mTitleBar.findViewById(R.id.login).performClick();
 	}
 	
-	private void initSns(){
-		
-		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(LoginAndRegisterActivity.this, "100424468",
-	                    "c7394704798a158208a74ab60104f0ba");
-	    qqSsoHandler.addToSocialSDK();
-	    mQqLogin = (ImageView) findViewById(R.id.login_qq);
-	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
-	    mQqLogin.setOnClickListener(this);
-	    mWeixinLogin.setOnClickListener(this);
-	}
-	
-	
 	@Override
 	public void switchLogin() {
 		mLoginInputLayout.setVisibility(View.VISIBLE);
@@ -196,7 +185,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 			getVerification(mRegisterUserMobileEdit.getText().toString());
 			break;
 		case R.id.login_qq:
-			loginQq(getApplicationContext());
+			loginQq(this);
 			break;
 		case R.id.login_weixin:
 			break;
@@ -270,20 +259,31 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	}
 	
 	// ===============================  Sns =======================================
+	private void initSns(){
+		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(LoginAndRegisterActivity.this, "1104506536",
+	                    "mHZPDXRIOLTUjVji");
+	    qqSsoHandler.addToSocialSDK();
+	    mQqLogin = (ImageView) findViewById(R.id.login_qq);
+	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
+	    mQqLogin.setOnClickListener(this);
+	    mWeixinLogin.setOnClickListener(this);
+	}
+	
 	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 	private void loginQq(final Context mContext){
 		mController.doOauthVerify(mContext, SHARE_MEDIA.QQ, new UMAuthListener() {
 		    @Override
 		    public void onStart(SHARE_MEDIA platform) {
-		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
+//		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onError(SocializeException e, SHARE_MEDIA platform) {
-		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
+//		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
-		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
+//		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
 		        //获取相关授权信息
 		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.QQ, new UMDataListener() {
 				    @Override

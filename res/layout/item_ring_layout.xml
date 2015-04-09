@@ -13,7 +13,7 @@
         	android:paddingTop="5dp"
         	android:paddingBottom="5dp">
         	
-        <com.xiaomei.widget.XCRoundImageView 
+        <com.xiaomei.widget.CircleImageView
             android:id="@+id/person_icon"
             android:layout_width="@dimen/item_icon_size_smaill_most"
             android:layout_height="@dimen/item_icon_size_smaill_most"

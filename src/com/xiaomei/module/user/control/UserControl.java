@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.bean.NetResult;
+import com.xiaomei.bean.User;
+import com.xiaomei.module.user.model.UserModel;
 import com.xiaomei.util.UserUtil;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
@@ -13,9 +15,12 @@ import com.yuekuapp.proxy.MessageProxy;
 public class UserControl extends BaseControl{
 	
 	private static boolean DEBUG = true;
+	
+	private UserModel mUserModel;
 
 	public UserControl(MessageProxy mMethodCallBack) {
 		super(mMethodCallBack);
+		mUserModel = new UserModel();
 	}
 	
 	@AsynMethod
@@ -40,23 +45,34 @@ public class UserControl extends BaseControl{
 
 	@AsynMethod
 	public void loginAsyn(String username ,String password){
+		User user = null;
 		try {
-			NetResult result = XiaoMeiApplication.getInstance().getApi().userLogin(username, password);
+			user = XiaoMeiApplication.getInstance().getApi().userLogin(username, password);
+			mUserModel.setUser(user);
 			if(DEBUG)
-				Log.d("111", "loginAsyn()  msg = " + result.getMsg());
+				Log.d("111", "loginAsyn()  user = " + user);
 		} catch (Exception e) {
 			sendMessage("loginAsynExceptionCallBack");
 			e.printStackTrace();
 			return;
 		} 
-		UserUtil.userloginSuccess(username, password);
-		sendMessage("loginAsynCallBack");
+		if(UserUtil.isUserValid(user)){
+			UserUtil.userloginSuccess(user);
+			sendMessage("loginAsynCallBack");
+			if(DEBUG)
+				Log.d("111", "loginAsyn()  登录成功" );
+		}else{
+			sendMessage("loginAsynExceptionCallBack");
+			if(DEBUG)
+				Log.d("111", "loginAsyn()  登录失败" );
+		}
 	}
 	
 	@AsynMethod
 	public void registeAsyn(String username,String password,String verificationCode){
 		try {
 			NetResult result = XiaoMeiApplication.getInstance().getApi().userRegister(username, password, verificationCode);
+
 			if(DEBUG)
 				Log.d("111", "registeAsyn()  msg = " + result.getMsg());
 		} catch (Exception e) {
@@ -79,6 +95,10 @@ public class UserControl extends BaseControl{
 				return;
 		} 
 		sendMessage("getVerificationCodeAsynCallBack");
+	}
+	
+	public User getUser(){
+		return mUserModel.getUser();
 	}
 	
 }

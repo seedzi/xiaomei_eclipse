@@ -48,7 +48,6 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 				}
 			}
 		}).start();*/
-	
         
         new Handler().postDelayed(new Runnable() {
             @Override

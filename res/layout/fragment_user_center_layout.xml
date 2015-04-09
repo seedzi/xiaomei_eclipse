@@ -18,7 +18,7 @@
         android:layout_height="124dp" 
         android:background="@drawable/gr_banner">
 
-        <com.xiaomei.widget.XCRoundImageView
+        <com.xiaomei.widget.CircleImageView
             android:id="@+id/user_icon"
             android:layout_width="@dimen/item_icon_size_normal"
             android:layout_height="@dimen/item_icon_size_normal"
