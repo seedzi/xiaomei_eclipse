@@ -41,12 +41,14 @@
      android:gravity="center_vertical"
      android:orientation="vertical">
             <TextView 
+                android:id="@+id/nick_name"
                 android:textSize="12sp"
                      android:layout_width="wrap_content"
      		android:layout_height="wrap_content"       
              android:textColor="@color/color_white"
              android:text="基调蔷薇"/>
                 <TextView 
+                  android:id="@+id/sex_location"  
                   android:layout_marginTop="6dp"
                 android:textSize="11sp"
                      android:layout_width="wrap_content"
@@ -56,6 +58,7 @@
         </LinearLayout>
         
                    <TextView 
+                       android:id="@+id/layout_title"
                        android:layout_above="@id/icon"
                 android:textSize="16sp"
                 android:layout_marginBottom="10dp"

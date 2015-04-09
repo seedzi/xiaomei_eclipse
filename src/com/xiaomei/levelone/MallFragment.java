@@ -3,6 +3,7 @@ package com.xiaomei.levelone;
 
 import com.xiaomei.R;
 import com.xiaomei.levelone.control.MallControl;
+import com.xiaomei.leveltwo.GoodsListActivity;
 import com.xiaomei.leveltwo.MallSecondActivity;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
@@ -121,7 +122,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 
 		@Override
 		public void onClick(View v) {
-			MallSecondActivity.startActivity(getActivity());
+			GoodsListActivity.startActivity(getActivity());
 		}
 		
 		private class Holder{

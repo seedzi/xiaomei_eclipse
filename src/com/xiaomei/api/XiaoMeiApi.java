@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.xiaomei.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.api.builder.BeautifulRingBuilder;
+import com.xiaomei.api.builder.GoodsBuilder;
 import com.xiaomei.api.builder.HospitalBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
@@ -27,6 +28,7 @@ import com.xiaomei.api.http.HttpApi;
 import com.xiaomei.api.http.HttpApiWithSession;
 import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.bean.BeautifulRingDetail;
+import com.xiaomei.bean.Goods;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
 import com.xiaomei.bean.NetResult;
@@ -66,6 +68,14 @@ public class XiaoMeiApi {
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),null);
 		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
+	}
+	
+	/**商品列表*/
+	public List<Goods> getGoodsListFromNet()
+			throws XiaoMeiCredentialsException, XiaoMeiIOException,
+			XiaoMeiJSONException, XiaoMeiOtherException {
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),null);
+		return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
 	}
 	
 	/**机构*/

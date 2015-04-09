@@ -61,11 +61,11 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 //    	TabsActivity.startActivity(LaunchActivity.this);
 //		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
     	
-    	if(UserUtil.isUserValid()){
+//    	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
-    	}else{
-    		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-    	}/**/
+//    	}else{
+//    		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
+//    	}/**/
 //    	PhoneGapAc.startActivity(LaunchActivity.this);
     	finish();	
     }

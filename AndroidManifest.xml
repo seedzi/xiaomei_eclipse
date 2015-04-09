@@ -77,6 +77,9 @@
 		<activity 
 		    android:name="com.xiaomei.leveltwo.MallSecondActivity">
 		</activity>		
+		<activity 
+            android:name="com.xiaomei.leveltwo.GoodsListActivity">
+        </activity> 
 		<!-- 圈子详情页 -->
 		<activity 
 		    android:name="com.xiaomei.leveltwo.BeautifulRingDetailsActivity">

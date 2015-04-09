@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+    <ImageView 
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"        
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/share_weixin_moment_icon"/>
+    <TextView 
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/icon"
+        android:layout_width="match_parent"        
+        android:layout_height="wrap_content"        
+        android:textSize="16sp"
+        android:text="suhu尚惠唇膏精品体验价格快来抢购吧！" />
+    
+    <TextView 
+        android:id="@+id/hospital"
+        android:layout_below="@id/title"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/icon"
+        android:layout_width="match_parent"        
+        android:layout_height="wrap_content"        
+        android:textSize="16sp"
+        android:text="LK外科医院" 
+        android:textColor="#787878"/>
+
+    <TextView 
+        android:id="@+id/size"
+            android:layout_below="@id/hospital"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/icon"
+        android:layout_width="match_parent"        
+        android:layout_height="wrap_content"        
+        android:textSize="16sp"
+        android:textColor="#aaaaaa"
+        android:text="销量234" /> 
+</RelativeLayout>
