@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.xiaomei">
 
 	<include 
 	    android:layout_width="match_parent"
@@ -24,6 +24,8 @@
             android:layout_height="@dimen/item_icon_size_normal"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/item_margin_normal"
+            app:border_width="3dp"
+            app:border_color="#ffffff"
             android:src="@drawable/joke_channel_offline_icon"/>
         <LinearLayout
             android:layout_width="wrap_content"

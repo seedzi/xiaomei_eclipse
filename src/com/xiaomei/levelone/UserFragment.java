@@ -1,6 +1,5 @@
 package com.xiaomei.levelone;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.levelone.control.UserControl;
 import com.xiaomei.module.user.center.AboutActivity;
