@@ -24,11 +24,6 @@ public class UserControl extends BaseControl{
 	}
 	
 	@AsynMethod
-	public void getUserOrdersAsyn(){
-		//TODO
-	}
-	
-	@AsynMethod
 	public void findPasswordAsyn(String username,String password,String verificationCode){
 		try {
 			NetResult result = XiaoMeiApplication.getInstance().getApi().findPassword(username, password, verificationCode);

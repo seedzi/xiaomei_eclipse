@@ -19,6 +19,7 @@ import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.bean.Goods;
 import com.xiaomei.leveltwo.control.LeveltwoControl;
+import com.xiaomei.module.user.center.OrderDetailsActivity;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 
@@ -71,7 +72,7 @@ public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
 		Toast.makeText(this, "加载数据错误", 0).show();
 	}
 	
-	private class MyAdapter extends BaseAdapter{
+	private class MyAdapter extends BaseAdapter implements View.OnClickListener{
 		
 		private LayoutInflater mLayoutInflater;
 		
@@ -110,12 +111,14 @@ public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
 				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
 				holder.sizeTv = (TextView) findViewById(R.id.size);
 				holder.hospitalTv = (TextView) findViewById(R.id.hospital);
+				convertView.setOnClickListener(this);
 				convertView.setTag(holder);
 			}
 			holder = (Holder) convertView.getTag();
 			Goods goods = mData.get(position);
 			ImageLoader.getInstance().displayImage(goods.getFileUrl(),holder.iconIv );
 			holder.titleTv .setText(goods.getTitle());
+			holder.goodId = goods.getId();
 //			holder.sizeTv.setText(goods.getPriceMarket());
 //			holder.hospitalTv.setText(goods.ge);
 			return convertView;
@@ -126,6 +129,13 @@ public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
 			TextView titleTv; 
 			TextView sizeTv;
 			TextView hospitalTv;
+			String goodId;
+		}
+
+		@Override
+		public void onClick(View v) {
+			Holder holder = (Holder) v.getTag();
+			OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
 		}
 		
 	}

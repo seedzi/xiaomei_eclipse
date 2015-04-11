@@ -1,12 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@color/color_gray">
+    android:background="@color/color_background">
     
     <include layout="@layout/title_bar_layout"/>
-        
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@drawable/order_details_top_bg">
+        <TextView 
+            android:id="@+id/mechanism_name_txt"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#373737"
+            android:text="机构名称：  "/>
+        <TextView 
+            android:id="@+id/mechanism_mobile"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#373737"
+            android:text="1342870367"/>
+        <TextView 
+            android:id="@+id/mobile_name_txt"
+            android:layout_toLeftOf="@id/mechanism_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#373737"
+            android:text="电话：  "/>
+         <TextView 
+            android:id="@+id/mechanism_name"
+            android:layout_toRightOf="@id/mechanism_name_txt"
+            android:layout_toLeftOf="@id/mobile_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#373737"
+            android:text="某一个外壳医院，呵呵呵呵"
+            android:maxLines="1"/>
+        <TextView 
+            android:id="@+id/mechanism_location_txt"
+            android:layout_marginTop="18dp"
+            android:layout_below="@id/mechanism_name_txt"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#373737"
+            android:text="机构地址：  "/>         
+         <TextView 
+            android:id="@+id/mechanism_location"
+            android:layout_marginTop="18dp"
+            android:layout_below="@id/mechanism_name_txt"
+            android:layout_toRightOf="@id/mechanism_location_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#373737"
+            android:text="首尔首尔首尔"/>            
+    </RelativeLayout>
+   	
+    <RelativeLayout 
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="15dp"
+        android:background="#ffffff">
+         <ImageView 
+             android:id="@+id/goods_icon"
+             android:layout_alignParentLeft="true"
+             android:layout_width="70dp"
+             android:layout_height="55dp"
+             />
+         <TextView 
+             android:id="@+id/goods_title"
+             android:layout_toRightOf="@id/goods_icon"
+             android:layout_alignTop="@id/goods_icon"
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:textColor="#373737"
+             android:textSize="15sp"
+             android:text="suhu尚惠唇膏精品特惠"/>
+         
+         <TextView 
+             android:id="@+id/goods_price"
+             android:layout_toRightOf="@id/goods_icon"
+             android:layout_alignBottom="@id/goods_icon"
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:text="599.00"
+             android:textColor="#d366f3"
+             android:textSize="17sp"/>
+         <TextView 
+             android:id="@+id/goods_type"
+             android:layout_alignBottom="@id/goods_icon"
+             android:layout_toRightOf="@id/goods_price"
+             android:layout_marginLeft="15dp"
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:textSize="17sp"
+             android:textColor="#b4b4b4"
+             android:text="X1"
+             />
+
+    </RelativeLayout>
+    
     <include android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
     
     <include android:id="@+id/item2" layout="@layout/item_user_order_details_layout"/>
@@ -22,11 +139,12 @@
     
 <RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:background="@color/color_gray">
+    android:layout_height="46dp">
     <TextView 
         android:layout_margin="10dp"
         android:id="@+id/title"
+        android:textSize="16sp"
+        android:textColor="#646464"
         android:layout_alignParentLeft="true"
         android:text="@string/pay_type"
         android:layout_centerVertical="true"
@@ -49,12 +167,12 @@
 	    <RelativeLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" 
-	        android:padding="10dp">
+	        android:padding="15dp">
 	        <ImageView 
 	        android:id="@+id/pay_icon_weixin"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" 	            
-	        android:src="@drawable/share_weixin_contact_icon"/>
+	        android:src="@drawable/weixing"/>
 			<TextView 
 			    android:layout_marginLeft="5dp"
 			    android:layout_toRightOf="@id/pay_icon_weixin"
@@ -77,6 +195,7 @@
 	    </RelativeLayout>
 		    
 	    <View 
+	        android:layout_marginLeft="15dp"
 	        android:background="@color/color_gray"
 	    	android:layout_height="1px"        
 	        android:layout_width="match_parent"/>
@@ -86,12 +205,12 @@
 	      <RelativeLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" 
-	        android:padding="10dp">
+	        android:padding="15dp">
 	        <ImageView 
 	        android:id="@+id/pay_icon_zhifubao"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" 	            
-	        android:src="@drawable/share_weixin_moment_icon"/>
+	        android:src="@drawable/zhifubao"/>
 			<TextView 
 			    android:layout_marginLeft="5dp"
 			    android:layout_toRightOf="@id/pay_icon_zhifubao"
@@ -116,3 +235,4 @@
 	</LinearLayout>
 
 </LinearLayout>
+</ScrollView>

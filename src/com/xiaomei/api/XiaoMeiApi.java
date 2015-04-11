@@ -10,10 +10,14 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.Context;
 import android.util.Log;
 
+import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.api.builder.AddUserOrderBuilder;
 import com.xiaomei.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.api.builder.BeautifulRingBuilder;
 import com.xiaomei.api.builder.GoodsBuilder;
 import com.xiaomei.api.builder.HospitalBuilder;
+import com.xiaomei.api.builder.ListOrderBuilder;
+import com.xiaomei.api.builder.LoginOutBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
 import com.xiaomei.api.builder.UserInfoBuilder;
@@ -142,6 +146,21 @@ public class XiaoMeiApi {
 	}
 	
 	/**
+	 * 登出
+	 */
+	public NetResult loginOut(String token)
+			throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("token", token),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserLoginOutUrl(),
+				values[0],
+				values[1],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+	}
+	
+	/**
 	 * 获取验证码
 	 */
 	public String getVerificationCode(String telno)
@@ -202,15 +221,44 @@ public class XiaoMeiApi {
 	// ========================================================================================
 	
 	/**
-	 * 获取用户订单列表接口
+	 * 新增订单接口
 	 */
-	public void addtUserOrder(String userid,String goodsId,String mobile,String passport){
+	public Order addUserOrder(String userid,String goodsId,String username,String mobile,String passport,String token)
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
+				new BasicNameValuePair("goods_id", goodsId),
+				new BasicNameValuePair("username", username),
+				new BasicNameValuePair("mobile", mobile),
+				new BasicNameValuePair("passport", passport),
+				new BasicNameValuePair("action", "add"),
+				new BasicNameValuePair("token", token),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.addUserOrderUrl(),
+				values[0],
+				values[1],
+				values[2],
+				values[3],
+				values[4],
+				values[5],
+				values[6],
+				values[7],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return mHttpApi.doHttpRequestObject(httpPost, new AddUserOrderBuilder());
 	}
 	
 	/**
 	 * 获取用户订单列表接口
 	 */
-	public List<Order> getUserOrderList(){
-		return null;
+	public List<Order> getUserOrderList(String userid,String token)
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
+				new BasicNameValuePair("token", token),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserOrderUrl(),
+				values[0],
+				values[1],
+				values[2],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
 	}
 }

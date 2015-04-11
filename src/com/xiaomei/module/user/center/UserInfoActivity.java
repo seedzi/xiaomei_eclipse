@@ -13,6 +13,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.xiaomei.R;
+import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.api.exception.XiaoMeiIOException;
+import com.xiaomei.api.exception.XiaoMeiJSONException;
+import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.User;
 import com.xiaomei.module.user.center.control.UserCenterControl;
 import com.xiaomei.util.UserUtil;
@@ -36,6 +41,7 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 		setContentView(R.layout.activity_user_info_layout);
 		initView();
 		initData();
+		
 	}
 	
 	private void initView(){
@@ -64,7 +70,7 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 		int id = v.getId();
 		switch (id) {
 		case R.id.loginout:
-			UserUtil.clearUser();
+			mControl.loginOutAsyn();
 			break;
 		case R.id.user_icon:
 	         Intent intent = new Intent();  
@@ -96,4 +102,12 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 		
 	}
 	
+	// =========================================== CallBack ===================================================
+	public void loginOutAsynCallBack(){
+		Toast.makeText(UserInfoActivity.this, "登出", 0).show();
+	}
+	
+	public void loginOutAsynExceptionCallBack(){
+		
+	}
 }
