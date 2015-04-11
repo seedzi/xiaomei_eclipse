@@ -116,7 +116,7 @@ public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
 			Goods goods = mData.get(position);
 			ImageLoader.getInstance().displayImage(goods.getFileUrl(),holder.iconIv );
 			holder.titleTv .setText(goods.getTitle());
-			holder.sizeTv.setText(goods.getPriceMarket());
+//			holder.sizeTv.setText(goods.getPriceMarket());
 //			holder.hospitalTv.setText(goods.ge);
 			return convertView;
 		}

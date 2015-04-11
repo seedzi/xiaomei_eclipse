@@ -33,6 +33,10 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		mData = data;
 	}
 	
+	public List<Section> getData(){
+		return mData;
+	}
+	
 	@Override
 	public int getCount() {
 		return mData == null ?0:mData.size();

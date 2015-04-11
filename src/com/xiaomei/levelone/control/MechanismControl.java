@@ -23,13 +23,23 @@ public class MechanismControl extends BaseControl {
 	@AsynMethod
 	public void getMechanismListAsyn(){
 		try {
-			mData.clear();
-			mData.addAll(XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet());
+			mData = XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet();
 		} catch (Exception e) {
 			sendMessage("getMechanismListExceptionCallBack");
 			return;
 		}
 		sendMessage("getMechanismLismListCallBack");
+	}
+	
+	@AsynMethod
+	public void getMechanismListMoreAsyn(){
+		try {
+			mData = XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet();
+		} catch (Exception e) {
+			sendMessage("getMechanismListMoreExceptionCallBack");
+			return;
+		}
+		sendMessage("getMechanismLismListMoreCallBack");
 	}
 	
 	public List<Hospital> getListData(){

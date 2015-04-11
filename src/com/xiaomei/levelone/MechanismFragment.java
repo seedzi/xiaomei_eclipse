@@ -19,13 +19,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class MechanismFragment extends BaseFragment<MechanismControl> implements OnRefreshListener{
+public class MechanismFragment extends BaseFragment<MechanismControl>
+	implements OnRefreshListener,OnScrollListener{
 	
 	private ViewGroup mRootView;
 	
@@ -36,6 +40,10 @@ public class MechanismFragment extends BaseFragment<MechanismControl> implements
 	private TitleBar mTitleBar;
 	
 	private MechanismAdapter mAdapter;
+	
+	private boolean mIsRefresh;
+	
+	private ViewGroup mRefreshLayout;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,28 +63,76 @@ public class MechanismFragment extends BaseFragment<MechanismControl> implements
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mAdapter = new MechanismAdapter(getActivity()); 
 		mListView.setAdapter(mAdapter);
+		
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 	}
 	
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
+		mPullToRefreshListView.setOnScrollListener(this);
 	}
 	
 	private void initData(){
+		mIsRefresh = true;
 		mControl.getMechanismListAsyn();
 	}
 	
-	public void getMechanismLismListCallBack(){
-		mAdapter.setData(mControl.getListData());
-		mAdapter.notifyDataSetChanged();
+	private void getMoreData(){
+		if(mIsRefresh)
+			return;
+		if(!mRefreshLayout.isShown())
+			mRefreshLayout.setVisibility(View.VISIBLE);
+		mPullToRefreshListView.addFooterView(mRefreshLayout);
+		mControl.getMechanismListMoreAsyn();
+		mIsRefresh = true;
 	}
 	
-	public void getMechanismListExceptionCallBack(){
-		
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		int position = mListView.getLastVisiblePosition();
+		Log.d("111", "position = " + position + ",mIsRefresh = " + mIsRefresh);
+		if(!mIsRefresh && position == mAdapter.getCount()){
+			getMoreData();
+		}
 	}
 
 	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+	}
+	
+	// ================================== Call back ==========================================
+	public void getMechanismLismListCallBack(){
+		mIsRefresh = false;
+		mAdapter.setData(mControl.getListData());
+		mAdapter.notifyDataSetChanged();
+		mPullToRefreshListView.onRefreshComplete();
+		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
+	}
+	
+	public void getMechanismListExceptionCallBack(){
+		mIsRefresh = false;
+		Toast.makeText(getActivity(), "加载数据异常", 0).show();
+	}
+
+	public void getMechanismLismListMoreCallBack(){
+		mIsRefresh = false;
+		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		mAdapter.getData().addAll(mControl.getListData());
+		mAdapter.notifyDataSetChanged();
+		Toast.makeText(getActivity(), "加载完成", 0).show();
+	}
+	
+	public void getMechanismListMoreExceptionCallBack(){
+		mIsRefresh = false;
+		Toast.makeText(getActivity(), "加载数据异常", 0).show();
+	}
+	// ================================== Call back ==========================================
+	@Override
 	public void onRefresh() {
 		mControl.getMechanismListAsyn();
+		mIsRefresh = true;
 	}
 	
 	private class MechanismAdapter extends BaseAdapter{
@@ -90,6 +146,10 @@ public class MechanismFragment extends BaseFragment<MechanismControl> implements
 		}
 		public void setData(List<Hospital> data){
 			mData = data;
+		}
+		
+		public List<Hospital> getData(){
+			return mData;
 		}
 		
 		@Override

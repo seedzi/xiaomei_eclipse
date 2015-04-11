@@ -39,6 +39,24 @@ public class HomeControl extends BaseControl {
 		}
 	}
 	
+	@AsynMethod
+	public void getMoreListDataFromNetAysn(){
+		try {
+			XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet();
+			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet();
+			if(listNet!=null && listNet.size()>0){
+				mModel.setList(listNet);
+				sendMessage("getHomeListEntityMoreAsynCallBack");
+			}else{
+				sendMessage("getHomeListEntityMoreAsynCallBackException");
+			}
+		} catch (Exception e) {
+			sendMessage("getHomeListEntityMoreAsynCallBackException");
+			e.printStackTrace();
+		} finally {
+		}
+	}
+	
 	public List<Section> getSectionList(){
 		return mModel.getList();
 	}

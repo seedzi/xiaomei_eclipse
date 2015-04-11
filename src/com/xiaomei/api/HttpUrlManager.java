@@ -56,5 +56,13 @@ public class HttpUrlManager {
 	String upoadAvatarUrl(){
 		return HOST + "/server/action/upoadAvatar.php";
 	}
+	/**获取用户订单*/
+	String getUserOrderUrl(){
+		return HOST + "/server/show/myOrder.php";
+	}
+	/**生成用户订单*/
+	String addUserOrderUrl(){
+		return HOST + "/server/action/order.php";
+	}
 }
 

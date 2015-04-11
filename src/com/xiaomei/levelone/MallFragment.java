@@ -5,6 +5,7 @@ import com.xiaomei.R;
 import com.xiaomei.levelone.control.MallControl;
 import com.xiaomei.leveltwo.GoodsListActivity;
 import com.xiaomei.leveltwo.MallSecondActivity;
+import com.xiaomei.util.ScreenUtils;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
@@ -30,6 +31,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 	
 	private TitleBar mTitleBar;
 	
+	private ImageView mTopIcon;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -46,6 +49,10 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mGridView = (GridView) mRootView.findViewById(R.id.grid);
 		mMailAdapter = new MailAdapter(getActivity());
 		mGridView.setAdapter(mMailAdapter);
+		
+		mTopIcon = (ImageView) mRootView.findViewById(R.id.top_icon);
+		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())/2;
+		mTopIcon.setImageResource(R.drawable.meinv);
 	}
 	
 	private void initData(){

@@ -32,6 +32,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private HomeAdapter mAdapter;
 	private View mEmptyView;
 	private View mLoadingView; 
+	private ViewGroup mRefreshLayout;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,12 +58,16 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		mEmptyView= mRootView.findViewById(R.id.empty_view);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 		
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
+		
 		mAdapter = new HomeAdapter(null, getActivity(), ImageLoader.getInstance());
 		mListView.setAdapter(mAdapter);
 	}
 	
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
+		mPullToRefreshListView.setOnScrollListener(this);
 	}
 	
 	private void initData(){
@@ -83,6 +88,24 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		mPullToRefreshListView.setVisibility(View.VISIBLE);
 	}
 	
+	@Override
+	public void onRefresh() {
+		mIsRefresh = true;
+		mControl.getHomeListEntityAsyn();
+	}
+	
+	private void getMoreData(){
+		if(mIsRefresh)
+			return;
+		if(!mRefreshLayout.isShown())
+			mRefreshLayout.setVisibility(View.VISIBLE);
+		mPullToRefreshListView.addFooterView(mRefreshLayout);
+		mControl.getMoreListDataFromNetAysn();
+		mIsRefresh = true;
+	}
+	
+	// ===========================  CallBackl ====================================
+	
 	public void getHomeListEntityAsynCallBack(){
 		mIsRefresh = false;
 		dissProgress();
@@ -94,19 +117,6 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
-	
-
-	@Override
-	public void onRefresh() {
-		mIsRefresh = true;
-		mControl.getHomeListEntityAsyn();
-	}
-	
-	private void getMoreData(){
-		
-	}
-	
-	// ===========================  CallBackl ====================================
 	
 	public void getHomeListEntityAsynCallBackNull(){
 		mIsRefresh = false;
@@ -120,6 +130,18 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		Toast.makeText(getActivity(), "网络异常", 0).show();
 	}
 
+	public void getHomeListEntityMoreAsynCallBack(){
+		mIsRefresh = false;
+		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		mAdapter.getData().addAll(mControl.getSectionList());
+		mAdapter.notifyDataSetChanged();
+		
+		Toast.makeText(getActivity(), "加载完成", 0).show();
+	}
+	
+	public void getHomeListEntityMoreAsynCallBackException(){
+		Toast.makeText(getActivity(), "网络异常", 0).show();
+	}
 	
 	// ===========================  Scroll ====================================
 	private boolean mIsRefresh = false;

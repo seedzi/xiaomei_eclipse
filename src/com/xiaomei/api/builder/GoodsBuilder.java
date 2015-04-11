@@ -17,8 +17,7 @@ public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
 	protected List<Goods> builder(JSONObject jsonObject) throws JSONException {
 		List<Goods> list = new ArrayList<Goods>();
 		Log.d("json", jsonObject.toString());
-		JSONArray jArray = new JSONArray();
-		jsonObject.toJSONArray(jArray);
+		JSONArray jArray = jsonObject.getJSONArray("data");
 		for(int i = 0 ;i<jArray.length(); i++){
 			Goods goods = new Goods();
 			JSONObject jobj = jArray.getJSONObject(i);

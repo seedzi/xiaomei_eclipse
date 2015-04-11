@@ -32,6 +32,7 @@ import com.xiaomei.bean.Goods;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
 import com.xiaomei.bean.NetResult;
+import com.xiaomei.bean.Order;
 import com.xiaomei.bean.Section;
 import com.xiaomei.bean.User;
 import com.xiaomei.util.Security;
@@ -196,4 +197,20 @@ public class XiaoMeiApi {
 		
 	}
 	
+	// ========================================================================================
+	// 订单
+	// ========================================================================================
+	
+	/**
+	 * 获取用户订单列表接口
+	 */
+	public void addtUserOrder(String userid,String goodsId,String mobile,String passport){
+	}
+	
+	/**
+	 * 获取用户订单列表接口
+	 */
+	public List<Order> getUserOrderList(){
+		return null;
+	}
 }
