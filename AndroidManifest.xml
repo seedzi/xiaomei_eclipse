@@ -95,8 +95,21 @@
 		    android:configChanges="orientation|keyboardHidden">
 		</activity>
 		
+	   <!-- ################### 支付宝 ###################### -->
+		<activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
 		
-		   <!-- ###################注册SDK使用的Activity###################### -->
+	   <!-- ###################注册SDK使用的Activity###################### -->
         <!--分享编辑页-->
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
@@ -158,8 +171,8 @@
    <uses-permission android:name="android.permission.READ_CONTACTS" />  
    <uses-permission android:name="android.permission.WRITE_CONTACTS" />     
    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />     
-   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
    <uses-permission android:name="android.permission.GET_ACCOUNTS" />  
    <uses-permission android:name="android.permission.BROADCAST_STICKY" />  
+   <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
