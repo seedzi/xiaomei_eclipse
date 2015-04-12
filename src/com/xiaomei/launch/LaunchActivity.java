@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.Payment.ZhifubaoPayManager;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.api.exception.XiaoMeiIOException;
 import com.xiaomei.api.exception.XiaoMeiJSONException;
@@ -58,16 +59,20 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
     }
     
     private void  init(){
-//    	TabsActivity.startActivity(LaunchActivity.this);
-//		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-    	
+    	/*
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
     	}else{
     		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-    	}/**/
+    	}*/
+    	
+    	
 //    	PhoneGapAc.startActivity(LaunchActivity.this);
-    	finish();	
+    	
+//    	finish();	
+    	
+    	ZhifubaoPayManager.getInstance().setCurrentActivity(this);
+    	ZhifubaoPayManager.getInstance().pay();
     }
 
 }

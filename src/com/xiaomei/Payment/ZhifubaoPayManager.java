@@ -39,11 +39,11 @@ public class ZhifubaoPayManager {
 	//商户PID
 	public static final String PARTNER = "2088302541704831";
 	//商户收款账号
-	public static final String SELLER = "";
+	public static final String SELLER = "2088302541704831";
 	//商户私钥，pkcs8格式
-	public static final String RSA_PRIVATE = "";
+	public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOFca1aQLBZ/qIX++rBWrY1dhj6QtHcwwrK3nF8GdDDyflGOhR0IuuMFrehbiLw/6lvGvtbKAe4lzOKzfVMi0fpG6ZQxU6Ir89nH/0EHfBRqxjnwuPSv7TCAy9nKVa6rk4klYbwCIwWVTSEbnRLYe4YGTcq/DhOv+yAQMjydUtSxAgMBAAECgYAx3+pBdhbLw+TgAtYoQIaYSqJzJkNKPZhZRRluTldYndIm6ou7KTtzEsayLc/NGbgcJ5gEoSBcPDFj2qVZyNL/TmyrIYsIp436cgn7xuHk6He6Qpm1geJgyNzxjILoYiQD3jOAQeNstIMBuTc6ED6HESOjQ4mkabh3gicEIJvoIQJBAPTE54Ub528bUUycgCL/2gpDs4mQmA8/BvCwkwYkeykYveu3vf5B/8aeAayoM9JoPdkPCv55kuXYIZ1ogDl5g9MCQQDrs4s9Q9WFPHgaKQpNcJUg4w8v4KEMIywMH1QnqUcwXQkIZUD9vgeAvtPQywRzo1IRGRyJbK9TuRIHgA8ABKbrAkEA29Ak9tYbXh1TQpDdRhEs18D68BSJak+4xNheAMssS7jrfk+RcVAGCnGFoW+gsllpCZBH2EaH1J/neDwLwxHMfwJBALNXV9jz5mGMky4EkCxAP5hYbFPXrXKYyIkoxVWwPdSU1aynrn3ju73AdVbnQqniWS1dWBNQuU8RAKDoVYGECKUCQDEJN7kmO01bJHz0r8g/oPnRYJJdjCh2bE9lhVVsOH0lgvxWhAdvwiDZAPlNque8AjszFppYFys4OCQmb5A9ZgQ=";
 	//支付宝公钥
-	public static final String RSA_PUBLIC = "";
+	public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
 	
 	private static final int SDK_PAY_FLAG = 1;
 
@@ -144,9 +144,9 @@ public class ZhifubaoPayManager {
 		// 商品详情
 		orderInfo += "&body=" + "\"" + body + "\"";
 		// 商品金额
-		orderInfo += "&total_fee=" + "\"" + price + "\"";
+		orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";  //TODO 写死价格
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm"
+		orderInfo += "&notify_url=" + "\"" + "http://drxmapi.duapp.com/libs/pay/notify_url.php"
 				+ "\"";
 		// 服务接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";
