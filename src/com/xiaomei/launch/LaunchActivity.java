@@ -50,6 +50,18 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
 			}
 		}).start();*/
         
+        new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					XiaoMeiApplication.getInstance().getApi().showUserMsg();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			}
+		}).start();
+        
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -59,20 +71,22 @@ public class LaunchActivity extends  BaseActiviy<LaunchControl>{
     }
     
     private void  init(){
+    	
+//    	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
+    	TabsActivity.startActivity(LaunchActivity.this);
     	/*
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
     	}else{
     		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
-    	}*/
-    	
-    	
+    	}
+    	*/
 //    	PhoneGapAc.startActivity(LaunchActivity.this);
     	
 //    	finish();	
     	
-    	ZhifubaoPayManager.getInstance().setCurrentActivity(this);
-    	ZhifubaoPayManager.getInstance().pay();
+//    	ZhifubaoPayManager.getInstance().setCurrentActivity(this);
+//    	ZhifubaoPayManager.getInstance().pay();
     }
 
 }

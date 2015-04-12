@@ -1,23 +1,20 @@
 package com.xiaomei.module.user.center;
 
-import java.io.FileNotFoundException;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
 import com.xiaomei.R;
-import com.xiaomei.XiaoMeiApplication;
-import com.xiaomei.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.api.exception.XiaoMeiIOException;
-import com.xiaomei.api.exception.XiaoMeiJSONException;
-import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.User;
 import com.xiaomei.module.user.center.control.UserCenterControl;
 import com.xiaomei.util.UserUtil;
@@ -35,6 +32,11 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 	private TitleBar mTitlebar;
 	
 	private CircleImageView mUserIcon;
+	
+	private ProgressDialog mProgressDialog;
+	
+	private String iconPath;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 		int id = v.getId();
 		switch (id) {
 		case R.id.loginout:
-			mControl.loginOutAsyn();
+			loginOut();
 			break;
 		case R.id.user_icon:
 	         Intent intent = new Intent();  
@@ -91,23 +93,64 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 		if (resultCode == RESULT_OK) {  
             Uri uri = data.getData();  
             ContentResolver cr = this.getContentResolver();  
-            try {  
-                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));  
-                /* 将Bitmap设定到ImageView */  
-                mUserIcon.setImageBitmap(bitmap);  
-            } catch (FileNotFoundException e) {  
-            }  
+            Cursor cursor = cr.query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);  
+            cursor.moveToFirst();  
+            String path = cursor.getString(column_index);  
+            iconPath = path;
+            uploadIcon(path);
         }  
 		super.onActivityResult(requestCode, resultCode, data);
-		
+	}
+	// ===========================================  api ===================================================
+	
+	private void loginOut(){
+		showProgressDialog("登出中...");
+		mControl.loginOutAsyn();
+	}
+	
+	private void uploadIcon(String filePath){
+		showProgressDialog("上传图片中...");
+		mControl.uploadIcon(filePath);
+	}
+	
+	// =========================================== ProgressDialog ===================================================
+	
+	private void showProgressDialog(String message){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setTitle("提示");
+		mProgressDialog.setMessage(message);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.show();
+	}
+	
+	private void dismissDialog(){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
 	}
 	
 	// =========================================== CallBack ===================================================
 	public void loginOutAsynCallBack(){
-		Toast.makeText(UserInfoActivity.this, "登出", 0).show();
+		dismissDialog();
 	}
 	
 	public void loginOutAsynExceptionCallBack(){
-		
+		dismissDialog();
 	}
+	
+	public void uploadIconCallBack(){
+		dismissDialog();
+		if(iconPath!=null){
+	        Bitmap bitmap = BitmapFactory.decodeFile(iconPath);
+			mUserIcon.setImageBitmap(bitmap);
+		}
+	}
+	
+	public void uploadIconExceptionCallBack(){
+		dismissDialog();
+	}
+	
+	
 }

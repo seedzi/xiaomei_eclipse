@@ -39,7 +39,9 @@ import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Order;
 import com.xiaomei.bean.Section;
 import com.xiaomei.bean.User;
+import com.xiaomei.util.FileUtils;
 import com.xiaomei.util.Security;
+import com.xiaomei.util.UserUtil;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -216,6 +218,28 @@ public class XiaoMeiApi {
 		
 	}
 	
+	/**
+	 * 更新用户头像
+	 */
+	public boolean uploadFile(String filePath){
+		boolean success = FileUtils.uploadFile(filePath, urlManager.upoadAvatarUrl());
+		return success;
+	}
+	
+	/**
+	 * 列出用户收到的对应消息
+	 */
+	public void showUserMsg()
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+			BasicNameValuePair[] values = {new BasicNameValuePair("token", UserUtil.getUser().getToken()) ,
+/*					new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))*/} ; 
+			HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getFindPwdUrl(),
+					values[0],
+//					values[1],
+					new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+			 mHttpApi.doHttpRequestObject(httpGet, new NetResultBuilder());
+	}
+	
 	// ========================================================================================
 	// 订单
 	// ========================================================================================
@@ -261,4 +285,8 @@ public class XiaoMeiApi {
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
 	}
+	
+
+	
+
 }

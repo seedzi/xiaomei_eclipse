@@ -527,7 +527,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int empty_text=0x7f09004d;
         public static final int empty_view=0x7f09004c;
         public static final int environmental=0x7f09006d;
-        public static final int forget_password=0x7f09001d;
+        public static final int forget_password=0x7f090021;
         public static final int fullscreen=0x7f090008;
         public static final int get_verification=0x7f09001b;
         public static final int goods_icon=0x7f09003a;
@@ -557,7 +557,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int item_text=0x7f090068;
         public static final int iv=0x7f09008a;
         public static final int jiangli=0x7f090092;
-        public static final int launch=0x7f09001e;
+        public static final int launch=0x7f09001d;
         public static final int layout_title=0x7f090049;
         public static final int left=0x7f090006;
         public static final int like=0x7f090077;
@@ -577,10 +577,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int location=0x7f090032;
         public static final int location_txt=0x7f090031;
         public static final int login=0x7f090096;
-        public static final int login_input_layout=0x7f09001f;
+        public static final int login_input_layout=0x7f09001e;
         public static final int login_qq=0x7f090023;
-        public static final int login_user_mobile=0x7f090020;
-        public static final int login_user_password=0x7f090021;
+        public static final int login_user_mobile=0x7f09001f;
+        public static final int login_user_password=0x7f090020;
         public static final int login_weixin=0x7f090024;
         public static final int loginout=0x7f090033;
         public static final int margin=0x7f090009;

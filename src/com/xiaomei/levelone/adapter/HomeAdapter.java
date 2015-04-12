@@ -5,6 +5,7 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Section;
+import com.xiaomei.leveltwo.WebViewActivity;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -184,6 +185,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		
+		//TODO
+		WebViewActivity.startActivity(mContext, "");
 	}
 }

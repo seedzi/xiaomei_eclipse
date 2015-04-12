@@ -4,6 +4,7 @@ package com.xiaomei.module.user;
 import java.util.Map;
 import java.util.Set;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.xiaomei.R;
 import com.xiaomei.bean.User;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.module.user.control.UserControl;
+import com.xiaomei.util.InputUtils;
 import com.xiaomei.util.MobileUtil;
 import com.xiaomei.util.UserUtil;
 import com.xiaomei.widget.TitleBar;
@@ -75,6 +77,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 				Toast.makeText(LoginAndRegisterActivity.this, "请输入正确的数据", 0).show();
 				return;
 			}
+			showProgressDialog("注册中...");
 			mControl.registeAsyn(mRegisterUserMobileEdit.getText().toString(),
 					mRegisterUserPasswordEdit.getText().toString(),
 					mRegisterUserVerificationEdit.getEditableText()
@@ -89,6 +92,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 				Toast.makeText(LoginAndRegisterActivity.this, "请输入正确的数据", 0).show();
 				return;
 			}
+			showProgressDialog("登录中...");
 			mControl.loginAsyn(mLoginUserMobileEdit.getText().toString(),
 					mLoginUserPasswordEdit.getText().toString());
 		}
@@ -99,7 +103,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	
 	private TitleBar mTitleBar;
 	
-	private View mLaunchButton;
+	private TextView mLaunchButton;
 	
 	private ViewGroup mLoginInputLayout, mRegisterInputLayout;
 	
@@ -137,7 +141,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		
 		mLoginInputLayout = (ViewGroup) findViewById(R.id.login_input_layout);
 		mRegisterInputLayout = (ViewGroup) findViewById(R.id.register_input_layout);
-		mLaunchButton = findViewById(R.id.launch);
+		mLaunchButton = (TextView) findViewById(R.id.launch);
 		mLaunchButton.setOnClickListener(this);
 		
 		mGetVerificationButton =  (TextView) findViewById(R.id.get_verification);
@@ -161,6 +165,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		mRegisterInputLayout.setVisibility(View.GONE);
 		forgetPassword.setVisibility(View.VISIBLE);
 		mLaunchListener  = LAUNCH_LOGIN;
+		mLaunchButton.setText("登录");
 	}
 
 	@Override
@@ -169,6 +174,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		mRegisterInputLayout.setVisibility(View.VISIBLE);
 		forgetPassword.setVisibility(View.GONE);
 		mLaunchListener  = LAUNCH_REGISTER;
+		mLaunchButton.setText("注册");
 	}
 
 	@Override
@@ -179,6 +185,7 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 			FindPasswordActivity.startActivity(LoginAndRegisterActivity.this);
 			break;
 		case R.id.launch:
+			InputUtils.hidSoftInput(LoginAndRegisterActivity.this);//强制关闭软键盘
 			mLaunchListener.onLaunch();
 			break;
 		case	R.id.get_verification:
@@ -242,22 +249,42 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 	}
 	
 	public void registeAsynCallBack(){
+		dismissDialog();
 		Toast.makeText(LoginAndRegisterActivity.this, "注册成功", 0).show();
 	}
 	public void registeAsynExceptionCallBack(){
+		dismissDialog();
 		Toast.makeText(LoginAndRegisterActivity.this, "注册失败", 0).show();
 	}
 	
 	public void loginAsynCallBack(){
+		dismissDialog();
 		Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
 		TabsActivity.startActivity(LoginAndRegisterActivity.this);
 		finish();
 	}
 	
 	public void loginAsynExceptionCallBack(){
+		dismissDialog();
 		Toast.makeText(LoginAndRegisterActivity.this, "登录失败", 0).show();
 	}
+	// =========================================== ProgressDialog ===================================================
 	
+	private ProgressDialog mProgressDialog;
+	private void showProgressDialog(String message){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setTitle("提示");
+		mProgressDialog.setMessage(message);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.show();
+	}
+	
+	private void dismissDialog(){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+	}
 	// ===============================  Sns =======================================
 	private void initSns(){
 		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.

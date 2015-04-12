@@ -1,5 +1,6 @@
 package com.xiaomei.module.user;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.module.user.control.UserControl;
+import com.xiaomei.util.InputUtils;
 import com.xiaomei.util.MobileUtil;
 import com.xiaomei.widget.TitleBar;
 
@@ -122,6 +124,8 @@ public class FindPasswordActivity extends BaseActiviy<UserControl>
 		int id = v.getId();
 		switch (id) {
 		case R.id.launch:
+			InputUtils.hidSoftInput(FindPasswordActivity.this);
+			showProgressDialog("加载...");
 			mLaunchListener.onLaunch();
 			break;
 		case	R.id.get_verification:
@@ -150,19 +154,39 @@ public class FindPasswordActivity extends BaseActiviy<UserControl>
 		public void onLaunch();
 	}
 	
+	// =========================================== ProgressDialog ===================================================
+	
+	private ProgressDialog mProgressDialog;
+	private void showProgressDialog(String message){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setTitle("提示");
+		mProgressDialog.setMessage(message);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.show();
+	}
+	
+	private void dismissDialog(){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+	}
+	
 	// ===============================  Call Back =======================================
 	
 		public void getVerificationCodeAsynExceptionCallBack(){
-			
+			dismissDialog();
 		}
-		public void getVerificatiolnCodeAsynCallBack(){
-			
+		public void getVerificationCodeAsynCallBack(){
+			dismissDialog();
 		}
 		
 		public void findPasswordAsynCallBack(){
+			dismissDialog();
 			Toast.makeText(FindPasswordActivity.this, "找回密码成功", 0).show();
 		}
 		public void findPasswordAsynExceptionCallBack(){
+			dismissDialog();
 			Toast.makeText(FindPasswordActivity.this, "找回密码失败", 0).show();
 		}
 

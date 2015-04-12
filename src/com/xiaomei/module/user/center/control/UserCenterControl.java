@@ -14,6 +14,7 @@ import com.xiaomei.bean.Order;
 import com.xiaomei.bean.User;
 import com.xiaomei.bean.User.UserInfo;
 import com.xiaomei.module.user.model.UserModel;
+import com.xiaomei.util.FileUtils;
 import com.xiaomei.util.UserUtil;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
@@ -84,6 +85,25 @@ public class UserCenterControl extends BaseControl {
 	
 	public UserModel getModel(){
 		return mModel;
+	}
+	
+	@AsynMethod
+	public void uploadIcon(String filePath){
+		//test
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sendMessage("uploadIconCallBack");
+		/*
+		boolean success = XiaoMeiApplication.getInstance().getApi().uploadFile(filePath);
+		if(success)
+			sendMessage("uploadIconCallBack");
+		else
+			sendMessage("uploadIconExceptionCallBack");
+		*/
 	}
 	
 }

@@ -64,5 +64,13 @@ public class HttpUrlManager {
 	String addUserOrderUrl(){
 		return HOST + "/server/action/order.php";
 	}
+	/**用户消息*/
+	String getUserMsgUrl(){
+		return HOST + "/show/myMsg";
+	}
+	/**用户阅读消息标记*/
+	String actionUserMsgUrl(){
+		return HOST + "/action/msg";
+	}
 }
 

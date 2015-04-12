@@ -13,6 +13,7 @@ import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -45,18 +46,24 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	
 	private ViewGroup mRefreshLayout;
 	
+	private View mLoadingView; 
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_mechanism_layout, null);
-		setUpView();
-		setListener();
-		initData();
+		if(mRootView == null){
+			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_mechanism_layout, null);
+			setUpView();
+			setListener();
+			initData();
+		}else{
+			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+		}
 		return mRootView;
 	}
 	
 	private void setUpView(){
-		mTitleBar = (TitleBar) mRootView.findViewById(R.id.titlebar);
+		mTitleBar = (TitleBar) mRootView.findViewById(R.id.title_bar);
 		mTitleBar.setTitle(getResources().getString(R.string.fragment_mechanism));
 		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
 
@@ -66,6 +73,8 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
+		
+		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 	}
 	
 	private void setListener(){
@@ -74,6 +83,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	}
 	
 	private void initData(){
+		showProgress();
 		mIsRefresh = true;
 		mControl.getMechanismListAsyn();
 	}
@@ -102,8 +112,24 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			int visibleItemCount, int totalItemCount) {
 	}
 	
+	
+	// ================================== Progress ==========================================
+	private void showProgress(){
+		mLoadingView.setVisibility(View.VISIBLE);
+		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
+		if(!animationDrawable.isRunning())
+			animationDrawable.start();
+		mPullToRefreshListView.setVisibility(View.GONE);
+	}
+	
+	private void dissProgress(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.VISIBLE);
+	}
+	
 	// ================================== Call back ==========================================
 	public void getMechanismLismListCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		mAdapter.setData(mControl.getListData());
 		mAdapter.notifyDataSetChanged();
@@ -112,11 +138,13 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	}
 	
 	public void getMechanismListExceptionCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		Toast.makeText(getActivity(), "加载数据异常", 0).show();
 	}
 
 	public void getMechanismLismListMoreCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
 		mAdapter.getData().addAll(mControl.getListData());
@@ -125,6 +153,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	}
 	
 	public void getMechanismListMoreExceptionCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		Toast.makeText(getActivity(), "加载数据异常", 0).show();
 	}

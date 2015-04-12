@@ -16,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -48,6 +49,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	
 	private ViewGroup mRefreshLayout;
 	
+	private View mLoadingView; 
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	}
 	
 	private void setUpView(){
-		mTitleBar = (TitleBar) mRootView.findViewById(R.id.titlebar);
+		mTitleBar = (TitleBar) mRootView.findViewById(R.id.title_bar);
 		mTitleBar.setTitle(getResources().getString(R.string.fragment_beautiful_ring));
 		
 		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
@@ -73,6 +76,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
+		
+		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 	}
 	
 	private void setListener(){
@@ -82,6 +87,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	
 	private void initdata(){
 		mControl.getListDataFromNetAysn();
+		showProgress();
 	}
 	
 	@Override
@@ -93,7 +99,6 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		int position = mListView.getLastVisiblePosition();
-		Log.d("111", "position = " + position + ",mIsRefresh = " + mIsRefresh);
 		if(!mIsRefresh && position == mAdapter.getCount()){
 			getMoreData();
 		}
@@ -114,8 +119,23 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		mIsRefresh = true;
 	}
 	
+	private void showProgress(){
+		mLoadingView.setVisibility(View.VISIBLE);
+		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
+		if(!animationDrawable.isRunning())
+			animationDrawable.start();
+		mPullToRefreshListView.setVisibility(View.GONE);
+	}
+	
+	private void dissProgress(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.VISIBLE);
+	}
+	
+	
 	// ================================== Call back ==========================================
 	public void getListDataFromNetAysnCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		mAdapter.setData(mControl.getData());
 		mAdapter.notifyDataSetChanged();
@@ -124,10 +144,12 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	}
 	
 	public void getListDataFromNetAysnExceptionCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 	}
 	
 	public void getMoreListDataFromNetAysnCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		mAdapter.setData(mControl.getData());
 		mAdapter.notifyDataSetChanged();
@@ -136,6 +158,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	}
 	
 	public void getMoreListDataFromNetAysnExceptionCallBack(){
+		dissProgress();
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
 	}
