@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
+import com.xiaomei.api.HttpUrlManager;
 import com.xiaomei.bean.Goods;
 import com.xiaomei.leveltwo.control.LeveltwoControl;
 import com.xiaomei.module.user.center.OrderDetailsActivity;
@@ -135,7 +136,8 @@ public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
 		@Override
 		public void onClick(View v) {
 			Holder holder = (Holder) v.getTag();
-			OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
+//			OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
+			WebViewActivity.startActivity(GoodsListActivity.this ,"http://drxiaomei.duapp.com/goods.php?goods_id=1015");
 		}
 		
 	}

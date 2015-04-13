@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/color_white" >
-	<WebView 
-	    android:id="@+id/webview"
+    
+    <include   layout="@layout/title_bar_layout"    android:id="@+id/title_bar"/>
+    
+	<org.apache.cordova.CordovaWebView 
+	    android:id="@+id/tutorialView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"	    
 	    />    
-
 </LinearLayout>

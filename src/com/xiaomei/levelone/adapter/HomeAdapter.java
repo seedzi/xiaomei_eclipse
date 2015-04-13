@@ -63,6 +63,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			switch (type) {
 			case 0:  // 热点
 				convertView = mInflater.inflate(R.layout.section_topic, null);
+				convertView.setOnClickListener(this);
 				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
 			case 1:  // 导航
@@ -78,14 +79,17 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				break;
 			case 2:  // 商品精选		if(holder.commontNumView!=null && en)
 				convertView = mInflater.inflate(R.layout.section_jingxuan, null);
+				convertView.setOnClickListener(this);
 				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
 			case 3:  // 分享
 				convertView =  mInflater.inflate(R.layout.section_share, null);
+				convertView.setOnClickListener(this);
 				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
 			case 4:   //会员活动
 				convertView =  mInflater.inflate(R.layout.section_vip, null);
+				convertView.setOnClickListener(this);
 				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
 			default:
@@ -103,7 +107,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		if(section==null || holder == null)
 			return;
 		switch (position) {
-		case 1:
+		case 1: // 导航
 			
 			break;
 		case 3:  //分享
@@ -122,6 +126,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.commontNumView.setText(entity.getNumcomment());
 			if(holder.favoriteNumView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
 				holder.favoriteNumView.setText(entity.getNumfavorite());
+				holder.url = entity.getUrl();
 			break;
 		case 0:
 		case 2:
@@ -131,6 +136,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 //				holder.titleView.setText(section.getTitle()); //TODO
 			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg()))
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+			holder.url = entity.getUrl();
 			break;
 		default:
 			break;
@@ -180,12 +186,13 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private TextView titleView; //标题
 			private TextView commontNumView;  //评论数
 			private TextView favoriteNumView; //点赞
+			private String url ;//详情页url
 //		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		//TODO
-		WebViewActivity.startActivity(mContext, "");
+		Holder holder = (Holder) v.getTag();
+		WebViewActivity.startActivity(mContext, holder.url);
 	}
 }

@@ -4,6 +4,8 @@ public class HttpUrlManager {
 	
 	private static String HOST = "http://drxmapi.duapp.com"; 
 	
+	public static String GOODS_DETAIL_URL  = HOST + "/goods.php";
+ 	
 	/**首页*/
 	String getHomeListUrl(){
 		return HOST + "/api/index.php";
@@ -71,6 +73,10 @@ public class HttpUrlManager {
 	/**用户阅读消息标记*/
 	String actionUserMsgUrl(){
 		return HOST + "/action/msg";
+	}
+	/**产品详情页*/
+	String goodsDetailUrl(){
+		return HOST + "/goods.php";
 	}
 }
 

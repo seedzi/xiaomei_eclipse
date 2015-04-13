@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">
         
-        <activity
+<activity
 	            android:name=".launch.LaunchActivity"
 	            android:label="LaunchActivityr" >
             <intent-filter>
@@ -31,7 +31,9 @@
         
        <!-- 欢迎页面 -->
         <activity
-            android:name=".leveltwo.WebViewActivity">
+            android:name=".leveltwo.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            >
         </activity>
         
 		<!-- 登陆注册 -->

@@ -1,6 +1,9 @@
 package com.xiaomei.test;
 
 import org.apache.cordova.DroidGap;
+import org.apache.cordova.api.PluginManager;
+
+import com.xiaomei.phonegap.PlugMethod;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +19,10 @@ public class PhoneGapAc extends DroidGap {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		super.loadUrl("file:///android_asset/www/index.html");
+		super.init();
+		appView.getSettings().setJavaScriptEnabled(true);
+		appView.addJavascriptInterface(new PlugMethod(this, appView), "SM");
+		super.loadUrl("file:///android_asset/www/index.html",2000);
 	}
 
 }
