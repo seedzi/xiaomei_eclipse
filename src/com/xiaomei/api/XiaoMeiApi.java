@@ -233,7 +233,7 @@ public class XiaoMeiApi {
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 			BasicNameValuePair[] values = {new BasicNameValuePair("token", UserUtil.getUser().getToken()) ,
 /*					new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))*/} ; 
-			HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getFindPwdUrl(),
+			HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getUserMsgUrl(),
 					values[0],
 //					values[1],
 					new BasicNameValuePair("fig", Security.get32MD5Str(values)));

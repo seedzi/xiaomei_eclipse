@@ -9,6 +9,7 @@ import android.view.KeyCharacterMap.KeyData;
 
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
+import com.xiaomei.XiaoMeiApplication;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -26,6 +27,17 @@ public class TabsActivity extends  BaseActiviy{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_layout);
+        
+        new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					XiaoMeiApplication.getInstance().getApi().showUserMsg();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+			}
+		}).start();
     }
 //
 //    @Override
