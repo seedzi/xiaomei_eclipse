@@ -140,7 +140,7 @@
     <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="xxxxxxxxxxxxxxxxxxxxxx" >
+            android:value="551671c8fd98c589220008bc" >
         </meta-data>
 		
     </application>

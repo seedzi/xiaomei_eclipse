@@ -302,15 +302,15 @@ public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
 		mController.doOauthVerify(mContext, SHARE_MEDIA.QQ, new UMAuthListener() {
 		    @Override
 		    public void onStart(SHARE_MEDIA platform) {
-//		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
+		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onError(SocializeException e, SHARE_MEDIA platform) {
-//		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
+		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
-//		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
+		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
 		        //获取相关授权信息
 		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.QQ, new UMDataListener() {
 				    @Override

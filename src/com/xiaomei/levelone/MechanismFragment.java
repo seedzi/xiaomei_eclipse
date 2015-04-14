@@ -6,12 +6,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.levelone.control.MechanismControl;
+import com.xiaomei.util.ScreenUtils;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -23,8 +25,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -213,6 +217,8 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		private void attachData2UI(Holder holder ,int position){
 			Log.d("111", "mData.get(position).getFile() = " + mData.get(position).getFile());
 			ImageLoader.getInstance().displayImage(mData.get(position).getFile(), holder.iconIv);
+			RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*3/5));
+			holder.iconIv.setLayoutParams(ll);
 		}
 		
 		private class Holder{

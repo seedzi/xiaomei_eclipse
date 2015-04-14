@@ -7,6 +7,7 @@ import com.xiaomei.R;
 import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.levelone.control.BeautifulRingControl;
 import com.xiaomei.leveltwo.BeautifulRingDetailsActivity;
+import com.xiaomei.util.ScreenUtils;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -14,6 +15,7 @@ import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -26,8 +28,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -212,6 +216,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		
 		private void attachDate(Holder holder,BeautifulRing bean){
 			ImageLoader.getInstance().displayImage(bean.getShareFile(), holder.shareImg);
+			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())/1.7));
+			holder.shareImg.setLayoutParams(ll);
 		}
 		
 		private void setData(List<BeautifulRing> data){

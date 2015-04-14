@@ -6,16 +6,21 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Section;
 import com.xiaomei.leveltwo.WebViewActivity;
+import com.xiaomei.util.ScreenUtils;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+@SuppressLint("NewApi")
 public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 
 	private List<Section> mData;
@@ -99,6 +104,13 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		}
 		holder = (Holder) convertView.getTag();
 		attachData2Holder(position, section, holder);	
+		switch (type) {
+		case 0:
+			layoutView(convertView,1);
+			break;
+		default:
+			break;
+		}
 		return convertView;
 	}
 
@@ -194,5 +206,10 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 	public void onClick(View v) {
 		Holder holder = (Holder) v.getTag();
 		WebViewActivity.startActivity(mContext, holder.url);
+	}
+	
+	private void layoutView(View view,int proportion){
+		AbsListView.LayoutParams ll = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, ScreenUtils.getScreenWidth(mContext)/proportion);
+		view.setLayoutParams(ll);
 	}
 }

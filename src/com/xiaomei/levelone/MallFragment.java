@@ -51,7 +51,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mGridView.setAdapter(mMailAdapter);
 		
 		mTopIcon = (ImageView) mRootView.findViewById(R.id.top_icon);
-		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())/2;
+		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*9/14;
 		mTopIcon.setImageResource(R.drawable.meinv);
 	}
 	
