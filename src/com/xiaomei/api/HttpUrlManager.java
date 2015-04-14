@@ -5,6 +5,8 @@ public class HttpUrlManager {
 	private static String HOST = "http://drxmapi.duapp.com"; 
 	
 	public static String GOODS_DETAIL_URL  = HOST + "/goods.php";
+	
+	public static String COMMENT_DETAIL_URL = "http://drxiaomei.duapp.com/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
  	
 	/**首页*/
 	String getHomeListUrl(){
