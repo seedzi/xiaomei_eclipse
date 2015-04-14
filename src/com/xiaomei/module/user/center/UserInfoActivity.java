@@ -110,7 +110,7 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 	}
 	
 	private void uploadIcon(String filePath){
-		showProgressDialog("上传图片中...");
+//		showProgressDialog("上传图片中...");
 		mControl.uploadIcon(filePath);
 	}
 	

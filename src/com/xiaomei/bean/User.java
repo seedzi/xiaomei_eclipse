@@ -127,7 +127,6 @@ public class User {
 					+ ", userid=" + userid + ", mobile=" + mobile + "]";
 		}
 		
-		
 	}
 
 
