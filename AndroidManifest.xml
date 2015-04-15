@@ -29,9 +29,13 @@
 	            android:label="TabsActivity" >
         </activity>
         
-       <!-- 欢迎页面 -->
         <activity
             android:name=".leveltwo.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            >
+        </activity>
+                <activity
+            android:name=".leveltwo.WebViewActivity1"
             android:configChanges="orientation|keyboardHidden"
             >
         </activity>
