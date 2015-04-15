@@ -5,6 +5,10 @@ public class HttpUrlManager {
 	private static String HOST = "http://drxmapi.duapp.com"; 
 	
 	public static String GOODS_DETAIL_URL  = "http://drxiaomei.duapp.com/goods.php";
+	
+	public static String COMMENT_DETAIL_URL = "http://drxiaomei.duapp.com/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
+	
+	public static String UPDATE_USER_ICON = HOST + "/server/action/upoadAvatar.php";
  	
 	/**首页*/
 	String getHomeListUrl(){
@@ -56,7 +60,7 @@ public class HttpUrlManager {
 	}
 	/**更新用户头像*/
 	String upoadAvatarUrl(){
-		return HOST + "/server/action/upoadAvatar.php";
+		return HOST + "/server/action/uploadAvatar.php";
 	}
 	/**获取用户订单*/
 	String getUserOrderUrl(){

@@ -60,6 +60,7 @@ public class UserCenterControl extends BaseControl {
 		try {
 			NetResult netResult = XiaoMeiApplication.getInstance().getApi().loginOut(UserUtil.getUser().getToken());
 			if(netResult.getCode().trim().equals("0")){
+				UserUtil.clearUser();
 				sendMessage("loginOutAsynCallBack");
 			}else{
 				sendMessage("loginOutAsynExceptionCallBack");
@@ -89,14 +90,20 @@ public class UserCenterControl extends BaseControl {
 	
 	@AsynMethod
 	public void uploadIcon(String filePath){
-		//test
+//		//test
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		sendMessage("uploadIconCallBack");
 		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
+			XiaoMeiApplication.getInstance().getApi().uploadFile(UserUtil.getUser().getToken(),filePath);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sendMessage("uploadIconCallBack");
 		/*
 		boolean success = XiaoMeiApplication.getInstance().getApi().uploadFile(filePath);
 		if(success)

@@ -10,6 +10,11 @@ import android.view.KeyCharacterMap.KeyData;
 import com.xiaomei.BaseActiviy;
 import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.api.exception.XiaoMeiIOException;
+import com.xiaomei.api.exception.XiaoMeiJSONException;
+import com.xiaomei.api.exception.XiaoMeiOtherException;
+import com.xiaomei.util.UserUtil;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -38,6 +43,27 @@ public class TabsActivity extends  BaseActiviy{
 				} 
 			}
 		}).start();
+        /*
+        new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					XiaoMeiApplication.getInstance().getApi().updateUserInfo(null, UserUtil.getUser().getToken());
+				} catch (XiaoMeiCredentialsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (XiaoMeiIOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (XiaoMeiJSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (XiaoMeiOtherException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();*/
     }
 //
 //    @Override

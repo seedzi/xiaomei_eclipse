@@ -1,7 +1,10 @@
 package com.xiaomei.api;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -20,7 +23,6 @@ import com.xiaomei.api.builder.ListOrderBuilder;
 import com.xiaomei.api.builder.LoginOutBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
-import com.xiaomei.api.builder.UserInfoBuilder;
 import com.xiaomei.api.builder.UserLoginBuilder;
 import com.xiaomei.api.builder.UserRegisterBuilder;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
@@ -39,6 +41,7 @@ import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Order;
 import com.xiaomei.bean.Section;
 import com.xiaomei.bean.User;
+import com.xiaomei.bean.User.UserInfo;
 import com.xiaomei.util.FileUtils;
 import com.xiaomei.util.Security;
 import com.xiaomei.util.UserUtil;
@@ -201,7 +204,8 @@ public class XiaoMeiApi {
 	/**
 	 * 获取用户信息
 	 */
-	public void getUserInfo(String userid,String token)
+	public void getUserInfo(String userid,String token){
+	/*
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),new BasicNameValuePair("token", token)} ; 
 		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserInfoUrl(),
@@ -209,21 +213,38 @@ public class XiaoMeiApi {
 				values[1],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		mHttpApi.doHttpRequestObject(httpPost, new UserInfoBuilder());
+		*/
 	}
 	/**
 	 * 更新用户信息
 	 */
-	public void updateUserInfo()
+	public void updateUserInfo(UserInfo userinfo,String token)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-		
+		BasicNameValuePair[] values = {new BasicNameValuePair("token", token),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
+				new BasicNameValuePair("username", "张论")};
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.updateUserInfoUrl(),
+				values[0],
+				values[1],
+				values[2],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
 	
 	/**
 	 * 更新用户头像
+	 * @throws Exception 
 	 */
-	public boolean uploadFile(String filePath){
-		boolean success = FileUtils.uploadFile(filePath, urlManager.upoadAvatarUrl());
-		return success;
+	public boolean uploadFile(String token,String filePath) throws Exception{
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("token", token),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))};
+		Map<String,String> params = new HashMap<String, String>();
+		params.put("token", token);
+		params.put("uptime", String.valueOf(System.currentTimeMillis()/1000));
+		params.put("fig",  Security.get32MD5Str(values));
+		FileUtils.uploadSubmit(urlManager.upoadAvatarUrl(),params,new File(filePath));
+		return false;
 	}
 	
 	/**
