@@ -1,15 +1,10 @@
 package com.xiaomei.leveltwo;
 
-import java.util.concurrent.ExecutorService;
 
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.DroidGap;
-import org.apache.cordova.api.CordovaInterface;
-import org.apache.cordova.api.CordovaPlugin;
 
 import com.xiaomei.api.HttpUrlManager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,10 +23,11 @@ public class WebViewActivity extends DroidGap{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		  super.init();    
 //		super.loadUrl(getIntent().getStringExtra("url"));
 		String url = HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + getIntent().getStringExtra("id");
 		android.util.Log.d("111", "url = " + url);
+//		super.loadUrl("http://z.drxiaomei.com/goods.php?goods_id=1051");
+//		super.loadUrl("file:///android_asset/www/index.html");
 		super.loadUrl(url);
 	}
 	
