@@ -39,6 +39,7 @@ import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
 import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Order;
+import com.xiaomei.bean.Order2;
 import com.xiaomei.bean.Section;
 import com.xiaomei.bean.User;
 import com.xiaomei.bean.User.UserInfo;
@@ -268,7 +269,7 @@ public class XiaoMeiApi {
 	/**
 	 * 新增订单接口
 	 */
-	public Order addUserOrder(String userid,String goodsId,String username,String mobile,String passport,String token)
+	public Order2 addUserOrder(String userid,String goodsId,String username,String mobile,String passport,String token)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
 				new BasicNameValuePair("goods_id", goodsId),

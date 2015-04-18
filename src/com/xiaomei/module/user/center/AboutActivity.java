@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 
-public class AboutActivity extends BaseActiviy{
+public class AboutActivity extends AbstractActivity{
 	
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,AboutActivity.class);

@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.module.user.control.UserControl;
 import com.xiaomei.util.InputUtils;
@@ -20,7 +20,7 @@ import com.xiaomei.util.MobileUtil;
 import com.xiaomei.widget.TitleBar;
 
 
-public class FindPasswordActivity extends BaseActiviy<UserControl>
+public class FindPasswordActivity extends AbstractActivity<UserControl>
 	implements View.OnClickListener{
 	
 	public static void startActivity(Context context){

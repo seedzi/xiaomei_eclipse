@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.KeyCharacterMap.KeyData;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
@@ -19,7 +19,7 @@ import com.xiaomei.util.UserUtil;
 /**
  * Created by huzhi on 15-2-17.
  */
-public class TabsActivity extends  BaseActiviy{
+public class TabsActivity extends  AbstractActivity{
 
 
     public static void startActivity(Context context){

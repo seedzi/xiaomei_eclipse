@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 
-public class FeedbackActivity extends BaseActiviy {
+public class FeedbackActivity extends AbstractActivity {
 	
 	
 	public static void startActivity(Context context){

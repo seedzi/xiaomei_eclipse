@@ -5,6 +5,12 @@
     android:orientation="vertical" 
     android:background="@color/color_background"
     xmlns:app="http://schemas.android.com/apk/res/com.xiaomei">
+    <!-- 防止edittext自动活取焦点 -->
+    <LinearLayout
+        android:focusable="true" android:focusableInTouchMode="true"
+        android:layout_width="0px" android:layout_height="0px">
+        <requestFocus />
+    </LinearLayout>
     
     <include layout="@layout/title_bar_layout"/>
     

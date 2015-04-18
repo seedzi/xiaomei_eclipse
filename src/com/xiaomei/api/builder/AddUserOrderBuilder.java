@@ -4,18 +4,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.xiaomei.bean.Order;
+import com.xiaomei.bean.Order2;
 
 import android.util.Log;
 
-public class AddUserOrderBuilder extends AbstractJSONBuilder<Order> {
+public class AddUserOrderBuilder extends AbstractJSONBuilder<Order2> {
 
 	
 	@Override
-	protected Order builder(JSONObject jsonObject) throws JSONException {
+	protected Order2 builder(JSONObject jsonObject) throws JSONException {
 		Log.d("json", jsonObject.toString());
-		Order order = null;
+		Order2 order = null;
 		if(jsonObject.has("msg"))
-			order = new Order();
+			order = new Order2();
 		if(jsonObject.has("modifydate"))
 			order.setModifydate(jsonObject.getString("modifydate"));
 		if(jsonObject.has("goods_pay"))
@@ -31,7 +32,7 @@ public class AddUserOrderBuilder extends AbstractJSONBuilder<Order> {
 		if(jsonObject.has("paydate"))
 			order.setPaydate(jsonObject.getString("paydate"));
 		if(jsonObject.has("order_id"))
-			order.setOrderid(jsonObject.getString("order_id"));
+			order.setOrderId(jsonObject.getString("order_id"));
 		if(jsonObject.has("goods_img"))
 			order.setGoodsImg(jsonObject.getString("goods_img"));
 		if(jsonObject.has("goods_amount"))
@@ -52,7 +53,7 @@ public class AddUserOrderBuilder extends AbstractJSONBuilder<Order> {
 			order.setGoodsCode(jsonObject.getString("goods_code"));
 		if(jsonObject.has("userinfo")){
 			JSONObject jObj = jsonObject.getJSONObject("userinfo");
-			Order.UserInfo userInfo = new Order.UserInfo();
+			Order2.UserInfo userInfo = new Order2.UserInfo();
 			if(jObj.has("mobile"))
 				userInfo.setMobile(jObj.getString("mobile"));
 			if(jObj.has("passport"))

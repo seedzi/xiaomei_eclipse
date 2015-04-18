@@ -4,7 +4,7 @@ package com.xiaomei.launch;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.Payment.ZhifubaoPayManager;
@@ -18,7 +18,7 @@ import com.xiaomei.module.user.LoginAndRegisterActivity;
 import com.xiaomei.test.PhoneGapAc;
 import com.xiaomei.util.UserUtil;
 
-public class LaunchActivity extends  BaseActiviy<LaunchControl>{
+public class LaunchActivity extends  AbstractActivity<LaunchControl>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

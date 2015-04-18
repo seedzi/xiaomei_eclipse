@@ -13,29 +13,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.Payment.PayUtils;
 import com.xiaomei.Payment.ZhifubaoPayManager;
 import com.xiaomei.bean.Order;
+import com.xiaomei.bean.Order2;
 import com.xiaomei.bean.User;
 import com.xiaomei.module.user.center.control.UserCenterControl;
 import com.xiaomei.util.UserUtil;
 import com.xiaomei.widget.TitleBar;
 
-public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> implements View.OnClickListener{
+public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
 	@Deprecated
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,OrderDetailsActivity.class);
 		context.startActivity(intent);
 	}
-	@Deprecated
+	/**
+	 * 我的订单页面进入
+	 * @param context
+	 * @param order
+	 */
 	public static void startActivity(Context context,Order order){
 		Intent intent = new Intent(context,OrderDetailsActivity.class);
 		intent.putExtra("order", order);
 		context.startActivity(intent);
 	}
 	/**
+	 * 产品页面进入
 	 * @param context
 	 * @param goodsId  商品id
 	 */
@@ -56,8 +63,8 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 	private ImageView goodsIconIv; //产品icon
 	private View payWeixin;
 	private View payZhifubao;
-	private Order order;
-	private Order.DataDetail.GoodsInfo goodsInfo ;
+//	private Order order;
+//	private Order.DataDetail.GoodsInfo goodsInfo ;
 	
 	private View rootView;
 	private View mLoadingView; 
@@ -97,9 +104,14 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 	private int[] res = new int[]{R.id.item1,R.id.item2,R.id.item3,R.id.item4,R.id.item5,R.id.item6};
 	
 	private void initData(){
-		String goodsId = getIntent().getStringExtra("goods_id");
-		mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "1");
-		showProgress();
+	    Order order = (Order) getIntent().getSerializableExtra("order");
+	    if(order!=null){   //我的订单页进入
+	        attachData2UI(order);
+	    }else{ //产品页进入
+	        String goodsId = getIntent().getStringExtra("goods_id");
+	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "123");
+	        showProgress();
+	    }
 		/*
 		order = (Order) getIntent().getSerializableExtra("order");
 		android.util.Log.d("111", "order = " + order);
@@ -129,11 +141,38 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 //		mControl.addUserOrderAsyn(user, goodsId, passport);
 	}
 
-	
+	private void attachData2UI(Order order){
+	        android.util.Log.d("111", "order = " + order);
+	        Order.DataDetail orderDataDetail = order.getDataDetail();
+	        if(orderDataDetail ==null)
+	            return ;
+	        Order.DataDetail.GoodsInfo goodsInfo = orderDataDetail.getGoodsInfo();
+	        goodsTitleTv.setText(goodsInfo.getGoodsName());
+	        goodsPriceTv.setText(goodsInfo.getOrderAmount());
+	        ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
+	        Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
+	        mechanismNameTv.setText(hospInfo.getHospName());
+	        mechanismLocationTv.setText(hospInfo.getAddr());
+	        mobileTv.setText(hospInfo.getTel());
+	        
+	        List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
+	        int i = 0;
+	        for(Order.DataDetail.OrderInfo info:orderInfos){
+	            initItem((ViewGroup)findViewById(res[i]), info);
+	            i++;
+	        }
+	}
 	// ====================================  CallBack =========================================================
 	public void addUserOrderAsynCallBack(){
-		Order order = mControl.getModel().getmOrder();
-		android.util.Log.d("111", "order = " + order);
+		Order2 order2 = mControl.getModel().getmOrder();
+        goodsTitleTv.setText(order2.getGoodsName());
+        goodsPriceTv.setText(order2.getOrderAmount());
+        dissProgress();
+        /*
+        mechanismNameTv.setText(order2.get);
+        mechanismLocationTv.setText(order2.getAddr());
+        mobileTv.setText(order2.get);*/
+		/*
 		Order.DataDetail orderDataDetail = order.getDataDetail();
 		if(orderDataDetail ==null)
 			return ;
@@ -152,6 +191,7 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 			initItem((ViewGroup)findViewById(res[i]), info);
 			i++;
 		}
+		*/
 	}
 	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info){
 		android.util.Log.d("111", "info = "+info);
@@ -160,7 +200,6 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 		title.setText(info.getTitle());
 		value.setText(info.getValue());
 		Toast.makeText(this, "订单生成成功", 0).show();
-		dissProgress();
 	}
 	
 	public void addUserOrderAsynExceptionCallBack(){
@@ -182,6 +221,12 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 		rootView.setVisibility(View.VISIBLE);
 	}
 	
+	// ====================================  Pay =========================================================
+	/**
+	 * 1.检查用户输入
+	 * 2.向服务器更新订单
+	 * 3.支付
+	 */
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
@@ -190,6 +235,10 @@ public class OrderDetailsActivity extends BaseActiviy<UserCenterControl> impleme
 			
 			break;
 		case R.id.pay_zhifubao:
+		    if(!PayUtils.checkoutInputData("", "", "")){
+		        Toast.makeText(this, "请您完整的输入您的信息", 0).show();
+		    }
+		    
 //			ZhifubaoPayManager.getInstance().pay(goodsInfo.getGoodsName(),goodsInfo.getGoodsName(),goodsInfo.getOrderAmount());
 			ZhifubaoPayManager.getInstance().pay();
 		default:

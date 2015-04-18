@@ -4,7 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:background="@color/color_background">
-        <include layout="@layout/title_bar_layout"/>
+    
+    <!-- 防止edittext自动活取焦点 -->
+    <LinearLayout
+        android:focusable="true" android:focusableInTouchMode="true"
+        android:layout_width="0px" android:layout_height="0px">
+        <requestFocus />
+    </LinearLayout>
+    
+    <include layout="@layout/title_bar_layout"/>
 <ScrollView 
     android:id="@+id/root_layout"
     android:layout_width="match_parent"

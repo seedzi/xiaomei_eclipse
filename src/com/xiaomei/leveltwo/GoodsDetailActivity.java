@@ -20,12 +20,12 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.api.HttpUrlManager;
 import com.xiaomei.widget.TitleBar;
 
-public class GoodsDetailActivity extends BaseActiviy implements CordovaInterface{
+public class GoodsDetailActivity extends AbstractActivity implements CordovaInterface{
 	
 	
 	public static void startActivity(Context context,String url){

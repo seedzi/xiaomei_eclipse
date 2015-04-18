@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.api.HttpUrlManager;
 import com.xiaomei.bean.Goods;
@@ -24,7 +24,7 @@ import com.xiaomei.module.user.center.OrderDetailsActivity;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 
-public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
+public class GoodsListActivity extends AbstractActivity<LeveltwoControl>{
 	
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,GoodsListActivity.class);

@@ -14,15 +14,16 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.bean.User;
+import com.xiaomei.module.user.LoginAndRegisterActivity;
 import com.xiaomei.module.user.center.control.UserCenterControl;
 import com.xiaomei.util.UserUtil;
 import com.xiaomei.widget.CircleImageView;
 import com.xiaomei.widget.TitleBar;
-import com.yuekuapp.BaseActivity;
 
-public class UserInfoActivity extends BaseActivity<UserCenterControl> implements View.OnClickListener{
+public class UserInfoActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
 
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,UserInfoActivity.class);
@@ -133,7 +134,10 @@ public class UserInfoActivity extends BaseActivity<UserCenterControl> implements
 	
 	// =========================================== CallBack ===================================================
 	public void loginOutAsynCallBack(){
+	    UserUtil.clearUser();
 		dismissDialog();
+		AbstractActivity.clearActivity();
+		LoginAndRegisterActivity.startActivity(this);
 	}
 	
 	public void loginOutAsynExceptionCallBack(){

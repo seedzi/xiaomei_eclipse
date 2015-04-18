@@ -26,7 +26,7 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.bean.User;
 import com.xiaomei.contanier.TabsActivity;
@@ -38,7 +38,7 @@ import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.TitleBar.Listener;
 
 
-public class LoginAndRegisterActivity extends BaseActiviy<UserControl>
+public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		implements Listener,View.OnClickListener{
 	
     public static void startActivity(Context context){

@@ -3,6 +3,7 @@ package com.xiaomei.module.user.model;
 import java.util.List;
 
 import com.xiaomei.bean.Order;
+import com.xiaomei.bean.Order2;
 import com.xiaomei.bean.User;
 
 public class UserModel {
@@ -17,7 +18,7 @@ public class UserModel {
 		return mUser;
 	}
 	
-	private Order mOrder;
+	private Order2 mOrder;
 
 	public User getmUser() {
 		return mUser;
@@ -27,11 +28,11 @@ public class UserModel {
 		this.mUser = mUser;
 	}
 
-	public Order getmOrder() {
+	public Order2 getmOrder() {
 		return mOrder;
 	}
 
-	public void setmOrder(Order mOrder) {
+	public void setmOrder(Order2 mOrder) {
 		this.mOrder = mOrder;
 	}
 	

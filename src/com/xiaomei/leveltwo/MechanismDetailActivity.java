@@ -12,11 +12,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 
-public class MechanismDetailActivity extends BaseActiviy {
+public class MechanismDetailActivity extends AbstractActivity {
 
 	public static void startActivity(Context context,String url){
 		Intent intent = new Intent(context,MechanismDetailActivity.class);

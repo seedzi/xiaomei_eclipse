@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.bean.HistroyItem;
 import com.xiaomei.widget.TitleBar;
 
-public class HistoryActivity extends BaseActiviy {
+public class HistoryActivity extends AbstractActivity {
 	
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,HistoryActivity.class);

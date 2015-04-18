@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.bean.BeautifulRingDetail;
 import com.xiaomei.bean.ChannelEntity;
@@ -34,7 +34,7 @@ import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.ViewPager;
 import com.xiaomei.widget.ViewPager.OnPageChangeListener;
 
-public class BeautifulRingDetailsActivity extends BaseActiviy<LeveltwoControl> implements OnTouchListener{
+public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoControl> implements OnTouchListener{
 
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,BeautifulRingDetailsActivity.class);

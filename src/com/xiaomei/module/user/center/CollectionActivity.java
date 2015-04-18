@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 
-public class CollectionActivity extends BaseActiviy {
+public class CollectionActivity extends AbstractActivity {
 	
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,CollectionActivity.class);

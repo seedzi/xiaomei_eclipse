@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import com.xiaomei.BaseActiviy;
+import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 
-public class MessageActivity extends BaseActiviy {
+public class MessageActivity extends AbstractActivity {
 	
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,MessageActivity.class);
