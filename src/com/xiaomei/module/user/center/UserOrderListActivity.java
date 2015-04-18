@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
@@ -25,10 +28,10 @@ import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseActivity;
 
-public class UserOrderActivity extends BaseActivity<UserCenterControl> {
+public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 	
 	public static void startActivity(Context context){
-		Intent intent = new Intent(context,UserOrderActivity.class);
+		Intent intent = new Intent(context,UserOrderListActivity.class);
 		context.startActivity(intent);
 	}
 	
@@ -70,7 +73,7 @@ public class UserOrderActivity extends BaseActivity<UserCenterControl> {
 	public void getUserOrdersAsynCallBack(){
 		mAdapter.setData(mControl.getModel().getOrderList());
 		mAdapter.notifyDataSetChanged();
-		Toast.makeText(UserOrderActivity.this, "加载成功", 0).show();
+		Toast.makeText(UserOrderListActivity.this, "加载成功", 0).show();
 	}
 	
 	public void getUserOrdersAsynExceptionCallBack(){
@@ -113,17 +116,53 @@ public class UserOrderActivity extends BaseActivity<UserCenterControl> {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Holder holder = null;
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_user_order_layout,null);
-				convertView.setOnClickListener(this);
+				holder = new Holder();
+				holder.orderIdTv = (TextView) convertView.findViewById(R.id.order_id);
+				holder.userNameTv = (TextView) convertView.findViewById(R.id.user_name);
+				holder.createTimeTv = (TextView) convertView.findViewById(R.id.create_time);
+				holder.goodsIconIv = (ImageView) convertView.findViewById(R.id.goods_icon);
+				holder.goodsNameTv = (TextView) convertView.findViewById(R.id.goods_name);
+				holder.statusTv = (TextView) convertView.findViewById(R.id.status);
+				holder.orderAmountTv = (TextView) convertView.findViewById(R.id.order_amount);
+				holder.payButton = convertView.findViewById(R.id.pay_button);
+				holder.payButton.setOnClickListener(this);
+				convertView.setTag(holder);
+			}
+			holder = (Holder) convertView.getTag();
+			Order order = data.get(position);
+			Order.DataList dataList = order.getDataList();
+			if(dataList!=null){
+				holder.orderIdTv.setText(dataList.getId());
+				holder.userNameTv.setText(dataList.getUsername());
+				holder.createTimeTv.setText(dataList.getCreatedate());
+				ImageLoader.getInstance().displayImage(dataList.getGoodsImg(), holder.goodsIconIv);
+				holder.goodsNameTv.setText(dataList.getGoodsName());
+				holder.statusTv.setText(dataList.getStatus());
+				holder.orderAmountTv.setText(dataList.getOrderAmount());
+				holder.payButton.setTag(Integer.valueOf(position));
 			}
 			return convertView;
 		}
 
 		@Override
 		public void onClick(View v) {
-			OrderDetailsActivity.startActivity(UserOrderActivity.this);
+			int position = (Integer) v.getTag();
+			Order order = data.get(position);
+			OrderDetailsActivity.startActivity(UserOrderListActivity.this,order.getDataList().getGoodsId());
 		}
 		
+		private class Holder {
+			TextView orderIdTv; //订单号
+			TextView userNameTv; //用户名
+			TextView createTimeTv; //创建时间
+			ImageView goodsIconIv; //商品icon
+			TextView goodsNameTv; //商品名
+			TextView statusTv;//订单状态
+			TextView orderAmountTv; //订单价格
+			View payButton; //按钮
+		}
 	}
 }

@@ -137,7 +137,9 @@ public class GoodsListActivity extends BaseActiviy<LeveltwoControl>{
 		public void onClick(View v) {
 			Holder holder = (Holder) v.getTag();
 //			OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
-			WebViewActivity.startActivity(GoodsListActivity.this,holder.goodId);
+//			GoodsDetailActivity.startActivity(GoodsListActivity.this,holder.goodId);
+			GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId);
+			
 //			WebViewActivity.startActivity(GoodsListActivity.this ,"http://drxiaomei.duapp.com/goods.php?goods_id=1015");
 		}
 		

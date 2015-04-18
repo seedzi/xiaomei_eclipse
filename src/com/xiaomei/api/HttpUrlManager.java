@@ -2,11 +2,13 @@ package com.xiaomei.api;
 
 public class HttpUrlManager {
 	
-	private static String HOST = "http://drxmapi.duapp.com"; 
-	
+	private static String HOST = "http://api.drxiaomei.com"; 
+	/**产品详情*/
 	public static String GOODS_DETAIL_URL  = "http://z.drxiaomei.com/goods.php";
+	/**机构详情*/
+	public static String MECHANISM_DETAIL_URL = "http://z.drxiaomei.com/hospital.php";//?hosp_id=45
 	
-	public static String COMMENT_DETAIL_URL = "http://drxiaomei.duapp.com/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
+	public static String COMMENT_DETAIL_URL = HOST +"/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
 	
 	public static String UPDATE_USER_ICON = HOST + "/server/action/upoadAvatar.php";
  	
@@ -78,9 +80,9 @@ public class HttpUrlManager {
 	String actionUserMsgUrl(){
 		return HOST + "/action/msg";
 	}
-	/**产品详情页*/
+	/**获取产品详情*/
 	String goodsDetailUrl(){
-		return HOST + "/goods.php";
+		return HOST + "/server/show/goodsinfo.php";//http://api.drxiaomei.com/server/show/goodsinfo.php?goods_id=45
 	}
 }
 

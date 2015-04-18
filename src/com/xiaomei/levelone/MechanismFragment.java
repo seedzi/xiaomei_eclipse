@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
+import com.xiaomei.api.HttpUrlManager;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.levelone.control.MechanismControl;
+import com.xiaomei.leveltwo.GoodsDetailActivity;
+import com.xiaomei.leveltwo.MechanismDetailActivity;
 import com.xiaomei.util.ScreenUtils;
 import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.pullrefreshview.PullToRefreshListView;
@@ -208,6 +211,13 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 				holder = new Holder();
 				holder.iconIv = (ImageView) convertView.findViewById(R.id.icon);
 				convertView.setTag(holder);
+				convertView.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Holder holder = (Holder) v.getTag();
+						GoodsDetailActivity.startActivity(getActivity(), HttpUrlManager.MECHANISM_DETAIL_URL + "?hosp_id=" + holder.id);
+					}
+				});
 			}
 			holder = (Holder) convertView.getTag();
 			attachData2UI(holder, position);
@@ -219,6 +229,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			ImageLoader.getInstance().displayImage(mData.get(position).getFile(), holder.iconIv);
 			RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*3/5));
 			holder.iconIv.setLayoutParams(ll);
+			holder.id = mData.get(position).getId();
 		}
 		
 		private class Holder{
@@ -226,6 +237,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			private TextView titleTv;
 			private TextView hospitalTv;
 			private TextView locationTv;
+			private String id;
 		}
 		
 	}

@@ -8,7 +8,7 @@ import com.xiaomei.module.user.center.FeedbackActivity;
 import com.xiaomei.module.user.center.HistoryActivity;
 import com.xiaomei.module.user.center.MessageActivity;
 import com.xiaomei.module.user.center.UserInfoActivity;
-import com.xiaomei.module.user.center.UserOrderActivity;
+import com.xiaomei.module.user.center.UserOrderListActivity;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
@@ -40,7 +40,6 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 			Bundle savedInstanceState) {
 		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_center_layout, null);
 		setUpView();
-		initData();
 		return mRootView;
 	}
 
@@ -80,34 +79,12 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		rootView.findViewById(R.id.new_version_prompt).setVisibility(View.GONE);
 	}
 
-	private void initData(){
-		mControl.updateUserMessgaeAsyn();
-	}
-	
-	/**活取用戶信息成功*/
-	public void updateUserMessgaeAsynCallBack(){
-		/*
-		String grade = mControl.getUserInfo().getGrade();
-		String iconUrl = mControl.getUserInfo().getIconUrl();
-		String userName = mControl.getUserInfo().getUsername();
-		
-		mUserNameTv.setText(userName);
-		mUserGradeTv.setText(grade);
-		ImageLoader.getInstance().displayImage(iconUrl, mUserIconIv);
-		*/
-	}
-	
-	/**获取用戶信息失敗*/
-	public void updateUserMessgaeAsynExceptionCallBack(){
-		// TODO
-	}
-	
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
 		case R.id.line1:  //我的订单
-			UserOrderActivity.startActivity(getActivity());
+			UserOrderListActivity.startActivity(getActivity());
 			break;
 		case R.id.line2: //我的消息
 			MessageActivity.startActivity(getActivity());

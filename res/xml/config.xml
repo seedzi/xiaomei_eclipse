@@ -78,7 +78,7 @@
     </plugins>
     <access origin="http://127.0.0.1*" />
      -->
-     <access origin="*" />
+     <access origin=".*" />
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="permissions" value="none" />

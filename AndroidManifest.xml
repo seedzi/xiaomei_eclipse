@@ -40,6 +40,16 @@
             >
         </activity>
         
+       <activity
+            android:name=".leveltwo.GoodsDetailActivity"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
+        <!-- 机构详情 -->
+       <activity
+            android:name=".leveltwo.MechanismDetailActivity"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>        
+       
 		<!-- 登陆注册 -->
 		<activity 
 		    android:name="com.xiaomei.module.user.LoginAndRegisterActivity">
@@ -57,7 +67,7 @@
 		</activity>
 		<!-- 我的订单 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.UserOrderActivity">
+		    android:name="com.xiaomei.module.user.center.UserOrderListActivity">
 		</activity>
 		<!-- 关于 -->
 		<activity 
@@ -100,6 +110,8 @@
 		    android:name="com.xiaomei.test.PhoneGapAc"
 		    android:configChanges="orientation|keyboardHidden">
 		</activity>
+		
+		
 		
 	   <!-- ################### 支付宝 ###################### -->
 		<activity

@@ -6,7 +6,7 @@
     android:background="@color/color_white">
     <RelativeLayout 
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="36dp"
         android:gravity="center_vertical">
         
         <ImageView 
@@ -19,7 +19,7 @@
             android:src="@drawable/order_tag"/>
         
         <TextView 
-            android:id="@+id/order_code"
+            android:id="@+id/order_id"
             android:textColor="@color/item_txt_color"
             android:layout_marginLeft="@dimen/item_margin_small_most"
             android:layout_toRightOf="@id/tag"
@@ -32,7 +32,7 @@
  
         <ImageView 
             android:id="@+id/user_tag"
-            android:layout_toRightOf="@id/order_code"
+            android:layout_toRightOf="@id/order_id"
             android:src="@drawable/order_name_tag"
             android:layout_centerInParent="true"
             android:layout_marginLeft="37dp"
@@ -53,7 +53,7 @@
             android:text="美哈哈"/>         
                       
         <TextView 
-            android:id="@+id/time"
+            android:id="@+id/create_time"
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
             android:textColor="@color/item_txt_color"
@@ -81,15 +81,15 @@
         android:paddingTop="@dimen/item_margin_small"
         android:paddingBottom="@dimen/item_margin_small">
         <ImageView 
-            android:id="@+id/icon"
+            android:id="@+id/goods_icon"
             android:layout_width="@dimen/item_icon_rect_width"
             android:layout_height="@dimen/item_icon_rect_height"            
             android:scaleType="fitXY"
             android:src="@drawable/user_centre_info_portrait_default"/>
         <TextView 
-            android:id="@+id/title"
+            android:id="@+id/goods_name"
             android:layout_marginLeft="@dimen/item_margin_small"
-			android:layout_toRightOf="@id/icon"            
+			android:layout_toRightOf="@id/goods_icon"            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#333333" 
@@ -98,8 +98,8 @@
          <TextView 
             android:id="@+id/status"
             android:layout_marginLeft="@dimen/item_margin_small"
-            android:layout_alignBottom="@id/icon"
-			android:layout_toRightOf="@id/icon"            
+            android:layout_alignBottom="@id/goods_icon"
+			android:layout_toRightOf="@id/goods_icon"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:textSize="12sp"
@@ -107,8 +107,8 @@
             android:text="未付款"/>       
             
            <TextView 
-            android:id="@+id/price"
-            android:layout_alignBottom="@id/icon"
+            android:id="@+id/order_amount"
+            android:layout_alignBottom="@id/goods_icon"
 			android:layout_alignParentRight="true"     
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
-        <Button 
+        <TextView 
             android:id="@+id/pay_button"
             android:text="立即付款"
             android:textColor="#ffffff"
@@ -137,10 +137,11 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="15sp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+    		android:gravity="center"
+    		android:paddingLeft="10dp"
+    		android:paddingRight="10dp"
             android:background="@drawable/payment_selector"/>
-        <Button 
+        <TextView 
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/pay_button"
             android:text="取消订单"
@@ -148,7 +149,8 @@
             android:textColor="@color/color_payment_cancel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:background="@null"/>        
+            android:background="@null"
+            android:visibility="gone"/>        
     </RelativeLayout> 
             <View 
         android:layout_width="match_parent"
