@@ -103,7 +103,8 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	        nickNameEd.setText(userInfo.getUsername());
 	        linkEd.setText(userInfo.getMobile());
 	        userNameTv.setText(userInfo.getUsername());
-	        ImageLoader.getInstance().displayImage(userInfo.getAvatar(), userIcon);
+	        if(!TextUtils.isEmpty(userInfo.getAvatar()))
+	            ImageLoader.getInstance().displayImage(userInfo.getAvatar(), userIcon);
         } catch (Exception e) {
         }
 	}
@@ -113,7 +114,24 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		int id = v.getId();
 		switch (id) {
 		case R.id.loginout:
-			loginOut();
+            AlertDialog.Builder builder = new Builder(this);
+            builder.setMessage("您确认要登出吗?");
+            builder.setTitle("提示");
+            builder.setPositiveButton("确认", new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    loginOut();
+                }
+            });
+            builder.setNegativeButton("取消", new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+
 			break;
 		case R.id.user_icon:
 	         Intent intent = new Intent();  
@@ -251,7 +269,7 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	private boolean showDialog4UserUpload(){
 	    if(!isUserMessgaeChanged())
 	        return false;;
-	   AlertDialog.Builder builder = new Builder(this);
+	    AlertDialog.Builder builder = new Builder(this);
 	    builder.setMessage("您确认修改信息吗?");  
 	    builder.setTitle("提示");  
 	    builder.setPositiveButton("确认", new OnClickListener() {   

@@ -17,6 +17,7 @@ import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,8 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	private void initData(){
 	    try {
 	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
-	        ImageLoader.getInstance().displayImage(userInfo.getAvatar(), mUserIconIv);
+	        if(!TextUtils.isEmpty(userInfo.getAvatar()))
+	            ImageLoader.getInstance().displayImage(userInfo.getAvatar(), mUserIconIv);
 	        mUserNameTv.setText(userInfo.getUsername());   
         } catch (Exception e) {
         }
