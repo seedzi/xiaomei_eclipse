@@ -83,6 +83,7 @@ public class FileUtils {
             }  
         }  
         post.abort();  
+        android.util.Log.d("111", "upload file = " + sb.toString());
         return sb.toString();  
     }  
 

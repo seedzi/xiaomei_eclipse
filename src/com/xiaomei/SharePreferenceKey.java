@@ -26,6 +26,8 @@ public class SharePreferenceKey {
 	
 	public static final String USER_MOBILE= "mobile";
 	
+	   public static final String USER_AVATAR= "avatar";
+	
 	/*
 	{"token":"75ced4559baf29cc7ba5c80add96c39af2f15cd1a348227bf0652508225e8e34",
 		"userinfo":

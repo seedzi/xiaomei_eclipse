@@ -1,19 +1,29 @@
 package com.xiaomei.module.user.center;
 
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.bean.User;
@@ -38,13 +48,30 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	
 	private String iconPath;
 	
+	/**昵称*/
+	private EditText nickNameEd;
+	/**联系方式*/
+	private EditText linkEd;
+	/**身份证号*/
+	private EditText shengFenZhengHaoEd;
+	/**地址*/
+	private EditText locationEd;
+	/**用户头像*/
+	private CircleImageView  userIcon;
+	/**用户名*/
+	private TextView userNameTv;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_info_layout);
 		initView();
 		initData();
-		
+	}
+	
+	@Override
+	protected void onResume() {
+	    super.onResume();
 	}
 	
 	private void initView(){
@@ -53,19 +80,32 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		mTitlebar.setBackListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+			    if(!showDialog4UserUpload()){
+			        finish();
+			    }
 			}
 		});
 		findViewById(R.id.loginout).setOnClickListener(this);
 		mUserIcon = (CircleImageView) findViewById(R.id.user_icon);
 		mUserIcon.setOnClickListener(this);
+		
+		nickNameEd = (EditText) findViewById(R.id.nick_name);
+		linkEd = (EditText) findViewById(R.id.link);
+		shengFenZhengHaoEd = (EditText) findViewById(R.id.sheng_fen_zheng_hao);
+		locationEd = (EditText) findViewById(R.id.location);
+		userIcon = (CircleImageView) findViewById(R.id.user_icon);
+		userNameTv = (TextView) findViewById(R.id.user_name);
 	}
 	
 	private void initData(){
-		if(UserUtil.getUser()!=null)
-			mControl.getUserInfo(User.getFromShareP());
-		else
-			Toast.makeText(getApplicationContext(), "没有用户", 0).show();
+	    try {
+	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
+	        nickNameEd.setText(userInfo.getUsername());
+	        linkEd.setText(userInfo.getMobile());
+	        userNameTv.setText(userInfo.getUsername());
+	        ImageLoader.getInstance().displayImage(userInfo.getAvatar(), userIcon);
+        } catch (Exception e) {
+        }
 	}
 
 	@Override
@@ -115,7 +155,7 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		mControl.uploadIcon(filePath);
 	}
 	
-	// =========================================== ProgressDialog ===================================================
+	// =========================================== ProgressDialog ==========================================
 	
 	private void showProgressDialog(String message){
 		if(mProgressDialog!=null && mProgressDialog.isShowing())
@@ -132,7 +172,7 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 			mProgressDialog.dismiss();
 	}
 	
-	// =========================================== CallBack ===================================================
+	// =========================================== CallBack =================================================
 	public void loginOutAsynCallBack(){
 	    UserUtil.clearUser();
 		dismissDialog();
@@ -156,5 +196,85 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		dismissDialog();
 	}
 	
+	public void uploadUserInfoCallBack(){
+	    Toast.makeText(this, "用户信息更新成功", 0).show();
+        dismissDialog();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },500);
+	}
+	
+	public void uploadUserInfoExceptionCallBack(){
+	    Toast.makeText(this, "用户信息更新失败", 0).show();
+        dismissDialog();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },500);
+	}
+	
+	@Override
+	public void onBackPressed() {
+
+	    if(showDialog4UserUpload()){
+	    }else{
+	        super.onBackPressed();
+	    }
+	}
+	
+    // =========================================== user upload =================================================
+	/**
+     * 检查用户信息是否修改
+     */
+	private boolean isUserMessgaeChanged(){
+	    try {
+	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
+	        if(!userInfo.getUsername().equals(nickNameEd.getText().toString().trim()))
+	            return true;
+	        if(!userInfo.getMobile().equals(linkEd.getText().toString().trim())) 
+	            return true;
+	        if(!TextUtils.isEmpty(mControl.getModel().getUploadFileUrl())) 
+	            return true;
+	        return false;
+        } catch (Exception e) {
+            return false;
+        }
+	}
+	/**
+	 * 如果用户信息修改了 弹出对话框
+	 */
+	private boolean showDialog4UserUpload(){
+	    if(!isUserMessgaeChanged())
+	        return false;;
+	   AlertDialog.Builder builder = new Builder(this);
+	    builder.setMessage("您确认修改信息吗?");  
+	    builder.setTitle("提示");  
+	    builder.setPositiveButton("确认", new OnClickListener() {   
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	            mControl.uploadUserInfo(nickNameEd.getText().toString(),
+	                    linkEd.getText().toString().replaceAll("-", ""),
+	                    locationEd.getText().toString(),
+	                    shengFenZhengHaoEd.getText().toString(),
+	                    mControl.getModel().getUploadFileUrl());
+	            dialog.dismiss();    
+	            showProgressDialog("用户信息上传中...");
+	         }
+	    });  
+	    builder.setNegativeButton("取消", new OnClickListener() {   @Override
+    	     public void onClick(DialogInterface dialog, int which) {
+    	          dialog.dismiss();
+    	          finish();
+    	     }
+	    });  
+	    builder.create().show();
+	    return true;
+	}
+
 	
 }

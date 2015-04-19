@@ -9,7 +9,9 @@ import com.xiaomei.bean.User;
 public class UserModel {
 	
 	private User mUser;
-
+	/**更新用户头像后新生成的url*/
+	private String uploadFileUrl;
+	
 	public void setUser(User user){
 		mUser = user;
 	}
@@ -45,5 +47,22 @@ public class UserModel {
 	public List<Order> getOrderList(){
 		return mOrderList;
 	}
+
+    public String getUploadFileUrl() {
+        return uploadFileUrl;
+    }
+
+    public void setUploadFileUrl(String uploadFileUrl) {
+        this.uploadFileUrl = uploadFileUrl;
+    }
+
+    public List<Order> getmOrderList() {
+        return mOrderList;
+    }
+
+    public void setmOrderList(List<Order> mOrderList) {
+        this.mOrderList = mOrderList;
+    }
+	
 	
 }

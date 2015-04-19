@@ -40,6 +40,8 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 				userInfo.setUserid(js.getString("userid"));
 			if(js.has("mobile"))
 				userInfo.setMobile(js.getString("mobile"));
+	         if(js.has("avatar"))
+	                userInfo.setAvatar(js.getString("avatar"));
 			user.setUserInfo(userInfo);
 		}
 		return user;

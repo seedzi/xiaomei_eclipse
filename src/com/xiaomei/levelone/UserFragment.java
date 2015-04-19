@@ -1,6 +1,8 @@
 package com.xiaomei.levelone;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
+import com.xiaomei.bean.User;
 import com.xiaomei.levelone.control.UserControl;
 import com.xiaomei.module.user.center.AboutActivity;
 import com.xiaomei.module.user.center.CollectionActivity;
@@ -9,6 +11,7 @@ import com.xiaomei.module.user.center.HistoryActivity;
 import com.xiaomei.module.user.center.MessageActivity;
 import com.xiaomei.module.user.center.UserInfoActivity;
 import com.xiaomei.module.user.center.UserOrderListActivity;
+import com.xiaomei.util.UserUtil;
 import com.xiaomei.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
@@ -43,6 +46,12 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		return mRootView;
 	}
 
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    initData();
+	}
+	
 	private void setUpView(){
 		mRootView.findViewById(R.id.back).setVisibility(View.GONE);
 		mRootView.findViewById(R.id.user_icon);
@@ -68,6 +77,15 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		mUserGradeTv = (TextView) mRootView.findViewById(R.id.user_grade);
 		
 		mRootView.findViewById(R.id.user_info_layout).setOnClickListener(this);
+	}
+	
+	private void initData(){
+	    try {
+	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
+	        ImageLoader.getInstance().displayImage(userInfo.getAvatar(), mUserIconIv);
+	        mUserNameTv.setText(userInfo.getUsername());   
+        } catch (Exception e) {
+        }
 	}
 	
 	private void setUpUserItem(ViewGroup rootView,String title,View.OnClickListener clickListener,int drawableRes){

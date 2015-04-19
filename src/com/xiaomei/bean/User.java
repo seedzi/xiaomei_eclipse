@@ -6,9 +6,24 @@ import com.xiaomei.SharePreferenceKey;
 import com.xiaomei.SharePreferenceWrap;
 
 /*
-{"token":"75ced4559baf29cc7ba5c80add96c39af2f15cd1a348227bf0652508225e8e34",
-	"userinfo":
-	{"modifydate":"1428493921","sex":"0","username":"未定义","user_type":"1","age":"0","createdate":"1428493921","userid":"19062270","mobile":"13716417246"}}
+{
+    "msg": {
+        "token": "0d653d91e6d6ff581796882b71c1f7cd0bde8ebd80963f5da969803da5f10378",
+        "userinfo": {
+            "modifydate": "1429330858",
+            "username": "未定义",
+            "sex": "0",
+            "order": "[19062301,19062309,19062310,19062311,19062312,19062313,19062314,19062315,19062316,19062317]",
+            "user_type": "1",
+            "age": "0",
+            "userid": "19062300",
+            "createdate": "1429330858",
+            "avatar": "http://bcs.duapp.com/drxiaomei//images/avatar/20150419/20150419082052_29670.png",
+            "mobile": "15010768102"
+        }
+    },
+    "code": 0
+}
 	*/
 public class User {
 	
@@ -54,6 +69,8 @@ public class User {
 		private String userid;
 		
 		private String mobile;
+		
+		private String avatar;
 
 		public String getModifydate() {
 			return modifydate;
@@ -119,14 +136,24 @@ public class User {
 			this.mobile = mobile;
 		}
 
-		@Override
-		public String toString() {
-			return "UserInfo [modifydate=" + modifydate + ", sex=" + sex
-					+ ", username=" + username + ", userType=" + userType
-					+ ", age=" + age + ", createdate=" + createdate
-					+ ", userid=" + userid + ", mobile=" + mobile + "]";
-		}
-		
+		public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        @Override
+        public String toString() {
+            return "UserInfo [modifydate=" + modifydate + ", sex=" + sex
+                    + ", username=" + username + ", userType=" + userType
+                    + ", age=" + age + ", createdate=" + createdate
+                    + ", userid=" + userid + ", mobile=" + mobile + ", avatar="
+                    + avatar + "]";
+        }
+
+        
 	}
 
 
@@ -140,6 +167,7 @@ public class User {
 		sharePreferenceWrap.putString(SharePreferenceKey.USER_CREATEDATE, user.getUserInfo().createdate);
 		sharePreferenceWrap.putString(SharePreferenceKey.USER_USERID, user.getUserInfo().userid);
 		sharePreferenceWrap.putString(SharePreferenceKey.USER_MOBILE, user.getUserInfo().mobile);
+		sharePreferenceWrap.putString(SharePreferenceKey.USER_AVATAR, user.getUserInfo().avatar);
 	}
 	
 	public static User getFromShareP(){
@@ -158,6 +186,7 @@ public class User {
 		userInfo.setUserid(sharePreferenceWrap.getString(SharePreferenceKey.USER_USERID, ""));
 		userInfo.setUsername(sharePreferenceWrap.getString(SharePreferenceKey.USER_NAME, ""));
 		userInfo.setUserType(sharePreferenceWrap.getString(SharePreferenceKey.USER_TYPE, ""));
+		userInfo.setAvatar(sharePreferenceWrap.getString(SharePreferenceKey.USER_AVATAR, ""));
 		user.setUserInfo(userInfo);
 		return user;
 	}

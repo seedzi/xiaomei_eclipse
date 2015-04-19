@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.cordova.api.LOG;
 
+import android.text.TextUtils;
+
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.api.exception.XiaoMeiIOException;
@@ -90,27 +92,35 @@ public class UserCenterControl extends BaseControl {
 	
 	@AsynMethod
 	public void uploadIcon(String filePath){
-//		//test
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		sendMessage("uploadIconCallBack");
+	    String uploadFileUrl = null;
 		try {
-			XiaoMeiApplication.getInstance().getApi().uploadFile(UserUtil.getUser().getToken(),filePath);
+		    uploadFileUrl = XiaoMeiApplication.getInstance().getApi().uploadFile(UserUtil.getUser().getToken(),filePath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		boolean success = XiaoMeiApplication.getInstance().getApi().uploadFile(filePath);
-		if(success)
+		mModel.setUploadFileUrl(uploadFileUrl);
+		if(!TextUtils.isEmpty(uploadFileUrl))
 			sendMessage("uploadIconCallBack");
 		else
 			sendMessage("uploadIconExceptionCallBack");
-		*/
+	}
+	
+	@AsynMethod
+	public void uploadUserInfo(String username,String mobile,String local,String shenfenzheng,String iconUrl){
+	    try {
+            XiaoMeiApplication.getInstance().getApi().updateUserInfo(username, mobile, local, shenfenzheng, iconUrl, UserUtil.getUser().getToken());
+            //更新本地的用户信息
+            User user = UserUtil.getUser();
+            User.UserInfo userInfo = user.getUserInfo();
+            userInfo.setUsername(username);
+            userInfo.setAvatar(iconUrl);
+            User.save(user);
+            sendMessage("uploadUserInfoCallBack");
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendMessage("uploadUserInfoExceptionCallBack");
+        } 
 	}
 	
 }

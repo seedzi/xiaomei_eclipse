@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.xiaomei.api.builder.ListOrderBuilder;
 import com.xiaomei.api.builder.LoginOutBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
+import com.xiaomei.api.builder.UploadFIleBuilder;
 import com.xiaomei.api.builder.UserLoginBuilder;
 import com.xiaomei.api.builder.UserRegisterBuilder;
 import com.xiaomei.api.exception.XiaoMeiCredentialsException;
@@ -219,15 +221,25 @@ public class XiaoMeiApi {
 	/**
 	 * 更新用户信息
 	 */
-	public void updateUserInfo(UserInfo userinfo,String token)
+	public void updateUserInfo(String username,String mobile,String local,String shenFenZheng,String iconPath,String token)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 		BasicNameValuePair[] values = {new BasicNameValuePair("token", token),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
-				new BasicNameValuePair("username", "张论")};
+				new BasicNameValuePair("username", username),
+                new BasicNameValuePair("mobile", mobile),
+                new BasicNameValuePair("avatar", iconPath)
+//                new BasicNameValuePair("local", local),
+//                new BasicNameValuePair("shenFenZheng", shenFenZheng),
+             
+		};
 		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.updateUserInfoUrl(),
 				values[0],
 				values[1],
 				values[2],
+                values[3],
+                values[4],
+//                values[5],
+//                values[6],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
@@ -236,7 +248,7 @@ public class XiaoMeiApi {
 	 * 更新用户头像
 	 * @throws Exception 
 	 */
-	public boolean uploadFile(String token,String filePath) throws Exception{
+	public String uploadFile(String token,String filePath) throws Exception{
 		BasicNameValuePair[] values = {
 				new BasicNameValuePair("token", token),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))};
@@ -244,8 +256,7 @@ public class XiaoMeiApi {
 		params.put("token", token);
 		params.put("uptime", String.valueOf(System.currentTimeMillis()/1000));
 		params.put("fig",  Security.get32MD5Str(values));
-		FileUtils.uploadSubmit(urlManager.upoadAvatarUrl(),params,new File(filePath));
-		return false;
+		return new UploadFIleBuilder().build(new JSONObject(FileUtils.uploadSubmit(urlManager.upoadAvatarUrl(),params,new File(filePath))));
 	}
 	
 	/**
