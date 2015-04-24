@@ -14,6 +14,7 @@ import com.xiaomei.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.api.exception.XiaoMeiIOException;
 import com.xiaomei.api.exception.XiaoMeiJSONException;
 import com.xiaomei.api.exception.XiaoMeiOtherException;
+import com.xiaomei.comment.CommentListActivity;
 import com.xiaomei.util.UserUtil;
 
 /**
@@ -34,6 +35,29 @@ public class TabsActivity extends  AbstractActivity{
         setContentView(R.layout.activity_container_layout);
         
         new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    XiaoMeiApplication.getInstance().getApi().showCommentList(UserUtil.getUser().getToken(), "1015", "goods", "1", "10");
+                } catch (XiaoMeiCredentialsException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (XiaoMeiIOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (XiaoMeiJSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (XiaoMeiOtherException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        // test
+        
+        /*
+        new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -43,7 +67,7 @@ public class TabsActivity extends  AbstractActivity{
 				} 
 			}
 		}).start();
-        /*
+        
         new Thread(new Runnable() {
 			@Override
 			public void run() {

@@ -268,7 +268,7 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	 */
 	private boolean showDialog4UserUpload(){
 	    if(!isUserMessgaeChanged())
-	        return false;;
+	        return false;
 	    AlertDialog.Builder builder = new Builder(this);
 	    builder.setMessage("您确认修改信息吗?");  
 	    builder.setTitle("提示");  

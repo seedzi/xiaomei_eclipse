@@ -18,7 +18,7 @@ public class Order2 {
     private String goodsPrice;
     private String goodsStatus;
     private String payType;
-    private String orderNum;
+    private String orderNum; //订单号
     private String goodsId;
     private String goodsCode;
     private UserInfo userInfo;

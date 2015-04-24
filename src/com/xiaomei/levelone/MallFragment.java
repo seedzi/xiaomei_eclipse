@@ -2,6 +2,7 @@ package com.xiaomei.levelone;
 
 
 import com.xiaomei.R;
+import com.xiaomei.comment.CommentListActivity;
 import com.xiaomei.levelone.control.MallControl;
 import com.xiaomei.leveltwo.GoodsListActivity;
 import com.xiaomei.leveltwo.MallSecondActivity;
@@ -53,6 +54,12 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mTopIcon = (ImageView) mRootView.findViewById(R.id.top_icon);
 		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*9/14;
 		mTopIcon.setImageResource(R.drawable.meinv);
+		mRootView.findViewById(R.id.top_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentListActivity.startActivity(getActivity());
+            }
+        });
 	}
 	
 	private void initData(){

@@ -14,7 +14,7 @@
     	android:layout_height="wrap_content"
         android:layout_width="wrap_content"/>
     
-    <TextView 
+    <EditText 
         android:id="@+id/value"
         android:textSize="15sp"
         android:layout_margin="15dp"
@@ -23,7 +23,8 @@
         android:textColor="#969696"
         android:layout_centerVertical="true"
     	android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:background="@null"/>
     
     
     <View 

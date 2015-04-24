@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/color_white">
+    
+    <!-- 评论的按钮 -->
+    <RelativeLayout 
+        android:id="@+id/comment_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical">
+        <TextView 
+            android:id="@+id/send_button"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="发送"
+            android:textColor="#ffffff"
+            android:background="@drawable/comment_fasong_button"
+            android:layout_marginRight="15dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"/>
+        <EditText 
+            android:id="@+id/comment_edit"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@id/send_button"
+            android:layout_height="35dp"
+            android:paddingLeft="10dp"
+            android:textSize="15sp"
+            android:hint="请输入"
+            android:layout_width="match_parent"
+            android:background="@drawable/comment_fabukaung_wenbanduo"/>
+    </RelativeLayout>
+    <!--   -->
+    <include   layout="@layout/title_bar_layout"    android:id="@+id/title_bar"/>
+    
+    <com.xiaomei.widget.pullrefreshview.PullToRefreshListView 
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffe2e2e2"
+        android:scrollbarStyle="outsideOverlay"
+        android:dividerHeight="1.0dp"
+        ptr:ptrMode="pullDownFromTop"
+        android:layout_below="@id/title_bar"
+        android:visibility="visible"
+        android:layout_above="@id/comment_layout"/> 
+    
+    <include  android:id="@+id/empty_view"
+        layout="@layout/empty_layout"
+        android:visibility="gone"/>
+    
+    <include  android:id="@+id/loading_layout"
+        layout="@layout/loading_layout"
+        android:visibility="visible"/>
+   
+</RelativeLayout>

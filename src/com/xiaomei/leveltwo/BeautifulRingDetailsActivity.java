@@ -26,6 +26,7 @@ import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
 import com.xiaomei.bean.BeautifulRingDetail;
 import com.xiaomei.bean.ChannelEntity;
+import com.xiaomei.comment.CommentsActivity;
 import com.xiaomei.leveltwo.control.LeveltwoControl;
 import com.xiaomei.widget.CircleImageView;
 import com.xiaomei.widget.MyLayout;
@@ -34,7 +35,7 @@ import com.xiaomei.widget.TitleBar;
 import com.xiaomei.widget.ViewPager;
 import com.xiaomei.widget.ViewPager.OnPageChangeListener;
 
-public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoControl> implements OnTouchListener{
+public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoControl> implements OnTouchListener,View.OnClickListener{
 
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,BeautifulRingDetailsActivity.class);
@@ -69,6 +70,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 			}
 		});
 		findViewById(R.id.right_root).setVisibility(View.VISIBLE);
+		findViewById(R.id.comment).setOnClickListener(this);
 		getView();
 		iniMenu();
 		initMenuBehindLayoutViews();
@@ -294,6 +296,19 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 			return false;
 		}
 	}
+
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+        case R.id.comment:
+            CommentsActivity.startActivity(this);
+            break;
+        default:
+            break;
+        }
+    }
 
 
 

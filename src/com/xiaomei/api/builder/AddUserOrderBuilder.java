@@ -17,47 +17,48 @@ public class AddUserOrderBuilder extends AbstractJSONBuilder<Order2> {
 		Order2 order = null;
 		if(jsonObject.has("msg"))
 			order = new Order2();
-		if(jsonObject.has("modifydate"))
-			order.setModifydate(jsonObject.getString("modifydate"));
-		if(jsonObject.has("goods_pay"))
-			order.setGoodsPay(jsonObject.getString("goods_pay"));
-		if(jsonObject.has("status"))
-			order.setStatus(jsonObject.getString("status"));
-		if(jsonObject.has("createdate"))
-			order.setCreatedate(jsonObject.getString("createdate"));
-		if(jsonObject.has("userid"))
-			order.setUserid(jsonObject.getString("userid"));
-		if(jsonObject.has("goods_name"))
-			order.setGoodsName(jsonObject.getString("goods_name"));
-		if(jsonObject.has("paydate"))
-			order.setPaydate(jsonObject.getString("paydate"));
-		if(jsonObject.has("order_id"))
-			order.setOrderId(jsonObject.getString("order_id"));
-		if(jsonObject.has("goods_img"))
-			order.setGoodsImg(jsonObject.getString("goods_img"));
-		if(jsonObject.has("goods_amount"))
-			order.setGoodsAmount(jsonObject.getString("goods_amount"));
-		if(jsonObject.has("username"))
-			order.setUsername(jsonObject.getString("username"));
-		if(jsonObject.has("goods_price"))
-			order.setGoodsPrice(jsonObject.getString("goods_price"));
-		if(jsonObject.has("goods_status"))
-			order.setGoodsStatus(jsonObject.getString("goods_status"));
-		if(jsonObject.has("pay_type"))
-			order.setPayType(jsonObject.getString("pay_type"));
-		if(jsonObject.has("order_num"))
-			order.setOrderNum(jsonObject.getString("order_num"));
-		if(jsonObject.has("goods_id"))
-			order.setGoodsId(jsonObject.getString("goods_id"));
-		if(jsonObject.has("goods_code"))
-			order.setGoodsCode(jsonObject.getString("goods_code"));
-		if(jsonObject.has("userinfo")){
-			JSONObject jObj = jsonObject.getJSONObject("userinfo");
+		JSONObject jsonObject1 = jsonObject.getJSONObject("msg");
+		if(jsonObject1.has("modifydate"))
+			order.setModifydate(jsonObject1.getString("modifydate"));
+		if(jsonObject1.has("goods_pay"))
+			order.setGoodsPay(jsonObject1.getString("goods_pay"));
+		if(jsonObject1.has("status"))
+			order.setStatus(jsonObject1.getString("status"));
+		if(jsonObject1.has("createdate"))
+			order.setCreatedate(jsonObject1.getString("createdate"));
+		if(jsonObject1.has("userid"))
+			order.setUserid(jsonObject1.getString("userid"));
+		if(jsonObject1.has("goods_name"))
+			order.setGoodsName(jsonObject1.getString("goods_name"));
+		if(jsonObject1.has("paydate"))
+			order.setPaydate(jsonObject1.getString("paydate"));
+		if(jsonObject1.has("order_id"))
+			order.setOrderId(jsonObject1.getString("order_id"));
+		if(jsonObject1.has("goods_img"))
+			order.setGoodsImg(jsonObject1.getString("goods_img"));
+		if(jsonObject1.has("goods_amount"))
+			order.setGoodsAmount(jsonObject1.getString("goods_amount"));
+		if(jsonObject1.has("username"))
+			order.setUsername(jsonObject1.getString("username"));
+		if(jsonObject1.has("goods_price"))
+			order.setGoodsPrice(jsonObject1.getString("goods_price"));
+		if(jsonObject1.has("goods_status"))
+			order.setGoodsStatus(jsonObject1.getString("goods_status"));
+		if(jsonObject1.has("pay_type"))
+			order.setPayType(jsonObject1.getString("pay_type"));
+		if(jsonObject1.has("order_num"))
+			order.setOrderNum(jsonObject1.getString("order_num"));
+		if(jsonObject1.has("goods_id"))
+			order.setGoodsId(jsonObject1.getString("goods_id"));
+		if(jsonObject1.has("goods_code"))
+			order.setGoodsCode(jsonObject1.getString("goods_code"));
+		if(jsonObject1.has("userinfo")){
+//			JSONObject jObj = jsonObject1.getJSONObject("userinfo");
 			Order2.UserInfo userInfo = new Order2.UserInfo();
-			if(jObj.has("mobile"))
+/*			if(jObj.has("mobile"))
 				userInfo.setMobile(jObj.getString("mobile"));
 			if(jObj.has("passport"))
-				userInfo.setPassport(jObj.getString("passport"));
+				userInfo.setPassport(jObj.getString("passport"));*/
 			order.setUserInfo(userInfo);
 		}
 		return order;

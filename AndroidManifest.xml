@@ -104,13 +104,14 @@
 		<activity 
 		    android:name="com.xiaomei.module.user.center.UserInfoActivity">
 		</activity>
-		
-		<!-- 测试 phonegap -->
-		<activity 
-		    android:name="com.xiaomei.test.PhoneGapAc"
-		    android:configChanges="orientation|keyboardHidden">
+		<!-- 评论页面 -->
+		<activity
+		    android:name="com.xiaomei.comment.CommentsActivity">
 		</activity>
-		
+		<!-- 评论列表页面 -->
+		<activity
+            android:name="com.xiaomei.comment.CommentListActivity">
+        </activity>
 		
 		
 	   <!-- ################### 支付宝 ###################### -->

@@ -216,7 +216,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		
 		private void attachDate(Holder holder,BeautifulRing bean){
 			ImageLoader.getInstance().displayImage(bean.getShareFile(), holder.shareImg);
-			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())/1.7));
+			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams
+			        (LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())/1.7));
 			holder.shareImg.setLayoutParams(ll);
 		}
 		
@@ -243,8 +244,4 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	}
 
 
-
-	
-
-	
 }

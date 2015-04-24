@@ -20,6 +20,7 @@ import com.xiaomei.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.api.builder.BeautifulRingBuilder;
 import com.xiaomei.api.builder.GoodsBuilder;
 import com.xiaomei.api.builder.HospitalBuilder;
+import com.xiaomei.api.builder.ListCommentBuilder;
 import com.xiaomei.api.builder.ListOrderBuilder;
 import com.xiaomei.api.builder.LoginOutBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
@@ -36,6 +37,7 @@ import com.xiaomei.api.http.HttpApi;
 import com.xiaomei.api.http.HttpApiWithSession;
 import com.xiaomei.bean.BeautifulRing;
 import com.xiaomei.bean.BeautifulRingDetail;
+import com.xiaomei.bean.CommentItem;
 import com.xiaomei.bean.Goods;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
@@ -320,8 +322,53 @@ public class XiaoMeiApi {
 	}
 	
 	// ========================================================================================
-	// 产品
+	// 评论
 	// ========================================================================================
-
+	   /**
+     * 获取用户列表列表
+     */
+	public List<CommentItem> showCommentList(String token,String id,String type,String curpage,String perpage)
+	    throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+	       BasicNameValuePair[] values = {new BasicNameValuePair("id", id),
+	                new BasicNameValuePair("type", type),
+	                new BasicNameValuePair("curpage", curpage),
+	                new BasicNameValuePair("perpage", perpage),
+	                new BasicNameValuePair("token", token),
+	                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+	        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.showCommentList(),
+	                values[0],
+	                values[1],
+	                values[2],
+	                values[3],
+	                values[4],
+	                values[5],
+	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+	        return mHttpApi.doHttpRequestObject(httpGet, new ListCommentBuilder());
+	}
+	
+	/**
+	 * 针对商品提交评论
+	 */
+	public void actionShareComment(){
+	    
+	}
+	/**
+     * 针对分享提交评论
+     */
+	public void actionGoodsComment(String token,String goodsId,String typeid,String comment)
+        throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {	    
+	       BasicNameValuePair[] values = {new BasicNameValuePair("token", token),
+	                new BasicNameValuePair("goods_id", goodsId),
+	                new BasicNameValuePair("type_id", typeid),
+	                new BasicNameValuePair("comment", comment),
+	                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+	        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.actionShareComment(),
+	                values[0],
+	                values[1],
+	                values[2],
+	                values[3],
+	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+	        mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
+	}
 
 }

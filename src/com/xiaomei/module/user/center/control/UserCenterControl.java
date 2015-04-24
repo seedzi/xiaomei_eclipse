@@ -56,6 +56,23 @@ public class UserCenterControl extends BaseControl {
 		} 
 	}
 	
+    @AsynMethod
+    public void addUserOrder2ServerAsyn(String username, String goodsId, String passport,String mobile) {
+        String token = UserUtil.getUser().getToken();
+        String userid = UserUtil.getUser().getUserInfo().getUserid();
+        try {
+            mModel.setmOrder(XiaoMeiApplication
+                    .getInstance()
+                    .getApi()
+                    .addUserOrder(userid, goodsId, username, mobile, passport,
+                            token));
+            sendMessage("addUserOrder2ServerAsynCallBack");
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendMessage("addUserOrder2ServerAsynExceptionCallBack");
+        }
+    }
+	
 
 	@AsynMethod
 	public void loginOutAsyn(){

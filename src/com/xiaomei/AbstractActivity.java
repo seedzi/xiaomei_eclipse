@@ -34,6 +34,7 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
 		    activities = new ArrayList<Activity>();
 		
 		activities.add(this);
+        XiaoMeiApplication.getInstance().setCurrentActivity(this);
 //		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);

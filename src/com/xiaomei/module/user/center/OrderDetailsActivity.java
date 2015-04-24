@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,11 +64,17 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private ImageView goodsIconIv; //产品icon
 	private View payWeixin;
 	private View payZhifubao;
+	
+	private EditText orderNameEd; //客户姓名
+	private EditText orderMobile; //客户电话
+	private EditText orderPassport; //客户护照
 //	private Order order;
 //	private Order.DataDetail.GoodsInfo goodsInfo ;
 	
 	private View rootView;
 	private View mLoadingView; 
+	
+	private String goodsId; //产品id
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -100,15 +107,20 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		payWeixin.setOnClickListener(this);
 		payZhifubao = findViewById(R.id.pay_zhifubao);
 		payZhifubao.setOnClickListener(this);
+		
+		orderNameEd = (EditText) findViewById(R.id.item4).findViewById(R.id.value);
+		orderMobile = (EditText) findViewById(R.id.item5).findViewById(R.id.value);
+		orderPassport = (EditText) findViewById(R.id.item6).findViewById(R.id.value);
 	}
 	private int[] res = new int[]{R.id.item1,R.id.item2,R.id.item3,R.id.item4,R.id.item5,R.id.item6};
 	
 	private void initData(){
 	    Order order = (Order) getIntent().getSerializableExtra("order");
 	    if(order!=null){   //我的订单页进入
+	        goodsId = order.getDataList().getGoodsId();
 	        attachData2UI(order);
 	    }else{ //产品页进入
-	        String goodsId = getIntent().getStringExtra("goods_id");
+	        goodsId = getIntent().getStringExtra("goods_id");
 	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "123");
 	        showProgress();
 	    }
@@ -142,25 +154,25 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	}
 
 	private void attachData2UI(Order order){
-	        android.util.Log.d("111", "order = " + order);
-	        Order.DataDetail orderDataDetail = order.getDataDetail();
-	        if(orderDataDetail ==null)
-	            return ;
-	        Order.DataDetail.GoodsInfo goodsInfo = orderDataDetail.getGoodsInfo();
-	        goodsTitleTv.setText(goodsInfo.getGoodsName());
-	        goodsPriceTv.setText(goodsInfo.getOrderAmount());
-	        ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
-	        Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
-	        mechanismNameTv.setText(hospInfo.getHospName());
-	        mechanismLocationTv.setText(hospInfo.getAddr());
-	        mobileTv.setText(hospInfo.getTel());
-	        
-	        List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
-	        int i = 0;
-	        for(Order.DataDetail.OrderInfo info:orderInfos){
-	            initItem((ViewGroup)findViewById(res[i]), info);
-	            i++;
-	        }
+        android.util.Log.d("111", "order = " + order);
+        Order.DataDetail orderDataDetail = order.getDataDetail();
+        if(orderDataDetail ==null)
+            return ;
+        Order.DataDetail.GoodsInfo goodsInfo = orderDataDetail.getGoodsInfo();
+        goodsTitleTv.setText(goodsInfo.getGoodsName());
+        goodsPriceTv.setText(goodsInfo.getOrderAmount());
+        ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
+        Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
+        mechanismNameTv.setText(hospInfo.getHospName());
+        mechanismLocationTv.setText(hospInfo.getAddr());
+        mobileTv.setText(hospInfo.getTel());
+        
+        List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
+        int i = 0;
+        for(Order.DataDetail.OrderInfo info:orderInfos){
+            initItem((ViewGroup)findViewById(res[i]), info);
+            i++;
+        }
 	}
 	// ====================================  CallBack =========================================================
 	public void addUserOrderAsynCallBack(){
@@ -168,43 +180,44 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         goodsTitleTv.setText(order2.getGoodsName());
         goodsPriceTv.setText(order2.getOrderAmount());
         dissProgress();
-        /*
-        mechanismNameTv.setText(order2.get);
-        mechanismLocationTv.setText(order2.getAddr());
-        mobileTv.setText(order2.get);*/
-		/*
-		Order.DataDetail orderDataDetail = order.getDataDetail();
-		if(orderDataDetail ==null)
-			return ;
-		goodsInfo = orderDataDetail.getGoodsInfo();
-		goodsTitleTv.setText(goodsInfo.getGoodsName());
-		goodsPriceTv.setText(goodsInfo.getOrderAmount());
-		ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
-		Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
-		mechanismNameTv.setText(hospInfo.getHospName());
-		mechanismLocationTv.setText(hospInfo.getAddr());
-		mobileTv.setText(hospInfo.getTel());
-		
-		List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
-		int i = 0;
-		for(Order.DataDetail.OrderInfo info:orderInfos){
-			initItem((ViewGroup)findViewById(res[i]), info);
-			i++;
-		}
-		*/
+        
+        View root = findViewById(R.id.item1);
+        ((TextView)root.findViewById(R.id.title)).setText("订单号");
+        ((TextView)root.findViewById(R.id.value)).setText(order2.getOrderNum());
+        root = findViewById(R.id.item2);
+        ((TextView)root.findViewById(R.id.title)).setText("下单日期");
+        ((TextView)root.findViewById(R.id.value)).setText(order2.getCreatedate());
+        root = findViewById(R.id.item3);
+        ((TextView)root.findViewById(R.id.title)).setText("服务日期");
+        ((TextView)root.findViewById(R.id.value)).setText("2个月内均可体验");
+        root = findViewById(R.id.item4);
+        ((TextView)root.findViewById(R.id.title)).setText("客户姓名");
+        ((TextView)root.findViewById(R.id.value)).setText(order2.getUsername());
+        root = findViewById(R.id.item5);
+        ((TextView)root.findViewById(R.id.title)).setText("客户电话");
+        ((TextView)root.findViewById(R.id.value)).setText(order2.getUserInfo().getMobile());
+        root = findViewById(R.id.item6);
+        ((TextView)root.findViewById(R.id.title)).setText("护照号");
+        ((TextView)root.findViewById(R.id.value)).setText(order2.getUserInfo().getPassport());
 	}
 	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info){
 		android.util.Log.d("111", "info = "+info);
 		TextView title = (TextView) viewItem.findViewById(R.id.title);
-		TextView value = (TextView) viewItem.findViewById(R.id.value);
+		EditText value = (EditText) viewItem.findViewById(R.id.value);
 		title.setText(info.getTitle());
 		value.setText(info.getValue());
-		Toast.makeText(this, "订单生成成功", 0).show();
 	}
 	
 	public void addUserOrderAsynExceptionCallBack(){
 		Toast.makeText(this, "订单生成失败", 0).show();
 		rootView.setVisibility(View.GONE);
+	}
+	
+	public void addUserOrder2ServerAsynCallBack(){
+	    ZhifubaoPayManager.getInstance().pay();
+	}
+	
+	public void addUserOrder2ServerAsynExceptionCallBack(){
 	}
 	
 	// ====================================  Progress =========================================================
@@ -235,12 +248,18 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			
 			break;
 		case R.id.pay_zhifubao:
-		    if(!PayUtils.checkoutInputData("", "", "")){
+		    if(!PayUtils.checkoutInputData(orderNameEd.getText().toString(),
+		            orderMobile.getText().toString(), 
+		            orderPassport.getText().toString())){
 		        Toast.makeText(this, "请您完整的输入您的信息", 0).show();
 		    }
-		    
+		    mControl.addUserOrder2ServerAsyn(orderNameEd.getText().toString(),
+		            goodsId, 
+		            orderPassport.getText().toString(),
+		            orderMobile.getText().toString()
+		            );
 //			ZhifubaoPayManager.getInstance().pay(goodsInfo.getGoodsName(),goodsInfo.getGoodsName(),goodsInfo.getOrderAmount());
-			ZhifubaoPayManager.getInstance().pay();
+			
 		default:
 			break;
 		}

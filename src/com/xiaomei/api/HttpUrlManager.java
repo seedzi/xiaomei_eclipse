@@ -84,5 +84,17 @@ public class HttpUrlManager {
 	String goodsDetailUrl(){
 		return HOST + "/server/show/goodsinfo.php";//http://api.drxiaomei.com/server/show/goodsinfo.php?goods_id=45
 	}
+	/**活取对应商品或者分享评论列表*/
+	String showCommentList(){
+	    return HOST + "/server/show/commentList.php";
+	}
+	/**添加商品评论接口*/
+    String actionGoodsComment(){
+        return HOST + "/server/action/goodsComment.php";
+    }
+    /**添加分享评论接口*/
+    String actionShareComment(){
+        return HOST + "/server/action/shareComment.php";
+    }	
 }
 

@@ -12,6 +12,7 @@ import com.xiaomei.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.api.exception.XiaoMeiIOException;
 import com.xiaomei.api.exception.XiaoMeiJSONException;
 import com.xiaomei.api.exception.XiaoMeiOtherException;
+import com.xiaomei.comment.CommentsActivity;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.launch.control.LaunchControl;
 import com.xiaomei.module.user.LoginAndRegisterActivity;
@@ -59,18 +60,17 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
     }
     
     private void  init(){
-    	
+//        CommentsActivity.startActivity(this);
 //    	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
 //    	TabsActivity.startActivity(LaunchActivity.this);
     	/*
-    	 * */
+    	 * 
+    	 */
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
     	}else{
     		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
     	}
-    	
-    	
 //    	PhoneGapAc.startActivity(LaunchActivity.this);
     	
 //    	finish();	

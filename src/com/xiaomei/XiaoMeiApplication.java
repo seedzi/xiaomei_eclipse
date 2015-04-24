@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.xiaomei.api.XiaoMeiApi;
 import com.yuekuapp.proxy.ControlFactory;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -57,4 +58,14 @@ public class XiaoMeiApplication extends Application{
     public XiaoMeiApi getApi(){
     	return api;
     }
+    
+    private  Activity mCurrentActivity;
+    
+    public void setCurrentActivity(Activity ac){
+        mCurrentActivity = ac;
+    }
+    
+    public Activity getCurrentActivity(){
+        return mCurrentActivity;
+    } 
 }
