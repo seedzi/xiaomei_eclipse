@@ -2,6 +2,7 @@ package com.xiaomei.module.user.center;
 
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -19,9 +20,11 @@ import com.xiaomei.R;
 import com.xiaomei.XiaoMeiApplication;
 import com.xiaomei.Payment.PayUtils;
 import com.xiaomei.Payment.ZhifubaoPayManager;
+import com.xiaomei.Payment.ZhifubaoPayManager.CallBack;
 import com.xiaomei.bean.Order;
 import com.xiaomei.bean.Order2;
 import com.xiaomei.bean.User;
+import com.xiaomei.comment.CommentsActivity;
 import com.xiaomei.module.user.center.control.UserCenterControl;
 import com.xiaomei.util.UserUtil;
 import com.xiaomei.widget.TitleBar;
@@ -75,9 +78,26 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private View mLoadingView; 
 	
 	private String goodsId; //产品id
+	
+	private ProgressDialog mProgressDialog;
+	
+	// =============================================================================================
+	/**未付款*/
+	private final int ORDER_NO_PAY = 1;
+	/**已付款*/
+	private final int ORDER_FINISH_PAY = 2;
+	/**已取消*/
+	private final int ORDER_CANCEL = 3;
+	/**交易完成*/
+	private final int ORDER_FINISH = 4;
+	/**评论完成*/
+	private final int ORDER_COMMENT_FINISH = 5;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Order order = (Order) getIntent().getSerializableExtra("order");
+		mControl.getModel().setOrder(order);
 		setContentView(R.layout.activity_user_order_details_layout);
 		setUpView();
 		initData();
@@ -112,13 +132,15 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		orderMobile = (EditText) findViewById(R.id.item5).findViewById(R.id.value);
 		orderPassport = (EditText) findViewById(R.id.item6).findViewById(R.id.value);
 	}
+	
 	private int[] res = new int[]{R.id.item1,R.id.item2,R.id.item3,R.id.item4,R.id.item5,R.id.item6};
 	
 	private void initData(){
-	    Order order = (Order) getIntent().getSerializableExtra("order");
+		Order order = mControl.getModel().getOrder();
 	    if(order!=null){   //我的订单页进入
 	        goodsId = order.getDataList().getGoodsId();
 	        attachData2UI(order);
+	        setStatus(order);
 	    }else{ //产品页进入
 	        goodsId = getIntent().getStringExtra("goods_id");
 	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "123");
@@ -153,14 +175,18 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 //		mControl.addUserOrderAsyn(user, goodsId, passport);
 	}
 
+	/**
+	 * 将order的数据设置到ui上
+	 */
 	private void attachData2UI(Order order){
         android.util.Log.d("111", "order = " + order);
         Order.DataDetail orderDataDetail = order.getDataDetail();
+        Order.DataList orderDataList =  order.getDataList();
         if(orderDataDetail ==null)
             return ;
         Order.DataDetail.GoodsInfo goodsInfo = orderDataDetail.getGoodsInfo();
         goodsTitleTv.setText(goodsInfo.getGoodsName());
-        goodsPriceTv.setText(goodsInfo.getOrderAmount());
+        goodsPriceTv.setText(orderDataList.getOrderAmount());
         ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
         Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
         mechanismNameTv.setText(hospInfo.getHospName());
@@ -170,42 +196,90 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
         int i = 0;
         for(Order.DataDetail.OrderInfo info:orderInfos){
-            initItem((ViewGroup)findViewById(res[i]), info);
+        	if(i<3){
+        		initItem((ViewGroup)findViewById(res[i]), info,false);
+        	}else{
+        		initItem((ViewGroup)findViewById(res[i]), info,true);
+        	}
             i++;
         }
 	}
+	/**
+	 * 根据order的状态设置数据
+	 */
+	private void setStatus(Order order){
+		TextView tv = (TextView) findViewById(R.id.order_status);
+		int status = Integer.valueOf(order.getDataList().getStatus());
+		switch (status) {
+		case ORDER_NO_PAY:
+			showPay();
+			setEditEnable(true);
+			break;
+		case ORDER_FINISH_PAY:
+			hidePay();
+			tv.setText("取消订单");
+			tv.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					CommentsActivity.startActivity(OrderDetailsActivity.this);
+				}
+			});
+			setEditEnable(false);
+			break;
+		case ORDER_CANCEL:
+			hidePay();
+			tv.setText("订单已取消");
+			setEditEnable(false);
+			break;
+		case ORDER_FINISH:
+			hidePay();
+			tv.setText("去评论");
+			setEditEnable(false);
+			break;
+		case ORDER_COMMENT_FINISH:
+			hidePay();
+			tv.setText("交易完成");
+			setEditEnable(false);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void hidePay(){
+		findViewById(R.id.pay_title_layout).setVisibility(View.GONE);
+		findViewById(R.id.pay_divild).setVisibility(View.GONE);
+		findViewById(R.id.pay_layout).setVisibility(View.GONE);
+		findViewById(R.id.order_status).setVisibility(View.VISIBLE);
+	}
+	
+	private void showPay(){
+		findViewById(R.id.pay_title_layout).setVisibility(View.VISIBLE);
+		findViewById(R.id.pay_divild).setVisibility(View.VISIBLE);
+		findViewById(R.id.pay_layout).setVisibility(View.VISIBLE);
+		findViewById(R.id.order_status).setVisibility(View.GONE);
+	}
+	
+	private void setEditEnable(boolean enable){
+		orderNameEd.setEnabled(enable);
+		orderMobile.setEnabled(enable);
+		orderPassport.setEnabled(enable);
+	}
+	
 	// ====================================  CallBack =========================================================
 	public void addUserOrderAsynCallBack(){
-		Order2 order2 = mControl.getModel().getmOrder();
-        goodsTitleTv.setText(order2.getGoodsName());
-        goodsPriceTv.setText(order2.getOrderAmount());
-        dissProgress();
-        
-        View root = findViewById(R.id.item1);
-        ((TextView)root.findViewById(R.id.title)).setText("订单号");
-        ((TextView)root.findViewById(R.id.value)).setText(order2.getOrderNum());
-        root = findViewById(R.id.item2);
-        ((TextView)root.findViewById(R.id.title)).setText("下单日期");
-        ((TextView)root.findViewById(R.id.value)).setText(order2.getCreatedate());
-        root = findViewById(R.id.item3);
-        ((TextView)root.findViewById(R.id.title)).setText("服务日期");
-        ((TextView)root.findViewById(R.id.value)).setText("2个月内均可体验");
-        root = findViewById(R.id.item4);
-        ((TextView)root.findViewById(R.id.title)).setText("客户姓名");
-        ((TextView)root.findViewById(R.id.value)).setText(order2.getUsername());
-        root = findViewById(R.id.item5);
-        ((TextView)root.findViewById(R.id.title)).setText("客户电话");
-        ((TextView)root.findViewById(R.id.value)).setText(order2.getUserInfo().getMobile());
-        root = findViewById(R.id.item6);
-        ((TextView)root.findViewById(R.id.title)).setText("护照号");
-        ((TextView)root.findViewById(R.id.value)).setText(order2.getUserInfo().getPassport());
+		dissProgress();
+		Order order = mControl.getModel().getOrder();
+		attachData2UI(order);
+		setStatus(order);
 	}
-	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info){
+	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info,boolean enable){
 		android.util.Log.d("111", "info = "+info);
 		TextView title = (TextView) viewItem.findViewById(R.id.title);
 		EditText value = (EditText) viewItem.findViewById(R.id.value);
 		title.setText(info.getTitle());
 		value.setText(info.getValue());
+		value.setEnabled(enable);
 	}
 	
 	public void addUserOrderAsynExceptionCallBack(){
@@ -213,11 +287,34 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		rootView.setVisibility(View.GONE);
 	}
 	
-	public void addUserOrder2ServerAsynCallBack(){
-	    ZhifubaoPayManager.getInstance().pay();
+	public void updateUserOrder2ServerAsynCallBack(){
+		dismissDialog();
+		Order order = mControl.getModel().getOrder();
+		ZhifubaoPayManager.getInstance().setCurrentActivity(this);
+		ZhifubaoPayManager.getInstance().setCallBack(new CallBack() {
+			@Override
+			public void successCallBack() {
+				setEditEnable(false);
+				hidePay();
+				TextView tv = (TextView) findViewById(R.id.order_status);
+				tv.setText("取消订单");
+				tv.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						CommentsActivity.startActivity(OrderDetailsActivity.this);
+					}
+				});
+			}
+			@Override
+			public void failureCallBack() {
+			}
+		});
+		ZhifubaoPayManager.getInstance().pay(order.getDataList().getGoodsName(),order.getDataList().getGoodsName(),"0.01"/*order.getDataList().getOrderAmount()*/,order.getDataList().getId());
 	}
 	
-	public void addUserOrder2ServerAsynExceptionCallBack(){
+	public void updateUserOrder2ServerAsynExceptionCallBack(){
+		dismissDialog();
+		Toast.makeText(this, "订单支付失败", 0).show();
 	}
 	
 	// ====================================  Progress =========================================================
@@ -234,6 +331,23 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		rootView.setVisibility(View.VISIBLE);
 	}
 	
+	// =========================================== ProgressDialog ==========================================
+	
+	private void showProgressDialog(String message){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setTitle("提示");
+		mProgressDialog.setMessage(message);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.show();
+	}
+	
+	private void dismissDialog(){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+	}
+	
 	// ====================================  Pay =========================================================
 	/**
 	 * 1.检查用户输入
@@ -247,23 +361,21 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		case R.id.pay_weixin:
 			
 			break;
-		case R.id.pay_zhifubao:
-		    /*
+		case R.id.pay_zhifubao: //支付宝支付
 		    if(!PayUtils.checkoutInputData(orderNameEd.getText().toString(),
 		            orderMobile.getText().toString(), 
 		            orderPassport.getText().toString())){
 		        Toast.makeText(this, "请您完整的输入您的信息", 0).show();
+		        return;
 		    }
-		    mControl.addUserOrder2ServerAsyn(orderNameEd.getText().toString(),
+		    showProgressDialog("订单提交中...");
+		    mControl.updateUserOrder2ServerAsyn(mControl.getModel().getOrder().getDataList().getId(),orderNameEd.getText().toString(),
 		            goodsId, 
 		            orderPassport.getText().toString(),
 		            orderMobile.getText().toString()
 		            );
-		            */
-//			ZhifubaoPayManager.getInstance().pay(goodsInfo.getGoodsName(),goodsInfo.getGoodsName(),goodsInfo.getOrderAmount());
-		    ZhifubaoPayManager.getInstance().setCurrentActivity(this);
-		    ZhifubaoPayManager.getInstance().pay();
-			
+
+//		    ZhifubaoPayManager.getInstance().pay();
 		default:
 			break;
 		}

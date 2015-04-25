@@ -1,16 +1,101 @@
 package com.xiaomei.api.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.xiaomei.bean.Order;
-import com.xiaomei.bean.Order2;
-
 import android.util.Log;
 
-public class AddUserOrderBuilder extends AbstractJSONBuilder<Order2> {
+import com.xiaomei.bean.Order;
 
-	
+public class AddUserOrderBuilder extends AbstractJSONBuilder<Order> {
+
+	@Override
+	protected Order builder(JSONObject jsonObject) throws JSONException {
+		Log.d("json", jsonObject.toString());
+		Order order = null;
+		if(jsonObject.has("msg")){
+			JSONObject jObj = jsonObject.getJSONObject("msg");
+			order = new Order();
+			if(jObj.has("data_list")){
+				/**data_list*/
+				JSONObject jDataListObj = jObj.getJSONObject("data_list");
+				Order.DataList orderDataList = new Order.DataList();
+				if(jDataListObj.has("id"))
+					orderDataList.setId(jDataListObj.getString("id"));
+				if(jDataListObj.has("order_amount"))
+					orderDataList.setOrderAmount(jDataListObj.getString("order_amount"));
+				if(jDataListObj.has("username"))
+					orderDataList.setUsername(jDataListObj.getString("username"));
+				if(jDataListObj.has("status"))
+					orderDataList.setStatus(jDataListObj.getString("status"));
+				if(jDataListObj.has("order_num"))
+					orderDataList.setOrderNum(jDataListObj.getString("order_num"));
+				if(jDataListObj.has("goods_id"))
+					orderDataList.setGoodsId(jDataListObj.getString("goods_id"));
+				if(jDataListObj.has("createdate"))
+					orderDataList.setCreatedate(jDataListObj.getString("createdate"));
+				if(jDataListObj.has("goods_name"))
+					orderDataList.setGoodsName(jDataListObj.getString("goods_name"));
+				if(jDataListObj.has("hosp_name"))
+					orderDataList.setHospName(jDataListObj.getString("hosp_name"));
+				if(jDataListObj.has("goods_img"))
+					orderDataList.setGoodsImg(jDataListObj.getString("goods_img"));
+				if(jDataListObj.has("city"))
+					orderDataList.setCity(jDataListObj.getString("city"));
+				order.setDataList(orderDataList);
+			}
+			/**data_list*/
+			if(jObj.has("data_detail")){
+				JSONObject jdataDetailObj = jObj.getJSONObject("data_detail");
+				Order.DataDetail orderDataDetail = new Order.DataDetail();
+				if(jdataDetailObj.has("goods_info")){
+					Order.DataDetail.GoodsInfo goodsInfo = new Order.DataDetail.GoodsInfo();
+					JSONObject jGoodsInfoObj = jdataDetailObj.getJSONObject("goods_info");
+					if(jGoodsInfoObj.has("order_amount"))
+						goodsInfo.setGoodsImg(jGoodsInfoObj.getString("order_amount"));
+					if(jGoodsInfoObj.has("goods_name"))
+						goodsInfo.setGoodsName(jGoodsInfoObj.getString("goods_name"));
+					if(jGoodsInfoObj.has("goods_img"))
+						goodsInfo.setGoodsImg(jGoodsInfoObj.getString("goods_img"));
+					orderDataDetail.setGoodsInfo(goodsInfo);
+				}
+				if(jdataDetailObj.has("hosp_info")){
+					Order.DataDetail.HospInfo  hospInfo = new Order.DataDetail.HospInfo();
+					JSONObject jHospInfoObj = jdataDetailObj.getJSONObject("hosp_info");
+					if(jHospInfoObj.has("hosp_name"))
+						hospInfo.setHospName(jHospInfoObj.getString("hosp_name"));
+					if(jHospInfoObj.has("addr"))
+						hospInfo.setAddr(jHospInfoObj.getString("addr"));
+					if(jHospInfoObj.has("tel"))
+						hospInfo.setTel(jHospInfoObj.getString("tel"));
+					orderDataDetail.setHospInfo(hospInfo);
+				}
+				if(jdataDetailObj.has("order_info")){
+					JSONArray jOrderInfoArray = jdataDetailObj.getJSONArray("order_info");
+					List<Order.DataDetail.OrderInfo> orderInfos = new ArrayList<Order.DataDetail.OrderInfo>();
+					for(int j= 0;j<jOrderInfoArray.length();j++){
+						Order.DataDetail.OrderInfo info = new Order.DataDetail.OrderInfo();
+						JSONObject jOrderInfo = jOrderInfoArray.getJSONObject(j);
+						if(jOrderInfo.has("value"))
+							info.setValue(jOrderInfo.getString("value"));
+						if(jOrderInfo.has("title"))
+							info.setTitle(jOrderInfo.getString("title"));
+						orderInfos.add(info);
+					}
+					orderDataDetail.setOrderInfos(orderInfos);
+				}
+				order.setDataDetail(orderDataDetail);
+			}
+			android.util.Log.d("order", "order = " + order);
+		}
+		return order;
+	}
+
+	/*
 	@Override
 	protected Order2 builder(JSONObject jsonObject) throws JSONException {
 		Log.d("json", jsonObject.toString());
@@ -53,16 +138,16 @@ public class AddUserOrderBuilder extends AbstractJSONBuilder<Order2> {
 		if(jsonObject1.has("goods_code"))
 			order.setGoodsCode(jsonObject1.getString("goods_code"));
 		if(jsonObject1.has("userinfo")){
-//			JSONObject jObj = jsonObject1.getJSONObject("userinfo");
+			JSONObject jObj = jsonObject1.getJSONObject("userinfo");
 			Order2.UserInfo userInfo = new Order2.UserInfo();
-/*			if(jObj.has("mobile"))
+			if(jObj.has("mobile"))
 				userInfo.setMobile(jObj.getString("mobile"));
 			if(jObj.has("passport"))
-				userInfo.setPassport(jObj.getString("passport"));*/
+				userInfo.setPassport(jObj.getString("passport"));
 			order.setUserInfo(userInfo);
 		}
 		return order;
-	}
+	}*/
 /*
 	{
 	    "msg": {

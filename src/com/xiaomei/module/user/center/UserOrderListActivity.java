@@ -127,7 +127,7 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 				holder.goodsNameTv = (TextView) convertView.findViewById(R.id.goods_name);
 				holder.statusTv = (TextView) convertView.findViewById(R.id.status);
 				holder.orderAmountTv = (TextView) convertView.findViewById(R.id.order_amount);
-				holder.payButton = convertView.findViewById(R.id.pay_button);
+				holder.payButton = (TextView) convertView.findViewById(R.id.pay_button);
 				holder.payButton.setOnClickListener(this);
 				convertView.setTag(holder);
 			}
@@ -135,6 +135,7 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 			Order order = data.get(position);
 			Order.DataList dataList = order.getDataList();
 			if(dataList!=null){
+				android.util.Log.d("111", "status = " + dataList.getStatus());
 				holder.orderIdTv.setText(dataList.getId());
 				holder.userNameTv.setText(dataList.getUsername());
 				holder.createTimeTv.setText(dataList.getCreatedate());
@@ -143,6 +144,31 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 				holder.statusTv.setText(dataList.getStatus());
 				holder.orderAmountTv.setText(dataList.getOrderAmount());
 				holder.payButton.setTag(Integer.valueOf(position));
+				int status = Integer.valueOf(dataList.getStatus());
+				switch (status) {
+				case 1: //未支付
+					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
+					holder.payButton.setText("立即付款");
+					break;
+				case 2: //已付款
+					holder.payButton.setBackgroundResource(R.drawable.payment_over);
+					holder.payButton.setText("订单详情");
+					break;
+				case 3: //
+					holder.payButton.setBackgroundResource(R.drawable.payment_over);
+					holder.payButton.setText("订单已取消");
+					break;
+				case 4:
+					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
+					holder.payButton.setText("去评论");
+					break;
+				case 5:
+					holder.payButton.setBackgroundResource(R.drawable.payment_over);
+					holder.payButton.setText("完成");
+					break;
+				default:
+					break;
+				}
 			}
 			return convertView;
 		}
@@ -151,7 +177,8 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 		public void onClick(View v) {
 			int position = (Integer) v.getTag();
 			Order order = data.get(position);
-			OrderDetailsActivity.startActivity(UserOrderListActivity.this,order.getDataList().getGoodsId());
+			OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+//			OrderDetailsActivity.startActivity(UserOrderListActivity.this,order.getDataList().getGoodsId());
 		}
 		
 		private class Holder {
@@ -162,7 +189,7 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 			TextView goodsNameTv; //商品名
 			TextView statusTv;//订单状态
 			TextView orderAmountTv; //订单价格
-			View payButton; //按钮
+			TextView payButton; //按钮
 		}
 	}
 }

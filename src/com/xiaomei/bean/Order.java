@@ -201,6 +201,14 @@ public class Order implements Serializable{
 						+ ", tel=" + tel + "]";
 			}
 		}
+
+		@Override
+		public String toString() {
+			return "DataDetail [goodsInfo=" + goodsInfo + ", orderInfos="
+					+ orderInfos + ", hospInfo=" + hospInfo + "]";
+		}
+		
+		
 	}
 
 	/**我的订单列表信息*/

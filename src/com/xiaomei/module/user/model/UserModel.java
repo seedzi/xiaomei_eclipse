@@ -20,7 +20,7 @@ public class UserModel {
 		return mUser;
 	}
 	
-	private Order2 mOrder;
+	private Order mOrder;
 
 	public User getmUser() {
 		return mUser;
@@ -30,11 +30,11 @@ public class UserModel {
 		this.mUser = mUser;
 	}
 
-	public Order2 getmOrder() {
+	public Order getOrder() {
 		return mOrder;
 	}
 
-	public void setmOrder(Order2 mOrder) {
+	public void setOrder(Order mOrder) {
 		this.mOrder = mOrder;
 	}
 	

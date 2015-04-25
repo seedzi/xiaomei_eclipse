@@ -19,11 +19,14 @@
         android:textSize="15sp"
         android:layout_margin="15dp"
         android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@id/title"
         android:text="1234567"
+        android:gravity="right"
         android:textColor="#969696"
         android:layout_centerVertical="true"
     	android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:singleLine="true"
         android:background="@null"/>
     
     

@@ -7,16 +7,11 @@ import org.apache.cordova.api.LOG;
 import android.text.TextUtils;
 
 import com.xiaomei.XiaoMeiApplication;
-import com.xiaomei.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.api.exception.XiaoMeiIOException;
-import com.xiaomei.api.exception.XiaoMeiJSONException;
-import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Order;
 import com.xiaomei.bean.User;
 import com.xiaomei.bean.User.UserInfo;
 import com.xiaomei.module.user.model.UserModel;
-import com.xiaomei.util.FileUtils;
 import com.xiaomei.util.UserUtil;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
@@ -48,8 +43,13 @@ public class UserCenterControl extends BaseControl {
 		String mobile = userInfo.getMobile();
 		String token = user.getToken();
 		try {
-			mModel.setmOrder(XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId, username, mobile, passport, token));
-			sendMessage("addUserOrderAsynCallBack");
+			Order order = XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId, username, mobile, passport, token,"add");
+			android.util.Log.d("111", "order = " + order);
+			mModel.setOrder(order);
+			if(order == null )
+				sendMessage("addUserOrderAsynExceptionCallBack");
+			else
+				sendMessage("addUserOrderAsynCallBack");
 		} catch (Exception e) {
 			e.printStackTrace();
 			sendMessage("addUserOrderAsynExceptionCallBack");
@@ -57,19 +57,25 @@ public class UserCenterControl extends BaseControl {
 	}
 	
     @AsynMethod
-    public void addUserOrder2ServerAsyn(String username, String goodsId, String passport,String mobile) {
+    public void updateUserOrder2ServerAsyn(String orderId,String username, String goodsId, String passport,String mobile) {
+    	android.util.Log.d("111", "orderId = " + orderId);
         String token = UserUtil.getUser().getToken();
         String userid = UserUtil.getUser().getUserInfo().getUserid();
         try {
-            mModel.setmOrder(XiaoMeiApplication
+           Order order = XiaoMeiApplication
                     .getInstance()
                     .getApi()
-                    .addUserOrder(userid, goodsId, username, mobile, passport,
-                            token));
-            sendMessage("addUserOrder2ServerAsynCallBack");
+                    .updateUserOrder(orderId,userid, goodsId, username, mobile, passport,
+                            token,"update");
+           if(order!=null){
+        	   mModel.setOrder(order);
+        	   sendMessage("updateUserOrder2ServerAsynCallBack");
+           } else{
+        	   sendMessage("updateUserOrder2ServerAsynExceptionCallBack");
+           }
         } catch (Exception e) {
             e.printStackTrace();
-            sendMessage("addUserOrder2ServerAsynExceptionCallBack");
+            sendMessage("updateUserOrder2ServerAsynExceptionCallBack");
         }
     }
 	

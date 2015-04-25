@@ -151,8 +151,19 @@
     
     <include android:id="@+id/item6" layout="@layout/item_user_order_details_layout"/>
    
+    <TextView 
+        android:id="@+id/order_status"
+        android:paddingTop="20dp"
+        android:paddingRight="15dp"
+        android:textColor="#969696"
+        android:textSize="17sp"
+        android:text="取消订单"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
     
 <RelativeLayout 
+    android:id="@+id/pay_title_layout"
     android:layout_width="match_parent"
     android:layout_height="46dp">
     <TextView 
@@ -167,6 +178,7 @@
         android:layout_width="wrap_content"/>
     
     <View 
+        android:id="@+id/pay_divild"
         android:layout_alignParentBottom="true"
         android:background="@color/color_gray"
     	android:layout_height="1px"        
@@ -174,6 +186,7 @@
 </RelativeLayout>
     
 	<LinearLayout 
+	   android:id="@+id/pay_layout"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical" 

@@ -16,6 +16,12 @@ public class CommentsActivity extends BaseActivity {
         context.startActivity(intent);
     }
     
+    public static void startActivity(Context context,String goodsId){
+        Intent intent = new Intent(context,CommentsActivity.class);
+        intent.putExtra("goods_id", goodsId);
+        context.startActivity(intent);
+    }
+    
     private TitleBar mTitleBar;
     
     @Override

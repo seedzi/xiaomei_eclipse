@@ -49,6 +49,18 @@ public class ZhifubaoPayManager {
 
 	private static final int SDK_CHECK_FLAG = 2;
 	
+	
+	public interface CallBack{
+		public void successCallBack();
+		public void failureCallBack();
+	}
+	
+	private CallBack mCallBack;
+	
+	public void setCallBack(CallBack callBack){
+		mCallBack = callBack;
+	}
+	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -64,6 +76,8 @@ public class ZhifubaoPayManager {
 				if (TextUtils.equals(resultStatus, "9000")) {
 					Toast.makeText(mCurrentActivity, "支付成功",
 							Toast.LENGTH_SHORT).show();
+					if(mCallBack!=null)
+						mCallBack.successCallBack();
 				} else {
 					// 判断resultStatus 为非“9000”则代表可能支付失败
 					// “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -75,8 +89,9 @@ public class ZhifubaoPayManager {
 						// 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
 						Toast.makeText(mCurrentActivity, "支付失败",
 								Toast.LENGTH_SHORT).show();
-
 					}
+					if(mCallBack!=null)
+						mCallBack.failureCallBack();
 				}
 				break;
 			}
@@ -92,10 +107,14 @@ public class ZhifubaoPayManager {
 	};
 	
 	public void pay(){
+		pay("测试的商品", "该测试商品的详细描述", "0.01",getOutTradeNo());
+	}
+	
+	public void pay(String subject,String body,String price,String orderNum){
 	    if(mCurrentActivity == null)
 	        throw new NullPointerException("mCurrentActivity == null");
 		// 订单
-		String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+		String orderInfo = getOrderInfo(subject, body,price,orderNum);
 		// 对订单做RSA 签名
 		String sign = sign(orderInfo);
 		try {
@@ -134,13 +153,13 @@ public class ZhifubaoPayManager {
 	 * create the order info. 创建订单信息
 	 * 
 	 */
-	public String getOrderInfo(String subject, String body, String price) {
+	public String getOrderInfo(String subject, String body, String price,String orderNum) {
 		// 签约合作者身份ID
 		String orderInfo = "partner=" + "\"" + PARTNER + "\"";
 		// 签约卖家支付宝账号
 		orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
 		// 商户网站唯一订单号
-		orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
+		orderInfo += "&out_trade_no=" + "\"" + orderNum/*getOutTradeNo()*/ + "\"";
 		// 商品名称
 		orderInfo += "&subject=" + "\"" + subject + "\"";
 		// 商品详情
@@ -148,7 +167,7 @@ public class ZhifubaoPayManager {
 		// 商品金额
 		orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";  //TODO 写死价格
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + "http://drxmapi.duapp.com/libs/pay/notify_url.php"
+		orderInfo += "&notify_url=" + "\"" + "http://api.drxiaomei.com/libs/pay/notify_url.php"
 				+ "\"";
 		// 服务接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";
