@@ -248,6 +248,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			
 			break;
 		case R.id.pay_zhifubao:
+		    /*
 		    if(!PayUtils.checkoutInputData(orderNameEd.getText().toString(),
 		            orderMobile.getText().toString(), 
 		            orderPassport.getText().toString())){
@@ -258,7 +259,10 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		            orderPassport.getText().toString(),
 		            orderMobile.getText().toString()
 		            );
+		            */
 //			ZhifubaoPayManager.getInstance().pay(goodsInfo.getGoodsName(),goodsInfo.getGoodsName(),goodsInfo.getOrderAmount());
+		    ZhifubaoPayManager.getInstance().setCurrentActivity(this);
+		    ZhifubaoPayManager.getInstance().pay();
 			
 		default:
 			break;

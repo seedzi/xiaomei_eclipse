@@ -51,7 +51,7 @@ public class XMCommonUtil extends CordovaPlugin{
 	private boolean orderSubmit( JSONArray args){
 		String goodsId;
 		try {
-			goodsId = args.getJSONObject(0).getString("goods_id");
+			goodsId = args.getJSONObject(0).getString("itemid");
 			OrderDetailsActivity.startActivity(ac, goodsId);
 		} catch (Exception e) {
 			return false;

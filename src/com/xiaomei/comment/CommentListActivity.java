@@ -103,7 +103,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                mControl.actionShareComment(goodsId, type, commentEdit.getText().toString());
             }
         });
     }

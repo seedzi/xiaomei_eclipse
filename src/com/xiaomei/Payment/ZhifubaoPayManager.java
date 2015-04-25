@@ -92,6 +92,8 @@ public class ZhifubaoPayManager {
 	};
 	
 	public void pay(){
+	    if(mCurrentActivity == null)
+	        throw new NullPointerException("mCurrentActivity == null");
 		// 订单
 		String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
 		// 对订单做RSA 签名
