@@ -24,7 +24,6 @@ public class HomeControl extends BaseControl {
 	public void getHomeListEntityAsyn(){
 		Log.d("111", "HomeControl =" +Thread.currentThread().getName());
 		try {
-			XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet();
 			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet();
 			if(listNet!=null && listNet.size()>0){
 				mModel.setList(listNet);

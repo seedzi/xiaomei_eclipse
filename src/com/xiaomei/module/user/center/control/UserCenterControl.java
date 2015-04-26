@@ -7,6 +7,10 @@ import org.apache.cordova.api.LOG;
 import android.text.TextUtils;
 
 import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.api.exception.XiaoMeiIOException;
+import com.xiaomei.api.exception.XiaoMeiJSONException;
+import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Order;
 import com.xiaomei.bean.User;
@@ -107,6 +111,15 @@ public class UserCenterControl extends BaseControl {
 			e.printStackTrace();
 			sendMessage("getUserOrdersAsynExceptionCallBack");
 		}
+	}
+	
+	@AsynMethod
+	public void cancelUserOrderUrl(String orderid){
+	    try {
+            XiaoMeiApplication.getInstance().getApi().cancelUserOrderUrl(orderid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
 	}
 	
 	public UserModel getModel(){

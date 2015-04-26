@@ -72,6 +72,10 @@ public class HttpUrlManager {
 	String addUserOrderUrl(){
 		return HOST + "/server/action/order.php";
 	}
+	/**取消用户订单*/
+    String cancelUserOrderUrl(){
+        return HOST + "/action/cancleOrder.php";
+    }
 	/**用户消息*/
 	String getUserMsgUrl(){
 		return HOST + "/show/myMsg";

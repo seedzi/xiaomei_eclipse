@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
-            android:src="@drawable/novel_cover_default4"/><!--  212dp -->
+            android:src="@color/color_white"/><!--  212dp @drawable/default_drawable-->
     </FrameLayout>
     
     <RelativeLayout 

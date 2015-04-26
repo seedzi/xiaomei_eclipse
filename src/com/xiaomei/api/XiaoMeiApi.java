@@ -278,6 +278,21 @@ public class XiaoMeiApi {
 	// ========================================================================================
 	// 订单
 	// ========================================================================================
+	/**
+	 * 取消订单
+	 */
+	public void cancelUserOrderUrl(String orderid)
+	    throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+        BasicNameValuePair[] values = {new BasicNameValuePair("orderid", orderid) ,
+                new BasicNameValuePair("token", UserUtil.getUser().getToken()),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getFindPwdUrl(),
+                values[0],
+                values[1],
+                values[2],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+	}
 	
 	/**
 	 * 新增订单接口

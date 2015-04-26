@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="fitXY"
-        android:src="@drawable/novel_cover_default4"/>
+        android:src="@color/color_white"/><!-- @drawable/novel_cover_default4" -->
 
     <TextView 
         android:id="@+id/title"

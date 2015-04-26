@@ -146,33 +146,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "123");
 	        showProgress();
 	    }
-		/*
-		order = (Order) getIntent().getSerializableExtra("order");
-		android.util.Log.d("111", "order = " + order);
-		Order.DataDetail orderDataDetail = order.getDataDetail();
-		if(orderDataDetail ==null)
-			return ;
-		goodsInfo = orderDataDetail.getGoodsInfo();
-		goodsTitleTv.setText(goodsInfo.getGoodsName());
-		goodsPriceTv.setText(goodsInfo.getOrderAmount());
-		ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
-		Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
-		mechanismNameTv.setText(hospInfo.getHospName());
-		mechanismLocationTv.setText(hospInfo.getAddr());
-		mobileTv.setText(hospInfo.getTel());
-		
-		List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
-		int i = 0;
-		for(Order.DataDetail.OrderInfo info:orderInfos){
-			initItem((ViewGroup)findViewById(res[i]), info);
-			i++;
-		}
-		*/
-//		// feiqi
-//		User user = UserUtil.getUser();
-//		String goodsId = mGoodsId;
-//		String passport = "123"; //护照 TODO
-//		mControl.addUserOrderAsyn(user, goodsId, passport);
 	}
 
 	/**
@@ -221,7 +194,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			tv.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					CommentsActivity.startActivity(OrderDetailsActivity.this);
+					mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId());
 				}
 			});
 			setEditEnable(false);
