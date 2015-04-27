@@ -140,7 +140,9 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	}
 	
 	public void getHomeListEntityMoreAsynCallBackException(){
-		Toast.makeText(getActivity(), "网络异常", 0).show();
+		mIsRefresh = false;
+		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		Toast.makeText(getActivity(), "没有更多数据", 0).show();
 	}
 	
 	// ===========================  Scroll ====================================
@@ -148,7 +150,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		int position = mListView.getLastVisiblePosition();
-		if(!mIsRefresh && position == mAdapter.getCount()){
+		if(!mIsRefresh && position == mAdapter.getCount() ){
 			getMoreData();
 		}
 	}

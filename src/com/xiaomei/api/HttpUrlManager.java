@@ -14,15 +14,15 @@ public class HttpUrlManager {
  	
 	/**首页*/
 	String getHomeListUrl(){
-		return HOST + "/api/index.php";
+		return HOST + "/server/show/start.php";
 	}
 	/**机构*/
 	String getMechanismListUrl(){
-		return HOST + "/api/hospital.php";
+		return HOST + "/server/show/hospital_list.php";
 	}
 	/**圈子*/
 	String getRingListUrl(){
-		return HOST + "/api/share.php";
+		return HOST + "/server/show/share_list.php";
 	}
 	/**圈子详情*/
 	String getRingDetailUrl(){
@@ -32,6 +32,11 @@ public class HttpUrlManager {
 	String getMallListUrl(){
 		return HOST + "/api/goods.php";
 	}
+	/**商城首页*/
+	String getMallHomeListUrl(){
+		return HOST + "/server/show/goods_home.php";
+	}
+	
 	/**注册*/
 	String getUserRegisterUrl(){
 		return HOST + "/server/user/register.php";

@@ -17,6 +17,8 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 	protected List<BeautifulRing> builder(JSONObject jsonObject) throws JSONException {
 		Log.d("json", jsonObject.toString());
 		List<BeautifulRing> list = new ArrayList<BeautifulRing>();
+		if(jsonObject.has("msg"))
+			jsonObject = jsonObject.getJSONObject("msg");
 		JSONArray jsonArray = jsonObject.getJSONArray("shares");
 		for( int i=0 ;i< jsonArray.length();i++){
 			JSONObject jobject = jsonArray.getJSONObject(i);
@@ -30,7 +32,7 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 			if(jsonObject.has("userid"))
 				beautifulRing.setUserid(jobject.getString("userid"));		
 			if(jobject.has("share_title"))
-				beautifulRing.setShareTitle(jobject.getString("share_des"));	
+				beautifulRing.setShareTitle(jobject.getString("share_title"));	
 			if(jobject.has("share_des"))
 				beautifulRing.setShareDes(jobject.getString("share_des"));	
 			if(jobject.has("sort_order"))
@@ -45,10 +47,10 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 				beautifulRing.setNumFavors(jobject.getString("num_favors"));	
 			if(jobject.has("num_comments"))
 				beautifulRing.setNumComments(jobject.getString("num_comments"));	
-			if(jobject.has("modifydate"))
-				beautifulRing.setModifydate(jobject.getString("modifydate"));	
 			if(jobject.has("share_type"))
 				beautifulRing.setShareType(jobject.getString("share_type"));	
+			if(jobject.has("createdate"))
+				beautifulRing.setCreatedate(jobject.getString("createdate"));
 			list.add(beautifulRing);
 		}
 		Log.d("111", "size = " + list.size());

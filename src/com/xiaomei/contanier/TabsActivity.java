@@ -33,7 +33,7 @@ public class TabsActivity extends  AbstractActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_layout);
-        
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -53,7 +53,7 @@ public class TabsActivity extends  AbstractActivity{
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
         // test
         
         /*

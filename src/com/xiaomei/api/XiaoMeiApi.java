@@ -23,6 +23,7 @@ import com.xiaomei.api.builder.HospitalBuilder;
 import com.xiaomei.api.builder.ListCommentBuilder;
 import com.xiaomei.api.builder.ListOrderBuilder;
 import com.xiaomei.api.builder.LoginOutBuilder;
+import com.xiaomei.api.builder.MallListBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
 import com.xiaomei.api.builder.UploadFIleBuilder;
@@ -41,6 +42,7 @@ import com.xiaomei.bean.CommentItem;
 import com.xiaomei.bean.Goods;
 import com.xiaomei.bean.Hospital;
 import com.xiaomei.bean.LoginResult;
+import com.xiaomei.bean.Mall;
 import com.xiaomei.bean.NetResult;
 import com.xiaomei.bean.Order;
 import com.xiaomei.bean.Order2;
@@ -70,10 +72,18 @@ public class XiaoMeiApi {
 	// ========================================================================================
     
     /**首页*/
-	public List<Section> getHomeListFromNet()
+	public List<Section> getHomeListFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getHomeListUrl(),null);
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("curpage", curpage),
+				new BasicNameValuePair("perpage", perpage),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getHomeListUrl(),
+				values[0],
+				values[1],
+				values[2],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new SectionBuilder());
 	}
 	
@@ -85,6 +95,18 @@ public class XiaoMeiApi {
 		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
 	}
 	
+	/**商城首页*/
+	public List<Mall> getMallHomeListFromNet()
+			throws XiaoMeiCredentialsException, XiaoMeiIOException,
+			XiaoMeiJSONException, XiaoMeiOtherException {
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallHomeListUrl(),
+				values[0],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return mHttpApi.doHttpRequestObject(httpGet, new MallListBuilder());
+	}
+	
 	/**商品列表*/
 	public List<Goods> getGoodsListFromNet()
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
@@ -94,17 +116,27 @@ public class XiaoMeiApi {
 	}
 	
 	/**机构*/
-	public List<Hospital> getMechanismListFromNet()
+	public List<Hospital> getMechanismListFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMechanismListUrl(),null);
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("curpage", curpage),
+				new BasicNameValuePair("perpage", perpage),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMechanismListUrl(),
+				values[0],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
 	}
 	
 	/**圈子*/
-	public List<BeautifulRing> getBeatifulRingListFromNet()
+	public List<BeautifulRing> getBeatifulRingListFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("curpage", curpage),
+				new BasicNameValuePair("perpage", perpage),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingListUrl(),null);
 		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulRingBuilder());
 	}

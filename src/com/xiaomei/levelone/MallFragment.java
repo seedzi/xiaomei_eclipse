@@ -1,7 +1,11 @@
 package com.xiaomei.levelone;
 
 
+import java.util.List;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
+import com.xiaomei.bean.Mall;
 import com.xiaomei.comment.CommentListActivity;
 import com.xiaomei.levelone.control.MallControl;
 import com.xiaomei.leveltwo.GoodsListActivity;
@@ -12,6 +16,7 @@ import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class MallFragment extends BaseFragment<MallControl> {
@@ -34,6 +40,10 @@ public class MallFragment extends BaseFragment<MallControl> {
 	
 	private ImageView mTopIcon;
 	
+	private View mLoadingView; 
+	
+	private View mScrollview;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -44,7 +54,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 	}
 	
 	private void setUpView(){
-		mTitleBar = (TitleBar) mRootView.findViewById(R.id.titlebar);
+		mTitleBar = (TitleBar) mRootView.findViewById(R.id.title_bar);
 		mTitleBar.setTitle(getResources().getString(R.string.fragment_mall));
 		
 		mGridView = (GridView) mRootView.findViewById(R.id.grid);
@@ -53,44 +63,79 @@ public class MallFragment extends BaseFragment<MallControl> {
 		
 		mTopIcon = (ImageView) mRootView.findViewById(R.id.top_icon);
 		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*9/14;
-		mTopIcon.setImageResource(R.drawable.meinv);
-		mRootView.findViewById(R.id.top_icon).setOnClickListener(new View.OnClickListener() {
+//		mTopIcon.setImageResource(R.drawable.meinv);
+		mTopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentListActivity.startActivity(getActivity());
+//                CommentListActivity.startActivity(getActivity());
             }
         });
+		
+		mScrollview = mRootView.findViewById(R.id.scrollview);
+		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 	}
 	
 	private void initData(){
+		showProgress();
 		mControl.getMallListFromNetAsyn();
 	}
 	
-	public void getMallListFromAsynCallBack(){
-		
+	
+	// ============================================  CallBack ==================================================
+	public void getMallListFromNetAsynCallBack(){
+		dissProgress();
+		mMailAdapter.setData(mControl.getModel().getData());
+		mMailAdapter.notifyDataSetChanged();
+		ImageLoader.getInstance().displayImage(mControl.getModel().getHead().getImage(), mTopIcon);
 	}
 	
-	public void getMallListFromAsynExceptionCallBack(){
-		
+	public void getMallListFromNetAsynExceptionCallBack(){
+		Toast.makeText(getActivity(), "网络异常", 0).show();
+		dissProgress();
 	}
 	
+	// ============================================  Progress ==================================================
+	private void showProgress(){
+		mLoadingView.setVisibility(View.VISIBLE);
+		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
+		if(!animationDrawable.isRunning())
+			animationDrawable.start();
+		mScrollview.setVisibility(View.GONE);
+	}
+	
+	private void dissProgress(){
+		mLoadingView.setVisibility(View.GONE);
+		mScrollview.setVisibility(View.VISIBLE);
+	}
+	
+	// ============================================  MailAdapter ==================================================
 	private class MailAdapter extends BaseAdapter implements View.OnClickListener{
 		
-		private int[] icon_reses = { R.drawable.icon_roudushuchuzou_selector,
-				R.drawable.icon_tichongsuxing_selector,
-				R.drawable.icon_jinfutisheng_selector,
-				R.drawable.icon_roudusumeixing_selector,
-				R.drawable.icon_tianchognsuxing_selector,
-				R.drawable.icon_jiguangmeifu_selector,
-				R.drawable.icon_hanguotesemeirong_selector,
-				R.drawable.icon_jiguangchumao_selector,
-				R.drawable.icon_tixinagtiaosu_selector };
-
-		private int[] txt_reses = { R.string.mall_item_nam_1,
-				R.string.mall_item_nam_2, R.string.mall_item_nam_3,
-				R.string.mall_item_nam_4, R.string.mall_item_nam_5,
-				R.string.mall_item_nam_6, R.string.mall_item_nam_7,
-				R.string.mall_item_nam_8, R.string.mall_item_nam_9 };
+		private List<Mall> mData;
+		
+		public List<Mall> getData(){
+			return mData;
+		}
+		
+		public void setData(List<Mall> data){
+			mData = data;
+		}
+		
+//		private int[] icon_reses = { R.drawable.icon_roudushuchuzou_selector,
+//				R.drawable.icon_tichongsuxing_selector,
+//				R.drawable.icon_jinfutisheng_selector,
+//				R.drawable.icon_roudusumeixing_selector,
+//				R.drawable.icon_tianchognsuxing_selector,
+//				R.drawable.icon_jiguangmeifu_selector,
+//				R.drawable.icon_hanguotesemeirong_selector,
+//				R.drawable.icon_jiguangchumao_selector,
+//				R.drawable.icon_tixinagtiaosu_selector };
+//
+//		private int[] txt_reses = { R.string.mall_item_nam_1,
+//				R.string.mall_item_nam_2, R.string.mall_item_nam_3,
+//				R.string.mall_item_nam_4, R.string.mall_item_nam_5,
+//				R.string.mall_item_nam_6, R.string.mall_item_nam_7,
+//				R.string.mall_item_nam_8, R.string.mall_item_nam_9 };
 		
 		private LayoutInflater mLayoutInflater;
 		
@@ -100,7 +145,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 
 		@Override
 		public int getCount() {
-			return 9;
+			return mData == null ? 0 : mData.size();
 		}
 
 		@Override
@@ -115,6 +160,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Mall mall = mData.get(position);
 			Holder holder = null;
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_mail_layout, null);
@@ -125,13 +171,13 @@ public class MallFragment extends BaseFragment<MallControl> {
 				holder.iconIv.setOnClickListener(this);
 			}
 			holder = (Holder) convertView.getTag();
-			attachHolder(holder, position);
+			attachHolder(holder, position,mall);
 			return convertView;
 		}
 		
-		private void attachHolder(Holder holder,int position){
-			holder.titleTv.setText(getResources().getString(txt_reses[position]));
-			holder.iconIv.setImageResource(icon_reses[position]);
+		private void attachHolder(Holder holder,int position,Mall mall){
+			holder.titleTv.setText(mall.getCatName());
+			ImageLoader.getInstance().displayImage(mall.getFile(), holder.iconIv);
 		}
 
 		@Override

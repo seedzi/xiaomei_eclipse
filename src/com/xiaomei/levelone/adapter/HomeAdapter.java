@@ -5,6 +5,7 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.R;
 import com.xiaomei.bean.Section;
+import com.xiaomei.leveltwo.GoodsDetailActivity;
 import com.xiaomei.leveltwo.WebViewActivity;
 import com.xiaomei.util.ScreenUtils;
 
@@ -28,6 +29,14 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 	private LayoutInflater mInflater;
 	
 	private Context mContext;
+	
+	private View.OnClickListener mNavOnClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			String url = (String) v.getTag();
+			GoodsDetailActivity.startActivity(mContext, url);
+		}
+	};
 	
 	public HomeAdapter(List<Section> data,Context context,ImageLoader imageLoader){
 		mData = data;
@@ -73,14 +82,15 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				break;
 			case 1:  // 导航
 				convertView = mInflater.inflate(R.layout.section_nav, null);
-				convertView.findViewById(R.id.youhui).setOnClickListener(this);
+				convertView.findViewById(R.id.youhui).setOnClickListener(mNavOnClickListener);
 				convertView.findViewById(R.id.youhui).setTag(section.getList().get(0).getUrl());
-				convertView.findViewById(R.id.payment).setOnClickListener(this);
+				convertView.findViewById(R.id.payment).setOnClickListener(mNavOnClickListener);
 				convertView.findViewById(R.id.payment).setTag(section.getList().get(1).getUrl());
-				convertView.findViewById(R.id.riji).setOnClickListener(this);
+				convertView.findViewById(R.id.riji).setOnClickListener(mNavOnClickListener);
 				convertView.findViewById(R.id.riji).setTag(section.getList().get(2).getUrl());
-				convertView.findViewById(R.id.jiangli).setOnClickListener(this);
+				convertView.findViewById(R.id.jiangli).setOnClickListener(mNavOnClickListener);
 				convertView.findViewById(R.id.jiangli).setTag(section.getList().get(3).getUrl());
+				attachView2Holder(holder, (ViewGroup)convertView, 0, 0);
 				break;
 			case 2:  // 商品精选		if(holder.commontNumView!=null && en)
 				convertView = mInflater.inflate(R.layout.section_jingxuan, null);
@@ -103,7 +113,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			convertView.setTag(holder);
 		}
 		holder = (Holder) convertView.getTag();
-		attachData2Holder(position, section, holder);	
+		attachData2Holder(type, section, holder);	
 		switch (type) {
 		case 0:
 			layoutView(convertView,1);
@@ -114,13 +124,24 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		return convertView;
 	}
 
-	private void attachData2Holder(int position ,Section section ,Holder holder){
+	private void attachData2Holder(int type ,Section section ,Holder holder){
 		Section.Entity entity = null;
 		if(section==null || holder == null)
 			return;
-		switch (position) {
+		switch (type) {
 		case 1: // 导航
-			
+			entity =  section.getList().get(0);
+			if(entity!=null)
+				holder.youhui.setTag(entity.getUrl());
+			entity =  section.getList().get(1);
+			if(entity!=null)
+				holder.payment.setTag(entity.getUrl());
+			entity =  section.getList().get(2);
+			if(entity!=null)
+				holder.riji.setTag(entity.getUrl());
+			entity =  section.getList().get(3);
+			if(entity!=null)
+				holder.jiangli.setTag(entity.getUrl());
 			break;
 		case 3:  //分享
 			entity =  section.getList().get(0);
@@ -141,13 +162,16 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.url = entity.getUrl();
 			break;
 		case 0:
+			entity =  section.getList().get(0);
+			android.util.Log.d("111", "entity.getImg() = " + entity.getImg());
 		case 2:
 		case 4:
 			entity =  section.getList().get(0);
 //			if(holder.titleView!=null && !TextUtils.isEmpty(section.getTitle()))
 //				holder.titleView.setText(section.getTitle()); //TODO
-			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg()))
+			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+			}
 			holder.url = entity.getUrl();
 			break;
 		default:
@@ -184,6 +208,11 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.imgView = (ImageView) vGroup.findViewById(R.id.icon);
 		holder.titleView = (TextView) vGroup.findViewById(R.id.title);
 		holder.commontNumView = (TextView) vGroup.findViewById(R.id.like_size);
+		
+		holder.youhui = vGroup.findViewById(R.id.youhui);
+		holder.payment = vGroup.findViewById(R.id.payment);
+		holder.jiangli = vGroup.findViewById(R.id.jiangli);
+		holder.riji = vGroup.findViewById(R.id.riji);
 		//TODO :处理图片大小
 //		holder.favoriteNumView.getLayoutParams().width = imageWidth;
 	}
@@ -199,13 +228,17 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private TextView commontNumView;  //评论数
 			private TextView favoriteNumView; //点赞
 			private String url ;//详情页url
+			private View youhui; //优惠
+			private View payment; //赔付
+			private View riji; //日记
+			private View jiangli; //奖励
 //		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		Holder holder = (Holder) v.getTag();
-		WebViewActivity.startActivity(mContext, holder.url);
+		GoodsDetailActivity.startActivity(mContext, holder.url);
 	}
 	
 	private void layoutView(View view,int proportion){

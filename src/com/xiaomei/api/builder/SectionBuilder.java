@@ -18,6 +18,7 @@ public class SectionBuilder extends AbstractJSONBuilder<List<Section>> {
 	@Override
 	protected List<Section> builder(JSONObject jsonObject) throws JSONException {
 		Log.d("json", jsonObject.toString());
+		jsonObject = jsonObject.getJSONObject("msg");
 		List<Section> list = new ArrayList<Section>();
 		JSONArray jsonArray = jsonObject.getJSONArray("sections");
 		for( int i=0 ;i< jsonArray.length();i++){

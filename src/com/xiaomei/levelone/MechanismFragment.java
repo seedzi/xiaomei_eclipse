@@ -108,7 +108,6 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		int position = mListView.getLastVisiblePosition();
-		Log.d("111", "position = " + position + ",mIsRefresh = " + mIsRefresh);
 		if(!mIsRefresh && position == mAdapter.getCount()){
 			getMoreData();
 		}
@@ -138,7 +137,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	public void getMechanismLismListCallBack(){
 		dissProgress();
 		mIsRefresh = false;
-		mAdapter.setData(mControl.getListData());
+		mAdapter.setData(mControl.getModel().getData());
 		mAdapter.notifyDataSetChanged();
 		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
@@ -154,7 +153,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		dissProgress();
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAdapter.getData().addAll(mControl.getListData());
+		mAdapter.getData().addAll(mControl.getModel().getData());
 		mAdapter.notifyDataSetChanged();
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
@@ -209,7 +208,13 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_mechanism_layout, null);
 				holder = new Holder();
+				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
+				holder.locationTv = (TextView) convertView.findViewById(R.id.location);
+				holder.hospitalTv = (TextView) convertView.findViewById(R.id.hospital);
 				holder.iconIv = (ImageView) convertView.findViewById(R.id.icon);
+				holder.serverTv = (TextView) convertView.findViewById(R.id.server);
+				holder.effectTv = (TextView) convertView.findViewById(R.id.effect);
+				holder.environmentalTv = (TextView) convertView.findViewById(R.id.environmental);
 				convertView.setTag(holder);
 				convertView.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -225,11 +230,17 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		}
 		
 		private void attachData2UI(Holder holder ,int position){
-			Log.d("111", "mData.get(position).getFile() = " + mData.get(position).getFile());
+			Hospital hospital = mData.get(position);
 			ImageLoader.getInstance().displayImage(mData.get(position).getFile(), holder.iconIv);
 			RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*3/5));
 			holder.iconIv.setLayoutParams(ll);
 			holder.id = mData.get(position).getId();
+			holder.hospitalTv.setText(hospital.getHospName());
+			holder.locationTv.setText(hospital.getAddr());
+			holder.titleTv.setText(hospital.getHospDes());
+			holder.serverTv .setText("服务" + hospital.getRateService());
+			holder.environmentalTv.setText("环境" + hospital.getRateEnvironment());
+			holder.effectTv.setText("效果" + hospital.getRateEffect());
 		}
 		
 		private class Holder{
@@ -237,6 +248,9 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			private TextView titleTv;
 			private TextView hospitalTv;
 			private TextView locationTv;
+			private TextView serverTv;
+			private TextView effectTv;
+			private TextView environmentalTv;
 			private String id;
 		}
 		

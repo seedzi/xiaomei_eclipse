@@ -15,7 +15,23 @@ public class HomeListModel {
 	public void setList(List<Section> list) {
 		this.list = list;
 	}
-
 	
+	private int pageNum = 1;
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+	
+	public void increasePageNum(){
+		pageNum ++;
+	}
+	
+	public void reducePageNum(){
+		pageNum --;
+	}
 	
 }

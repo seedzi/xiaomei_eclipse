@@ -200,12 +200,13 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 				convertView = mLayoutInflater.inflate(R.layout.item_ring_layout, null);
 				holder = new Holder();
 				holder.userIconIv = (ImageView) convertView.findViewById(R.id.user_icon);
-				holder.userNaemTv = (TextView) convertView.findViewById(R.id.user_name);
+				holder.userNaemTv = (TextView) convertView.findViewById(R.id.person_name);
 				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
 				holder.timeTv = (TextView) convertView.findViewById(R.id.time);
 				holder.bubleSizeTv = (TextView) convertView.findViewById(R.id.buble_size);
 				holder.likeSizeTv = (TextView) convertView.findViewById(R.id.like_size);
 				holder.shareImg = (ImageView) convertView.findViewById(R.id.share_img);
+				holder.descriptionTv = (TextView) convertView.findViewById(R.id.description);
 				convertView.setTag(holder);
 				convertView.setOnClickListener(this);
 			}
@@ -219,6 +220,11 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams
 			        (LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())/1.7));
 			holder.shareImg.setLayoutParams(ll);
+			holder.descriptionTv.setText(bean.getShareTitle());
+			holder.userNaemTv.setText(bean.getUsername());
+			holder.timeTv.setText(bean.getCreatedate());
+			holder.bubleSizeTv.setText(bean.getNumComments());
+			holder.likeSizeTv.setText(bean.getNumFavors());
 		}
 		
 		private void setData(List<BeautifulRing> data){

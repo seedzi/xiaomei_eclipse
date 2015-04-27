@@ -2,6 +2,266 @@ package com.xiaomei.bean;
 
 public class Hospital {
 	
+/*	
+	{
+	    "msg": {
+	        "hospitals": [
+	            {
+	                "rate_avg": "98.5",
+	                "tel": "+82-02-562-5800",
+	                "addr": "韩国首尔江南区驿三洞822 －1江南A座9层",
+	                "hosp_name": "COOKI整形外科",
+	                "city": "3",
+	                "rate_environment": "4",
+	                "open_time": "周一到周四 10:00－19:00 周五 10:00－21:00 周六 10:00－16:00",
+	                "id": "3",
+	                "surrounding": "[\"1\",\"2\",\"3\",\"4\",\"5\"]",
+	                "area": "1",
+	                "file": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/hosp3\/20150413095720_64494.jpg",
+	                "hosp_type": "1",
+	                "parent_id": "0",
+	                "services": "[\"1\",\"2\",\"3\",\"4\",\"5\"]",
+	                "keywords": "0",
+	                "hosp_des": "专业定制你的美",
+	                "link_url": "www.cookips.co.kr",
+	                "hosp_name_en": "jg1",
+	                "rate_effect": "5",
+	                "watermark": "0",
+	                "payments": "[\"1\",\"2\",\"3\"]",
+*/
+	
+	private String rateAvg;
+	
+	private String tel;
+	
+	private String addr;
+	
+	private String hospName;
+	
+	private String city;
+	
+	private String rateEnvironment;
+	
+	private String openTime;
+	
+	private String id;
+	
+	private String surrounding;
+	
+	private String area;
+	
+	private String file;
+	
+	private String hospType;
+	
+	private String parentId;
+	
+	private String services;
+	
+	private String keywords;
+	
+	private String hospDes;
+	
+	private String linkUrl;
+	
+	private String hospNameEn;
+	
+	private String rateEffect;
+	
+	private String watermark;
+	
+	private String payments;
+	
+	private String rateService;
+
+	public String getRateAvg() {
+		return rateAvg;
+	}
+
+	public void setRateAvg(String rateAvg) {
+		this.rateAvg = rateAvg;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+
+	public String getHospName() {
+		return hospName;
+	}
+
+	public void setHospName(String hospName) {
+		this.hospName = hospName;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getRateEnvironment() {
+		return rateEnvironment;
+	}
+
+	public void setRateEnvironment(String rateEnvironment) {
+		this.rateEnvironment = rateEnvironment;
+	}
+
+	public String getOpenTime() {
+		return openTime;
+	}
+
+	public void setOpenTime(String openTime) {
+		this.openTime = openTime;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getSurrounding() {
+		return surrounding;
+	}
+
+	public void setSurrounding(String surrounding) {
+		this.surrounding = surrounding;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
+	public String getHospType() {
+		return hospType;
+	}
+
+	public void setHospType(String hospType) {
+		this.hospType = hospType;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getServices() {
+		return services;
+	}
+
+	public void setServices(String services) {
+		this.services = services;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public String getHospDes() {
+		return hospDes;
+	}
+
+	public void setHospDes(String hospDes) {
+		this.hospDes = hospDes;
+	}
+
+	public String getLinkUrl() {
+		return linkUrl;
+	}
+
+	public void setLinkUrl(String linkUrl) {
+		this.linkUrl = linkUrl;
+	}
+
+	public String getHospNameEn() {
+		return hospNameEn;
+	}
+
+	public void setHospNameEn(String hospNameEn) {
+		this.hospNameEn = hospNameEn;
+	}
+
+	public String getRateEffect() {
+		return rateEffect;
+	}
+
+	public void setRateEffect(String rateEffect) {
+		this.rateEffect = rateEffect;
+	}
+
+	public String getWatermark() {
+		return watermark;
+	}
+
+	public void setWatermark(String watermark) {
+		this.watermark = watermark;
+	}
+
+	public String getPayments() {
+		return payments;
+	}
+
+	public void setPayments(String payments) {
+		this.payments = payments;
+	}
+
+	public String getRateService() {
+		return rateService;
+	}
+
+	public void setRateService(String rateService) {
+		this.rateService = rateService;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	private String id;
 	private String parentId;
 	private String hospName;
@@ -135,6 +395,9 @@ public class Hospital {
 	public void setPayments(String payments) {
 		this.payments = payments;
 	}
+	*/
+	
+	
 	
 	
 	
