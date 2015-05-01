@@ -194,7 +194,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			tv.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId());
+					mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId()); 
+					// 临时测试
+//					CommentsActivity.startActivity(OrderDetailsActivity.this,mControl.getModel().getOrder());
 				}
 			});
 			setEditEnable(false);
@@ -208,6 +210,12 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			hidePay();
 			tv.setText("去评论");
 			setEditEnable(false);
+			tv.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					CommentsActivity.startActivity4Result(OrderDetailsActivity.this,mControl.getModel().getOrder());
+				}
+			});
 			break;
 		case ORDER_COMMENT_FINISH:
 			hidePay();
@@ -240,6 +248,17 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	}
 	
 	// ====================================  CallBack =========================================================
+	public void cancelUserOrderUrlCallBack(){ 
+		TextView tv = (TextView) findViewById(R.id.order_status);
+		tv.setText("订单已取消");
+		setEditEnable(false);
+		Toast.makeText(this, "订单已取消", 0).show();
+	}
+	
+	public void cancelUserOrderUrlExceptionCallBack(){
+		Toast.makeText(this, "网络异常", 0).show();
+	}
+	
 	public void addUserOrderAsynCallBack(){
 		dissProgress();
 		Order order = mControl.getModel().getOrder();
@@ -271,12 +290,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 				hidePay();
 				TextView tv = (TextView) findViewById(R.id.order_status);
 				tv.setText("取消订单");
-				tv.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						CommentsActivity.startActivity(OrderDetailsActivity.this);
-					}
-				});
 			}
 			@Override
 			public void failureCallBack() {
@@ -349,6 +362,23 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		            );
 
 //		    ZhifubaoPayManager.getInstance().pay();
+		default:
+			break;
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case 1:
+			if(resultCode == RESULT_OK){
+				TextView tv = (TextView) findViewById(R.id.order_status);
+				tv.setText("已评论");
+				tv.setOnClickListener(null);
+			}
+			break;
+
 		default:
 			break;
 		}

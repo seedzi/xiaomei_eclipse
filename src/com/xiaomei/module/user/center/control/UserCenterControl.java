@@ -116,9 +116,15 @@ public class UserCenterControl extends BaseControl {
 	@AsynMethod
 	public void cancelUserOrderUrl(String orderid){
 	    try {
-            XiaoMeiApplication.getInstance().getApi().cancelUserOrderUrl(orderid);
+	    	NetResult netResult = XiaoMeiApplication.getInstance().getApi().cancelUserOrderUrl(orderid);
+	    	if(netResult!=null && "0".equals(netResult.getCode())){ //取消订单成功
+	    		sendMessage("cancelUserOrderUrlCallBack"); 
+	    	}else{
+	    		sendMessage("cancelUserOrderUrlExceptionCallBack");
+	    	}
         } catch (Exception e) {
             e.printStackTrace();
+            sendMessage("cancelUserOrderUrlExceptionCallBack");
         } 
 	}
 	

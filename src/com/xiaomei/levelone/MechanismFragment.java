@@ -86,7 +86,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
-		mPullToRefreshListView.setOnScrollListener(this);
+//		mPullToRefreshListView.setOnScrollListener(this);
 	}
 	
 	private void initData(){

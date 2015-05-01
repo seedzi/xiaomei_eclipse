@@ -25,6 +25,7 @@ import com.xiaomei.api.builder.ListOrderBuilder;
 import com.xiaomei.api.builder.LoginOutBuilder;
 import com.xiaomei.api.builder.MallListBuilder;
 import com.xiaomei.api.builder.NetResultBuilder;
+import com.xiaomei.api.builder.OrderCommentBuilder;
 import com.xiaomei.api.builder.SectionBuilder;
 import com.xiaomei.api.builder.UploadFIleBuilder;
 import com.xiaomei.api.builder.UserLoginBuilder;
@@ -108,10 +109,18 @@ public class XiaoMeiApi {
 	}
 	
 	/**商品列表*/
-	public List<Goods> getGoodsListFromNet()
+	public List<Goods> getGoodsListFromNet(String catId,String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),null);
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("cat_id", catId),
+				new BasicNameValuePair("curpage", curpage),
+				new BasicNameValuePair("perpage", perpage)} ; 
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),
+				values[0],
+				values[1],
+				values[2],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
 	}
 	
@@ -137,7 +146,11 @@ public class XiaoMeiApi {
 				new BasicNameValuePair("curpage", curpage),
 				new BasicNameValuePair("perpage", perpage),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingListUrl(),null);
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingListUrl(),
+				values[0],
+				values[1],
+				values[2],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulRingBuilder());
 	}
 	
@@ -313,17 +326,17 @@ public class XiaoMeiApi {
 	/**
 	 * 取消订单
 	 */
-	public void cancelUserOrderUrl(String orderid)
+	public NetResult cancelUserOrderUrl(String orderid)
 	    throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
         BasicNameValuePair[] values = {new BasicNameValuePair("orderid", orderid) ,
                 new BasicNameValuePair("token", UserUtil.getUser().getToken()),
                 new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getFindPwdUrl(),
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.cancelUserOrderUrl(),
                 values[0],
                 values[1],
                 values[2],
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-        mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+        return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
 	
 	/**
@@ -404,7 +417,8 @@ public class XiaoMeiApi {
      */
 	public List<CommentItem> showCommentList(String token,String id,String type,String curpage,String perpage)
 	    throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-	       BasicNameValuePair[] values = {new BasicNameValuePair("id", id),
+	       BasicNameValuePair[] values = {
+	    		    new BasicNameValuePair("id", id),
 	                new BasicNameValuePair("type", type),
 	                new BasicNameValuePair("curpage", curpage),
 	                new BasicNameValuePair("perpage", perpage),
@@ -424,8 +438,30 @@ public class XiaoMeiApi {
 	/**
 	 * 针对商品提交评论
 	 */
-	public void actionShareComment(){
-	    
+	public NetResult actionShareComment(String orderId,String goodsId,String comment,String markService,String markEffect,String markEnvironment,String token) 
+			throws XiaoMeiCredentialsException,
+			XiaoMeiIOException, XiaoMeiJSONException, XiaoMeiOtherException {
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("order_id", orderId),
+				new BasicNameValuePair("goods_id", goodsId),
+				new BasicNameValuePair("comment", comment),
+				new BasicNameValuePair("mark_service", markService),
+				new BasicNameValuePair("mark_effect", markEffect),
+				new BasicNameValuePair("mark_environment", markEnvironment),
+				new BasicNameValuePair("token", token),
+				new BasicNameValuePair("uptime", String.valueOf(System
+						.currentTimeMillis() / 1000)) };
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.actionGoodsComment(),
+				values[0], 
+				values[1], 
+				values[2], 
+				values[3],
+				values[4],
+				values[5],
+				values[6],
+				values[7],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
 	/**
      * 针对分享提交评论
@@ -442,6 +478,7 @@ public class XiaoMeiApi {
 	                values[1],
 	                values[2],
 	                values[3],
+	                values[4],
 	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 	        mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
 	}

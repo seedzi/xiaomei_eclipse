@@ -10,8 +10,8 @@ public class EntityBuilder extends AbstractJSONBuilder<Entity> {
 	@Override
 	protected Entity builder(JSONObject jsonObject) throws JSONException {
 		Entity entity = new Entity();
-		if(jsonObject.has("img"))
-			entity.setImg(jsonObject.getString("img"));
+		if(jsonObject.has("image_6"))
+			entity.setImg(jsonObject.getString("image_6"));
 		if(jsonObject.has("title"))
 			entity.setTitle(jsonObject.getString("title"));
 		if(jsonObject.has("url"))

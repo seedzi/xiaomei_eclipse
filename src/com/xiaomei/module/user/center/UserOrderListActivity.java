@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.xiaomei.api.exception.XiaoMeiIOException;
 import com.xiaomei.api.exception.XiaoMeiJSONException;
 import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.Order;
+import com.xiaomei.comment.CommentsActivity;
 import com.xiaomei.module.user.center.control.UserCenterControl;
 import com.xiaomei.module.user.control.UserControl;
 import com.xiaomei.util.UserUtil;
@@ -37,7 +39,7 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 	
 	private TitleBar  mTitleBar;
 	
-	private PullToRefreshListView mList;
+	private PullToRefreshListView mPullToRefreshListView;
 	
 	private OrderAdapter mAdapter;
 	
@@ -59,25 +61,43 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 			}
 		});
 		
-		mList = (PullToRefreshListView) findViewById(R.id.list);
+		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
 		mAdapter = new OrderAdapter(this);
-		mList.getRefreshableView().setAdapter(mAdapter);
-		
+		mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
+		mPullToRefreshListView.setPullToRefreshEnabled(false);
+		mLoadingView = findViewById(R.id.loading_layout);
 	}
 	
 	private void initData(){
+		showProgress();
 		mControl.getUserOrdersAsyn();
 	}
+	// =============================================== ProgressDialog  =================================================
+	private View mLoadingView; 
+	private void showProgress(){
+		mLoadingView.setVisibility(View.VISIBLE);
+		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
+		if(!animationDrawable.isRunning())
+			animationDrawable.start();
+		mPullToRefreshListView.setVisibility(View.GONE);
+	}
+	
+	private void dissProgress(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.VISIBLE);
+	}
+	
 	
 	// =============================================== CallBack  =================================================
 	public void getUserOrdersAsynCallBack(){
 		mAdapter.setData(mControl.getModel().getOrderList());
 		mAdapter.notifyDataSetChanged();
 		Toast.makeText(UserOrderListActivity.this, "加载成功", 0).show();
+		dissProgress();
 	}
 	
 	public void getUserOrdersAsynExceptionCallBack(){
-		
+		dissProgress();
 	}
 	
 	
@@ -177,8 +197,22 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 		public void onClick(View v) {
 			int position = (Integer) v.getTag();
 			Order order = data.get(position);
-			OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
-//			OrderDetailsActivity.startActivity(UserOrderListActivity.this,order.getDataList().getGoodsId());
+			if(order == null)
+				return;
+			switch (Integer.valueOf(order.getDataList().getStatus())) {
+			case 1:
+				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+				break;
+			case 2:
+				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+				break;
+			case 4:
+				CommentsActivity.startActivity4Result(UserOrderListActivity.this, order);
+				break;
+
+			default:
+				break;
+			}
 		}
 		
 		private class Holder {
@@ -190,6 +224,21 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 			TextView statusTv;//订单状态
 			TextView orderAmountTv; //订单价格
 			TextView payButton; //按钮
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case 1:
+			if(resultCode == RESULT_OK){
+				initData();
+			}
+			break;
+
+		default:
+			break;
 		}
 	}
 }

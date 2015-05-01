@@ -7,6 +7,7 @@ import com.xiaomei.bean.Goods;
 
 public class LevelTwoModel {
 	
+	
 	private List<Goods> mGoodsList;
 
 	private BeautifulRingDetail mBeautifulRingDetailData;
@@ -26,4 +27,22 @@ public class LevelTwoModel {
 	public BeautifulRingDetail getBeautifulRingDetail(){
 		return mBeautifulRingDetailData;
 	} 
+	
+	private int mPage;
+	
+	public int getPage(){
+		return mPage;
+	}
+	
+	public void setPage(int page){
+		mPage  = page;
+	}
+
+	public void increaePage(){
+		mPage ++;
+	}
+	
+	public void reducePage(){
+		mPage --;
+	}
 }

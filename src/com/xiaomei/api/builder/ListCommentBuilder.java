@@ -17,7 +17,8 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
         List<CommentItem> list = null;
         JSONArray jsonArray = null;
         if(jsonObject.has("msg")){
-            jsonArray = jsonObject.getJSONArray("msg");
+        	jsonObject = jsonObject.getJSONObject("msg");
+            jsonArray = jsonObject.getJSONArray("list");
             list = new ArrayList<CommentItem>();
         }else{
             return null;
@@ -30,7 +31,7 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
             if(jsObj.has("user_type"))
                 commentItem.setMarkService(jsObj.getString("user_type"));
             if(jsObj.has("createdate"))
-                commentItem.setMarkService(jsObj.getString("createdate"));
+                commentItem.setCreatedate(jsObj.getString("createdate"));
             if(jsObj.has("userid"))
                 commentItem.setMarkService(jsObj.getString("userid"));
             if(jsObj.has("mark_service"))

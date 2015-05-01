@@ -3,7 +3,8 @@
     xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/color_background">
     
     <include layout="@layout/title_bar_layout"/>
     
@@ -16,4 +17,8 @@
 	    ptr:ptrMode="pullDownFromTop"
 	    android:visibility="visible"/> 
     
+	    <include  android:id="@+id/loading_layout"
+        layout="@layout/loading_layout"
+        android:visibility="visible"/>
+	
 </LinearLayout>

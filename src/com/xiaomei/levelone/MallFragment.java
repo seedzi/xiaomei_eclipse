@@ -178,11 +178,14 @@ public class MallFragment extends BaseFragment<MallControl> {
 		private void attachHolder(Holder holder,int position,Mall mall){
 			holder.titleTv.setText(mall.getCatName());
 			ImageLoader.getInstance().displayImage(mall.getFile(), holder.iconIv);
+			holder.iconIv.setTag(position);
 		}
 
 		@Override
 		public void onClick(View v) {
-			GoodsListActivity.startActivity(getActivity());
+			Mall mall = mData.get((Integer)v.getTag());
+			String catId = mall.getId();
+			GoodsListActivity.startActivity(getActivity(),catId,mall.getCatName());
 		}
 		
 		private class Holder{

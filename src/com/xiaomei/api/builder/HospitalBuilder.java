@@ -76,8 +76,8 @@ public class HospitalBuilder extends AbstractJSONBuilder<List<Hospital>>{
 				hospital.setSurrounding(jO.getString("surrounding"));		
 			if(jO.has("area"))
 				hospital.setArea(jO.getString("area"));		
-			if(jO.has("file"))
-				hospital.setFile(jO.getString("file"));		
+			if(jO.has("image_6"))
+				hospital.setFile(jO.getString("image_6"));		
 			if(jO.has("hosp_type"))
 				hospital.setHospType(jO.getString("hosp_type"));		
 			if(jO.has("parent_id"))

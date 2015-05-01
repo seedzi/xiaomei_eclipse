@@ -23,7 +23,8 @@ public class HomeControl extends BaseControl {
 	@AsynMethod
 	public void getHomeListEntityAsyn(){
 		try {
-			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet("1",PERPAGE);
+			mModel.setPageNum(1);
+			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet(String.valueOf(mModel.getPageNum()),PERPAGE);
 			if(listNet!=null && listNet.size()>0){
 				mModel.setList(listNet);
 				mModel.setPageNum(1); //设置当前页面为1

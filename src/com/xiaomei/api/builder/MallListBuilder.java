@@ -35,8 +35,8 @@ public class MallListBuilder extends AbstractJSONBuilder<List<Mall>> {
 				mall.setCreatedate(jsObj.getString("createdate"));
 			if(jsObj.has("is_open"))
 				mall.setIsOpen(jsObj.getString("is_open"));
-			if(jsObj.has("image"))
-				mall.setImage(jsObj.getString("image"));
+			if(jsObj.has("image_6"))
+				mall.setImage(jsObj.getString("image_6"));
 			if(jsObj.has("is_delete"))
 				mall.setIsDelete(jsObj.getString("is_delete"));
 			if(jsObj.has("parentid"))

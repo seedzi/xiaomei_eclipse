@@ -37,6 +37,7 @@ public class MallControl extends BaseControl {
 				sendMessage("getMallListFromNetAsynExceptionCallBack");
 		} catch (Exception e) {
 			e.printStackTrace();
+			android.util.Log.d("111", "e = " + e.getMessage());
 			sendMessage("getMallListFromNetAsynExceptionCallBack");
 		} 
 	}

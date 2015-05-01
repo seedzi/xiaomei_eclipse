@@ -30,7 +30,7 @@ public class HttpUrlManager {
 	}
 	/**商城*/
 	String getMallListUrl(){
-		return HOST + "/api/goods.php";
+		return HOST + "/server/show/goods_list.php";
 	}
 	/**商城首页*/
 	String getMallHomeListUrl(){
@@ -79,7 +79,7 @@ public class HttpUrlManager {
 	}
 	/**取消用户订单*/
     String cancelUserOrderUrl(){
-        return HOST + "/action/cancleOrder.php";
+        return HOST + "/server/action/cancleOrder.php";
     }
 	/**用户消息*/
 	String getUserMsgUrl(){

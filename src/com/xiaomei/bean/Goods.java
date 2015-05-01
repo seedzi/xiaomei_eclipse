@@ -19,6 +19,10 @@ public class Goods {
 	private String isFront;
 	
 	private String fileUrl;
+	
+	private String hospName;
+	
+	private String sales;
 
 	public String getId() {
 		return id;
@@ -91,6 +95,23 @@ public class Goods {
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
 	}
+
+	public String getHospName() {
+		return hospName;
+	}
+
+	public void setHospName(String hospName) {
+		this.hospName = hospName;
+	}
+
+	public String getSales() {
+		return sales;
+	}
+
+	public void setSales(String sales) {
+		this.sales = sales;
+	}
+	
 	
 }
 /*

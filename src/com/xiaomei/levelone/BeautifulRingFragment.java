@@ -155,7 +155,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	public void getMoreListDataFromNetAysnCallBack(){
 		dissProgress();
 		mIsRefresh = false;
-		mAdapter.setData(mControl.getData());
+		mAdapter.getData().addAll(mControl.getData());
 		mAdapter.notifyDataSetChanged();
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
@@ -229,6 +229,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		
 		private void setData(List<BeautifulRing> data){
 			mData = data;
+		}
+		
+		public List<BeautifulRing> getData(){
+			return mData;
 		}
 
 		@Override

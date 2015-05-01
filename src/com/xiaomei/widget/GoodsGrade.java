@@ -10,11 +10,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class GoodsGrade extends View {
     
-    private Rect rect = new Rect();
+    private Rect rect1 = new Rect();
+    
+    private Rect rect2 = new Rect();
+    private Rect rect3 = new Rect();
+    private Rect rect4 = new Rect();
+    private Rect rect5 = new Rect();
     
     private static Bitmap itemIcon = BitmapFactory.decodeResource(XiaoMeiApplication.getInstance().getResources(), R.drawable.pinglun_star);
     
@@ -26,7 +32,7 @@ public class GoodsGrade extends View {
     
     private Paint mPaint = new Paint();
     
-    private int mGrade = 0;
+    private int mGrade = 5;
 
     public GoodsGrade(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -52,54 +58,95 @@ public class GoodsGrade extends View {
         mGrade = grade;
         invalidate();
     }
+    public int getGrade(){
+    	return mGrade;
+    }
     
     @Override
     protected void onDraw(Canvas canvas) {
-        
-        super.onDraw(canvas);
+        android.util.Log.d("111", "mGrade = " + mGrade);
+        int grade = mGrade;
+//        super.onDraw(canvas);
         int layoutWidth = getMeasuredWidth();
         int layoutHeight = getMeasuredHeight();
         int itemWidth = layoutWidth/5;
-        rect.left = 0 + (itemWidth - itemIconWidth)/2;
-//        rect.right = rect.left + itemIconWidth;
-        rect.top = 0 + (layoutHeight - itemIconHeight)/2;
-//        rect.bottom = rect.top + itemIconHeight;
-        mGrade -- ;
-        if(mGrade>=0)
-            canvas.drawBitmap(itemIconChecked, rect.left , rect.top, mPaint);
+        rect1.left = 0 + (itemWidth - itemIconWidth)/2;
+        rect1.top = 0 + (layoutHeight - itemIconHeight)/2;
+        rect1.right = rect1.left + itemWidth;
+        rect1.bottom = rect1.top + itemIconHeight;
+        grade -- ;
+        if(grade>=0)
+            canvas.drawBitmap(itemIconChecked, rect1.left , rect1.top, mPaint);
         else
-            canvas.drawBitmap(itemIcon, rect.left , rect.top, mPaint);
+            canvas.drawBitmap(itemIcon, rect1.left , rect1.top, mPaint);
         
-        mGrade -- ;
-        rect.left = rect.left + itemWidth;
-        if(mGrade>=0)
-            canvas.drawBitmap(itemIconChecked, rect.left , rect.top, mPaint);
+        rect2.left = rect1.left + itemWidth;
+        rect2.top = 0 + (layoutHeight - itemIconHeight)/2;
+        rect2.right = rect2.left + itemWidth;
+        rect2.bottom = rect2.top + itemIconHeight;
+        grade -- ;
+        if(grade>=0)
+            canvas.drawBitmap(itemIconChecked, rect2.left , rect2.top, mPaint);
         else
-            canvas.drawBitmap(itemIcon, rect.left , rect.top, mPaint);
+            canvas.drawBitmap(itemIcon, rect2.left , rect2.top, mPaint);
         
-        mGrade -- ;
-        rect.left = rect.left + itemWidth;
-        if(mGrade>=0){
-            canvas.drawBitmap(itemIconChecked, rect.left , rect.top, mPaint);
-        }else{
-            canvas.drawBitmap(itemIcon, rect.left , rect.top, mPaint);
-        }
+        rect3.left = rect2.left + itemWidth;
+        rect3.top = 0 + (layoutHeight - itemIconHeight)/2;
+        rect3.right = rect3.left + itemWidth;
+        rect3.bottom = rect3.top + layoutHeight;
+        grade -- ;
+        if(grade>=0)
+            canvas.drawBitmap(itemIconChecked, rect3.left , rect3.top, mPaint);
+        else
+            canvas.drawBitmap(itemIcon, rect3.left , rect3.top, mPaint);
         
-        mGrade -- ;
-        rect.left = rect.left + itemWidth;
-        if(mGrade>=0){
-            canvas.drawBitmap(itemIconChecked, rect.left , rect.top, mPaint);
-        }else{
-            canvas.drawBitmap(itemIcon, rect.left , rect.top, mPaint);
-        }
+        rect4.left = rect3.left + itemWidth;
+        rect4.top = 0 + (layoutHeight - itemIconHeight)/2;
+        rect4.right = rect4.left + itemWidth;
+        rect4.bottom = rect4.top + itemIconHeight;
+        grade -- ;
+        if(grade>=0)
+            canvas.drawBitmap(itemIconChecked, rect4.left , rect4.top, mPaint);
+        else
+            canvas.drawBitmap(itemIcon, rect4.left , rect4.top, mPaint);
         
-        mGrade -- ;
-        rect.left = rect.left + itemWidth;
-        if(mGrade>=0){
-            canvas.drawBitmap(itemIconChecked, rect.left , rect.top, mPaint);
-        }else{
-            canvas.drawBitmap(itemIcon, rect.left , rect.top, mPaint);
-        }
+        rect5.left = rect4.left + itemWidth;
+        rect5.top = 0 + (layoutHeight - itemIconHeight)/2;
+        rect5.right = rect5.left + itemWidth;
+        rect5.bottom = rect5.top + itemIconHeight;
+        grade -- ;
+        if(grade>=0)
+            canvas.drawBitmap(itemIconChecked, rect5.left , rect5.top, mPaint);
+        else
+            canvas.drawBitmap(itemIcon, rect5.left , rect5.top, mPaint);
+    }
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+    	int action = event.getAction();
+    	int x = (int) event.getX();
+    	int y = (int) event.getY();
+    	android.util.Log.d("111", "x = " + x + ", y = " + y + ",rect1 = " + rect1);
+    	switch (action) {
+		case MotionEvent.ACTION_DOWN:
+			if(rect1.contains(x,y))
+				setGrade(1);
+			else if (rect2.contains(x,y))
+				setGrade(2);
+			else if (rect3.contains(x,y))
+				setGrade(3);
+			else if (rect4.contains(x,y))
+				setGrade(4);
+			else if (rect5.contains(x,y))
+				setGrade(5);
+			break;
+		case MotionEvent.ACTION_UP:
+
+			break;
+		default:
+			break;
+		}
+    	return super.onTouchEvent(event);
     }
 
 }

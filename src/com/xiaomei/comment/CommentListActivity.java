@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
@@ -71,19 +72,26 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         }
         setUpViews();
         initData();
+        
         // test 
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
                 mControl.actionShareComment(goodsId, type, "哈哈哈哈哈哈");
             }
-        }).start();
+        }).start();*/
     }
 
     private void setUpViews(){
         TitleBar mTitleBar = (TitleBar) findViewById(R.id.title_bar);
-        
-        mTitleBar.setTitle("详情");
+        mTitleBar.setBackListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+        mTitleBar.setTitle("评论");
         
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mListView = mPullToRefreshListView.getRefreshableView();
@@ -133,6 +141,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         mIsRefresh = true;
 //        mControl.getCommentListData("1010", "goods");
         showProgress();
+        android.util.Log.d("111", "goodsId = " + goodsId + ",type = " + type);
         mControl.getCommentListData(goodsId, type);
     }
     
@@ -153,6 +162,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         mAdapter.notifyDataSetChanged();
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
+        Toast.makeText(this, "加载完成", 0).show();
     }
     
     public void getCommentListDataExceptionCallBack(){
@@ -164,6 +174,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     public void getCommentListDataMoreCallBack(){
         mAdapter.getData().addAll(mControl.getModel().getCommentList());
         mAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "加载完成", 0).show();
     }
     
     public void getCommentListDataMoreExceptionCallBack(){
@@ -236,7 +247,6 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         }
         
         private void attachDate(Holder holder,CommentItem bean){
-            android.util.Log.d("111", "bean = " + bean);
             ImageLoader.getInstance().displayImage(bean.getAvatar(), holder.userIcon);
             holder.userName.setText(bean.getUsername());
             holder.createTime.setText(bean.getCreatedate());

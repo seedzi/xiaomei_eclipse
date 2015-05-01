@@ -155,6 +155,7 @@
                 android:layout_width="wrap_content"
                 android:text="服务"/>
            <com.xiaomei.widget.GoodsGrade
+                android:id="@+id/grade_server"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
             />
@@ -174,6 +175,7 @@
                 android:layout_width="wrap_content"
                 android:text="环境"/>
            <com.xiaomei.widget.GoodsGrade
+                android:id="@+id/grade_environment"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
             />
@@ -194,6 +196,7 @@
                 android:layout_width="wrap_content"
                 android:text="效果"/>
            <com.xiaomei.widget.GoodsGrade
+                android:id="@+id/grade_effect"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
             />
@@ -206,6 +209,22 @@
              android:text="文字评价"
              android:layout_height="wrap_content"
              android:layout_width="match_parent"/>
+         
+         <EditText 
+             android:id="@+id/comment_edit"
+             android:layout_marginTop="20dp"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/pinluan_yuanjiao"
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:hint="您的宝贵意见是给我们服务的最大支持！"
+             android:gravity="left"
+             android:padding="10dp"
+             android:textColor="#b4b4b4"
+             android:textSize="16sp"
+             /><!--android:paddingTop="24dp"  -->
+         <!-- 
          <LinearLayout
              android:layout_marginTop="20dp"
              android:layout_marginLeft="15dp"
@@ -232,8 +251,9 @@
              android:textSize="16sp"
              android:textColor="#646464"/>
          </LinearLayout>
-     
+      -->
          <TextView 
+             android:id="@+id/comment_button"
              android:layout_marginTop="20dp"
              android:layout_marginBottom="20dp"
              android:text="评论"
