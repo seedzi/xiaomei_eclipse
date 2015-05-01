@@ -338,5 +338,18 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		    }
 		} );
 	}
+	/**
+	 05-01 21:29:00.052: D/TestData(29103): is_yellow_year_vip=0
+05-01 21:29:00.052: D/TestData(29103): vip=1
+05-01 21:29:00.052: D/TestData(29103): level=7
+05-01 21:29:00.052: D/TestData(29103): province=北京
+05-01 21:29:00.052: D/TestData(29103): yellow_vip_level=7
+05-01 21:29:00.052: D/TestData(29103): is_yellow_vip=1
+05-01 21:29:00.052: D/TestData(29103): gender=男
+05-01 21:29:00.052: D/TestData(29103): screen_name=三文鱼
+05-01 21:29:00.052: D/TestData(29103): msg=
+05-01 21:29:00.052: D/TestData(29103): profile_image_url=http://q.qlogo.cn/qqapp/1104506536/CEE0B09E3B6BD8D29AF057FAAEBDE9A1/100
+05-01 21:29:00.052: D/TestData(29103): city=海淀
+	 */
 	
 }

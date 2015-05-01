@@ -482,5 +482,50 @@ public class XiaoMeiApi {
 	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 	        mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
 	}
+    // ========================================================================================
+    // 第三方登录(NET)
+    // ========================================================================================
+	/**
+	 * 12. 接口功能:   第三方登陆接口
+    接口地址:   third/weixinlogin.php
+    请求参数:   //微信第三方登陆
+                openid  对应用户在第三方唯一id
+                platform    对应第三方平台(weixin, qq, weibo)
+                access_token    用来校验用户授权
+                username    用户名
+                avatar      用户头像
+                sex      用户性别
+                //腾讯QQ第三方登陆
+                openid  对应用户在第三方唯一id
+                platform    对应第三方平台(weixin, qq, weibo)
+                pf          对应腾讯具体平台
+                userip      具体用户ip,用来在腾讯进行用户登录状态校验
+                username    用户名
+                avatar      用户头像
+                sex      用户性别
+    请求验证:   无
+    请求返回:   与普通登陆相同的用户基本信息      
+	 */
+    public void thirdLogin(String openid, String platform, String access_token,
+            String username, String avatar, String sex) 
+        throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
+        BasicNameValuePair[] values = {new BasicNameValuePair("openid", openid),
+                new BasicNameValuePair("platform", platform),
+                new BasicNameValuePair("access_token", access_token),
+                new BasicNameValuePair("username", username),
+                new BasicNameValuePair("avatar", avatar),
+                new BasicNameValuePair("sex", sex),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.actionShareComment(),
+                values[0],
+                values[1],
+                values[2],
+                values[3],
+                values[4],
+                values[5],
+                values[6],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
 
+    }
 }

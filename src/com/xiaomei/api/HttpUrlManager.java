@@ -49,6 +49,10 @@ public class HttpUrlManager {
 	String getUserLoginOutUrl(){
 		return HOST + "/server/user/logout.php";
 	}
+    /**第三方登录*/
+    String thirdLogin(){
+        return HOST + "/third/weixinlogin.php";
+    }
 	/**短信验证*/
 	String getVerificationCodeUrl(){
 		return HOST + "/server/user/rdcode.php";
