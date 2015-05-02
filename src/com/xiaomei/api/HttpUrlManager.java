@@ -51,7 +51,7 @@ public class HttpUrlManager {
 	}
     /**第三方登录*/
     String thirdLogin(){
-        return HOST + "/third/weixinlogin.php";
+        return HOST + "/server/third/weixinlogin.php";
     }
 	/**短信验证*/
 	String getVerificationCodeUrl(){

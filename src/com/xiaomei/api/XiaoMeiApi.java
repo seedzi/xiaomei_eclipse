@@ -509,14 +509,15 @@ public class XiaoMeiApi {
     public void thirdLogin(String openid, String platform, String access_token,
             String username, String avatar, String sex) 
         throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
-        BasicNameValuePair[] values = {new BasicNameValuePair("openid", openid),
+        BasicNameValuePair[] values = {
+        		new BasicNameValuePair("openid", openid),
                 new BasicNameValuePair("platform", platform),
                 new BasicNameValuePair("access_token", access_token),
                 new BasicNameValuePair("username", username),
                 new BasicNameValuePair("avatar", avatar),
                 new BasicNameValuePair("sex", sex),
                 new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.actionShareComment(),
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.thirdLogin(),
                 values[0],
                 values[1],
                 values[2],
@@ -525,7 +526,7 @@ public class XiaoMeiApi {
                 values[5],
                 values[6],
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-        mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
+        mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 
     }
 }

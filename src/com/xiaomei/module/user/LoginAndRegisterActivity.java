@@ -20,14 +20,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeUser;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.FetchUserListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.xiaomei.AbstractActivity;
 import com.xiaomei.R;
+import com.xiaomei.XiaoMeiApplication;
+import com.xiaomei.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.api.exception.XiaoMeiIOException;
+import com.xiaomei.api.exception.XiaoMeiJSONException;
+import com.xiaomei.api.exception.XiaoMeiOtherException;
 import com.xiaomei.bean.User;
 import com.xiaomei.contanier.TabsActivity;
 import com.xiaomei.module.user.control.UserControl;
@@ -195,6 +203,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 			loginQq(this);
 			break;
 		case R.id.login_weixin:
+			loginWeixin(this);
 			break;
 		default:
 			break;
@@ -285,7 +294,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		if(mProgressDialog!=null && mProgressDialog.isShowing())
 			mProgressDialog.dismiss();
 	}
-	// ===============================  Sns =======================================
+	// ===============================  Sns qq登录=======================================
 	private void initSns(){
 		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
 		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(LoginAndRegisterActivity.this, "1104506536",
@@ -295,6 +304,13 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
 	    mQqLogin.setOnClickListener(this);
 	    mWeixinLogin.setOnClickListener(this);
+	    
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(LoginAndRegisterActivity.this,"wx67f54f6d2c0d66c8","912a0d27dd139295d96cd4b63977d22c");
+		wxHandler.addToSocialSDK();
+		
+		
+		
 	}
 	
 	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
@@ -310,7 +326,10 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		    }
 		    @Override
 		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
+		    	android.util.Log.d("111", "value = " + value);
 		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
+		        openid = value.getString("openid");
+		        access_token = value.getString("access_token");
 		        //获取相关授权信息
 		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.QQ, new UMDataListener() {
 				    @Override
@@ -319,16 +338,33 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 				    }                                              
 				    @Override
 			        public void onComplete(int status, Map<String, Object> info) {
-			            if(status == 200 && info != null){
-			                StringBuilder sb = new StringBuilder();
-			                Set<String> keys = info.keySet();
-			                for(String key : keys){
-			                   sb.append(key+"="+info.get(key).toString()+"\r\n");
-			                }
-			                Log.d("TestData",sb.toString());
-			            }else{
-			               Log.d("TestData","发生错误："+status);
-			           }
+						if (status == 200 && info != null) {
+							username = (String) info.get("screen_name");
+							avatar = (String) info.get("profile_image_url");
+							
+							StringBuilder sb = new StringBuilder();
+							Set<String> keys = info.keySet();
+							for (String key : keys) {
+								sb.append(key
+										+ "="
+										+ info.get(key)
+												.toString()
+										+ "\r\n");
+							}
+							Log.d("TestData", sb.toString());
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "qq", access_token, username, avatar, sex);
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}).start();
+						} else {
+							Log.d("TestData", "发生错误：" + status);
+						}
 			        }
 				});
 		    }
@@ -337,7 +373,58 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		        Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
 		    }
 		} );
+		
 	}
+	// ===============================  Sns  微信登录 =======================================	
+	private void loginWeixin(final Context mContext){
+		mController.doOauthVerify(mContext, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+		    @Override
+		    public void onStart(SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
+		    }
+		    @Override
+		    public void onError(SocializeException e, SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
+		    }
+		    @Override
+		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
+		    	android.util.Log.d("111", "value = " + value);
+		        //获取相关授权信息
+		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.WEIXIN, new UMDataListener() {
+		    @Override
+		    public void onStart() {
+		        Toast.makeText(LoginAndRegisterActivity.this, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
+		    }                                              
+		    @Override
+		        public void onComplete(int status, Map<String, Object> info) {
+		            if(status == 200 && info != null){
+		                StringBuilder sb = new StringBuilder();
+		                Set<String> keys = info.keySet();
+		                for(String key : keys){
+		                   sb.append(key+"="+info.get(key).toString()+"\r\n");
+		                }
+		                Log.d("TestData",sb.toString());
+		            }else{
+		               Log.d("TestData","发生错误："+status);
+		           }
+		        }
+		});
+		    }
+		    @Override
+		    public void onCancel(SHARE_MEDIA platform) {
+		        Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
+		    }
+		} );
+	}
+	
+	/**第三方登录数据*/
+	private String openid;
+	private String access_token;
+	private String username;
+	private String avatar;
+	private String sex;
+	
 	/**
 	 05-01 21:29:00.052: D/TestData(29103): is_yellow_year_vip=0
 05-01 21:29:00.052: D/TestData(29103): vip=1
@@ -350,6 +437,21 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 05-01 21:29:00.052: D/TestData(29103): msg=
 05-01 21:29:00.052: D/TestData(29103): profile_image_url=http://q.qlogo.cn/qqapp/1104506536/CEE0B09E3B6BD8D29AF057FAAEBDE9A1/100
 05-01 21:29:00.052: D/TestData(29103): city=海淀
+
+05-02 09:32:12.194: D/111(14403): value = Bundle[{access_token=12F0F80F89C3E26537D60050D367CD47, 
+openid=CEE0B09E3B6BD8D29AF057FAAEBDE9A1, 
+expires_in=7776000, pay_token=27B9A6544CE36E888F546B328F5E7A70, 
+pf=desktop_m_qq-10000144-android-2002-, 
+ret=0, 
+uid=CEE0B09E3B6BD8D29AF057FAAEBDE9A1, 
+sendinstall=, 
+appid=, 
+pfkey=db6a2b0180c1d38a62a098eb9359bc44, 
+page_type=, 
+auth_time=}]
+
+	AppID：wx67f54f6d2c0d66c8
+	AppSecret：912a0d27dd139295d96cd4b63977d22c
 	 */
-	
+
 }
