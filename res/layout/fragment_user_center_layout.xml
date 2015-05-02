@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.xiaomei">
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.xiaomei.yanyu">
 
 	<include 
 	    android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:layout_height="124dp" 
         android:background="@drawable/gr_banner">
 
-        <com.xiaomei.widget.CircleImageView
+        <com.xiaomei.yanyu.widget.CircleImageView
             android:id="@+id/user_icon"
             android:layout_width="@dimen/item_icon_size_normal"
             android:layout_height="@dimen/item_icon_size_normal"

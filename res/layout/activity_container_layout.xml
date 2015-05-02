@@ -9,7 +9,7 @@
         <!--/>-->
 
     <!-- bottom -->
-    <com.xiaomei.contanier.Tabs
+    <com.xiaomei.yanyu.contanier.Tabs
         android:id="@+id/container_tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tabs_height_dp"

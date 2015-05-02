@@ -31,7 +31,7 @@
 			android:visibility="gone"/>  -->
 	</RelativeLayout>
 	
-	<com.xiaomei.widget.ViewPager 
+	<com.xiaomei.yanyu.widget.ViewPager 
 	    android:id="@+id/vpager"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"

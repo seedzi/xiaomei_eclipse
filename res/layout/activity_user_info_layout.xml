@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:background="@color/color_background"
-    xmlns:app="http://schemas.android.com/apk/res/com.xiaomei">
+    xmlns:app="http://schemas.android.com/apk/res/com.xiaomei.yanyu">
     <!-- 防止edittext自动活取焦点 -->
     <LinearLayout
         android:focusable="true" android:focusableInTouchMode="true"
@@ -29,7 +29,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
         
-        <com.xiaomei.widget.CircleImageView 
+        <com.xiaomei.yanyu.widget.CircleImageView 
             android:id="@+id/user_icon"
         	android:layout_width="50dp"
             android:layout_height="50dp"           
@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content" 
                 android:textColor="#373737"/>
              <TextView 
+                 android:id="@+id/vip_txt"
                 android:layout_marginTop="10dp"
                 android:text="金牌会员"
                 android:textSize="11sp"
@@ -113,7 +114,8 @@
 
     </RelativeLayout>
     
-    <com.xiaomei.widget.VipGradeView
+    <com.xiaomei.yanyu.widget.VipGradeView
+        android:id="@+id/vip_grade"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="16dp"
         android:layout_height="wrap_content"

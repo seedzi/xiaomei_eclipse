@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.xiaomei.widget.TitleBar  xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xiaomei.yanyu.widget.TitleBar  xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/titlebar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_heigt"
@@ -76,4 +76,4 @@
 
 
 
-</com.xiaomei.widget.TitleBar>
+</com.xiaomei.yanyu.widget.TitleBar>

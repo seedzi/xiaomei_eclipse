@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xiaomei"
+    package="com.xiaomei.yanyu"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -9,13 +9,13 @@
         android:targetSdkVersion="21" />
 
     <application
-        android:name=".XiaoMeiApplication"
+        android:name="com.xiaomei.yanyu.XiaoMeiApplication"
         android:allowBackup="true"
         android:icon="@drawable/xiaomei_log"
         android:label="@string/app_name">
         
 	<activity
-	            android:name=".launch.LaunchActivity"
+	    		android:name="com.xiaomei.yanyu.launch.LaunchActivity"
 	            android:label="LaunchActivityr" 
 	            android:icon="@drawable/xiaomei_log">
             <intent-filter>
@@ -26,94 +26,102 @@
         
         <!-- 主页面 -->
          <activity
-	            android:name=".contanier.TabsActivity"
+	            android:name="com.xiaomei.yanyu.contanier.TabsActivity"
 	            android:label="TabsActivity" >
         </activity>
-        
         <activity
-            android:name=".leveltwo.WebViewActivity"
+    		android:name="com.xiaomei.yanyu.leveltwo.WebViewActivity"
             android:configChanges="orientation|keyboardHidden"
             >
         </activity>
-                <activity
-            android:name=".leveltwo.WebViewActivity1"
+        <activity
+            android:name="com.xiaomei.yanyu.leveltwo.WebViewActivity1"
             android:configChanges="orientation|keyboardHidden"
             >
         </activity>
-        
-       <activity
-            android:name=".leveltwo.GoodsDetailActivity"
+        <activity
+   			android:name="com.xiaomei.yanyu.leveltwo.GoodsDetailActivity"
             android:configChanges="orientation|keyboardHidden">
         </activity>
         <!-- 机构详情 -->
-       <activity
-            android:name=".leveltwo.MechanismDetailActivity"
+                <activity
+  			 android:name="com.xiaomei.yanyu.leveltwo.MechanismDetailActivity"
             android:configChanges="orientation|keyboardHidden">
-        </activity>        
+            </activity>
        
-		<!-- 登陆注册 -->
+            	<!-- 登陆注册 -->    
+     		<activity 
+		    android:name="com.xiaomei.yanyu.module.user.LoginAndRegisterActivity">
+		</activity>           
+	<!-- 找回密碼 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.LoginAndRegisterActivity">
+		    android:name="com.xiaomcom.xiaomei.yanyu.module.user.FindPasswordActivity">
 		</activity>
 		
-		<!-- 找回密碼 -->
+		
 		<activity 
-		    android:name="com.xiaomei.module.user.FindPasswordActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.HistoryActivity">
 		</activity>
 		
 		
 		<!-- 浏览记录 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.HistoryActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.UserOrderListActivity">
 		</activity>
 		<!-- 我的订单 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.UserOrderListActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.AboutActivity">
 		</activity>
 		<!-- 关于 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.AboutActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.CollectionActivity">
 		</activity>
 		<!-- 我的收藏 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.CollectionActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.MessageActivity">
 		</activity>
 		<!-- 我的消息 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.MessageActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.FeedbackActivity">
 		</activity>
 		<!-- 我的反馈 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.FeedbackActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.OrderDetailsActivity">
 		</activity>
 		<!-- 订单详情 -->
 		<activity 
 		    android:name="com.xiaomei.module.user.center.OrderDetailsActivity">
 		</activity>		
-		<!-- 商城二级 -->
+		<!-- 商城 -->
 		<activity 
-		    android:name="com.xiaomei.leveltwo.MallSecondActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.MallSecondActivity">
 		</activity>		
 		<activity 
-            android:name="com.xiaomei.leveltwo.GoodsListActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.GoodsListActivity">
         </activity> 
-		<!-- 圈子详情页 -->
-		<activity 
-		    android:name="com.xiaomei.leveltwo.BeautifulRingDetailsActivity">
+		<!-- 圈子详情 -->
+		<activity
+			android:name="com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity">
 		</activity>		
 		<!-- 用户详情页 -->
 		<activity 
-		    android:name="com.xiaomei.module.user.center.UserInfoActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.UserInfoActivity">
 		</activity>
 		<!-- 评论页面 -->
 		<activity
-		    android:name="com.xiaomei.comment.CommentsActivity">
+		    android:name="com.xiaomei.yanyu.comment.CommentsActivity">
 		</activity>
 		<!-- 评论列表页面 -->
 		<activity
-            android:name="com.xiaomei.comment.CommentListActivity">
+            android:name="com.xiaomei.yanyu.comment.CommentListActivity">
         </activity>
-		
+        
+		<!-- 微信支付结果页面 -->
+		 <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
+        
 		
 	   <!-- ################### 支付宝 ###################### -->
 		<activity
@@ -155,12 +163,28 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:screenOrientation="portrait">
         </activity>
+        	   <!-- ###################注册SDK使用的Activity###################### -->
+        <activity
+   android:name=".wxapi.WXEntryActivity"
+   android:theme="@android:style/Theme.Translucent.NoTitleBar"
+   android:configChanges="keyboardHidden|orientation|screenSize"
+   android:exported="true"
+   android:screenOrientation="portrait" />
+        
     <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="551671c8fd98c589220008bc" >
         </meta-data>
 		
+        
+              <receiver
+            android:name="net.sourceforge.simcpux.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+        
     </application>
     
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.xiaomei.widget.MyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xiaomei.yanyu.widget.MyLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mylayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white" >
 
-    <com.xiaomei.widget.ViewPager
+    <com.xiaomei.yanyu.widget.ViewPager
         android:id="@+id/pager"
         android:paddingTop="22dp"
         android:paddingBottom="22dp"
@@ -13,6 +13,6 @@
         android:paddingRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.xiaomei.widget.ViewPager>
+    </com.xiaomei.yanyu.widget.ViewPager>
 
-</com.xiaomei.widget.MyLayout>
+</com.xiaomei.yanyu.widget.MyLayout>

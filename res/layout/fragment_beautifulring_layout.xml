@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei"
+     xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei.yanyu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
     <include  layout="@layout/title_bar_layout" android:id="@+id/title_bar"/>
- <com.xiaomei.widget.pullrefreshview.PullToRefreshListView 
+ <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
