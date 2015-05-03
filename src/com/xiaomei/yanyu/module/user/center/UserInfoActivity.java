@@ -74,11 +74,6 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		initData();
 	}
 	
-	@Override
-	protected void onResume() {
-	    super.onResume();
-	}
-	
 	private void initView(){
 		mTitlebar = (TitleBar) findViewById(R.id.titlebar);
 		mTitlebar.setTitle("用戶信息");

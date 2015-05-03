@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yuekuapp.BaseActivity;
 import com.yuekuapp.BaseControl;
 
@@ -27,6 +29,8 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
         }
     }
     
+    private Context mContext;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,8 +42,22 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
 //		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
+        mContext = this;
 	}
 	
-	
+	@Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart( this.getClass().getSimpleName() );
+        MobclickAgent.onResume(mContext);
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd( this.getClass().getSimpleName() );
+        MobclickAgent.onPause(mContext);
+    }
 
 }

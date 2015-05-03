@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.KeyCharacterMap.KeyData;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.XiaoMeiApplication;
@@ -33,72 +35,24 @@ public class TabsActivity extends  AbstractActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_layout);
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    XiaoMeiApplication.getInstance().getApi().showCommentList(UserUtil.getUser().getToken(), "1015", "goods", "1", "10");
-                } catch (XiaoMeiCredentialsException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (XiaoMeiIOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (XiaoMeiJSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (XiaoMeiOtherException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();*/
-        // test
         
-        /*
-        new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					XiaoMeiApplication.getInstance().getApi().showUserMsg();
-				} catch (Exception e) {
-					e.printStackTrace();
-				} 
-			}
-		}).start();
+        //  (1)
+        // ================== UM统计 =====================
+        MobclickAgent.setDebugMode(true);
+//      SDK在统计Fragment时，需要关闭Activity自带的页面统计，
+//      然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+//      MobclickAgent.setAutoLocation(true);
+//      MobclickAgent.setSessionContinueMillis(1000);
+        MobclickAgent.updateOnlineConfig(this);
+        // ================== UM统计 =====================
         
-        new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					XiaoMeiApplication.getInstance().getApi().updateUserInfo(null, UserUtil.getUser().getToken());
-				} catch (XiaoMeiCredentialsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XiaoMeiIOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XiaoMeiJSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XiaoMeiOtherException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();*/
+       //  (2)
+       // ================== UM升级 =====================
+        UmengUpdateAgent.setDefault();
+        UmengUpdateAgent.update(this);
+        // ================== UM升级 =====================
     }
-//
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//    	if(keyCode == KeyEvent.KEYCODE_BACK){
-//    		finish();
-//    		return true;
-//    	}
-//    		
-//    	return super.onKeyDown(keyCode, event);
-//    }
     
     @Override
     public void onBackPressed() {
