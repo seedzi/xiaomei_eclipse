@@ -18,9 +18,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -70,6 +72,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 //                CommentListActivity.startActivity(getActivity());
             }
         });
+		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*346/720;
+		
 		
 		mScrollview = mRootView.findViewById(R.id.scrollview);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
@@ -167,6 +171,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 				holder = new Holder();
 				holder.titleTv = (TextView) convertView.findViewById(R.id.item_text);
 				holder.iconIv = (ImageView) convertView.findViewById(R.id.item_icon);
+				holder.root = (ViewGroup) convertView.findViewById(R.id.root);
 				convertView.setTag(holder);
 				holder.iconIv.setOnClickListener(this);
 			}
@@ -175,10 +180,13 @@ public class MallFragment extends BaseFragment<MallControl> {
 			return convertView;
 		}
 		
-		private void attachHolder(Holder holder,int position,Mall mall){
+		private void attachHolder(final Holder holder,int position,Mall mall){
 			holder.titleTv.setText(mall.getCatName());
 			ImageLoader.getInstance().displayImage(mall.getFile(), holder.iconIv);
 			holder.iconIv.setTag(position);
+//			AbsListView.LayoutParams al = new AbsListView.LayoutParams(ScreenUtils.getScreenWidth(getActivity())/3 -2 ,
+//				ScreenUtils.dip2px(getActivity(), 130));
+//			holder.root.setLayoutParams(al);
 		}
 
 		@Override
@@ -191,6 +199,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		private class Holder{
 			private ImageView iconIv;
 			private TextView titleTv;
+			private ViewGroup root;
 		}
 		
 	}

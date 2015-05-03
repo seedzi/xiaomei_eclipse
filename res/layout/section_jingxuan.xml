@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_background"
-    android:paddingBottom="10dp">
+    android:background="@color/color_background" >
+
 	<ImageView 
 	    android:id="@+id/icon"
 	    android:layout_width="match_parent"
@@ -23,5 +27,9 @@
     	android:paddingBottom="15dp"
     	android:background="@drawable/home_label"/>
 </FrameLayout>
-    
-
+            <View       
+		 android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_background"/>
+</LinearLayout>

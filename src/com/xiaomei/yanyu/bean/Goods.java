@@ -23,6 +23,8 @@ public class Goods {
 	private String hospName;
 	
 	private String sales;
+	
+	private String cityName;
 
 	public String getId() {
 		return id;
@@ -111,7 +113,14 @@ public class Goods {
 	public void setSales(String sales) {
 		this.sales = sales;
 	}
-	
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
 	
 }
 /*

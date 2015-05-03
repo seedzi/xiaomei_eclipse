@@ -41,8 +41,8 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 				beautifulRing.setIsOpen(jobject.getString("is_open"));	
 			if(jobject.has("share_mark"))
 				beautifulRing.setShareMark(jobject.getString("share_mark"));	
-			if(jobject.has("share_file"))
-				beautifulRing.setShareFile(jobject.getString("share_file"));	
+			if(jobject.has("image_6"))
+				beautifulRing.setShareFile(jobject.getString("image_6"));	
 			if(jobject.has("num_favors"))
 				beautifulRing.setNumFavors(jobject.getString("num_favors"));	
 			if(jobject.has("num_comments"))

@@ -213,6 +213,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
 				holder.sizeTv = (TextView) convertView.findViewById(R.id.size);
 				holder.hospitalTv = (TextView) convertView.findViewById(R.id.hospital_name);
+				holder.localTv = (TextView) convertView.findViewById(R.id.location);
+				holder.priceTv = (TextView) convertView.findViewById(R.id.price);
+				holder.localTv = (TextView) convertView.findViewById(R.id.location);
 				convertView.setOnClickListener(this);
 				convertView.setTag(holder);
 			}
@@ -223,6 +226,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			holder.goodId = goods.getId();
 			holder.sizeTv.setText("销量" + goods.getSales());
 			holder.hospitalTv.setText(goods.getHospName());
+			holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
+			holder.localTv.setText(goods.getCityName());
+			
 //			holder.sizeTv.setText(goods.getPriceMarket());
 //			holder.hospitalTv.setText(goods.ge);
 			return convertView;
@@ -234,6 +240,8 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			TextView sizeTv;
 			TextView hospitalTv;
 			String goodId;
+			TextView localTv;
+			TextView priceTv;
 		}
 
 		@Override

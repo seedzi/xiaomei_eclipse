@@ -206,6 +206,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 				holder.bubleSizeTv = (TextView) convertView.findViewById(R.id.buble_size);
 				holder.likeSizeTv = (TextView) convertView.findViewById(R.id.like_size);
 				holder.shareImg = (ImageView) convertView.findViewById(R.id.share_img);
+				
 				holder.descriptionTv = (TextView) convertView.findViewById(R.id.description);
 				convertView.setTag(holder);
 				convertView.setOnClickListener(this);
@@ -218,7 +219,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		private void attachDate(Holder holder,BeautifulRing bean){
 			ImageLoader.getInstance().displayImage(bean.getShareFile(), holder.shareImg);
 			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams
-			        (LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())/1.7));
+			        (LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*516/720));
 			holder.shareImg.setLayoutParams(ll);
 			holder.descriptionTv.setText(bean.getShareTitle());
 			holder.userNaemTv.setText(bean.getUsername());

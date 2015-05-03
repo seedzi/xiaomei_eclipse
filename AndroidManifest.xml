@@ -184,7 +184,13 @@
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
-        
+        <!-- 友盟 -->
+        <activity 
+            android:name="com.umeng.update.UpdateDialogActivity"
+		  	android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+              
+              
     </application>
     
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

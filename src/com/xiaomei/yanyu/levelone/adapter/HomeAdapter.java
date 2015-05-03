@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
@@ -113,18 +114,11 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			convertView.setTag(holder);
 		}
 		holder = (Holder) convertView.getTag();
-		attachData2Holder(type, section, holder);	
-		switch (type) {
-		case 0:
-			layoutView(convertView,1);
-			break;
-		default:
-			break;
-		}
+		attachData2Holder(type, section, holder,convertView);	
 		return convertView;
 	}
 
-	private void attachData2Holder(int type ,Section section ,Holder holder){
+	private void attachData2Holder(int type ,Section section ,Holder holder,View convertView){
 		Section.Entity entity = null;
 		if(section==null || holder == null)
 			return;
@@ -145,14 +139,17 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			break;
 		case 3:  //分享
 			entity =  section.getList().get(0);
+			android.util.Log.d("111", "entity = " + entity);
 			if(holder.personIconView!=null && !TextUtils.isEmpty( entity.getNumcomment()))
-//				ImageLoader.getInstance().displayImage(entity.get, holder.personIconView); //TODO
+				ImageLoader.getInstance().displayImage(entity.getAvator(), holder.personIconView); 
 			if(holder.personnameView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
 				holder.personnameView.setText(entity.getNumfavorite());
 			if(holder.timeView!=null && !TextUtils.isEmpty( entity.getDate()))
 				holder.timeView.setText(entity.getDate());
-			if(holder.imgView!=null && !TextUtils.isEmpty( entity.getImg()))
+			if(holder.imgView!=null && !TextUtils.isEmpty( entity.getImg())){
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+				holder.imgView.getLayoutParams().height = ScreenUtils.getScreenWidth(mContext)*430/720;
+			}
 			if(holder.titleView!=null && !TextUtils.isEmpty( entity.getTitle()))
 				holder.titleView.setText(entity.getTitle());
 			if(holder.commontNumView!=null && !TextUtils.isEmpty( entity.getNumcomment()))
@@ -161,18 +158,43 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.favoriteNumView.setText(entity.getNumfavorite());
 				holder.url = entity.getUrl();
 			break;
-		case 0:
+		case 0: //首张图
 			entity =  section.getList().get(0);
-			android.util.Log.d("111", "entity.getImg() = " + entity.getImg());
-		case 2:
-		case 4:
+			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
+				if(holder.root!=null){
+					android.util.Log.d("111", "holder.root!=null");
+					AbsListView.LayoutParams ll = new AbsListView.LayoutParams(
+							android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+							(int) (ScreenUtils.getScreenWidth(mContext) * 730 / 720)
+									+ ScreenUtils.dip2px(mContext, 10));
+					holder.root.setLayoutParams(ll);
+				}
+				if(holder.line != null){
+					holder.line.getLayoutParams().height = ScreenUtils.dip2px(mContext, 10);
+				}
+				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*730/720);
+			}
+			holder.url = entity.getUrl();
+			break;
+		case 2: //商品精选
+			entity =  section.getList().get(0);
+			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
+				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+				holder.imgView.getLayoutParams().width = ScreenUtils.getScreenWidth(mContext)*430/720;
+			}
+			holder.url = entity.getUrl();
+			break;
+		case 4: //会员活动
 			entity =  section.getList().get(0);
 //			if(holder.titleView!=null && !TextUtils.isEmpty(section.getTitle()))
 //				holder.titleView.setText(section.getTitle()); //TODO
 			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*428/720);
 			}
 			holder.url = entity.getUrl();
+//			holder.imgView.getLayoutParams().width = ?? //TODO
 			break;
 		default:
 			break;
@@ -213,6 +235,8 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.payment = vGroup.findViewById(R.id.payment);
 		holder.jiangli = vGroup.findViewById(R.id.jiangli);
 		holder.riji = vGroup.findViewById(R.id.riji);
+		holder.root = (ViewGroup) vGroup.findViewById(R.id.root);
+		holder.line = vGroup.findViewById(R.id.line);
 		//TODO :处理图片大小
 //		holder.favoriteNumView.getLayoutParams().width = imageWidth;
 	}
@@ -232,6 +256,8 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private View payment; //赔付
 			private View riji; //日记
 			private View jiangli; //奖励
+			private ViewGroup root;
+			private View line; //分割线
 //		}
 	}
 
@@ -241,8 +267,4 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		GoodsDetailActivity.startActivity(mContext, holder.url);
 	}
 	
-	private void layoutView(View view,int proportion){
-		AbsListView.LayoutParams ll = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, ScreenUtils.getScreenWidth(mContext)/proportion);
-		view.setLayoutParams(ll);
-	}
 }

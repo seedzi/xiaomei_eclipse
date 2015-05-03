@@ -37,13 +37,13 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
     private TabsFragmentManager mMTabsFragmentManager;
     
     int[] tabs_drawable_res = {R.drawable.tabs_home_gary, 
-			R.drawable.tabs_shopping_gary,
+			R.drawable.tabr_fenlei,
 			R.drawable.tabs_mechanism_gary,
 			R.drawable.tabs_circle_gary,
 			R.drawable.tabs_me_gary};
     
     int[] tabs_drawable_res_checked = {R.drawable.tabs_home, 
-			R.drawable.tabs_shopping,
+			R.drawable.tabr_fenlei_press,
 			R.drawable.tabs_mechanism,
 			R.drawable.tabs_circle,
 			R.drawable.tabs_me};
@@ -83,6 +83,7 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
             topDrawable.setBounds(0, 0, topDrawable.getMinimumWidth(), topDrawable.getMinimumHeight());
             tab.setCompoundDrawables(null,topDrawable , null, null);
             tab.setWidth(ScreenUtils.getScreenWidth(context)/tabs_names.length);
+            tab.setGravity(Gravity.CENTER);
             tab.setTag(index);
             index ++;
             tab.setOnClickListener(this);

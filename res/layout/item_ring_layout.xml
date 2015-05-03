@@ -76,7 +76,7 @@
 	       android:paddingRight="15dp">
         	<TextView 
            android:id="@+id/description"	    
-           android:textSize="21sp"
+           android:textSize="16sp"
            android:textColor="#373737"	    
            android:layout_centerVertical="true"
 	       android:text="韩国几种常见的隆鼻手术方法"
@@ -93,7 +93,7 @@
     <View 
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray"/>
+        android:background="#ebebeb"/>
 
     <RelativeLayout 
         android:layout_height="wrap_content"

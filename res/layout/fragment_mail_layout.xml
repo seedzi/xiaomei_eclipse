@@ -20,10 +20,10 @@
             android:scaleType="fitXY"/>
             <com.xiaomei.yanyu.widget.NoScrollGrideView 
         android:id="@+id/grid"
-        android:background="@color/color_gray"
+        android:background="#ebebeb"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:listSelector="@null" 
+        android:listSelector="#ebebeb" 
         android:verticalSpacing="1.0px" 
         android:horizontalSpacing="1.0px"
         android:numColumns="3"/>

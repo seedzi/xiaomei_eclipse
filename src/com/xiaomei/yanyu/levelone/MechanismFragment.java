@@ -10,6 +10,7 @@ import com.xiaomei.yanyu.levelone.control.MechanismControl;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.MechanismDetailActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
+import com.xiaomei.yanyu.widget.StarsView;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -215,6 +216,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 				holder.serverTv = (TextView) convertView.findViewById(R.id.server);
 				holder.effectTv = (TextView) convertView.findViewById(R.id.effect);
 				holder.environmentalTv = (TextView) convertView.findViewById(R.id.environmental);
+				holder.startsView = (StarsView) convertView.findViewById(R.id.grades);
 				convertView.setTag(holder);
 				convertView.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -241,6 +243,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			holder.serverTv .setText("服务" + hospital.getRateService());
 			holder.environmentalTv.setText("环境" + hospital.getRateEnvironment());
 			holder.effectTv.setText("效果" + hospital.getRateEffect());
+			holder.startsView.setGrade(Integer.valueOf(hospital.getRateService()));
 		}
 		
 		private class Holder{
@@ -252,6 +255,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			private TextView effectTv;
 			private TextView environmentalTv;
 			private String id;
+			private StarsView startsView;
 		}
 		
 	}

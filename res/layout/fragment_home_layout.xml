@@ -13,10 +13,10 @@
 	    android:layout_height="match_parent"
 	    android:background="#ffe2e2e2"
 	    android:scrollbarStyle="outsideOverlay"
-	    android:dividerHeight="1.0dp"
 	    ptr:ptrMode="pullDownFromTop"
+
 	    android:layout_below="@id/title_bar"
-	    android:visibility="visible"/> 
+	    android:visibility="visible"/> <!-- 	    android:dividerHeight="10dp"  	    android:divider="@color/color_background"-->
 	
 	<include  android:id="@+id/empty_view"
 	    layout="@layout/empty_layout"

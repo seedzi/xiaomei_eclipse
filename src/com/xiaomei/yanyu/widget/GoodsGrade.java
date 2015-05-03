@@ -22,13 +22,14 @@ public class GoodsGrade extends View {
     private Rect rect4 = new Rect();
     private Rect rect5 = new Rect();
     
-    private static Bitmap itemIcon = BitmapFactory.decodeResource(XiaoMeiApplication.getInstance().getResources(), R.drawable.pinglun_star);
     
-    private static Bitmap itemIconChecked = BitmapFactory.decodeResource(XiaoMeiApplication.getInstance().getResources(), R.drawable.pinglun_star_yipin);
+    protected static Bitmap itemIcon = BitmapFactory.decodeResource(XiaoMeiApplication.getInstance().getResources(), R.drawable.pinglun_star);
     
-    private int itemIconHeight = itemIcon.getHeight();
+    protected static Bitmap itemIconChecked = BitmapFactory.decodeResource(XiaoMeiApplication.getInstance().getResources(), R.drawable.pinglun_star_yipin);
     
-    private int itemIconWidth = itemIcon.getWidth();
+    protected int itemIconHeight = itemIcon.getHeight();
+    
+    protected int itemIconWidth = itemIcon.getWidth();
     
     private Paint mPaint = new Paint();
     

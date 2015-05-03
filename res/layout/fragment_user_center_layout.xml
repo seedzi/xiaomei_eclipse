@@ -41,14 +41,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_pick_high"
                 android:text="美美达" 
-                android:textSize="@dimen/txt_big_size_sp"/>
+                android:textSize="18sp"/>
             <TextView
                 android:id="@+id/user_grade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="v2白金会员"
                 android:textColor="@color/color_pick_high"
-                android:textSize="@dimen/txt_normal_size_sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
@@ -62,7 +62,7 @@
 
   		<View
 	       	android:layout_width="match_parent"
-	      	android:layout_height="@dimen/item_height_small"/>
+	      	android:layout_height="10dp"/>
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,18 +70,22 @@
         android:orientation="vertical" >
         
         <include android:id="@+id/line1"  layout="@layout/item_center_user_layout" />
-        <include android:id="@+id/line2"  layout="@layout/item_center_user_layout" />
+        <!-- 隐藏 -->
+        <include android:id="@+id/line2"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
         
+        <!-- 隐藏 -->
 		<View
          	android:layout_width="match_parent"
-        	android:layout_height="@dimen/item_height_small"/>
-        
-        <include android:id="@+id/line3"  layout="@layout/item_center_user_layout" />
-        <include android:id="@+id/line4"  layout="@layout/item_center_user_layout" />
-        
+        	android:layout_height="@dimen/item_height_small"
+        	android:visibility="gone"/>
+        <!-- 隐藏 -->
+        <include android:id="@+id/line3"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
+        <include android:id="@+id/line4"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
+        <!-- 隐藏 -->
 		<View
          	android:layout_width="match_parent"
-        	android:layout_height="@dimen/item_height_small" />
+        	android:layout_height="@dimen/item_height_small" 
+        	android:visibility="gone"/>
         
         <include android:id="@+id/line5"  layout="@layout/item_center_user_layout" />
         <include android:id="@+id/line6"  layout="@layout/item_center_user_layout" />

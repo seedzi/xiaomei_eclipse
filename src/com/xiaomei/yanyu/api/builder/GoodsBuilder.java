@@ -44,6 +44,8 @@ public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
 				goods.setHospName(jobj.getString("hosp_name"));
 			if(jobj.has("sales"))
 				goods.setSales(jobj.getString("sales"));
+			if(jobj.has("city_name"))
+				goods.setCityName(jobj.getString("city_name"));
 			list.add(goods);
 		}
 		return list;

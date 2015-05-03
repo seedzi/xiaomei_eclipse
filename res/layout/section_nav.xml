@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+        android:background="@color/color_background">
+    
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="95dp"
     android:orientation="horizontal"
     android:background="@color/color_background"
-    android:weightSum="4" 
-    android:paddingBottom="10dp">
+    android:weightSum="4" >
     
-    <!--限时特惠  -->
+    <!--安全保障 -->
     <LinearLayout 
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -16,23 +23,23 @@
     	android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/youhui"
-	        android:layout_marginTop="18dp"
+	        android:layout_marginTop="12dp"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_height="wrap_content"
 	        android:layout_width="wrap_content"
-	        android:src="@drawable/home_special_offer"/>
+	        android:src="@drawable/anquanbaoz_selector"/>
 	    <TextView 
 	        android:id="@+id/title"
 	        android:layout_gravity="center_horizontal"
-	        android:layout_marginTop="16dp"
-	        android:layout_marginBottom="16dp"
+	        android:layout_marginTop="6dp"
+	        android:layout_marginBottom="12dp"
 	        android:layout_height="wrap_content"
 		 	android:layout_width="wrap_content"	   
 		 	android:textColor="#b5b5b5"     
-	        android:text="限时特惠"/>
+	        android:text="安全保障"/>
 	</LinearLayout>
 	
-        <!--颜语赔付  -->
+        <!--服务流程  -->
     <LinearLayout 
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -41,19 +48,19 @@
     		android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/payment"
-	        android:layout_marginTop="18dp"
+	        android:layout_marginTop="12dp"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_height="wrap_content"
 	        android:layout_width="wrap_content"
-	        android:src="@drawable/home_compensation"/>
+	        android:src="@drawable/fuwuliucheng_selector"/>
 	    <TextView 
 	        android:layout_gravity="center_horizontal"
-	        android:layout_marginTop="16dp"
-	        android:layout_marginBottom="16dp"
+	        android:layout_marginTop="6dp"
+	        android:layout_marginBottom="12dp"
 	        android:layout_height="wrap_content"
 		 	android:layout_width="wrap_content"	   
 		 	android:textColor="#b5b5b5"     
-	        android:text="颜语赔付"/>
+	        android:text="服务流程"/>
 	</LinearLayout>
 	
         <!--写日记 -->
@@ -65,19 +72,19 @@
     		android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/riji"
-	        android:layout_marginTop="18dp"
+	        android:layout_marginTop="12dp"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_height="wrap_content"
 	        android:layout_width="wrap_content"
-	        android:src="@drawable/home_diary"/>
+	        android:src="@drawable/weizhengx_selector"/>
 	    <TextView 
 	        android:layout_gravity="center_horizontal"
-	        android:layout_marginTop="16dp"
-	        android:layout_marginBottom="16dp"
+	        android:layout_marginTop="6dp"
+	        android:layout_marginBottom="12dp"
 	        android:layout_height="wrap_content"
 		 	android:layout_width="wrap_content"	   
 		 	android:textColor="#b5b5b5"     
-	        android:text="写日记"/>
+	        android:text="整形介绍"/>
 	</LinearLayout>
 	
         <!--积分奖励  -->
@@ -89,18 +96,24 @@
     		android:background="@color/color_white">
 	    <ImageView 
 	        android:id="@+id/jiangli"
-	        android:layout_marginTop="18dp"
+	        android:layout_marginTop="12dp"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_height="wrap_content"
 	        android:layout_width="wrap_content"
-	        android:src="@drawable/home_bonus_points"/>
+	        android:src="@drawable/guanyuyanyu_selector"/>
 	    <TextView 
 	        android:layout_gravity="center_horizontal"
-	        android:layout_marginTop="16dp"
-	        android:layout_marginBottom="16dp"
+	        android:layout_marginTop="6dp"
+	        android:layout_marginBottom="12dp"
 	        android:layout_height="wrap_content"
 		 	android:layout_width="wrap_content"	   
 		 	android:textColor="#b5b5b5"     
-	        android:text="积分奖励"/>
+	        android:text="关于颜语"/>
 	</LinearLayout>
+</LinearLayout>
+
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_background"/>
 </LinearLayout>

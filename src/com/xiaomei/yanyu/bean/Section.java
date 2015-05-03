@@ -127,6 +127,14 @@ public class Section {
 			this.url = url;
 		}
 
+		@Override
+		public String toString() {
+			return "Entity [title=" + title + ", img=" + img + ", url=" + url
+					+ ", numfavorite=" + numfavorite + ", date=" + date
+					+ ", username=" + username + ", numcomment=" + numcomment
+					+ ", avator=" + avator + "]";
+		}
+
 //		public String getPrice_market_h() {
 //			return price_market_h;
 //		}
