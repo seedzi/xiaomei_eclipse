@@ -51,6 +51,10 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 				beautifulRing.setShareType(jobject.getString("share_type"));	
 			if(jobject.has("createdate"))
 				beautifulRing.setCreatedate(jobject.getString("createdate"));
+			if(jobject.has("username"))
+				beautifulRing.setUsername(jobject.getString("username"));
+			if(jobject.has("avatar"))
+				beautifulRing.setAvatar(jobject.getString("avatar"));
 			list.add(beautifulRing);
 		}
 		Log.d("111", "size = " + list.size());

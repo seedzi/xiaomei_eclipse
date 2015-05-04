@@ -26,7 +26,7 @@ public class HttpUrlManager {
 	}
 	/**圈子详情*/
 	String getRingDetailUrl(){
-		return HOST + "/api/share_detail.php";
+		return HOST + "/server/show/share_info.php";
 	}
 	/**商城*/
 	String getMallListUrl(){

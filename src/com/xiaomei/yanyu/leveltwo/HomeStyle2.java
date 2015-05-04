@@ -7,27 +7,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewParent;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.ChannelEntity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
-import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity.MyPagerAdapter;
 import com.xiaomei.yanyu.widget.CircleImageView;
 import com.xiaomei.yanyu.widget.MyLayout;
 import com.xiaomei.yanyu.widget.PagerAdapter;
@@ -35,17 +33,11 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.ViewPager;
 import com.xiaomei.yanyu.widget.ViewPager.OnPageChangeListener;
 
-public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoControl> implements OnTouchListener,View.OnClickListener{
-
-	@Deprecated
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,BeautifulRingDetailsActivity.class);
-		context.startActivity(intent);
-	}
+public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View.OnClickListener{
 	
-	public static void startActivity(Context context,String id){
+	public static void startActivity(Context context,String data){
 		Intent intent = new Intent(context,BeautifulRingDetailsActivity.class);
-		intent.putExtra("id", id);
+		intent.putExtra("data", data);
 		context.startActivity(intent);
 	}
 	
@@ -58,8 +50,6 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	 //手势识别
 	 private GestureDetector mGestureDetector;
 	 
-	 private String id;
-	
 	 private ImageView backImageview;
 	 
 	 private ImageView iconView;
@@ -67,7 +57,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		id = getIntent().getStringExtra("id");
+		String data = getIntent().getStringExtra("data");
 		setContentView(R.layout.activiy_beautiful_ring_details_layout);
 		initView();
 		intGesture();
@@ -141,7 +131,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	}
 	
 	private void initData(){
-		mControl.getDataAsyn(id);
+//		mControl.getDataAsyn(id);
 	}
 	
 	// ============================   手势  ==================================
@@ -159,7 +149,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	
 	// ============================   callBack  ==================================
 	public void getDataAsynCallBack(){
-		BeautifulRingDetail data = mControl.getModel().getBeautifulRingDetail();
+		BeautifulRingDetail data = null;//mControl.getModel().getBeautifulRingDetail();
 		ImageLoader.getInstance().displayImage(data.getImage(), backImageview);
 		ImageLoader.getInstance().displayImage(data.getAvatar(), iconView);
 		titleTv.setText(data.getShareTitle());
@@ -327,7 +317,5 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
             break;
         }
     }
-
-
 
 }

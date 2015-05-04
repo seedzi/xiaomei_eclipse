@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:textColor="#1e1e1e"
             android:text="Seth Audley"
-            android:textSize="17sp"
+            android:textSize="13sp"
             android:layout_toRightOf="@id/person_icon"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"/>
@@ -63,10 +63,11 @@
             android:layout_width="59dp"
             android:layout_height="22dp"
             android:text="鼻子"
+            android:textColor="#ffffff"
             android:layout_marginTop="17dp"
             android:textSize="16sp"
             android:gravity="center"
-            android:textColor="@color/color_white"/>
+            android:background="#99c96cf1"/>
     </FrameLayout>
     
     <RelativeLayout 

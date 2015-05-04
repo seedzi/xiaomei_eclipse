@@ -4,6 +4,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.levelone.control.UserControl;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.module.user.center.AboutActivity;
 import com.xiaomei.yanyu.module.user.center.CollectionActivity;
 import com.xiaomei.yanyu.module.user.center.FeedbackActivity;
@@ -39,18 +40,26 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	
 	private TextView mUserGradeTv;
 	
+	private TextView mLoginButton;
+	
+	private TextView mRegisterButton;
+	
+	private View mUserInfoLayout;
+	
+	private View mNoLoginLayout;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_center_layout, null);
 		setUpView();
+	    initData();
 		return mRootView;
 	}
 
 	@Override
 	public void onResume() {
 	    super.onResume();
-	    initData();
 	}
 	
 	private void setUpView(){
@@ -77,10 +86,27 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		mUserNameTv = (TextView) mRootView.findViewById(R.id.user_name);
 		mUserGradeTv = (TextView) mRootView.findViewById(R.id.user_grade);
 		
-		mRootView.findViewById(R.id.user_info_layout).setOnClickListener(this);
+		mLoginButton = (TextView) mRootView.findViewById(R.id.login_button);
+		mRegisterButton = (TextView) mRootView.findViewById(R.id.register_button);
+		mUserInfoLayout = mRootView.findViewById(R.id.user_info_layout);
+		mNoLoginLayout = mRootView.findViewById(R.id.no_login_layout);
+		
+		mLoginButton.setOnClickListener(this);
+		mRegisterButton.setOnClickListener(this);
+		mUserInfoLayout.setOnClickListener(this);
 	}
 	
 	private void initData(){
+		User user = UserUtil.getUser();
+		if(user == null){
+			mNoLoginLayout.setVisibility(View.VISIBLE);
+			mUserInfoLayout.setVisibility(View.GONE);
+			return;
+		}else{
+			mNoLoginLayout.setVisibility(View.GONE);
+			mUserInfoLayout.setVisibility(View.VISIBLE);
+		}
+		
 	    try {
 	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
 	        if(!TextUtils.isEmpty(userInfo.getAvatar()))
@@ -119,6 +145,12 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
+		case R.id.login_button://登录
+			LoginAndRegisterActivity.startActivity(getActivity(),true);
+			break;
+		case R.id.register_button://注册
+			LoginAndRegisterActivity.startActivity(getActivity(),false);
+			break;
 		case R.id.line1:  //我的订单
 			UserOrderListActivity.startActivity(getActivity());
 			break;

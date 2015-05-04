@@ -64,9 +64,13 @@ public class HttpApiWithSession extends AbstractHttpApi {
     public String doHttpRequestString(HttpRequestBase httpRequest)
             throws XiaoMeiCredentialsException, XiaoMeiOtherException,
             XiaoMeiIOException {
+    	android.util.Log.d("111", "doHttpRequestString ");
         InputStream in = executeHttp(httpRequest);
         try {
-            return StringUtil.convertStreamToString(in);
+//            return StringUtil.convertStreamToString(in);
+        	String s = StringUtil.convertStreamToString(in);
+        	android.util.Log.d("111", "sss = " + s);
+        	return s;
         } finally {
             if (in != null) {
                 try {

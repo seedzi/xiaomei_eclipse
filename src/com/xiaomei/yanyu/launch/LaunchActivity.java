@@ -66,11 +66,14 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
     	/*
     	 * 
     	 */
+  		TabsActivity.startActivity(LaunchActivity.this);
+  		/*
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);
     	}else{
     		LoginAndRegisterActivity.startActivity(LaunchActivity.this);
     	}
+    	*/
 //    	PhoneGapAc.startActivity(LaunchActivity.this);
     	
 //    	finish();	

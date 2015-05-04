@@ -49,9 +49,13 @@ public class MallFragment extends BaseFragment<MallControl> {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_mail_layout, null);
-		setUpView();
-		initData();
+		if(mRootView == null){
+			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_mail_layout, null);
+			setUpView();
+			initData();
+		}else{
+			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+		}
 		return mRootView;
 	}
 	

@@ -49,8 +49,15 @@ import com.xiaomei.yanyu.widget.TitleBar.Listener;
 public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		implements Listener,View.OnClickListener{
 	
+	@Deprecated
     public static void startActivity(Context context){
         Intent intent = new Intent(context,LoginAndRegisterActivity.class);
+        context.startActivity(intent);
+    }
+    
+    public static void startActivity(Context context,boolean isLogin){
+        Intent intent = new Intent(context,LoginAndRegisterActivity.class);
+        intent.putExtra("is_login", isLogin);
         context.startActivity(intent);
     }
     
@@ -164,7 +171,10 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		
 		forgetPassword = findViewById(R.id.forget_password);
 		forgetPassword.setOnClickListener(this);
-		mTitleBar.findViewById(R.id.login).performClick();
+		if(getIntent().getBooleanExtra("is_login", true))
+			mTitleBar.findViewById(R.id.login).performClick();
+		else 
+			mTitleBar.findViewById(R.id.register).performClick();
 	}
 	
 	@Override

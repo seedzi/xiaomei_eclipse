@@ -10,6 +10,8 @@ public class Section {
 	
 	private String title;
 	
+	private String type;
+	
 	private List<Entity> list = null;
 	
 	
@@ -44,6 +46,16 @@ public class Section {
 	public void setList(List<Entity> list) {
 		this.list = list;
 	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
 
 	public static class Entity{
 		
@@ -62,6 +74,7 @@ public class Section {
 		private String numcomment;
 		
 		private String avator;
+		
 
 		public String getTitle() {
 			return title;
@@ -126,6 +139,7 @@ public class Section {
 		public void setUrl(String url) {
 			this.url = url;
 		}
+		
 
 		@Override
 		public String toString() {
@@ -134,6 +148,7 @@ public class Section {
 					+ ", username=" + username + ", numcomment=" + numcomment
 					+ ", avator=" + avator + "]";
 		}
+
 
 //		public String getPrice_market_h() {
 //			return price_market_h;

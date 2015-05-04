@@ -71,7 +71,7 @@
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray"/>
+        android:background="#e2e2e2"/>
     
     <RelativeLayout 
         android:layout_width="match_parent"
@@ -113,14 +113,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#d366f3" 
-            android:textSize="21sp"
+            android:textSize="16sp"
             android:text="￥ 599"/>                
     </RelativeLayout>
     
         <View 
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#989898"/>
+        android:background="#e2e2e2"/>
     
     <RelativeLayout 
         android:layout_width="match_parent"
@@ -140,7 +140,7 @@
     		android:gravity="center"
     		android:paddingLeft="10dp"
     		android:paddingRight="10dp"
-            android:background="@drawable/payment_selector"/>
+            android:background="@drawable/payment_selector"/><!--payment_selector  -->
         <TextView 
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/pay_button"

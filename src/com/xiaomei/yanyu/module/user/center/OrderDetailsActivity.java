@@ -167,7 +167,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
             return ;
         Order.DataDetail.GoodsInfo goodsInfo = orderDataDetail.getGoodsInfo();
         goodsTitleTv.setText(goodsInfo.getGoodsName());
-        goodsPriceTv.setText(orderDataList.getOrderAmount());
+        goodsPriceTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + orderDataList.getOrderAmount());
         ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
         Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
         mechanismNameTv.setText(hospInfo.getHospName());

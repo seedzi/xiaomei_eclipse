@@ -15,7 +15,8 @@ public class BeautifulDetailBuilder extends AbstractJSONBuilder<BeautifulRingDet
 	@Override
 	protected BeautifulRingDetail builder(JSONObject jsonObject)
 			throws JSONException {
-		LOG.d("json", jsonObject.toString());
+		android.util.Log.d("json", jsonObject.toString());
+		jsonObject = jsonObject.getJSONObject("msg");
 		BeautifulRingDetail beautifulRingDetail = new BeautifulRingDetail();
 		if(jsonObject.has("id"))
 			beautifulRingDetail.setId(jsonObject.getString("id"));
@@ -47,6 +48,8 @@ public class BeautifulDetailBuilder extends AbstractJSONBuilder<BeautifulRingDet
 			beautifulRingDetail.setNumComments(jsonObject.getString("num_comments"));
 		if(jsonObject.has("createdate"))
 			beautifulRingDetail.setCreatedate(jsonObject.getString("createdate"));
+		if(jsonObject.has("image_6"))
+			beautifulRingDetail.setImage(jsonObject.getString("image_6"));
 		if(jsonObject.has("images")){
 			List<BeautifulRingDetail.Item> list = new ArrayList<BeautifulRingDetail.Item>();
 			JSONArray jsonArray = jsonObject.getJSONArray("images");
@@ -59,8 +62,8 @@ public class BeautifulDetailBuilder extends AbstractJSONBuilder<BeautifulRingDet
 					item.setType(job.getString("type"));
 				if(job.has("typeid"))
 					item.setTypeid(job.getString("typeid"));
-				if(job.has("url"))
-					item.setUrl(job.getString("url"));
+				if(job.has("image_6"))
+					item.setUrl(job.getString("image_6"));
 				if(job.has("title"))
 					item.setTilte(job.getString("title"));
 				list.add(item);
@@ -70,53 +73,91 @@ public class BeautifulDetailBuilder extends AbstractJSONBuilder<BeautifulRingDet
 		return beautifulRingDetail;
 	}
 
+	
 	/*
 	{
-	    "id": "5",
-	    "goods_id": "0",
-	    "hosp_id": "0",
-	    "userid": "0",
-	    "username": null,
-	    "avatar": null,
-	    "share_title": "是对方是否1231",
-	    "share_des": "阿萨德发顺风",
-	    "sort_order": "0",
-	    "is_open": "1",
-	    "share_mark": "暗示",
-	    "share_file": "http://bcs.duapp.com/drxiaomei/images/share5/20150323161155_26824.jpeg",
-	    "num_favors": "0",
-	    "num_comments": "0",
-	    "createdate": "1427522221",
-	    "images": [
-	        {
-	            "id": "5",
-	            "type": "share",
-	            "typeid": "5",
-	            "url": "http://bcs.duapp.com/drxiaomei/images/share5/20150323161155_26824.jpeg",
-	            "title": "asdfsfsd"
-	        },
-	        {
-	            "id": "6",
-	            "type": "share",
-	            "typeid": "5",
-	            "url": "http://bcs.duapp.com/drxiaomei/images/share5/20150328140000_42996.jpg",
-	            "title": "找不到对象"
-	        },
-	        {
-	            "id": "7",
-	            "type": "share",
-	            "typeid": "5",
-	            "url": "http://bcs.duapp.com/drxiaomei/images/share5/20150328140035_29489.jpg",
-	            "title": "趴咚"
-	        },
-	        {
-	            "id": "8",
-	            "type": "share",
-	            "typeid": "5",
-	            "url": "http://bcs.duapp.com/drxiaomei/images/share5/20150328140126_18939.jpg",
-	            "title": "荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚荷花咚"
-	        }
-	    ]
-	}
-	*/
+	    "msg": {
+	        "share_type": "1",
+	        "share_mark": "0",
+	        "userid": "0",
+	        "createdate": "1430622104",
+	        "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165807_21061.jpg",
+	        "avatar": "0",
+	        "id": "19000005",
+	        "share_des": "清潭洞位于大名鼎鼎的江南区，是首尔首屈一指的富人区，同时也是著名的商业中心。这里不仅汇集了很多顶级店铺、时尚潮店、还是许多上流社会精英、富豪和影视明星的置地首选。在韩国，清潭洞仿佛象征着财富和权力，散发着高贵而典雅的气息，吸引着众多追随者慕名前来。",
+	        "num_comments": "0",
+	        "username": "0",
+	        "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165801_74142.jpg",
+	        "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165754_57218.jpg",
+	        "images": [
+	            {
+	                "id": "147",
+	                "title": "地铁清潭站附近的Galleria百货店里名品众多，并且因为高级的质感和独特的设计，十分受到消费者的喜爱，高贵且不堪平庸的你，又怎么会错过呢~",
+	                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165829_40790.jpg",
+	                "link": null,
+	                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165824_22677.jpg",
+	                "typeid": "19000005",
+	                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165835_77814.jpg",
+	                "sort_order": "0",
+	                "type": "share"
+	            },
+	            {
+	                "id": "148",
+	                "title": "GUCCI在清潭洞设有在韩国最大的旗舰店，更是保证了与国际同步更新，让你随时掌握时尚的脉搏。",
+	                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165854_80445.jpg",
+	                "link": null,
+	                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165846_96369.jpg",
+	                "typeid": "19000005",
+	                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165900_27179.jpg",
+	                "sort_order": "0",
+	                "type": "share"
+	            },
+	            {
+	                "id": "149",
+	                "title": "深受卡梅隆·迪亚兹、妮可·里奇等大牌明星追捧的菲利林3.1 也在林荫树街开设了店铺，菲利林3.1是众多新兴时尚品牌中的成功典范。",
+	                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165919_50559.jpg",
+	                "link": null,
+	                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165913_96323.jpg",
+	                "typeid": "19000005",
+	                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165925_96124.jpg",
+	                "sort_order": "0",
+	                "type": "share"
+	            },
+	            {
+	                "id": "150",
+	                "title": "源于1952年的潮牌老店--纪梵希在韩国的旗舰店也选址在了清潭洞.该店铺不仅位于清潭洞的黄金地段更是请来了意大利设计师PLUARCH精心打造。",
+	                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165944_96498.jpg",
+	                "link": null,
+	                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165938_58356.jpg",
+	                "typeid": "19000005",
+	                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502165951_40474.jpg",
+	                "sort_order": "0",
+	                "type": "share"
+	            },
+	            {
+	                "id": "151",
+	                "title": "源于1952年的潮牌老店--纪梵希在韩国的旗舰店也选址在了清潭洞.该店铺不仅位于清潭洞的黄金",
+	                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502170010_93948.jpg",
+	                "link": null,
+	                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502170003_76512.jpg",
+	                "typeid": "19000005",
+	                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502170016_53118.jpg",
+	                "sort_order": "0",
+	                "type": "share"
+	            },
+	            {
+	                "id": "152",
+	                "title": "若乘坐首尔地铁，可以从7号线清潭站8号和9号出口出来，沿着三成路走5分钟，就可抵达清潭洞名品街。",
+	                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502170036_62884.jpg",
+	                "link": null,
+	                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502170030_11330.jpg",
+	                "typeid": "19000005",
+	                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/share19000005\/20150502170042_78825.jpg",
+	                "sort_order": "0",
+	                "type": "share"
+	            }
+	        ],
+	        "num_favors": "0",
+	        "share_title": "韩国购�
+*/
 }

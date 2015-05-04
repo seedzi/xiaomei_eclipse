@@ -104,7 +104,7 @@
         android:layout_below="@id/hospital"
         android:textSize="10sp"
         android:layout_toLeftOf="@id/effect"
-        android:background="@drawable/jg_xiaoguo"
+        android:background="@drawable/jg_fuwu"
         android:gravity="center"
         android:textColor="#b7cbec"
         android:text="服务4"

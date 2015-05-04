@@ -12,53 +12,87 @@
 	    layout="@layout/title_bar_layout"
 	    />
 
-    <RelativeLayout
+	<LinearLayout 
+        android:layout_width="match_parent"	    
+	    android:layout_height="124dp" 
+	    android:orientation="vertical"
+	    android:gravity="center"
+	    android:background="@drawable/gr_banner">
+	    <RelativeLayout
         android:id="@+id/user_info_layout"
         android:layout_width="match_parent"
-        android:layout_height="124dp" 
-        android:background="@drawable/gr_banner">
-
-        <com.xiaomei.yanyu.widget.CircleImageView
-            android:id="@+id/user_icon"
-            android:layout_width="@dimen/item_icon_size_normal"
-            android:layout_height="@dimen/item_icon_size_normal"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/item_margin_normal"
-            app:border_width="3dp"
-            app:border_color="#ffffff"
-            android:src="@drawable/joke_channel_offline_icon"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/item_margin_small"
-            android:layout_toRightOf="@id/user_icon"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_pick_high"
-                android:text="美美达" 
-                android:textSize="18sp"/>
-            <TextView
-                android:id="@+id/user_grade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="v2白金会员"
-                android:textColor="@color/color_pick_high"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/item_margin_normal"
-            android:src="@drawable/next_icon" />
+        android:layout_height="124dp"
+        android:visibility="gone">
+	        <com.xiaomei.yanyu.widget.CircleImageView
+	            android:id="@+id/user_icon"
+	            android:layout_width="@dimen/item_icon_size_normal"
+	            android:layout_height="@dimen/item_icon_size_normal"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="@dimen/item_margin_normal"
+	            app:border_width="3dp"
+	            app:border_color="#ffffff"
+	            android:src="@drawable/joke_channel_offline_icon"/>
+	        <LinearLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginLeft="@dimen/item_margin_small"
+	            android:layout_toRightOf="@id/user_icon"
+	            android:gravity="center_vertical"
+	            android:orientation="vertical" >
+	
+	            <TextView
+	                android:id="@+id/user_name"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="@color/color_pick_high"
+	                android:text="美美达" 
+	                android:textSize="18sp"/>
+	            <TextView
+	                android:id="@+id/user_grade"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="v2白金会员"
+	                android:textColor="@color/color_pick_high"
+	                android:textSize="14sp" />
+	        </LinearLayout>
+	        <ImageView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginRight="@dimen/item_margin_normal"
+	            android:src="@drawable/next_icon" />
     </RelativeLayout>
+    
+	    <LinearLayout 
+	       android:id="@+id/no_login_layout"
+	       android:layout_gravity="center"
+	       android:layout_width="wrap_content"	    
+	       android:layout_height="wrap_content"
+	       android:orientation="horizontal" 
+	       android:weightSum="2">
+	        <TextView 
+	           android:id="@+id/login_button"
+	           android:layout_width="wrap_content" 
+	           android:layout_height="wrap_content"
+	           android:background="@drawable/denglu_zhuce_selector"
+	           android:gravity="center"
+	           android:textColor="#b664b8"
+	           android:textSize="17sp"
+	           android:text="登陆"/>
+	       <TextView 
+	           android:id="@+id/register_button"
+	           android:layout_marginLeft="40dp"
+	           android:layout_width="wrap_content" 
+	           android:layout_height="wrap_content"
+	           android:background="@drawable/denglu_zhuce_selector"
+	           android:gravity="center"
+	           android:textColor="#b664b8"
+	           android:textSize="17sp"
+	           android:text="注册"/>
+	    </LinearLayout>
+	</LinearLayout>
+    
 
   		<View
 	       	android:layout_width="match_parent"

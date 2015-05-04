@@ -157,10 +157,18 @@ public class XiaoMeiApi {
 	}
 	
 	/**圈子详情*/
-	public BeautifulRingDetail getBeatifulRingDetailFromNet()
+	public BeautifulRingDetail getBeatifulRingDetailFromNet(String id)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingDetailUrl(),null);
+		android.util.Log.d("111", "id = " + id);
+		BasicNameValuePair[] values = {
+				new BasicNameValuePair("id",id),
+				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingDetailUrl(),
+				values[0],
+				values[1],
+				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		android.util.Log.d("111", "getBeatifulRingDetailFromNet");
 		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulDetailBuilder());
 	}
 	

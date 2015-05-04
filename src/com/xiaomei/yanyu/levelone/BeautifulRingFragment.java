@@ -7,7 +7,9 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.levelone.control.BeautifulRingControl;
 import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity;
+import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.ScreenUtils;
+import com.xiaomei.yanyu.util.SystemUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -199,17 +201,18 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			if(convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.item_ring_layout, null);
 				holder = new Holder();
-				holder.userIconIv = (ImageView) convertView.findViewById(R.id.user_icon);
+				holder.userIconIv = (ImageView) convertView.findViewById(R.id.person_icon);
 				holder.userNaemTv = (TextView) convertView.findViewById(R.id.person_name);
 				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
 				holder.timeTv = (TextView) convertView.findViewById(R.id.time);
 				holder.bubleSizeTv = (TextView) convertView.findViewById(R.id.buble_size);
 				holder.likeSizeTv = (TextView) convertView.findViewById(R.id.like_size);
 				holder.shareImg = (ImageView) convertView.findViewById(R.id.share_img);
-				
 				holder.descriptionTv = (TextView) convertView.findViewById(R.id.description);
+				holder.shareButton = convertView.findViewById(R.id.share);
 				convertView.setTag(holder);
-				convertView.setOnClickListener(this);
+				holder.shareImg.setOnClickListener(this);
+				holder.shareButton .setOnClickListener(this);
 			}
 			holder = (Holder) convertView.getTag();
 			attachDate(holder, mData.get(position));
@@ -218,14 +221,18 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		
 		private void attachDate(Holder holder,BeautifulRing bean){
 			ImageLoader.getInstance().displayImage(bean.getShareFile(), holder.shareImg);
+			ImageLoader.getInstance().displayImage(bean.getAvatar(),holder.userIconIv);
 			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams
 			        (LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*516/720));
 			holder.shareImg.setLayoutParams(ll);
 			holder.descriptionTv.setText(bean.getShareTitle());
 			holder.userNaemTv.setText(bean.getUsername());
-			holder.timeTv.setText(bean.getCreatedate());
 			holder.bubleSizeTv.setText(bean.getNumComments());
 			holder.likeSizeTv.setText(bean.getNumFavors());
+			holder.titleTv.setText(bean.getShareMark());
+			holder.timeTv.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
+			holder.shareImg.setTag(holder);
+			holder.id = bean.getId();
 		}
 		
 		private void setData(List<BeautifulRing> data){
@@ -238,7 +245,18 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 
 		@Override
 		public void onClick(View v) {
-			BeautifulRingDetailsActivity.startActivity(getActivity());
+			int id = v.getId();
+			switch (id) {
+			case R.id.share:
+				SystemUtils.shareMsg(getActivity(), ""/*getActivity().getClass().getSimpleName()*/, "颜语", "小美医生", null);
+				break;
+			case R.id.share_img:
+				BeautifulRingDetailsActivity.startActivity(getActivity(),((Holder)v.getTag()).id);
+				break;
+			default:
+				break;
+			}
+
 		}
 		
 		private class Holder{
@@ -250,6 +268,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			private TextView descriptionTv;
 			private TextView likeSizeTv;
 			private TextView bubleSizeTv;
+			private View shareButton;
+			private String id;
 		}
 		
 	}

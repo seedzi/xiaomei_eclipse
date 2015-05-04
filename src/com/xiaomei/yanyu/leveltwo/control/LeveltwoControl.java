@@ -25,14 +25,15 @@ public class LeveltwoControl extends BaseControl {
 	
 	// ============================== 圈子 ====================================
 	@AsynMethod
-	public void getDataAsyn(){
+	public void getDataAsyn(String id ){
 		try {
-			mModel.setBeautifulRingDetail(XiaoMeiApplication.getInstance().getApi().getBeatifulRingDetailFromNet());
+			mModel.setBeautifulRingDetail(XiaoMeiApplication.getInstance().getApi().getBeatifulRingDetailFromNet(id));
 			if(mModel.getBeautifulRingDetail()!=null)
 				sendMessage("getDataAsynCallBack");
 			else
 				sendMessage("getDataAsynExceptionCallBack");
 		} catch (Exception e) {
+			android.util.Log.d("111", "e = " + e.getMessage() + ",e = " + e);
 			e.printStackTrace();
 			sendMessage("getDataAsynExceptionCallBack");
 			return;

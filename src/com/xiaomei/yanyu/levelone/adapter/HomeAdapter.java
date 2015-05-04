@@ -5,6 +5,7 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.Section;
+import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.WebViewActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
@@ -157,12 +158,12 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			if(holder.favoriteNumView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
 				holder.favoriteNumView.setText(entity.getNumfavorite());
 				holder.url = entity.getUrl();
+				holder.type = section.getType();
 			break;
 		case 0: //首张图
 			entity =  section.getList().get(0);
 			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
 				if(holder.root!=null){
-					android.util.Log.d("111", "holder.root!=null");
 					AbsListView.LayoutParams ll = new AbsListView.LayoutParams(
 							android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
 							(int) (ScreenUtils.getScreenWidth(mContext) * 730 / 720)
@@ -176,6 +177,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*730/720);
 			}
 			holder.url = entity.getUrl();
+			holder.type = section.getType();
 			break;
 		case 2: //商品精选
 			entity =  section.getList().get(0);
@@ -184,6 +186,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.imgView.getLayoutParams().width = ScreenUtils.getScreenWidth(mContext)*430/720;
 			}
 			holder.url = entity.getUrl();
+			holder.type = section.getType();
 			break;
 		case 4: //会员活动
 			entity =  section.getList().get(0);
@@ -194,6 +197,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*428/720);
 			}
 			holder.url = entity.getUrl();
+			holder.type = section.getType();
 //			holder.imgView.getLayoutParams().width = ?? //TODO
 			break;
 		default:
@@ -258,13 +262,20 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private View jiangli; //奖励
 			private ViewGroup root;
 			private View line; //分割线
+			private String type; //区分点击的动作
 //		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		Holder holder = (Holder) v.getTag();
-		GoodsDetailActivity.startActivity(mContext, holder.url);
+		android.util.Log.d("111", "type = " + holder.type);
+		if("0".equals(holder.type)){
+			GoodsDetailActivity.startActivity(mContext, holder.url);
+		}else{
+			BeautifulRingDetailsActivity.startActivity(mContext);
+		}
+
 	}
 	
 }
