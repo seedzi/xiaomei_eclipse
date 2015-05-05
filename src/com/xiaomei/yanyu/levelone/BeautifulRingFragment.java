@@ -7,6 +7,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.levelone.control.BeautifulRingControl;
 import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity;
+import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.util.SystemUtils;
@@ -16,6 +17,7 @@ import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListe
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
@@ -253,6 +255,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			holder.timeTv.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
 			holder.shareImg.setTag(holder);
 			holder.id = bean.getId();
+			holder.share_type = bean.getShareType();
+			holder.link = bean.getLink();
 		}
 		
 		private void setData(List<BeautifulRing> data){
@@ -271,7 +275,15 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 				SystemUtils.shareMsg(getActivity(), ""/*getActivity().getClass().getSimpleName()*/, "颜语", "小美医生", null);
 				break;
 			case R.id.share_img:
-				BeautifulRingDetailsActivity.startActivity(getActivity(),((Holder)v.getTag()).id);
+				try {
+					if(((Holder)v.getTag()).share_type.equals("0")){
+						GoodsDetailActivity.startActivity(getActivity(),((Holder)v.getTag()).link);
+					}else{
+						BeautifulRingDetailsActivity.startActivity(getActivity(),((Holder)v.getTag()).id);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 			default:
 				break;
@@ -290,6 +302,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			private TextView bubleSizeTv;
 			private View shareButton;
 			private String id;
+			private String share_type;
+			private String link;
 		}
 		
 	}

@@ -55,6 +55,8 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 				beautifulRing.setUsername(jobject.getString("username"));
 			if(jobject.has("avatar"))
 				beautifulRing.setAvatar(jobject.getString("avatar"));
+			if(jobject.has("link"))
+				beautifulRing.setLink(jobject.getString("link"));
 			list.add(beautifulRing);
 		}
 		Log.d("111", "size = " + list.size());
