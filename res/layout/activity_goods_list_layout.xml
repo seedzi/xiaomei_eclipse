@@ -9,6 +9,7 @@
     <include  layout="@layout/title_bar_layout"   />
     
  <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
+     android:divider="#00000000"
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

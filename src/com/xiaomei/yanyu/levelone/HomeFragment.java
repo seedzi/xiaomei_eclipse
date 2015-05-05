@@ -30,7 +30,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private PullToRefreshListView mPullToRefreshListView;
 	private ListView mListView;
 	private HomeAdapter mAdapter;
-	private View mEmptyView;
+//	private View mEmptyView;
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
 	
@@ -55,7 +55,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		
 		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
 		mListView = mPullToRefreshListView.getRefreshableView();
-		mEmptyView= mRootView.findViewById(R.id.empty_view);
+//		mEmptyView= mRootView.findViewById(R.id.empty_view);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -68,13 +68,13 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
 		mPullToRefreshListView.setOnScrollListener(this);
-		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showProgress();
-				initData();
-			}
-		});
+//		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				showProgress();
+//				initData();
+//			}
+//		});
 	}
 	
 	private void initData(){
@@ -88,19 +88,19 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
 		mPullToRefreshListView.setVisibility(View.GONE);
-		mEmptyView.setVisibility(View.GONE);
+//		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.VISIBLE);
-		mEmptyView.setVisibility(View.GONE);
+//		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void showEmpty(){
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.GONE);
-		mEmptyView.setVisibility(View.VISIBLE);
+//		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
 	@Override
