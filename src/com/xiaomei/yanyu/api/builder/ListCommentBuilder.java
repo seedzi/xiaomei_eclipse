@@ -43,7 +43,7 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
             if(jsObj.has("type"))
                 commentItem.setMarkService(jsObj.getString("type"));
             if(jsObj.has("avatar"))
-                commentItem.setMarkService(jsObj.getString("avatar"));
+                commentItem.setAvatar(jsObj.getString("avatar"));
             if(jsObj.has("content"))
                 commentItem.setMarkService(jsObj.getString("content"));
             if(jsObj.has("id"))
@@ -51,13 +51,13 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
             if(jsObj.has("mark_effect"))
                 commentItem.setMarkService(jsObj.getString("mark_effect"));
             if(jsObj.has("username"))
-                commentItem.setMarkService(jsObj.getString("username"));
+                commentItem.setUsername(jsObj.getString("username"));
             if(jsObj.has("typeid"))
-                commentItem.setMarkService(jsObj.getString("typeid"));
+                commentItem.setTypeid(jsObj.getString("typeid"));
             if(jsObj.has("reply_root"))
-                commentItem.setMarkService(jsObj.getString("reply_root"));
+                commentItem.setReplyRoot(jsObj.getString("reply_root"));
             if(jsObj.has("reply"))
-                commentItem.setMarkService(jsObj.getString("reply"));
+                commentItem.setReply(jsObj.getString("reply"));
             if(jsObj.has("content"))
                 commentItem.setContent(jsObj.getString("content"));
             list.add(commentItem);

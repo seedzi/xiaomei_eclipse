@@ -1,7 +1,11 @@
 package com.xiaomei.yanyu.leveltwo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +29,6 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.ChannelEntity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
-import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity.MyPagerAdapter;
 import com.xiaomei.yanyu.widget.CircleImageView;
 import com.xiaomei.yanyu.widget.MyLayout;
 import com.xiaomei.yanyu.widget.PagerAdapter;
@@ -34,10 +37,13 @@ import com.xiaomei.yanyu.widget.ViewPager;
 import com.xiaomei.yanyu.widget.ViewPager.OnPageChangeListener;
 
 public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View.OnClickListener{
-	
-	public static void startActivity(Context context,String data){
-		Intent intent = new Intent(context,BeautifulRingDetailsActivity.class);
-		intent.putExtra("data", data);
+	public static void startActivity(Context context,String data,String tilte,String des,String img_url){
+		android.util.Log.d("444", "tilte = " + tilte + ", des = " + des + ", img_url = " + img_url);
+		Intent intent = new Intent(context,HomeStyle2.class);
+		intent.putExtra("data", Info.toBean(data));
+		intent.putExtra("tilte", tilte);
+		intent.putExtra("des", des);
+		intent.putExtra("img_url", img_url);
 		context.startActivity(intent);
 	}
 	
@@ -57,8 +63,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String data = getIntent().getStringExtra("data");
-		setContentView(R.layout.activiy_beautiful_ring_details_layout);
+		setContentView(R.layout.activity_home_style2);
 		initView();
 		intGesture();
 		initData();
@@ -118,7 +123,6 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 	private TextView browseSizeTv;
 	private CircleImageView iconImage;
 	private TextView nickNameTv;
-	private TextView sexLocationTv;
 	private TextView titleTv;
 	
 	private void initMenuBehindLayoutViews(){
@@ -126,11 +130,32 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 		browseSizeTv = (TextView) findViewById(R.id.browse_size);
 		iconImage = (CircleImageView) findViewById(R.id.icon);
 		nickNameTv = (TextView) findViewById(R.id.nick_name);
-		sexLocationTv = (TextView) findViewById(R.id.sex_location);
 		titleTv = (TextView) findViewById(R.id.layout_title);
 	}
 	
+	private String tilte;
+	private String des;
+	private String img_url;
 	private void initData(){
+		try {
+			Info data = (Info) getIntent().getSerializableExtra("data");
+			tilte = getIntent().getStringExtra("tilte");
+			des = getIntent().getStringExtra("des");
+			img_url = getIntent().getStringExtra("img_url");
+			
+			android.util.Log.d("111", "title = " + tilte);
+			android.util.Log.d("111", "des = " + des);
+			android.util.Log.d("111", "img_url = " + img_url);
+			
+			titleTv.setText(tilte);
+			descriptionTv.setText(des);
+			ImageLoader.getInstance().displayImage(img_url, backImageview);
+			mAdapter.setData(data.list);
+			mAdapter.notifyDataSetChanged();
+		} catch (Exception e) {
+			android.util.Log.d("444", "e = " + e.toString());
+		}
+
 //		mControl.getDataAsyn(id);
 	}
 	
@@ -147,31 +172,17 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 		  return mGestureDetector.onTouchEvent(event);
 	}
 	
-	// ============================   callBack  ==================================
-	public void getDataAsynCallBack(){
-		BeautifulRingDetail data = null;//mControl.getModel().getBeautifulRingDetail();
-		ImageLoader.getInstance().displayImage(data.getImage(), backImageview);
-		ImageLoader.getInstance().displayImage(data.getAvatar(), iconView);
-		titleTv.setText(data.getShareTitle());
-		mAdapter.setData(data.getItems());
-		mAdapter.notifyDataSetChanged();
-	}
-	
-	public void getDataAsynExceptionCallBack(){
-		Toast.makeText(this, "获取数据异常", 0).show();
-	}
-	
 	// ============================   viewPager  ==================================
 	
 	private List<View> mlistViews;
 		class MyPagerAdapter extends PagerAdapter {
 			
-			private List<BeautifulRingDetail.Item> mList;
+			private List<Info.Bean> mList;
 
 			public MyPagerAdapter() {
 			}
 			
-			public void setData(List<BeautifulRingDetail.Item> list){
+			public void setData(List<Info.Bean> list){
 				mList = list;
 			}
 
@@ -196,9 +207,9 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 					vG.removeView(converView);
 				((ViewPager) collection).addView(converView, 0);
 				ImageView icon = (ImageView) converView.findViewById(R.id.item_img);
-				ImageLoader.getInstance().displayImage(mList.get(position).getUrl(), icon);
+				ImageLoader.getInstance().displayImage(mList.get(position).image, icon);
 				TextView tv = (TextView) converView.findViewById(R.id.item_description);
-				tv.setText(mList.get(position).getTilte());
+				tv.setText(mList.get(position).title);
 				return converView;
 			}
 			@Override
@@ -317,5 +328,133 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
             break;
         }
     }
+    
+    // ==================================================================   Bean  ===================================================================
 
+    private static class Info implements Serializable{
+		private static final long serialVersionUID = 1001L;
+		private String des;
+    	private String title;
+    	private String img;
+    	private List<Bean> list;
+    	
+    	
+    	
+    	private static class Bean implements Serializable{
+    		private static final long serialVersionUID = 1002L;
+    		private String image;
+    		private String title;
+    		private String link;
+			@Override
+			public String toString() {
+				return "Bean [image=" + image + ", title=" + title + ", link="
+						+ link + "]";
+			}
+    	}
+    	
+    	public  static Info toBean(String str){
+    		try {
+        		JSONObject jsonObject = new JSONObject(str);
+        		Info info = new Info();
+//        		info.des = jsonObject.getString("des");
+        		android.util.Log.d("222", "info.des = " + info.des);
+//        		info.title = jsonObject.getString("title");
+        		android.util.Log.d("222", "info.title = " + info.title);
+        		List<Bean> list = new ArrayList<HomeStyle2.Info.Bean>();
+        		JSONArray jArray = jsonObject.getJSONArray("images");
+        		android.util.Log.d("222", "jArray size = " + jArray.length());
+        		List<Bean> beans = new ArrayList<HomeStyle2.Info.Bean>();
+        		for(int i = 0;i<jArray.length(); i++){
+        			Bean bean = new Bean();
+        			JSONObject js = jArray.getJSONObject(i);
+        			bean.image = js.getString("image_6");
+        			bean.title = js.getString("title");
+        			bean.link = js.getString("link");
+        			beans.add(bean);
+        		}
+        		info.list = beans;
+        		return info;
+			} catch (Exception e) {
+				android.util.Log.d("222", "e = " + e.toString());
+				return null;
+			}
+    	}
+
+		@Override
+		public String toString() {
+			return "Info [des=" + des + ", title=" + title + ", list=" + list
+					+ "]";
+		}
+    	
+    	
+    	
+    	
+    	
+    	/*
+    	{
+    "list": {
+        "images": [
+            {
+                "des": "春夏秋冬针对皮肤疾患，拉皮，腹肌整形等手术性领域有着丰富的经验和精湛的手术技术。代表院长姜胜勋不仅对皮肤和轮廓有着多样化的治疗技术，还是个电视红人，很多韩国明星都指定他为专门医生。",
+                "title": "【春夏秋冬皮肤科】",
+                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic60\/20150502190704_43072.jpg",
+                "price_xm": false,
+                "link": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=",
+                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic60\/20150502190700_14289.jpg",
+                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic60\/20150502190708_96534.jpg",
+                "hosp_name": false
+            },
+            {
+                "des": "皮肤表层沉积的角质，成为引发皮肤粉刺、让肤色暗淡的罪魁祸首。春夏秋冬4Seasons皮肤科医院的天然去角质法阿拉丁磨砂，用纯天然成分去除皮肤表层的角质，并诱导皮肤细胞的活跃再生。",
+                "title": "【阿拉丁磨砂焕肤】",
+                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic50\/20150502190227_61170.jpg",
+                "price_xm": "4500",
+                "link": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=1056",
+                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic50\/20150502190220_43198.jpg",
+                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic50\/20150502190235_78038.jpg",
+                "hosp_name": "UP2C整形外科"
+            },
+            {
+                "des": "FMTS（Fractional MTS）是新一代微针，通过垂直滚动，均匀地打进皮肤，并通过快速旋转大幅降低对皮肤表层的影响。FMTS结合皮肤自身再生功能，抑制皮肤老化，增强皮肤弹性、治疗毛孔、痘印、色斑等。 ",
+                "title": "【FMTS微针T】",
+                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190333_28429.jpg",
+                "price_xm": "4500",
+                "link": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=1055",
+                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190329_35551.jpg",
+                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190338_79355.jpg",
+                "hosp_name": "UP2C整形外科"
+            },
+            {
+                "des": "春夏秋冬的激光Toning将原有激光技术进一步提升为高功率进行升级治疗，把激光照射到皮肤上的时间缩短，最小化了对皮肤组织的损伤，有效治疗、色斑、雀斑、肤色不均匀暗沉等问题。",
+                "title": "【Toning激光美白】",
+                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic57\/20150502190433_15600.jpg",
+                "price_xm": false,
+                "link": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=123",
+                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic57\/20150502190425_39149.jpg",
+                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic57\/20150502190438_22913.jpg",
+                "hosp_name": false
+            },
+            {
+                "des": "每天长时间面对电脑工作的白领，肌肤很容易干燥缺水。Derma Queen –嫩肤皇后，将药物更有效的注射到皮肤深处。仪器治疗结合最前沿LED照射与后续管理，让水嫩效果更佳持久。",
+                "title": "【嫩肤皇后水光针】",
+                "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic58\/20150502190523_87112.jpg",
+                "price_xm": false,
+                "link": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=456",
+                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic58\/20150502190518_18950.jpg",
+                "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic58\/20150502190527_45623.jpg",
+                "hosp_name": false
+            }
+        ],
+        "des": "不想和爱的人永远隔着一层小心翼翼，灯光暗掉的时刻你还美在何处？你看，就让你尽情的看，多近，都好。你触，细腻的肌肤掠过你的沧桑，知道，你会一生守护照料，心安理得，带着孩童般的欢愉和稚嫩的脸我安详睡去。\nBe Who You Should Be",
+        "title": "坏皮肤呀！都走开！Be Who You Should Be"
+    },
+    "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic1\/20150502190132_86619.jpg",
+    "title": "坏皮肤呀！都走开！Be Who You Should Be",
+    "type": "1",
+    "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic1\/20150502190121_80612.jpg",
+    "url": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=1015",
+    
+    	*/
+    }
+    
 }

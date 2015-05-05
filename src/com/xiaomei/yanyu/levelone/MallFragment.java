@@ -46,6 +46,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 	
 	private View mScrollview;
 	
+	private View mEmptyView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		
 		mTopIcon = (ImageView) mRootView.findViewById(R.id.top_icon);
 		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*9/14;
-//		mTopIcon.setImageResource(R.drawable.meinv);
+		mTopIcon.setImageResource(R.drawable.classification_top_default_img);
 		mTopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +83,15 @@ public class MallFragment extends BaseFragment<MallControl> {
 		
 		mScrollview = mRootView.findViewById(R.id.scrollview);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
+		
+		mEmptyView= mRootView.findViewById(R.id.empty_view);
+		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showProgress();
+				initData();
+			}
+		});
 	}
 	
 	private void initData(){
@@ -100,6 +111,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 	public void getMallListFromNetAsynExceptionCallBack(){
 		Toast.makeText(getActivity(), "网络异常", 0).show();
 		dissProgress();
+		showEmpty();
 	}
 	
 	// ============================================  Progress ==================================================
@@ -109,11 +121,19 @@ public class MallFragment extends BaseFragment<MallControl> {
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
 		mScrollview.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mScrollview.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.GONE);
+	}
+	
+	private void showEmpty(){
+		mLoadingView.setVisibility(View.GONE);
+		mScrollview.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
 	// ============================================  MailAdapter ==================================================
@@ -186,6 +206,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		
 		private void attachHolder(final Holder holder,int position,Mall mall){
 			holder.titleTv.setText(mall.getCatName());
+			holder.iconIv.setImageResource(R.drawable.classification_head_default_img);
 			ImageLoader.getInstance().displayImage(mall.getFile(), holder.iconIv);
 			holder.iconIv.setTag(position);
 //			AbsListView.LayoutParams al = new AbsListView.LayoutParams(ScreenUtils.getScreenWidth(getActivity())/3 -2 ,

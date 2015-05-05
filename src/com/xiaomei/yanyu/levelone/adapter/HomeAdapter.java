@@ -7,6 +7,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.leveltwo.HomeStyle2;
 import com.xiaomei.yanyu.leveltwo.WebViewActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
 
@@ -148,8 +149,9 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			if(holder.timeView!=null && !TextUtils.isEmpty( entity.getDate()))
 				holder.timeView.setText(entity.getDate());
 			if(holder.imgView!=null && !TextUtils.isEmpty( entity.getImg())){
+				holder.imgView.setImageResource(R.drawable.ring_default_img);
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
-				holder.imgView.getLayoutParams().height = ScreenUtils.getScreenWidth(mContext)*430/720;
+				holder.imgView.getLayoutParams().height = ScreenUtils.getScreenWidth(mContext)*516/720;
 			}
 			if(holder.titleView!=null && !TextUtils.isEmpty( entity.getTitle()))
 				holder.titleView.setText(entity.getTitle());
@@ -159,6 +161,11 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.favoriteNumView.setText(entity.getNumfavorite());
 				holder.url = entity.getUrl();
 				holder.type = section.getType();
+				
+				holder.listData = section.getList_String();
+				holder.des = section.getDes();
+				holder.tilte = section.getTitle();
+				holder.img_url = entity.getImg();
 			break;
 		case 0: //首张图
 			entity =  section.getList().get(0);
@@ -173,20 +180,32 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				if(holder.line != null){
 					holder.line.getLayoutParams().height = ScreenUtils.dip2px(mContext, 10);
 				}
+				holder.imgView.setImageResource(R.drawable.home_default_img);
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
 				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*730/720);
 			}
 			holder.url = entity.getUrl();
 			holder.type = section.getType();
+			
+			holder.listData = section.getList_String();
+			holder.des = section.getDes();
+			holder.tilte = section.getTitle();
+			holder.img_url = entity.getImg();
 			break;
 		case 2: //商品精选
 			entity =  section.getList().get(0);
 			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
+				holder.imgView.setImageResource(R.drawable.home_transverse_default_img);
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
 				holder.imgView.getLayoutParams().width = ScreenUtils.getScreenWidth(mContext)*430/720;
 			}
 			holder.url = entity.getUrl();
 			holder.type = section.getType();
+			
+			holder.listData = section.getList_String();
+			holder.des = section.getDes();
+			holder.tilte = section.getTitle();
+			holder.img_url = entity.getImg();
 			break;
 		case 4: //会员活动
 			entity =  section.getList().get(0);
@@ -194,11 +213,16 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 //				holder.titleView.setText(section.getTitle()); //TODO
 			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
+				holder.imgView.setImageResource(R.drawable.home_transverse_default_img);
 				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*428/720);
 			}
 			holder.url = entity.getUrl();
 			holder.type = section.getType();
-//			holder.imgView.getLayoutParams().width = ?? //TODO
+
+			holder.listData = section.getList_String();
+			holder.des = section.getDes();
+			holder.tilte = section.getTitle();
+			holder.img_url = entity.getImg();
 			break;
 		default:
 			break;
@@ -263,17 +287,22 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private ViewGroup root;
 			private View line; //分割线
 			private String type; //区分点击的动作
+			/*带过来的数据*/
+			private String listData;
+			private String tilte;
+			private String des;
+			private String img_url;
 //		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		Holder holder = (Holder) v.getTag();
-		android.util.Log.d("111", "type = " + holder.type);
+		android.util.Log.d("222", "type = " + holder.type + ",data = " + holder.listData);
 		if("0".equals(holder.type)){
 			GoodsDetailActivity.startActivity(mContext, holder.url);
 		}else{
-			BeautifulRingDetailsActivity.startActivity(mContext);
+			HomeStyle2.startActivity(mContext,holder.listData,holder.tilte,holder.des,holder.img_url);
 		}
 
 	}

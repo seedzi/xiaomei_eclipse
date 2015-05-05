@@ -21,7 +21,7 @@ public class ImageUtils {
 	 public static Bitmap blurImages(Bitmap bmp, Context context) {
 	 
 	  int width = bmp.getWidth();
-	  int height = bmp.getHeight();
+	  int height = bmp.getHeight() ;
 	  int[] inPixels = new int[width * height];
 	  int[] outPixels = new int[width * height];
 	  Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);

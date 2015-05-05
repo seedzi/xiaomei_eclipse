@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_transparent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+    <TextView 
+     android:id="@+id/browse_size"   
+     android:layout_alignParentBottom="true"   
+     android:text="4503次浏览"   
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"       
+     android:textSize="11sp"
+     android:textColor="@color/color_white"/>
+    
+    <TextView 
+     android:id="@+id/description"   
+     android:layout_above="@id/browse_size"   
+     android:layout_marginBottom="28dp"
+     android:text=""   
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"       
+     android:textSize="14sp"
+     android:textColor="@color/color_white"/>
+        
+                   <TextView 
+                       android:id="@+id/layout_title"
+                       android:layout_above="@id/icon"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"
+                     android:layout_width="wrap_content"
+     		android:layout_height="wrap_content"       
+             android:textColor="@color/color_white"
+             android:text="做女人,身材必须要火辣~"/>     
+</RelativeLayout>

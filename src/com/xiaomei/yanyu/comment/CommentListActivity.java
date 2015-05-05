@@ -24,6 +24,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.comment.control.CommentListControl;
+import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -42,6 +43,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         Intent intent = new Intent(context,CommentListActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("goodsId", goodsId);
+        android.util.Log.d("111", "type = " + type + ",goodsId = " + goodsId);
         context.startActivity(intent);
     }
     
@@ -236,10 +238,12 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
                 holder.createTime = (TextView) convertView.findViewById(R.id.create_time);
                 holder.commentTxt = (TextView) convertView.findViewById(R.id.comment_txt);
                 holder.gentieSize = (TextView) convertView.findViewById(R.id.gentie_size);
+                holder.line = convertView.findViewById(R.id.line);
                 convertView.setTag(holder);
             }
             holder = (Holder) convertView.getTag();
             if(position!=0){
+            	holder.line.setVisibility(View.GONE);
                 holder.topLayout.setVisibility(View.GONE);
             }
             attachDate(holder, mData.get(position));
@@ -247,9 +251,10 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         }
         
         private void attachDate(Holder holder,CommentItem bean){
+        	android.util.Log.d("111", "avata = " + bean.getAvatar());
             ImageLoader.getInstance().displayImage(bean.getAvatar(), holder.userIcon);
             holder.userName.setText(bean.getUsername());
-            holder.createTime.setText(bean.getCreatedate());
+            holder.createTime.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
             holder.commentTxt.setText(bean.getContent());
         }
         
@@ -271,6 +276,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             private TextView createTime;  //创建时间
             private TextView commentTxt;//评论文案
             private TextView gentieSize; //跟帖数
+            private View line;
         }
         
     }

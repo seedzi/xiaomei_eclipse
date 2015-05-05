@@ -56,6 +56,8 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	
 	private View mLoadingView; 
 	
+	private View mEmptyView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -83,6 +85,15 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 		
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
+		
+		mEmptyView= mRootView.findViewById(R.id.empty_view);
+		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showProgress();
+				initData();
+			}
+		});
 	}
 	
 	private void setListener(){
@@ -127,11 +138,20 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
 		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.GONE);
+	}
+	
+	
+	private void showEmpty(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
 	// ================================== Call back ==========================================
@@ -146,6 +166,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	
 	public void getMechanismListExceptionCallBack(){
 		dissProgress();
+		showEmpty();
 		mIsRefresh = false;
 		Toast.makeText(getActivity(), "加载数据异常", 0).show();
 	}
@@ -233,6 +254,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		
 		private void attachData2UI(Holder holder ,int position){
 			Hospital hospital = mData.get(position);
+			holder.iconIv.setImageResource(R.drawable.mechanism_default_img);
 			ImageLoader.getInstance().displayImage(mData.get(position).getFile(), holder.iconIv);
 			RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*3/5));
 			holder.iconIv.setLayoutParams(ll);

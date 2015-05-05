@@ -57,6 +57,8 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	
 	private View mLoadingView; 
 	
+	private View mEmptyView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -84,6 +86,15 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 		
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
+		
+		mEmptyView= mRootView.findViewById(R.id.empty_view);
+		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showProgress();
+				initdata();
+			}
+		});
 	}
 	
 	private void setListener(){
@@ -131,13 +142,20 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
 		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
+	private void showEmpty(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.VISIBLE);
+	}
 	
 	// ================================== Call back ==========================================
 	public void getListDataFromNetAysnCallBack(){
@@ -151,6 +169,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	
 	public void getListDataFromNetAysnExceptionCallBack(){
 		dissProgress();
+		showEmpty();
 		mIsRefresh = false;
 	}
 	
@@ -220,6 +239,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		}
 		
 		private void attachDate(Holder holder,BeautifulRing bean){
+			holder.shareImg.setImageResource(R.drawable.ring_default_img);
 			ImageLoader.getInstance().displayImage(bean.getShareFile(), holder.shareImg);
 			ImageLoader.getInstance().displayImage(bean.getAvatar(),holder.userIconIv);
 			FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams

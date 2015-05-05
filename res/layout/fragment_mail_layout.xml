@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     
     <include  android:id="@+id/title_bar" layout="@layout/title_bar_layout" />
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
     <ScrollView 
         android:id="@+id/scrollview"
-        android:layout_below="@id/title_bar"
        android:layout_width="match_parent" 
        android:layout_height="match_parent">
     <LinearLayout 
@@ -33,5 +37,9 @@
     	<include  android:id="@+id/loading_layout"
 	    layout="@layout/loading_layout"
 	    android:visibility="visible"/>
-    
-</RelativeLayout>
+    	
+    		<include  android:id="@+id/empty_view"
+	    layout="@layout/empty_layout"
+	    android:visibility="gone"/>
+        </RelativeLayout>
+</LinearLayout>

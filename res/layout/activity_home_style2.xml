@@ -10,45 +10,20 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/color_background">
-    <FrameLayout 
-             android:layout_height="match_parent"
-     android:layout_width="match_parent"       
-     android:paddingBottom="-10dp"
-     >
     <com.xiaomei.yanyu.widget.BlurImageView 
      android:id="@+id/img"  
      android:layout_height="match_parent"
      android:layout_width="match_parent"       
       android:scaleType="centerCrop"
-      />
-    <View
-             android:layout_height="match_parent"
-     android:layout_width="match_parent"       
-            android:background="#44000000"
-        />
-        </FrameLayout>
-    <!--     
-    sliding:viewAbove="@layout/YOUR_ABOVE_VIEW"
-    sliding:viewBehind="@layout/YOUR_BEHIND_BEHIND"
-    sliding:touchModeAbove="margin|fullscreen"
-        sliding:behindOffset="@dimen/YOUR_OFFSET"
-    sliding:behindWidth="@dimen/YOUR_WIDTH"
-        sliding:fadeEnabled="true|false"
-    sliding:fadeDegree="float"
-        sliding:selectorEnabled="true|false"
-    sliding:selectorDrawable="@drawable/YOUR_SELECTOR"
-        sliding:shadowDrawable="@drawable/YOUR_SHADOW"
-    sliding:shadowWidth="@dimen/YOUR_SHADOW_WIDTH"
-     -->
+      android:padding="-5dp"/>
     <com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
-    android:layout_marginTop="22dp"
     xmlns:sliding="http://schemas.android.com/apk/res-auto"
     android:id="@+id/slidingmenulayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     sliding:touchModeAbove="fullscreen"
     sliding:behindOffset="50dp"
-    app:viewBehind="@layout/beautiful_ring_menu_behind_layout"
+    app:viewBehind="@layout/home_menu_behind_layout"
     sliding:viewAbove="@layout/beautiful_ring_menu_above_layout"
 	android:background="@color/color_transparent"/>
     

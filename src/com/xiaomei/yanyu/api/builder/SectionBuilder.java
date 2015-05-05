@@ -48,10 +48,16 @@ public class SectionBuilder extends AbstractJSONBuilder<List<Section>> {
 					section.setKey(jobject.getString("key"));
 					section.setOrdering(jobject.getInt("ordering"));
 					section.setTitle(jobject.getString("title"));
+					if(jobject.has("title"))
+						section.setTitle(jobject.getString("title"));
+					if(jobject.has("des"))
+						section.setDes(jobject.getString("des"));
 					List<Entity> entityList = new ArrayList<Section.Entity>();
 					JSONObject jO =  jA.getJSONObject(j);
 					if(jO.has("type"))
 						section.setType(jO.getString("type"));
+					if(jO.has("list"))
+						section.setList_String(jO.getString("list"));
 					try {
 						Entity entity = new EntityBuilder().build(jO);
 						entityList.add(entity);

@@ -25,12 +25,13 @@ public class BeautifulRingControl extends BaseControl {
 		try {
 			mModel.setPage(1);
 			mModel.setData(XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet(String.valueOf(mModel.getPage()),String.valueOf(PERPAGE)));
+			sendMessage("getListDataFromNetAysnCallBack");
 		} catch (Exception e) {
 			sendMessage("getListDataFromNetAysnExceptionCallBack");
 			e.printStackTrace();
 		} finally {
 		}
-		sendMessage("getListDataFromNetAysnCallBack");
+	
 	}
 	
 	@AsynMethod

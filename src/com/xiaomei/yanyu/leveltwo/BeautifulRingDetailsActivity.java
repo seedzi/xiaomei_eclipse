@@ -128,7 +128,6 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	private TextView browseSizeTv;
 	private CircleImageView iconImage;
 	private TextView nickNameTv;
-	private TextView sexLocationTv;
 	private TextView titleTv;
 	
 	private void initMenuBehindLayoutViews(){
@@ -136,7 +135,6 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 		browseSizeTv = (TextView) findViewById(R.id.browse_size);
 		iconImage = (CircleImageView) findViewById(R.id.icon);
 		nickNameTv = (TextView) findViewById(R.id.nick_name);
-		sexLocationTv = (TextView) findViewById(R.id.sex_location);
 		titleTv = (TextView) findViewById(R.id.layout_title);
 	}
 	
@@ -206,6 +204,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 					vG.removeView(converView);
 				((ViewPager) collection).addView(converView, 0);
 				ImageView icon = (ImageView) converView.findViewById(R.id.item_img);
+				icon.setImageResource(R.drawable.ring_details_default_img);
 				ImageLoader.getInstance().displayImage(mList.get(position).getUrl(), icon);
 				TextView tv = (TextView) converView.findViewById(R.id.item_description);
 				tv.setText(mList.get(position).getTilte());

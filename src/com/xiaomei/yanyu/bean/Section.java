@@ -12,9 +12,21 @@ public class Section {
 	
 	private String type;
 	
+	private String list_String;
+	
+	private String des;
+	
 	private List<Entity> list = null;
 	
 	
+	public String getList_String() {
+		return list_String;
+	}
+
+	public void setList_String(String list_String) {
+		this.list_String = list_String;
+	}
+
 	public String getKey() {
 		return key;
 	}
@@ -53,6 +65,14 @@ public class Section {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getDes() {
+		return des;
+	}
+
+	public void setDes(String des) {
+		this.des = des;
 	}
 
 

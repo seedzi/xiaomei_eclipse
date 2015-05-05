@@ -68,6 +68,13 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
 		mPullToRefreshListView.setOnScrollListener(this);
+		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showProgress();
+				initData();
+			}
+		});
 	}
 	
 	private void initData(){
@@ -81,11 +88,19 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
 		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.GONE);
+	}
+	
+	private void showEmpty(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
 	@Override
@@ -121,12 +136,14 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void getHomeListEntityAsynCallBackNull(){
 		mIsRefresh = false;
 		dissProgress();
+		showEmpty();
 		Toast.makeText(getActivity(), "网络异常l", 0).show();
 	}
 	
 	public void getHomeListEntityAsynCallBackException(){
 		mIsRefresh = false;
 		dissProgress();
+		showEmpty();
 		Toast.makeText(getActivity(), "网络异常", 0).show();
 	}
 

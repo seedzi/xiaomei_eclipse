@@ -3,9 +3,9 @@
     android:id="@+id/menu_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_transparent"
     android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:paddingRight="15dp"
+    android:paddingBottom="33dp">
     <TextView 
      android:id="@+id/browse_size"   
      android:layout_alignParentBottom="true"   
@@ -19,6 +19,7 @@
      android:id="@+id/description"   
      android:layout_above="@id/browse_size"   
      android:layout_marginBottom="28dp"
+     android:lineSpacingMultiplier="1.2"
      android:text="巴黎的女人被公认是最漂亮、最有气质、最有情调的女人，助理前段时间去了巴黎，回来感叹到，巴黎的女人看起来不像传说中那么令人惊艳，气质出众，但她们不怕冷给人留下了深刻印象。这大冬天的，街上随处可见透肉黑丝，不论老少，甚至还有光腿的，更有一大把年纪还露腿穿裙子的，让我等裹成企鹅怕冷不怕丑的女人汗颜！
         想起前几天看到的一个笑话说，搞不懂女人冬天里上面穿棉袄，下面穿丝袜是为的什么？难道是鲜奶需要保温，而火腿需要冷藏？"   
      android:layout_width="wrap_content"
@@ -30,15 +31,15 @@
      android:id="@+id/icon"   
      android:layout_marginBottom="28dp"
      android:layout_above="@id/description"   
-     android:layout_width="67dp"
-     android:layout_height="67dp"
+     android:layout_width="25dp"
+     android:layout_height="25dp"
      android:background="@drawable/icon_tianchognsuxing"/>
         <LinearLayout 
      android:layout_toRightOf="@id/icon" 
      android:layout_alignBottom="@id/icon"
       android:layout_marginLeft="11dp"
      android:layout_width="wrap_content"
-     android:layout_height="67dp" 
+     android:layout_height="25dp" 
      android:gravity="center_vertical"
      android:orientation="vertical">
             <TextView 
@@ -48,14 +49,6 @@
      		android:layout_height="wrap_content"       
              android:textColor="@color/color_white"
              android:text="基调蔷薇"/>
-                <TextView 
-                  android:id="@+id/sex_location"  
-                  android:layout_marginTop="6dp"
-                android:textSize="11sp"
-                     android:layout_width="wrap_content"
-     		android:layout_height="wrap_content"       
-             android:textColor="@color/color_white"
-             android:text="女     北京"/>
         </LinearLayout>
         
                    <TextView 
