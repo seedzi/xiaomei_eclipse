@@ -79,6 +79,36 @@ public class User {
 		private String mobile;
 		
 		private String avatar;
+		
+		private String cost;
+		
+		private String idcard;
+		
+		private String address;
+		
+		public String getIdcard() {
+			return idcard;
+		}
+
+		public void setIdcard(String idcard) {
+			this.idcard = idcard;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getCost() {
+			return cost;
+		}
+
+		public void setCost(String cost) {
+			this.cost = cost;
+		}
 
 		public String getModifydate() {
 			return modifydate;
@@ -166,8 +196,11 @@ public class User {
 					+ modifydate + ", sex=" + sex + ", username=" + username
 					+ ", userType=" + userType + ", age=" + age
 					+ ", createdate=" + createdate + ", userid=" + userid
-					+ ", mobile=" + mobile + ", avatar=" + avatar + "]";
+					+ ", mobile=" + mobile + ", avatar=" + avatar + ", cost="
+					+ cost + ", idcard=" + idcard + ", address=" + address
+					+ "]";
 		}
+
 	}
 
 
@@ -183,6 +216,9 @@ public class User {
 		sharePreferenceWrap.putString(SharePreferenceKey.USER_USERID, user.getUserInfo().userid);
 		sharePreferenceWrap.putString(SharePreferenceKey.USER_MOBILE, user.getUserInfo().mobile);
 		sharePreferenceWrap.putString(SharePreferenceKey.USER_AVATAR, user.getUserInfo().avatar);
+		sharePreferenceWrap.putString(SharePreferenceKey.USER_COST, user.getUserInfo().cost);
+		sharePreferenceWrap.putString(SharePreferenceKey.USER_IDCARD, user.getUserInfo().idcard);
+		sharePreferenceWrap.putString(SharePreferenceKey.USER_ADDRESS, user.getUserInfo().address);
 	}
 	
 	public static User getFromShareP(){
@@ -203,6 +239,9 @@ public class User {
 		userInfo.setUserType(sharePreferenceWrap.getString(SharePreferenceKey.USER_TYPE, ""));
 		userInfo.setAvatar(sharePreferenceWrap.getString(SharePreferenceKey.USER_AVATAR, ""));
 		userInfo.setUserTypeDesc(sharePreferenceWrap.getString(SharePreferenceKey.USER_TYPE_DESC, ""));
+		userInfo.setCost(sharePreferenceWrap.getString(SharePreferenceKey.USER_COST, ""));
+		userInfo.setCost(sharePreferenceWrap.getString(SharePreferenceKey.USER_IDCARD, ""));
+		userInfo.setCost(sharePreferenceWrap.getString(SharePreferenceKey.USER_ADDRESS, ""));
 		user.setUserInfo(userInfo);
 		return user;
 	}

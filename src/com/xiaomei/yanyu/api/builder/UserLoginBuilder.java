@@ -12,28 +12,28 @@ import com.xiaomei.yanyu.bean.User;
 public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 	/*
 	{
-	    "msg": {
-	        "token": "8e34f2168a9928e46f7fe5f5c5562e6d1b6ff39fbcf7de8c86be4c90840a9dad",
-	        "userinfo": {
-	            "user_type_desc": "升级青铜用户还需1000",
-	            "modifydate": "1430531569",
-	            "sex": "",
-	            "user_type": 1,
-	            "userid": "19062525",
-	            "createdate": "1430531569",
-	            "idcard": "",
-	            "avatar": "http://q.qlogo.cn/qqapp/1104506536/CEE0B09E3B6BD8D29AF057FAAEBDE9A1/100",
-	            "cost": "0",
-	            "discount": 1,
-	            "username": "三文鱼",
-	            "order": "[]",
-	            "qq_uid": "CEE0B09E3B6BD8D29AF057FAAEBDE9A1",
-	            "address": "",
-	            "points": "0",
-	            "mobile": ""
-	        }
-	    },
-	    "code": 0
+{
+    "msg": {
+        "token": "5a989c54b7f03ea0bbefd17b497debf6f6b80c65952fec79bde99a200e282ea8",
+        "userinfo": {
+            "user_type_desc": "升级钻石会员还需18600",
+            "modifydate": "1429330858",
+            "sex": "0",
+            "user_type": 3,
+            "userid": "19062300",
+            "createdate": "1429330858",
+            "avatar": "http://bcs.duapp.com/drxiaomei//images/avatar/20150419/20150419090018_81662.jpg",
+            "cost": "11400",
+            "discount": 0.97,
+            "username": "张三",
+            "order": "[19062394,19062405,19062408,19062409,19062410,19062411,19062412,19062414]",
+            "age": "0",
+            "points": "11400",
+            "mobile": "15010768102"
+        }
+    },
+    "code": 0
+}
 	}
 		*/
 	@Override
@@ -49,7 +49,7 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 		if(jsonObject.has("userinfo")){
 			JSONObject js = jsonObject.getJSONObject("userinfo");
 			User.UserInfo userInfo = new User.UserInfo();
-			if(jsonObject.has("user_type_desc"))
+			if(js.has("user_type_desc"))
 				userInfo.setUserTypeDesc(js.getString("user_type_desc"));
 			if(js.has("modifydate"))
 				userInfo.setModifydate(js.getString("modifydate"));
@@ -69,6 +69,8 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 				userInfo.setMobile(js.getString("mobile"));
 	         if(js.has("avatar"))
 	                userInfo.setAvatar(js.getString("avatar"));
+   	         if(js.has("cost"))
+	                userInfo.setCost(js.getString("cost"));
 			user.setUserInfo(userInfo);
 		}
 		return user;

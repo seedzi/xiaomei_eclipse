@@ -12,10 +12,10 @@
         
         <com.xiaomei.yanyu.widget.CircleImageView
             android:id="@+id/icon"
-            android:layout_height="100dp"
-            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/joke_channel_offline_icon"/>
+            android:src="@drawable/ouer_logo"/>
             
         <TextView 
             android:layout_below="@id/icon"

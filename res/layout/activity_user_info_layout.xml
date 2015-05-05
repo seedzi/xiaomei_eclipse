@@ -45,7 +45,7 @@
         android:gravity="center_vertical">
             <TextView 
                 android:id="@+id/user_name"
-                android:text="美美塔"
+                android:text=""
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
@@ -53,7 +53,7 @@
              <TextView 
                  android:id="@+id/vip_txt"
                 android:layout_marginTop="10dp"
-                android:text="金牌会员"
+                android:text=""
                 android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
@@ -131,13 +131,14 @@
   		android:layout_width="match_parent"      
         >
         <TextView 
+            android:id="@+id/cost"
             android:textSize="13sp"
             android:textColor="#373737"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="累计消费：3000元"/>
+            android:text=""/>
         
                 <TextView 
             android:layout_alignParentRight="true"        
@@ -152,11 +153,12 @@
     </RelativeLayout>
     
     <TextView 
+        android:id="@+id/user_type_desc"
         android:layout_marginLeft="15dp"
         android:layout_marginBottom="15dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="升级白金会员还需2000yuan"
+        android:text=""
         android:textSize="13sp"
         android:textColor="#373737"
         />
@@ -227,7 +229,7 @@
 			 	    android:layout_centerVertical="true"
 			 	    android:id="@+id/link"
 			 	    android:layout_toRightOf="@id/link_txt" 
-		            android:text="152-1456-2395"
+		            android:text=""
 		            android:textColor="#969696"
 		            android:textSize="15sp"
 		            android:gravity="right"
@@ -260,7 +262,7 @@
 		        
 			 	<EditText
 			 	    android:id="@+id/sheng_fen_zheng_hao" 
-		            android:text="34237×××××984855"
+		            android:text=""
 		            android:textColor="#969696"
 		            android:textSize="15sp"
 		            android:gravity="right"
@@ -297,7 +299,7 @@
 			 	    android:layout_centerVertical="true"
 			 	    android:gravity="right"
 			 	    android:layout_toRightOf="@id/location_txt"
-		            android:text="北京市海淀区清..."
+		            android:text=""
 		            android:textColor="#969696"
 		            android:textSize="15sp"
 		            android:layout_height="wrap_content"

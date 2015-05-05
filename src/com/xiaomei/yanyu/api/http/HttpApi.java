@@ -11,9 +11,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -39,7 +41,6 @@ public interface HttpApi {
     abstract public HttpGet createHttpGet(String url,NameValuePair... nameValuePairs);
 
     abstract public HttpPost createHttpPost(String url,NameValuePair... nameValuePairs) throws XiaoMeiIOException;
-
 
     abstract public HttpResponse doHttpRequestResponse(
             HttpRequestBase httpRequest) throws XiaoMeiCredentialsException,

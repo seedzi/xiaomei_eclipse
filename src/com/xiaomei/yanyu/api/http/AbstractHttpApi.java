@@ -6,6 +6,7 @@ package com.xiaomei.yanyu.api.http;
 
 import android.util.Log;
 
+import com.umeng.socialize.net.utils.BaseNCodec;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
@@ -87,7 +88,6 @@ abstract public class AbstractHttpApi implements HttpApi {
         }
         return httpPost;
     }
-
 
     /**
      * Create a thread-safe client. This client does not do redirecting, to

@@ -68,6 +68,10 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	/**Vip等级*/
 	private VipGradeView vipGrade;
 	
+	private TextView userTypeDesc;
+	/**累计消费*/	
+	private TextView costTv;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,11 +103,14 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		userNameTv = (TextView) findViewById(R.id.user_name);
 		vipTxtTv = (TextView) findViewById(R.id.vip_txt);
 		vipGrade = (VipGradeView) findViewById(R.id.vip_grade);
+		userTypeDesc = (TextView) findViewById(R.id.user_type_desc);
+		costTv = (TextView) findViewById(R.id.cost);
 	}
 	
 	private void initData(){
 	    try {
 	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
+	        android.util.Log.d("111", "userInfo = " + userInfo);
 	        nickNameEd.setText(userInfo.getUsername());
 	        linkEd.setText(userInfo.getMobile());
 	        userNameTv.setText(userInfo.getUsername());
@@ -111,6 +118,10 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	            ImageLoader.getInstance().displayImage(userInfo.getAvatar(), userIcon);
 	        vipTxtTv.setText(userInfo.getUserTypeDesc());
 	        vipGrade.setGrade(Integer.valueOf(userInfo.getUserType())-1);
+	        userTypeDesc.setText(userInfo.getUserTypeDesc());
+	        costTv.setText("累计消费：" + userInfo.getCost());
+	        shengFenZhengHaoEd.setText(userInfo.getIdcard());
+	        locationEd.setText(userInfo.getAddress());
 	        switch (Integer.valueOf(userInfo.getUserType())) {
 			case 1:
 				vipTxtTv.setText("普通会员");
@@ -274,11 +285,15 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	private boolean isUserMessgaeChanged(){
 	    try {
 	        User.UserInfo userInfo = UserUtil.getUser().getUserInfo();
-	        if(!userInfo.getUsername().equals(nickNameEd.getText().toString().trim()))
+	        if(!nickNameEd.getText().toString().trim().equals(userInfo.getUsername()))//姓名
 	            return true;
-	        if(!userInfo.getMobile().equals(linkEd.getText().toString().trim())) 
+	        if(!linkEd.getText().toString().trim().equals(userInfo.getMobile()))  //联系方式
 	            return true;
-	        if(!TextUtils.isEmpty(mControl.getModel().getUploadFileUrl())) 
+	        if(!shengFenZhengHaoEd.getText().toString().trim().equals(userInfo.getIdcard()))//身份证 
+	            return true;
+	        if(!locationEd.getText().toString().trim().equals(userInfo.getAddress())) //地址
+	            return true;
+	        if(!TextUtils.isEmpty(mControl.getModel().getUploadFileUrl())) //头像
 	            return true;
 	        return false;
         } catch (Exception e) {

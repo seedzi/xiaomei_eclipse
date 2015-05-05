@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
@@ -278,16 +279,19 @@ public class XiaoMeiApi {
 	/**
 	 * 更新用户信息
 	 */
-	public void updateUserInfo(String username,String mobile,String local,String shenFenZheng,String iconPath,String token)
+	public void updateUserInfo(String username,String mobile,String address,String idcard,String avatar,String token)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+		/*
+		android.util.Log.d("555",
+				"token = " + token + ",username = " + username + ",mobile = " + mobile + ",avatar = " + avatar + ",address = " + address + ",idcard = " +idcard
+				);
 		BasicNameValuePair[] values = {new BasicNameValuePair("token", token),
-				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
 				new BasicNameValuePair("username", username),
                 new BasicNameValuePair("mobile", mobile),
-                new BasicNameValuePair("avatar", iconPath)
-//                new BasicNameValuePair("local", local),
-//                new BasicNameValuePair("shenFenZheng", shenFenZheng),
-             
+                new BasicNameValuePair("avatar", avatar),
+                new BasicNameValuePair("address", address),
+                new BasicNameValuePair("idcard", idcard),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))
 		};
 		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.updateUserInfoUrl(),
 				values[0],
@@ -295,9 +299,41 @@ public class XiaoMeiApi {
 				values[2],
                 values[3],
                 values[4],
-//                values[5],
+                values[5],
 //                values[6],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+		*/
+		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
+		if(!TextUtils.isEmpty(username))
+			list.add(new BasicNameValuePair("username", username));
+		if(!TextUtils.isEmpty(mobile))
+			list.add(new BasicNameValuePair("mobile", mobile));
+		if(!TextUtils.isEmpty(address))
+			list.add(new BasicNameValuePair("address", address));
+		if(!TextUtils.isEmpty(idcard))
+			list.add(new BasicNameValuePair("idcard", idcard));
+		if(!TextUtils.isEmpty(avatar))
+			list.add(new BasicNameValuePair("avatar", avatar));
+		list.add(new BasicNameValuePair("token", token));
+		
+		List<BasicNameValuePair> data = new ArrayList<BasicNameValuePair>();
+		if(!TextUtils.isEmpty(username))
+			data.add(new BasicNameValuePair("username", username));
+		if(!TextUtils.isEmpty(mobile))
+			data.add(new BasicNameValuePair("mobile", mobile));
+		if(!TextUtils.isEmpty(address))
+			data.add(new BasicNameValuePair("address", address));
+		if(!TextUtils.isEmpty(idcard))
+			data.add(new BasicNameValuePair("idcard", idcard));
+		if(!TextUtils.isEmpty(avatar))
+			data.add(new BasicNameValuePair("avatar", avatar));
+		data.add(new BasicNameValuePair("token", token));
+		
+		BasicNameValuePair pairs = 		new BasicNameValuePair("fig", Security.get32MD5Str((BasicNameValuePair[])data.toArray()));
+		list.add(pairs);
+		
+		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.updateUserInfoUrl(), (BasicNameValuePair[])list.toArray());
 		mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
 	

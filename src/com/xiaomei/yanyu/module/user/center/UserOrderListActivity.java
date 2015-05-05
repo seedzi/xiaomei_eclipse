@@ -27,6 +27,7 @@ import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.module.user.control.UserControl;
+import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -173,7 +174,7 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				android.util.Log.d("111", "status = " + dataList.getStatus());
 				holder.orderIdTv.setText(dataList.getId());
 				holder.userNameTv.setText(dataList.getUsername());
-				holder.createTimeTv.setText(dataList.getCreatedate());
+				holder.createTimeTv.setText(DateUtils.formateDate(Long.valueOf(dataList.getCreatedate())*1000));
 				ImageLoader.getInstance().displayImage(dataList.getGoodsImg(), holder.goodsIconIv);
 				holder.goodsNameTv.setText(dataList.getGoodsName());
 				holder.statusTv.setText(dataList.getStatus());

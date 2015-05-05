@@ -158,8 +158,14 @@ public class UserCenterControl extends BaseControl {
             //更新本地的用户信息
             User user = UserUtil.getUser();
             User.UserInfo userInfo = user.getUserInfo();
-            userInfo.setUsername(username);
-            userInfo.setAvatar(iconUrl);
+            if(!TextUtils.isEmpty(username))//姓名
+            	userInfo.setUsername(username);
+            if(!TextUtils.isEmpty(iconUrl))//头像
+            	userInfo.setAvatar(iconUrl);
+            if(!TextUtils.isEmpty(shenfenzheng)) //身份
+            	userInfo.setIdcard(shenfenzheng);
+            if(!TextUtils.isEmpty(local))//地址
+            	userInfo.setAddress(local);
             User.save(user);
             sendMessage("uploadUserInfoCallBack");
         } catch (Exception e) {

@@ -30,7 +30,11 @@ public class SharePreferenceKey {
 	   
     public static final String USER_TYPE_DESC = "user_type_desc";
 	   
-	
+    public static final String USER_COST = "user_cost";
+    
+    public static final String USER_IDCARD = "idcard";
+    
+    public static final String USER_ADDRESS = "address";
 	/*
 	{"token":"75ced4559baf29cc7ba5c80add96c39af2f15cd1a348227bf0652508225e8e34",
 		"userinfo":
