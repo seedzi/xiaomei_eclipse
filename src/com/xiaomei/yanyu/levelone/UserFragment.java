@@ -17,6 +17,7 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	@Override
 	public void onResume() {
 	    super.onResume();
+	    initData();
 	}
 	
 	private void setUpView(){
@@ -146,10 +148,16 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		int id = v.getId();
 		switch (id) {
 		case R.id.login_button://登录
-			LoginAndRegisterActivity.startActivity(getActivity(),true);
+//	        Intent intent = new Intent(getActivity(),LoginAndRegisterActivity.class);
+//	        intent.putExtra("is_login", true);
+//	        startActivityForResult(intent, 1);
+			LoginAndRegisterActivity.startActivity(getActivity(), true);
 			break;
 		case R.id.register_button://注册
-			LoginAndRegisterActivity.startActivity(getActivity(),false);
+//	        Intent intent1 = new Intent(getActivity(),LoginAndRegisterActivity.class);
+//	        intent1.putExtra("is_login", false);
+//	        startActivityForResult(intent1, 1);
+			LoginAndRegisterActivity.startActivity(getActivity(), false);
 			break;
 		case R.id.line1:  //我的订单
 			UserOrderListActivity.startActivity(getActivity());
@@ -177,6 +185,20 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		}
 	}
 	
-	
+//	@Override
+//	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		android.util.Log.d("111", "requestCode = " + requestCode + ",resultCode = " + resultCode);
+//		super.onActivityResult(requestCode, resultCode, data);
+//		switch (requestCode) {
+//		case 1:
+//			if(resultCode == -1){
+//				initData();
+//			}
+//			break;
+//
+//		default:
+//			break;
+//		}
+//	}
 
 }

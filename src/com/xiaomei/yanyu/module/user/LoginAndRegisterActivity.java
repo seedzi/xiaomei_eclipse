@@ -4,6 +4,7 @@ package com.xiaomei.yanyu.module.user;
 import java.util.Map;
 import java.util.Set;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -55,10 +56,11 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
         context.startActivity(intent);
     }
     
-    public static void startActivity(Context context,boolean isLogin){
-        Intent intent = new Intent(context,LoginAndRegisterActivity.class);
+    public static void startActivity(Activity ac,boolean isLogin){
+        Intent intent = new Intent(ac,LoginAndRegisterActivity.class);
         intent.putExtra("is_login", isLogin);
-        context.startActivity(intent);
+        ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
     }
     
     private final int REFRESH_TIEM = 1;
@@ -280,6 +282,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		dismissDialog();
 		Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
 		TabsActivity.startActivity(LoginAndRegisterActivity.this);
+		setResult(RESULT_OK);
 		finish();
 	}
 	
