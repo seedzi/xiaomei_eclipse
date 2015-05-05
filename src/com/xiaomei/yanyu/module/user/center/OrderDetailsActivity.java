@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -180,9 +181,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         int i = 0;
         for(Order.DataDetail.OrderInfo info:orderInfos){
         	if(i<3){
-        		initItem((ViewGroup)findViewById(res[i]), info,false);
+        		initItem((ViewGroup)findViewById(res[i]), info,false,i);
         	}else{
-        		initItem((ViewGroup)findViewById(res[i]), info,true);
+        		initItem((ViewGroup)findViewById(res[i]), info,true,i);
         	}
             i++;
         }
@@ -287,13 +288,34 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		Toast.makeText(this, "支付失败", 0).show();
 	}
 	
-	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info,boolean enable){
+	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info,boolean enable,int i){
 		android.util.Log.d("111", "info = "+info);
 		TextView title = (TextView) viewItem.findViewById(R.id.title);
 		EditText value = (EditText) viewItem.findViewById(R.id.value);
 		title.setText(info.getTitle());
-		value.setText(info.getValue());
 		value.setEnabled(enable);
+		
+		if(i==3){ //客户姓名
+			if(TextUtils.isEmpty(info.getValue())){
+				value.setHint("请输入姓名");
+			}else{
+				value.setText(info.getValue());
+			}
+		}else if(i==4){ //客户电话
+			if(TextUtils.isEmpty(info.getValue())||"0".equals(info.getValue())){
+				value.setHint("请输入电话");
+			}else{
+				value.setText(info.getValue());
+			}
+		}else if(i==5){ //执照
+			if(TextUtils.isEmpty(info.getValue())||"0".equals(info.getValue())){
+				value.setHint("请输入执照");
+			}else{
+				value.setText(info.getValue());
+			}
+		}else{
+			value.setText(info.getValue());
+		}
 	}
 	
 	public void addUserOrderAsynExceptionCallBack(){
