@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.module.user.center;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
@@ -30,11 +32,12 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseActivity;
 
-public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
+public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 	
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,UserOrderListActivity.class);
-		context.startActivity(intent);
+	public static void startActivity(Activity ac){
+		Intent intent = new Intent(ac,UserOrderListActivity.class);
+		ac.startActivity(intent);
+		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
 	private TitleBar  mTitleBar;
@@ -42,6 +45,8 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 	private PullToRefreshListView mPullToRefreshListView;
 	
 	private OrderAdapter mAdapter;
+	
+	private View mEmptyView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,8 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 		mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
 		mPullToRefreshListView.setPullToRefreshEnabled(false);
 		mLoadingView = findViewById(R.id.loading_layout);
+		
+		mEmptyView= findViewById(R.id.empty_view);
 	}
 	
 	private void initData(){
@@ -80,13 +87,20 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
 		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.GONE);
 	}
 	
+	private void showEmpty(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.VISIBLE);
+	}
 	
 	// =============================================== CallBack  =================================================
 	public void getUserOrdersAsynCallBack(){
@@ -98,6 +112,7 @@ public class UserOrderListActivity extends BaseActivity<UserCenterControl> {
 	
 	public void getUserOrdersAsynExceptionCallBack(){
 		dissProgress();
+		showEmpty();
 	}
 	
 	

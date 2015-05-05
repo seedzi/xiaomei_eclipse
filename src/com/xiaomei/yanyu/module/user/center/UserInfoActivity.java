@@ -1,6 +1,7 @@
 package com.xiaomei.yanyu.module.user.center;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
@@ -36,9 +37,10 @@ import com.xiaomei.yanyu.widget.VipGradeView;
 
 public class UserInfoActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
 
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,UserInfoActivity.class);
-		context.startActivity(intent);
+	public static void startActivity(Activity ac){
+		Intent intent = new Intent(ac,UserInfoActivity.class);
+		ac.startActivity(intent);
+		 ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
 	private TitleBar mTitlebar;

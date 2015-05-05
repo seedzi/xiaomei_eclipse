@@ -24,11 +24,11 @@ public class MechanismControl extends BaseControl {
 	public void getMechanismListAsyn(){
 		try {
 			mModel.setData(XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet("1",PERPAGE));
+			sendMessage("getMechanismLismListCallBack");
 		} catch (Exception e) {
 			sendMessage("getMechanismListExceptionCallBack");
 			return;
 		}
-		sendMessage("getMechanismLismListCallBack");
 	}
 	
 	@AsynMethod

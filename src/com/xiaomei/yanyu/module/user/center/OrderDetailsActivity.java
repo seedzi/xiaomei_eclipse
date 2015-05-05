@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.module.user.center;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -53,10 +54,11 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	 * @param context
 	 * @param goodsId  商品id
 	 */
-	public static void startActivity(Context context,String goodsId){
-		Intent intent = new Intent(context,OrderDetailsActivity.class);
+	public static void startActivity(Activity ac,String goodsId){
+		Intent intent = new Intent(ac,OrderDetailsActivity.class);
 		 intent.putExtra("goods_id", goodsId);
-		context.startActivity(intent);
+		 ac.startActivity(intent);
+		 ac.overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_in_from_right);
 	}
 	
 	/**标识是从支付宝支付还是从微信支付*/

@@ -35,7 +35,6 @@ public class CommentListControl extends BaseControl {
            mCommentModel.setCommentList(list);
            mCommentModel.setCurrentPage(1);
            sendMessage("getCommentListDataCallBack");
-            android.util.Log.d("111", "list.size() = " + list.size());
         } catch (Exception e) {
             sendMessage("getCommentListDataExceptionCallBack");
             e.printStackTrace();

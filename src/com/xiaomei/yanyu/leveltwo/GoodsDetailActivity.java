@@ -28,10 +28,11 @@ import com.xiaomei.yanyu.widget.TitleBar;
 public class GoodsDetailActivity extends AbstractActivity implements CordovaInterface{
 	
 	
-	public static void startActivity(Context context,String url){
-		Intent intent = new Intent(context,GoodsDetailActivity.class);
+	public static void startActivity(Activity ac,String url){
+		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
-		context.startActivity(intent);
+		ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
 	private CordovaWebView mCordovaWebView;

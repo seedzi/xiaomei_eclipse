@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei.yanyu"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
+    android:orientation="vertical"
     android:background="@color/color_white">
     
     <!-- 评论的按钮 -->
@@ -40,6 +41,10 @@
     <!--   -->
     <include   layout="@layout/title_bar_layout"    android:id="@+id/title_bar"/>
     
+    <RelativeLayout 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center">
     <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -47,7 +52,6 @@
         android:background="#ffe2e2e2"
         android:scrollbarStyle="outsideOverlay"
         ptr:ptrMode="pullDownFromTop"
-        android:layout_below="@id/title_bar"
         android:visibility="visible"
         /> <!-- android:layout_above="@id/comment_layout" -->
     
@@ -58,5 +62,5 @@
     <include  android:id="@+id/loading_layout"
         layout="@layout/loading_layout"
         android:visibility="visible"/>
-   
-</RelativeLayout>
+    </RelativeLayout>   
+</LinearLayout>

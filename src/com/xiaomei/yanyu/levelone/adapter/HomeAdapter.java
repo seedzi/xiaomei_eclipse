@@ -13,6 +13,7 @@ import com.xiaomei.yanyu.util.ScreenUtils;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		@Override
 		public void onClick(View v) {
 			String url = (String) v.getTag();
-			GoodsDetailActivity.startActivity(mContext, url);
+			GoodsDetailActivity.startActivity((Activity)mContext, url);
 		}
 	};
 	
@@ -212,8 +213,8 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 //			if(holder.titleView!=null && !TextUtils.isEmpty(section.getTitle()))
 //				holder.titleView.setText(section.getTitle()); //TODO
 			if(holder.imgView!=null && !TextUtils.isEmpty(entity.getImg())){
-				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
 				holder.imgView.setImageResource(R.drawable.home_transverse_default_img);
+				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
 				holder.imgView.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(mContext)*428/720);
 			}
 			holder.url = entity.getUrl();
@@ -300,9 +301,9 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		Holder holder = (Holder) v.getTag();
 		android.util.Log.d("222", "type = " + holder.type + ",data = " + holder.listData);
 		if("0".equals(holder.type)){
-			GoodsDetailActivity.startActivity(mContext, holder.url);
+			GoodsDetailActivity.startActivity((Activity)mContext, holder.url);
 		}else{
-			HomeStyle2.startActivity(mContext,holder.listData,holder.tilte,holder.des,holder.img_url);
+			HomeStyle2.startActivity((Activity)mContext,holder.listData,holder.tilte,holder.des,holder.img_url);
 		}
 
 	}

@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.ChannelEntity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
+import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity.MyOnPageChangeListener;
 import com.xiaomei.yanyu.widget.CircleImageView;
 import com.xiaomei.yanyu.widget.MyLayout;
 import com.xiaomei.yanyu.widget.PagerAdapter;
@@ -37,14 +39,15 @@ import com.xiaomei.yanyu.widget.ViewPager;
 import com.xiaomei.yanyu.widget.ViewPager.OnPageChangeListener;
 
 public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View.OnClickListener{
-	public static void startActivity(Context context,String data,String tilte,String des,String img_url){
+	public static void startActivity(Activity ac,String data,String tilte,String des,String img_url){
 		android.util.Log.d("444", "tilte = " + tilte + ", des = " + des + ", img_url = " + img_url);
-		Intent intent = new Intent(context,HomeStyle2.class);
+		Intent intent = new Intent(ac,HomeStyle2.class);
 		intent.putExtra("data", Info.toBean(data));
 		intent.putExtra("tilte", tilte);
 		intent.putExtra("des", des);
 		intent.putExtra("img_url", img_url);
-		context.startActivity(intent);
+		ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
 	private TitleBar mTitleBar;
@@ -58,7 +61,9 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 	 
 	 private ImageView backImageview;
 	 
-	 private ImageView iconView;
+	 private TextView pageSize;
+	 
+	 private ViewPager page;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 			}
 		});
 		backImageview = (ImageView) findViewById(R.id.img);
-		iconView = (ImageView) findViewById(R.id.icon);
+		pageSize = (TextView) findViewById(R.id.page_size);
 		findViewById(R.id.right_root).setVisibility(View.VISIBLE);
 		findViewById(R.id.comment).setOnClickListener(this);
 		getView();
@@ -92,7 +97,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 		menu.showMenu();
 		
 		ViewGroup content = (ViewGroup) menu.getContent();
-		ViewPager page = (ViewPager) content.findViewById(R.id.pager);
+		page = (ViewPager) content.findViewById(R.id.pager);
 		mAdapter = new MyPagerAdapter();
 		page.setAdapter(mAdapter);
 		MyLayout myLayout = (MyLayout) findViewById(R.id.mylayout);
@@ -152,6 +157,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 			ImageLoader.getInstance().displayImage(img_url, backImageview);
 			mAdapter.setData(data.list);
 			mAdapter.notifyDataSetChanged();
+			page.setOnPageChangeListener(new MyOnPageChangeListener(data.list));
 		} catch (Exception e) {
 			android.util.Log.d("444", "e = " + e.toString());
 		}
@@ -173,9 +179,9 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 	}
 	
 	// ============================   viewPager  ==================================
-	
+	private String link = "";
 	private List<View> mlistViews;
-		class MyPagerAdapter extends PagerAdapter {
+		class MyPagerAdapter extends PagerAdapter implements View.OnClickListener{
 			
 			private List<Info.Bean> mList;
 
@@ -210,6 +216,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 				ImageLoader.getInstance().displayImage(mList.get(position).image, icon);
 				TextView tv = (TextView) converView.findViewById(R.id.item_description);
 				tv.setText(mList.get(position).title);
+				icon.setOnClickListener(this);
 				return converView;
 			}
 			@Override
@@ -226,18 +233,29 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 			@Override
 			public void startUpdate(View arg0) {
 			}
+
+			@Override
+			public void onClick(View v) {
+				android.util.Log.d("111", "url = " + link);
+				GoodsDetailActivity.startActivity(HomeStyle2.this ,link);
+			}
 		}
 		
 		class MyOnPageChangeListener implements OnPageChangeListener {
 			boolean refresh = false;
-			private List<ChannelEntity> channelEntities;
+			private  List<Info.Bean> channelEntities;
 
-			MyOnPageChangeListener(List<ChannelEntity> channelEntities) {
+			MyOnPageChangeListener( List<Info.Bean> channelEntities) {
 				this.channelEntities = channelEntities;
 			}
 
 			@Override
 			public void onPageSelected(int position) {
+				if(channelEntities!=null && channelEntities.size()!=0)
+					pageSize.setText(position+1 + "/" + channelEntities.size());
+				
+				link = channelEntities.get(position).link;
+				android.util.Log.d("111", "onPageSelected link = " + link);
 			}
 
 			@Override
@@ -356,13 +374,8 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
     		try {
         		JSONObject jsonObject = new JSONObject(str);
         		Info info = new Info();
-//        		info.des = jsonObject.getString("des");
-        		android.util.Log.d("222", "info.des = " + info.des);
-//        		info.title = jsonObject.getString("title");
-        		android.util.Log.d("222", "info.title = " + info.title);
         		List<Bean> list = new ArrayList<HomeStyle2.Info.Bean>();
         		JSONArray jArray = jsonObject.getJSONArray("images");
-        		android.util.Log.d("222", "jArray size = " + jArray.length());
         		List<Bean> beans = new ArrayList<HomeStyle2.Info.Bean>();
         		for(int i = 0;i<jArray.length(); i++){
         			Bean bean = new Bean();

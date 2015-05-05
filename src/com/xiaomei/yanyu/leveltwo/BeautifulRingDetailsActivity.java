@@ -3,6 +3,7 @@ package com.xiaomei.yanyu.leveltwo;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,10 +44,11 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 		context.startActivity(intent);
 	}
 	
-	public static void startActivity(Context context,String id){
-		Intent intent = new Intent(context,BeautifulRingDetailsActivity.class);
+	public static void startActivity(Activity ac,String id){
+		Intent intent = new Intent(ac,BeautifulRingDetailsActivity.class);
 		intent.putExtra("id", id);
-		context.startActivity(intent);
+		ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
 	private TitleBar mTitleBar;
@@ -62,7 +64,9 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	
 	 private ImageView backImageview;
 	 
-	 private ImageView iconView;
+	 private TextView pageSize;
+	 
+	 private ViewPager page ;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 			}
 		});
 		backImageview = (ImageView) findViewById(R.id.img);
-		iconView = (ImageView) findViewById(R.id.icon);
+		pageSize = (TextView) findViewById(R.id.page_size);
 		findViewById(R.id.right_root).setVisibility(View.VISIBLE);
 		findViewById(R.id.comment).setOnClickListener(this);
 		getView();
@@ -97,7 +101,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 		menu.showMenu();
 		
 		ViewGroup content = (ViewGroup) menu.getContent();
-		ViewPager page = (ViewPager) content.findViewById(R.id.pager);
+		page = (ViewPager) content.findViewById(R.id.pager);
 		mAdapter = new MyPagerAdapter();
 		page.setAdapter(mAdapter);
 		MyLayout myLayout = (MyLayout) findViewById(R.id.mylayout);
@@ -159,10 +163,14 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 	public void getDataAsynCallBack(){
 		BeautifulRingDetail data = mControl.getModel().getBeautifulRingDetail();
 		ImageLoader.getInstance().displayImage(data.getImage(), backImageview);
-		ImageLoader.getInstance().displayImage(data.getAvatar(), iconView);
+		ImageLoader.getInstance().displayImage(data.getAvatar(), iconImage);
 		titleTv.setText(data.getShareTitle());
+		descriptionTv.setText(data.getShareDes());
+		nickNameTv.setText(data.getUsername());
+		browseSizeTv.setText(data.getNumFavors() + "次浏览");
 		mAdapter.setData(data.getItems());
 		mAdapter.notifyDataSetChanged();
+		page.setOnPageChangeListener(new MyOnPageChangeListener(data.getItems()));
 	}
 	
 	public void getDataAsynExceptionCallBack(){
@@ -228,14 +236,16 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 		
 		class MyOnPageChangeListener implements OnPageChangeListener {
 			boolean refresh = false;
-			private List<ChannelEntity> channelEntities;
+			private  List<BeautifulRingDetail.Item>  channelEntities  ;
 
-			MyOnPageChangeListener(List<ChannelEntity> channelEntities) {
-				this.channelEntities = channelEntities;
+			MyOnPageChangeListener(  List<BeautifulRingDetail.Item> mList) {
+				this.channelEntities = mList;
 			}
 
 			@Override
 			public void onPageSelected(int position) {
+				if(channelEntities!=null && channelEntities.size()!=0)
+					pageSize.setText(position+1 + "/" + channelEntities.size());
 			}
 
 			@Override

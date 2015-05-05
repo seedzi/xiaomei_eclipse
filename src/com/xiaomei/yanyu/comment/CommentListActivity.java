@@ -49,7 +49,6 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     
     private PullToRefreshListView mPullToRefreshListView;
     private ListView mListView;
-    private View mEmptyView;
     private View mLoadingView;
     private ViewGroup mRefreshLayout;
     private MyAdapter mAdapter;
@@ -63,6 +62,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     
     private final int LOAD_MORE_COUNT = 10;
     
+	private View mEmptyView;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,6 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mListView = mPullToRefreshListView.getRefreshableView();
-        mEmptyView= findViewById(R.id.empty_view);
         mLoadingView = findViewById(R.id.loading_layout);
         
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -116,6 +115,15 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
                 mControl.actionShareComment(goodsId, type, commentEdit.getText().toString());
             }
         });
+        
+        mEmptyView= findViewById(R.id.empty_view);
+		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showProgress();
+				initData();
+			}
+		});
     }
     
     @Override
@@ -170,6 +178,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     public void getCommentListDataExceptionCallBack(){
         Toast.makeText(this, "网络异常", 0).show();
         dissProgress();
+        showEmpty();
         mPullToRefreshListView.onRefreshComplete();
     }
     
@@ -190,12 +199,21 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         if(!animationDrawable.isRunning())
             animationDrawable.start();
         mPullToRefreshListView.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.GONE);
     }
     
     private void dissProgress(){
         mLoadingView.setVisibility(View.GONE);
         mPullToRefreshListView.setVisibility(View.VISIBLE);
+        mEmptyView.setVisibility(View.GONE);
     }
+    
+	private void showEmpty(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.VISIBLE);
+	}
+	
     
     // ====================================== Adapter ============================================
     private class MyAdapter extends BaseAdapter {

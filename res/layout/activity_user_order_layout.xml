@@ -8,6 +8,10 @@
     
     <include layout="@layout/title_bar_layout"/>
     
+    <FrameLayout 
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 	<com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
 	    android:id="@+id/list"
 	    android:layout_width="match_parent"
@@ -20,5 +24,9 @@
 	    <include  android:id="@+id/loading_layout"
         layout="@layout/loading_layout"
         android:visibility="visible"/>
-	
+	    
+	<include  android:id="@+id/empty_view"
+	    layout="@layout/order_no_data_layout"
+	    android:visibility="gone"/> 	
+	        </FrameLayout>
 </LinearLayout>

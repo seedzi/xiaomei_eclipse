@@ -25,31 +25,7 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-        /*
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-//					XiaoMeiApplication.getInstance().getApi().userRegister("huzhi", "123456");
-//					XiaoMeiApplication.getInstance().getApi().getVerificationCode("15010768102");
-//					XiaoMeiApplication.getInstance().getApi().userRegister("15010768102", "123456" ,"6394");
-					XiaoMeiApplication.getInstance().getApi().userLogin("15010768102", "123456");
-//					XiaoMeiApplication.getInstance().getApi().findPassword("15010768102", "abcdef", "10422");
-				} catch (XiaoMeiCredentialsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XiaoMeiIOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XiaoMeiJSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XiaoMeiOtherException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();*/
+        useAnimation = false;
         
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -67,6 +43,7 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
     	 * 
     	 */
   		TabsActivity.startActivity(LaunchActivity.this);
+  		finish();
   		/*
     	if(UserUtil.isUserValid()){
     		TabsActivity.startActivity(LaunchActivity.this);

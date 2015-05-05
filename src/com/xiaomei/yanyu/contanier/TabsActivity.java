@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.contanier;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,9 +26,10 @@ import com.xiaomei.yanyu.util.UserUtil;
 public class TabsActivity extends  AbstractActivity{
 
 
-    public static void startActivity(Context context){
-        Intent intent = new Intent(context,TabsActivity.class);
-        context.startActivity(intent);
+    public static void startActivity(Activity ac){
+        Intent intent = new Intent(ac,TabsActivity.class);
+        ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
     }
 
 

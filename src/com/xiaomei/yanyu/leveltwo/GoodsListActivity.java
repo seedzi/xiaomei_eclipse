@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.leveltwo;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -31,11 +32,12 @@ import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListe
 
 public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener{
 	
-	public static void startActivity(Context context,String catId,String title){
-		Intent intent = new Intent(context,GoodsListActivity.class);
+	public static void startActivity(Activity ac,String catId,String title){
+		Intent intent = new Intent(ac,GoodsListActivity.class);
 		intent.putExtra("cat_id", catId);
 		intent.putExtra("title", title);
-		context.startActivity(intent);
+		ac.startActivity(intent);
+		 ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 
 	private TitleBar mTitleBar;

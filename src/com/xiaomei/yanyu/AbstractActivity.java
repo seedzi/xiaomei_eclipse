@@ -20,6 +20,8 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
 
     private static List<Activity>  activities;
     
+    protected boolean useAnimation = true;
+    
     public static synchronized void  clearActivity(){
         if(activities!=null){
             for(Activity ac:activities){
@@ -60,4 +62,11 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
         MobclickAgent.onPause(mContext);
     }
 
+    @Override
+    public void finish() {
+    	super.finish();
+    	if(useAnimation)
+    		overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_out_from_left);
+    }
+    
 }
