@@ -240,8 +240,8 @@ public class User {
 		userInfo.setAvatar(sharePreferenceWrap.getString(SharePreferenceKey.USER_AVATAR, ""));
 		userInfo.setUserTypeDesc(sharePreferenceWrap.getString(SharePreferenceKey.USER_TYPE_DESC, ""));
 		userInfo.setCost(sharePreferenceWrap.getString(SharePreferenceKey.USER_COST, ""));
-		userInfo.setCost(sharePreferenceWrap.getString(SharePreferenceKey.USER_IDCARD, ""));
-		userInfo.setCost(sharePreferenceWrap.getString(SharePreferenceKey.USER_ADDRESS, ""));
+		userInfo.setIdcard(sharePreferenceWrap.getString(SharePreferenceKey.USER_IDCARD, ""));
+		userInfo.setAddress(sharePreferenceWrap.getString(SharePreferenceKey.USER_ADDRESS, ""));
 		user.setUserInfo(userInfo);
 		return user;
 	}

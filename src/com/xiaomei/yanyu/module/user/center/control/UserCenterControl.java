@@ -154,6 +154,7 @@ public class UserCenterControl extends BaseControl {
 	
 	@AsynMethod
 	public void uploadUserInfo(String username,String mobile,String local,String shenfenzheng,String iconUrl){
+	    android.util.Log.d("user", "username = " + username + ",mobile = " +mobile + ", local = " + local + ",shenfenzheng = " + shenfenzheng );
 	    try {
             XiaoMeiApplication.getInstance().getApi().updateUserInfo(username, mobile, local, shenfenzheng, iconUrl, UserUtil.getUser().getToken());
             //更新本地的用户信息
@@ -167,6 +168,7 @@ public class UserCenterControl extends BaseControl {
             	userInfo.setIdcard(shenfenzheng);
             if(!TextUtils.isEmpty(local))//地址
             	userInfo.setAddress(local);
+            android.util.Log.d("user", "user = " + user);
             User.save(user);
             sendMessage("uploadUserInfoCallBack");
         } catch (Exception e) {

@@ -281,7 +281,6 @@ public class XiaoMeiApi {
 	 */
 	public void updateUserInfo(String username,String mobile,String address,String idcard,String avatar,String token)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-		/*
 		android.util.Log.d("555",
 				"token = " + token + ",username = " + username + ",mobile = " + mobile + ",avatar = " + avatar + ",address = " + address + ",idcard = " +idcard
 				);
@@ -300,10 +299,10 @@ public class XiaoMeiApi {
                 values[3],
                 values[4],
                 values[5],
-//                values[6],
+                values[6],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
-		*/
+	    /*
 		List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 		if(!TextUtils.isEmpty(username))
 			list.add(new BasicNameValuePair("username", username));
@@ -335,6 +334,7 @@ public class XiaoMeiApi {
 		
 		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.updateUserInfoUrl(), (BasicNameValuePair[])list.toArray());
 		mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+		*/
 	}
 	
 	/**

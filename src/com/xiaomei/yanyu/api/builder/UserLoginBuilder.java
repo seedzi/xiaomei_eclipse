@@ -71,7 +71,12 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 	                userInfo.setAvatar(js.getString("avatar"));
    	         if(js.has("cost"))
 	                userInfo.setCost(js.getString("cost"));
+   	         if(js.has("address"))
+                    userInfo.setAddress(js.getString("address"));
+             if(js.has("idcard"))
+                    userInfo.setIdcard(js.getString("idcard"));
 			user.setUserInfo(userInfo);
+			android.util.Log.d("user", "user = " + user);
 		}
 		return user;
 	}

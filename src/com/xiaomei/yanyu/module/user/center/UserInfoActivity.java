@@ -303,20 +303,47 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	/**
 	 * 如果用户信息修改了 弹出对话框
 	 */
+	private String server_username;
+	private String server_link;
+	private String server_location;
+	private String server_shengFenZheng;
+    private String server_iconUrl;
 	private boolean showDialog4UserUpload(){
 	    if(!isUserMessgaeChanged())
 	        return false;
 	    AlertDialog.Builder builder = new Builder(this);
 	    builder.setMessage("您确认修改信息吗?");  
 	    builder.setTitle("提示");  
+	    
+	    server_username = nickNameEd.getText().toString();
+        if(TextUtils.isEmpty(server_username))
+            server_username = UserUtil.getUser().getUserInfo().getUsername();
+        
+        server_link = linkEd.getText().toString();
+        if(TextUtils.isEmpty(server_link))
+            server_link = UserUtil.getUser().getUserInfo().getMobile();
+        
+        server_location = locationEd.getText().toString();
+        if(TextUtils.isEmpty(server_location))
+            server_location = UserUtil.getUser().getUserInfo().getAddress();
+        
+        server_shengFenZheng = shengFenZhengHaoEd.getText().toString();
+        if(TextUtils.isEmpty(server_shengFenZheng))
+            server_shengFenZheng = UserUtil.getUser().getUserInfo().getIdcard();
+        
+        server_iconUrl = mControl.getModel().getUploadFileUrl();
+        if(TextUtils.isEmpty(server_iconUrl))
+            server_iconUrl = UserUtil.getUser().getUserInfo().getAvatar();
+        
 	    builder.setPositiveButton("确认", new OnClickListener() {   
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
-	            mControl.uploadUserInfo(nickNameEd.getText().toString(),
-	                    linkEd.getText().toString().replaceAll("-", ""),
-	                    locationEd.getText().toString(),
-	                    shengFenZhengHaoEd.getText().toString(),
-	                    mControl.getModel().getUploadFileUrl());
+	            mControl.uploadUserInfo(
+	                    server_username,
+	                    server_link,
+	                    server_location,
+	                    server_shengFenZheng,
+	                    server_iconUrl);
 	            dialog.dismiss();    
 	            showProgressDialog("用户信息上传中...");
 	         }
