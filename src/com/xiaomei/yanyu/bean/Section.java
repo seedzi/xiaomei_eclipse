@@ -95,6 +95,15 @@ public class Section {
 		
 		private String avator;
 		
+		private String shareId;
+		
+		public String getShareId() {
+			return shareId;
+		}
+
+		public void setShareId(String shareId) {
+			this.shareId = shareId;
+		}
 
 		public String getTitle() {
 			return title;

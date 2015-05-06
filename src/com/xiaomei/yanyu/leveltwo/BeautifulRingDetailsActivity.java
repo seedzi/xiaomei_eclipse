@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -27,6 +28,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.ChannelEntity;
+import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.widget.CircleImageView;
@@ -36,7 +38,7 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.ViewPager;
 import com.xiaomei.yanyu.widget.ViewPager.OnPageChangeListener;
 
-public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoControl> implements OnTouchListener,View.OnClickListener{
+public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoControl> implements OnTouchListener{
 
 	@Deprecated
 	public static void startActivity(Context context){
@@ -87,10 +89,20 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 				finish();
 			}
 		});
+		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
+		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
+		mTitleBar.findViewById(R.id.comment).setVisibility(View.VISIBLE);
+		mTitleBar.findViewById(R.id.comment).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!TextUtils.isEmpty(commentId))
+					CommentListActivity.startActivity(BeautifulRingDetailsActivity.this, "share", commentId);
+			}
+		});
+		
 		backImageview = (ImageView) findViewById(R.id.img);
 		pageSize = (TextView) findViewById(R.id.page_size);
 		findViewById(R.id.right_root).setVisibility(View.VISIBLE);
-		findViewById(R.id.comment).setOnClickListener(this);
 		getView();
 		iniMenu();
 		initMenuBehindLayoutViews();
@@ -159,9 +171,12 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 		  return mGestureDetector.onTouchEvent(event);
 	}
 	
+	private String commentId;
+	
 	// ============================   callBack  ==================================
 	public void getDataAsynCallBack(){
 		BeautifulRingDetail data = mControl.getModel().getBeautifulRingDetail();
+		commentId = data.getId();
 		ImageLoader.getInstance().displayImage(data.getImage(), backImageview);
 		ImageLoader.getInstance().displayImage(data.getAvatar(), iconImage);
 		titleTv.setText(data.getShareTitle());
@@ -323,20 +338,6 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 			return false;
 		}
 	}
-
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-        case R.id.comment:
-            CommentsActivity.startActivity(this);
-            break;
-        default:
-            break;
-        }
-    }
-
 
 
 }

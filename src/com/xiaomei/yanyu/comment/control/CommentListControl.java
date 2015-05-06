@@ -34,7 +34,10 @@ public class CommentListControl extends BaseControl {
                     id, type, "1", PER_PAGE);
            mCommentModel.setCommentList(list);
            mCommentModel.setCurrentPage(1);
-           sendMessage("getCommentListDataCallBack");
+           if(list!=null && list.size()>0)
+        	   sendMessage("getCommentListDataCallBack");
+           else
+        	   sendMessage("getCommentListDataExceptionCallBack");
         } catch (Exception e) {
             sendMessage("getCommentListDataExceptionCallBack");
             e.printStackTrace();

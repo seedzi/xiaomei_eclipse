@@ -139,6 +139,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			entity =  section.getList().get(3);
 			if(entity!=null)
 				holder.jiangli.setTag(entity.getUrl());
+			holder.section_type = "nav";
 			break;
 		case 3:  //分享
 			entity =  section.getList().get(0);
@@ -167,6 +168,8 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.des = section.getDes();
 				holder.tilte = section.getTitle();
 				holder.img_url = entity.getImg();
+				holder.section_type = "share";
+				holder.share_id = entity.getShareId();
 			break;
 		case 0: //首张图
 			entity =  section.getList().get(0);
@@ -192,6 +195,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.des = section.getDes();
 			holder.tilte = section.getTitle();
 			holder.img_url = entity.getImg();
+			holder.section_type = "topic";
 			break;
 		case 2: //商品精选
 			entity =  section.getList().get(0);
@@ -207,6 +211,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.des = section.getDes();
 			holder.tilte = section.getTitle();
 			holder.img_url = entity.getImg();
+			holder.section_type = "jingxua";
 			break;
 		case 4: //会员活动
 			entity =  section.getList().get(0);
@@ -224,6 +229,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.des = section.getDes();
 			holder.tilte = section.getTitle();
 			holder.img_url = entity.getImg();
+			holder.section_type = "vip";
 			break;
 		default:
 			break;
@@ -293,6 +299,8 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private String tilte;
 			private String des;
 			private String img_url;
+			private String section_type; //区分 分享 热点 等。。。
+			private String share_id;//分享的id
 //		}
 	}
 
@@ -300,10 +308,16 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 	public void onClick(View v) {
 		Holder holder = (Holder) v.getTag();
 		android.util.Log.d("222", "type = " + holder.type + ",data = " + holder.listData);
+		android.util.Log.d("111", "holder.share_id = " + holder.share_id + ", holder.type = " + holder.type + ",holder.section_type = " + holder.section_type);
 		if("0".equals(holder.type)){
 			GoodsDetailActivity.startActivity((Activity)mContext, holder.url);
-		}else{
-			HomeStyle2.startActivity((Activity)mContext,holder.listData,holder.tilte,holder.des,holder.img_url);
+		}else if("1".equals(holder.type)){
+			if("share".equals(holder.section_type) && !TextUtils.isEmpty(holder.share_id)){
+				android.util.Log.d("111", "holder.share_id = " + holder.share_id);
+				BeautifulRingDetailsActivity.startActivity((Activity)mContext, holder.share_id);
+			}else{
+				HomeStyle2.startActivity((Activity)mContext,holder.listData,holder.tilte,holder.des,holder.img_url);
+			}
 		}
 
 	}

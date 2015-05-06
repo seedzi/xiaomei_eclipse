@@ -154,7 +154,7 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
 					@Override
 					public void onClick(View v) {
 		    	   		TabsActivity.startActivity(LaunchActivity.this);
-//		    	  		finish();
+		    	  		finish();
 					}
 				});
 			}else{

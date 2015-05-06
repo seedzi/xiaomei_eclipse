@@ -14,6 +14,8 @@ public class EntityBuilder extends AbstractJSONBuilder<Entity> {
 			entity.setImg(jsonObject.getString("image_6"));
 		if(jsonObject.has("title"))
 			entity.setTitle(jsonObject.getString("title"));
+		if(jsonObject.has("share_id"))
+			entity.setShareId(jsonObject.getString("share_id"));
 		if(jsonObject.has("url"))
 			entity.setUrl(jsonObject.getString("url"));
 		if(jsonObject.has("num_favorite"))
