@@ -160,6 +160,8 @@ public class UserCenterControl extends BaseControl {
             //更新本地的用户信息
             User user = UserUtil.getUser();
             User.UserInfo userInfo = user.getUserInfo();
+            if(!TextUtils.isEmpty(mobile)) //电话
+                userInfo.setMobile(mobile);
             if(!TextUtils.isEmpty(username))//姓名
             	userInfo.setUsername(username);
             if(!TextUtils.isEmpty(iconUrl))//头像
