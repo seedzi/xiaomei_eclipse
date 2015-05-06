@@ -35,6 +35,7 @@ public class TabsActivity extends  AbstractActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	useAnimation = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_layout);
         
