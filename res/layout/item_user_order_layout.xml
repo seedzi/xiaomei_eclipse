@@ -85,7 +85,7 @@
             android:layout_width="@dimen/item_icon_rect_width"
             android:layout_height="@dimen/item_icon_rect_height"            
             android:scaleType="fitXY"
-            android:src="@drawable/user_centre_info_portrait_default"/>
+            android:src="@drawable/order_list_default"/>
         <TextView 
             android:id="@+id/goods_name"
             android:layout_marginLeft="@dimen/item_margin_small"

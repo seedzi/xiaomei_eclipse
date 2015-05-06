@@ -40,7 +40,7 @@ import com.xiaomei.yanyu.widget.ViewPager.OnPageChangeListener;
 
 public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View.OnClickListener{
 	public static void startActivity(Activity ac,String data,String tilte,String des,String img_url){
-		android.util.Log.d("444", "tilte = " + tilte + ", des = " + des + ", img_url = " + img_url);
+		android.util.Log.d("111", "info = " + Info.toBean(data));
 		Intent intent = new Intent(ac,HomeStyle2.class);
 		intent.putExtra("data", Info.toBean(data));
 		intent.putExtra("tilte", tilte);
@@ -215,8 +215,12 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 				ImageView icon = (ImageView) converView.findViewById(R.id.item_img);
 				ImageLoader.getInstance().displayImage(mList.get(position).image, icon);
 				TextView tv = (TextView) converView.findViewById(R.id.item_description);
-				tv.setText(mList.get(position).title);
+				tv.setText(mList.get(position).des);
 				icon.setOnClickListener(this);
+				TextView title = (TextView) converView.findViewById(R.id.title);
+				title.setText(mList.get(position).title);
+				TextView price = (TextView) converView.findViewById(R.id.price);
+				price.setText(getResources().getString(R.string.ren_ming_bi) +" " +  mList.get(position).price_xm);
 				return converView;
 			}
 			@Override
@@ -363,10 +367,13 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
     		private String image;
     		private String title;
     		private String link;
+    		private String des;
+    		private String price_xm;
 			@Override
 			public String toString() {
 				return "Bean [image=" + image + ", title=" + title + ", link="
-						+ link + "]";
+						+ link + ", des=" + des + ", price_xm=" + price_xm
+						+ "]";
 			}
     	}
     	
@@ -383,6 +390,8 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
         			bean.image = js.getString("image_6");
         			bean.title = js.getString("title");
         			bean.link = js.getString("link");
+        			bean.des = js.getString("des");
+        			bean.price_xm = js.getString("price_xm");
         			beans.add(bean);
         		}
         		info.list = beans;
@@ -433,7 +442,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
                 "image_6": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190333_28429.jpg",
                 "price_xm": "4500",
                 "link": "http:\/\/z.drxiaomei.com\/goods.php?goods_id=1055",
-                "image_5": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190329_35551.jpg",
+                "image_5": "http:\toBean/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190329_35551.jpg",
                 "image_plus": "http:\/\/bcs.duapp.com\/drxiaomei\/images\/topic51\/20150502190338_79355.jpg",
                 "hosp_name": "UP2C整形外科"
             },

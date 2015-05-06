@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Shader.TileMode;
@@ -12,16 +13,20 @@ import android.widget.TextView;
 
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.util.AppUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 public class AboutActivity extends AbstractActivity{
 	
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,AboutActivity.class);
-		context.startActivity(intent);
+	public static void startActivity(Activity ac){
+		Intent intent = new Intent(ac,AboutActivity.class);
+		ac.startActivity(intent);
+		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
 	private TitleBar mTitleBar;
+	
+	private TextView mVersionTv;
 	
 	private Handler mHandler = new Handler();
 	
@@ -53,6 +58,9 @@ public class AboutActivity extends AbstractActivity{
 		
 		ViewGroup item4 = (ViewGroup) findViewById(R.id.item4);
 		setUpItem(item4, R.drawable.icon_about_welcome, "欢迎页面");
+		
+		mVersionTv  = (TextView) findViewById(R.id.version);
+		mVersionTv.setText("版本" + AppUtil.getVersion(this));
 	}
 	
 	private void setUpItem(ViewGroup itemGroup,int drawableResource,String title){

@@ -13,7 +13,7 @@
         android:layout_height="92dp"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
-        android:src="@drawable/share_weixin_moment_icon"/>
+        android:src="@drawable/goods_list_default"/>
     <TextView 
         android:id="@+id/title"
         android:layout_alignTop="@id/icon"

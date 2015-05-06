@@ -416,6 +416,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		        return;
 		    }
 		    showProgressDialog("订单提交中...");
+		    android.util.Log.d("111", "提交 goodsId =  " + goodsId + ",orderPassport = " + orderPassport.getText().toString() + ",orderMobile = " + orderMobile.getText().toString() );
 		    mControl.updateUserOrder2ServerAsyn(mControl.getModel().getOrder().getDataList().getId(),orderNameEd.getText().toString(),
 		            goodsId, 
 		            orderPassport.getText().toString(),

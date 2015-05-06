@@ -223,7 +223,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			}
 			holder = (Holder) convertView.getTag();
 			Goods goods = mData.get(position);
+			holder.iconIv.setImageResource(R.drawable.goods_list_default);
 			ImageLoader.getInstance().displayImage(goods.getFileUrl(),holder.iconIv );
+			android.util.Log.d("111", "holder.iconIv height = " + holder.iconIv.getHeight() + ",  width = " + holder.iconIv.getWidth());
 			holder.titleTv .setText(goods.getTitle());
 			holder.goodId = goods.getId();
 			holder.sizeTv.setText("销量" + goods.getSales());

@@ -175,6 +175,7 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				holder.orderIdTv.setText(dataList.getId());
 				holder.userNameTv.setText(dataList.getUsername());
 				holder.createTimeTv.setText(DateUtils.formateDate(Long.valueOf(dataList.getCreatedate())*1000));
+				holder.goodsIconIv.setImageResource(R.drawable.order_list_default);
 				ImageLoader.getInstance().displayImage(dataList.getGoodsImg(), holder.goodsIconIv);
 				holder.goodsNameTv.setText(dataList.getGoodsName());
 				holder.statusTv.setText(dataList.getStatus());

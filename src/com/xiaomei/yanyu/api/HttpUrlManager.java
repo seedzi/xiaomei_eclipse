@@ -113,5 +113,9 @@ public class HttpUrlManager {
     String payWechat(){
 		return HOST + "/server/pay/wechat.php";
     }
+    /**用户反馈*/
+    String feedbackUrl(){
+    	return HOST + "/server/action/feedback.php";
+    }
 }
 

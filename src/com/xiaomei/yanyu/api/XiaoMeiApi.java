@@ -588,4 +588,25 @@ public class XiaoMeiApi {
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
         return mHttpApi.doHttpRequestObject(httpPost, new WechatBuilder());
     }
+    /**用户反馈*/
+    public boolean feedback(String content,String contact,String token)
+            throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
+    	android.util.Log.d("111", "feedback  content = "+ content + ",token = " + token);
+        BasicNameValuePair[] values = {
+				new BasicNameValuePair("token", token),
+                new BasicNameValuePair("content", content),
+                new BasicNameValuePair("contact", contact),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))}; 
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.feedbackUrl(),
+                values[0],
+                values[1],
+                values[2],
+                values[3],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        NetResult netResult =  mHttpApi.doHttpRequestObject(httpGet, new NetResultBuilder());
+        if(netResult!=null && "0".equals(netResult.getCode())){
+        	return true;
+        }
+        return false;
+    }
 }

@@ -4,13 +4,14 @@
          android:layout_width="fill_parent"
          android:id="@+id/root"
          android:gravity="center"
-         android:padding="15dp"
+         android:paddingTop="15dp"
+         android:paddingBottom="15dp"
          android:background="@color/color_white">  
          <LinearLayout 
                 android:layout_height="wrap_content"   
-               android:layout_width="wrap_content"   
+               android:layout_width="match_parent"   
                android:orientation="vertical"
-               >
+               android:gravity="center_horizontal">
              
 
          <ImageView   
@@ -21,8 +22,9 @@
          </ImageView>  
          <TextView   
                android:id="@+id/item_text"
+               android:gravity="center"
                android:layout_marginTop="5dp"
-               android:layout_width="wrap_content"   
+               android:layout_width="match_parent"   
                android:layout_below="@+id/item_icon"   
                android:layout_height="wrap_content"   
                android:text="TextView01"   

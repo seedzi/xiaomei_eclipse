@@ -82,6 +82,7 @@ public class UserCenterControl extends BaseControl {
            }
         } catch (Exception e) {
             e.printStackTrace();
+            android.util.Log.d("111", "e = " + e.getMessage());
             sendMessage("updateUserOrder2ServerAsynExceptionCallBack");
         }
     }

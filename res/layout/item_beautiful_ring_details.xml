@@ -5,20 +5,48 @@
         android:paddingLeft="10dp"
     android:paddingRight="10dp" >
 
-<LinearLayout 
+<RelativeLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@drawable/corners">
 <ImageView 
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
     android:layout_marginTop="25dp"
     android:id="@+id/item_img"
     android:layout_width="310dp"
     android:layout_height="337dp"
     android:scaleType="fitXY"
     android:src="@drawable/sex_1"/>
+<RelativeLayout 
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+        <TextView 
+            android:id="@+id/title"
+            android:textSize="13sp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+         <TextView 
+            android:id="@+id/price"
+            android:textSize="13sp"
+            android:textColor="#d366f3"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+</RelativeLayout>
 	<TextView
+	    android:layout_centerHorizontal="true"
+	    android:layout_below="@id/item_img"
+	    android:layout_above="@id/bottom"
 	    android:layout_marginTop="20dp"
         android:id="@+id/item_description"
         android:layout_width="310dp"
@@ -29,5 +57,5 @@
         android:maxLines="4"
         android:textSize="14sp" />
 
-</LinearLayout>
+</RelativeLayout>
 </FrameLayout>

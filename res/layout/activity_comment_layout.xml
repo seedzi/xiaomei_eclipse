@@ -83,7 +83,7 @@
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray"/>
+        android:background="#e4e4e4"/>
     
     <RelativeLayout 
         android:layout_width="match_parent"
@@ -132,7 +132,7 @@
         <View 
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#989898"/>
+        android:background="#e4e4e4"/>
 
         <TextView 
         android:textColor="#969696"
@@ -221,8 +221,8 @@
              android:hint="您的宝贵意见是给我们服务的最大支持！"
              android:gravity="left"
              android:padding="10dp"
-             android:textColor="#b4b4b4"
-             android:textSize="16sp"
+             android:textColor="#686868"
+             android:textSize="15sp"
              /><!--android:paddingTop="24dp"  -->
          <!-- 
          <LinearLayout

@@ -96,4 +96,17 @@ public class UserControl extends BaseControl{
 		return mUserModel.getUser();
 	}
 	
+	
+	@AsynMethod
+	public void feedback(String content,String contact){
+		try {
+			XiaoMeiApplication.getInstance().getApi().	feedback(content,contact,UserUtil.getUser().getToken());
+			sendMessage("feedbackAsynCallBack");
+		} catch (Exception e) {
+				sendMessage("feedbackExceptionCallBack");
+				e.printStackTrace();
+				return;
+		} 
+	}
+	
 }
