@@ -141,6 +141,7 @@
             android:text=""/>
         
                 <TextView 
+            android:id="@+id/huiyuan_guizhe"
             android:layout_alignParentRight="true"        
             android:textSize="11sp"
             android:layout_centerVertical="true"

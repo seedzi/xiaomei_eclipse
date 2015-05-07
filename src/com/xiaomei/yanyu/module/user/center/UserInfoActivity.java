@@ -28,6 +28,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.bean.User;
+import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UserUtil;
@@ -105,6 +106,7 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 		vipGrade = (VipGradeView) findViewById(R.id.vip_grade);
 		userTypeDesc = (TextView) findViewById(R.id.user_type_desc);
 		costTv = (TextView) findViewById(R.id.cost);
+		findViewById(R.id.huiyuan_guizhe).setOnClickListener(this);
 	}
 	
 	private void initData(){
@@ -174,6 +176,9 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
              intent.setAction(Intent.ACTION_GET_CONTENT);   
              /* 取得相片后返回本画面 */  
              startActivityForResult(intent, 1);
+			break;
+		case R.id.huiyuan_guizhe:
+			GoodsDetailActivity.startActivity(this, "http://z.drxiaomei.com/m/rule.html");
 			break;
 		default:
 			break;
