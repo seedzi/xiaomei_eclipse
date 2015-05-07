@@ -57,6 +57,15 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 		initData();
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+        if(OrderDetailsActivity.STATE_CHANGED){
+        	initData();
+        	OrderDetailsActivity.STATE_CHANGED = false;
+        }
+	}
+	
 	private void setUpView(){
 		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
 		mTitleBar.setTitle(getResources().getString(R.string.user_order));

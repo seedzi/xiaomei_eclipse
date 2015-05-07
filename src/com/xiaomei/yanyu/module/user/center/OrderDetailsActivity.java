@@ -33,6 +33,9 @@ import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
+	
+	public static boolean STATE_CHANGED = false;
+	
 	@Deprecated
 	public static void startActivity(Context context){
 		Intent intent = new Intent(context,OrderDetailsActivity.class);
@@ -264,6 +267,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		tv.setText("订单已取消");
 		setEditEnable(false);
 		Toast.makeText(this, "订单已取消", 0).show();
+		STATE_CHANGED = true;
 	}
 	
 	public void cancelUserOrderUrlExceptionCallBack(){
@@ -335,6 +339,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 					hidePay();
 					TextView tv = (TextView) findViewById(R.id.order_status);
 					tv.setText("取消订单");
+					STATE_CHANGED = true;
 				}
 				@Override
 				public void failureCallBack() {
