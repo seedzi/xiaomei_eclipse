@@ -167,7 +167,7 @@ public class ZhifubaoPayManager {
 		// 商品金额
 		orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";  //TODO 写死价格
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + "http://api.drxiaomei.com/libs/pay/notify_url.php"
+		orderInfo += "&notify_url=" + "\"" + "http://api.drxiaomei.com/server/pay/alipay_notify.php"
 				+ "\"";
 		// 服务接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";
