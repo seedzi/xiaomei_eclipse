@@ -46,6 +46,11 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         mContext = this;
+        
+        
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.updateOnlineConfig(this);
 	}
 	
 	@Override

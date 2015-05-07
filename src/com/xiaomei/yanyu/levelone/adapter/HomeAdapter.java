@@ -38,6 +38,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		@Override
 		public void onClick(View v) {
 			String url = (String) v.getTag();
+			android.util.Log.d("111", "url = " + url);
 			GoodsDetailActivity.startActivity((Activity)mContext, url);
 		}
 	};

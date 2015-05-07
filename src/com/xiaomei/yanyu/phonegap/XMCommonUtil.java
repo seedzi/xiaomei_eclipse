@@ -8,10 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
+import com.xiaomei.yanyu.util.UserUtil;
 
 public class XMCommonUtil extends CordovaPlugin{
 	
@@ -51,6 +53,10 @@ public class XMCommonUtil extends CordovaPlugin{
 	private boolean orderSubmit( JSONArray args){
 		String goodsId;
 		try {
+	          if(UserUtil.getUser()==null){
+	                Toast.makeText(ac, "请您先登录账号", 0).show();
+	                return false;
+	          }
 			goodsId = args.getJSONObject(0).getString("itemid");
 			OrderDetailsActivity.startActivity(ac, goodsId);
 		} catch (Exception e) {
