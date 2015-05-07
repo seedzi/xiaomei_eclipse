@@ -1,9 +1,15 @@
 package com.xiaomei.yanyu.module.user.center;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Shader.TileMode;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
@@ -63,6 +69,10 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
 		ViewGroup item4 = (ViewGroup) findViewById(R.id.item4);
 		setUpItem(item4, R.drawable.icon_about_welcome, "欢迎页面");
 		
+		ViewGroup item5 = (ViewGroup) findViewById(R.id.item5);
+		item5.setOnClickListener(this);
+		setUpItem(item5, R.drawable.ouer_dianhua, "400-667-0190");
+		
 		mVersionTv  = (TextView) findViewById(R.id.version);
 		mVersionTv.setText("版本" + AppUtil.getVersion(this));
 	}
@@ -87,9 +97,33 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
             url = "http://z.drxiaomei.com/m/flow.html";
             GoodsDetailActivity.startActivity(this, url);
             break;
+        case R.id.item5:
+        	showProgressDialog();
+            break;
         default:
             break;
         }
     }
 
+	private void showProgressDialog(){
+        AlertDialog.Builder builder = new Builder(this);
+//        builder.setMessage("400-667-0190");
+        builder.setTitle("400-667-0190");
+        builder.setPositiveButton("呼叫", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:4006670190")); 
+            	startActivity(intent);  
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+	}
+    
 }

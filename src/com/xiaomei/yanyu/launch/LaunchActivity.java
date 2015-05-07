@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.SharePreferenceKey;
+import com.xiaomei.yanyu.SharePreferenceWrap;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.Payment.ZhifubaoPayManager;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
@@ -68,27 +70,34 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
     }
     
     private void  init(){
-
+    	SharePreferenceWrap sharePreferenceWrap = new SharePreferenceWrap(SharePreferenceKey.APP);
+    	if(sharePreferenceWrap.getBoolean(SharePreferenceKey.APP_KEY_INSTALL_FIRST, true)){
+        	Animation animationOut =AnimationUtils.loadAnimation(this, R.anim.activity_slid_out_from_right);//加载Xml文件中
+        	splash.startAnimation(animationOut);
+        	Animation animationIn =AnimationUtils.loadAnimation(this, R.anim.activity_slid_in_from_right);//加载Xml文件中
+        	pager.startAnimation(animationIn);
+        	animationIn.setAnimationListener(new AnimationListener() {
+    			@Override
+    			public void onAnimationStart(Animation animation) {
+    			}
+    			
+    			@Override
+    			public void onAnimationRepeat(Animation animation) {
+    			}
+    			
+    			@Override
+    			public void onAnimationEnd(Animation animation) {
+    		    	splash.setVisibility(View.GONE);
+    		    	pager.setVisibility(View.VISIBLE);
+    			}
+    		});
+        	sharePreferenceWrap.putBoolean(SharePreferenceKey.APP_KEY_INSTALL_FIRST, false);
+    	}else{
+	   		TabsActivity.startActivity(LaunchActivity.this);
+	  		finish();
+    	}
     	
-    	Animation animationOut =AnimationUtils.loadAnimation(this, R.anim.activity_slid_out_from_right);//加载Xml文件中
-    	splash.startAnimation(animationOut);
-    	Animation animationIn =AnimationUtils.loadAnimation(this, R.anim.activity_slid_in_from_right);//加载Xml文件中
-    	pager.startAnimation(animationIn);
-    	animationIn.setAnimationListener(new AnimationListener() {
-			@Override
-			public void onAnimationStart(Animation animation) {
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-			}
-			
-			@Override
-			public void onAnimationEnd(Animation animation) {
-		    	splash.setVisibility(View.GONE);
-		    	pager.setVisibility(View.VISIBLE);
-			}
-		});
+
 //        CommentsActivity.startActivity(this);
 //    	LoginAndRegisterActivity.startActivity(LaunchActivity.this);
 //    	TabsActivity.startActivity(LaunchActivity.this);

@@ -17,7 +17,12 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -33,7 +38,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	
 	private TitleBar mTitleBar;
 	
-	private ViewGroup line1,line2,line3,line4,line5,line6;
+	private ViewGroup line1,line2,line3,line4,line5,line6,line7;
 	
 	private ImageView mUserIconIv;
 	
@@ -82,7 +87,8 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		setUpUserItem(line5, getResources().getString(R.string.user_feedback), this,R.drawable.feedback);
 		line6 = (ViewGroup) mRootView.findViewById(R.id.line6);
 		setUpUserItem(line6, getResources().getString(R.string.user_about), this,R.drawable.about_us);
-		
+		line7 = (ViewGroup) mRootView.findViewById(R.id.line7);
+		setUpUserItem(line7, "400-667-0190", this, R.drawable.ouer_dianhua);
 		
 		mUserIconIv = (ImageView) mRootView.findViewById(R.id.user_icon);
 		mUserNameTv = (TextView) mRootView.findViewById(R.id.user_name);
@@ -177,6 +183,9 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		case R.id.line6: //关于我们
 			AboutActivity.startActivity(getActivity());
 			break;
+		case R.id.line7: 
+			showProgressDialog();
+			break;
 		case R.id.user_info_layout:
 			UserInfoActivity.startActivity(getActivity());
 			break;
@@ -185,20 +194,24 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		}
 	}
 	
-//	@Override
-//	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		android.util.Log.d("111", "requestCode = " + requestCode + ",resultCode = " + resultCode);
-//		super.onActivityResult(requestCode, resultCode, data);
-//		switch (requestCode) {
-//		case 1:
-//			if(resultCode == -1){
-//				initData();
-//			}
-//			break;
-//
-//		default:
-//			break;
-//		}
-//	}
+	private void showProgressDialog(){
+        AlertDialog.Builder builder = new Builder(getActivity());
+        builder.setTitle("400-667-0190");
+        builder.setPositiveButton("呼叫", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:4006670190")); 
+            	startActivity(intent);  
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+	}
 
 }

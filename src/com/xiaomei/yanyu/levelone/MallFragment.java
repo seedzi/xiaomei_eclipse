@@ -8,6 +8,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.Mall;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.levelone.control.MallControl;
+import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsListActivity;
 import com.xiaomei.yanyu.leveltwo.MallSecondActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
@@ -75,11 +76,10 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mTopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                CommentListActivity.startActivity(getActivity());
+            	GoodsDetailActivity.startActivity(getActivity(), (String)v.getTag());
             }
         });
 		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*346/720;
-		
 		
 		mScrollview = mRootView.findViewById(R.id.scrollview);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
@@ -106,6 +106,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mMailAdapter.setData(mControl.getModel().getData());
 		mMailAdapter.notifyDataSetChanged();
 		ImageLoader.getInstance().displayImage(mControl.getModel().getHead().getImage(), mTopIcon);
+		mTopIcon.setTag(mControl.getModel().getHead().getLink());
 	}
 	
 	public void getMallListFromNetAsynExceptionCallBack(){

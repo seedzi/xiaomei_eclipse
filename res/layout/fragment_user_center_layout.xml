@@ -123,6 +123,8 @@
         
         <include android:id="@+id/line5"  layout="@layout/item_center_user_layout" />
         <include android:id="@+id/line6"  layout="@layout/item_center_user_layout" />
+        
+        <include android:id="@+id/line7" layout="@layout/item_center_user_layout"/>
     </LinearLayout>
     
     <View

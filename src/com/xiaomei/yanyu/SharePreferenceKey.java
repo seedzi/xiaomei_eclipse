@@ -40,4 +40,7 @@ public class SharePreferenceKey {
 		"userinfo":
 		{"modifydate":"1428493921","sex":"0","username":"未定义","user_type":"1","age":"0","createdate":"1428493921","userid":"19062270","mobile":"13716417246"}}
 		*/
+    
+    public static final String APP = "app"; 
+	public static final String APP_KEY_INSTALL_FIRST = "app_install_first";
 }
