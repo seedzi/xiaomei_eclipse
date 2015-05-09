@@ -198,7 +198,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 				holder.iconIv = (ImageView) convertView.findViewById(R.id.item_icon);
 				holder.root = (ViewGroup) convertView.findViewById(R.id.root);
 				convertView.setTag(holder);
-				holder.iconIv.setOnClickListener(this);
+				convertView.setOnClickListener(this);
 			}
 			holder = (Holder) convertView.getTag();
 			attachHolder(holder, position,mall);
@@ -210,6 +210,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 			holder.iconIv.setImageResource(R.drawable.classification_head_default_img);
 			ImageLoader.getInstance().displayImage(mall.getFile(), holder.iconIv);
 			holder.iconIv.setTag(position);
+			holder.position = position;
 //			AbsListView.LayoutParams al = new AbsListView.LayoutParams(ScreenUtils.getScreenWidth(getActivity())/3 -2 ,
 //				ScreenUtils.dip2px(getActivity(), 130));
 //			holder.root.setLayoutParams(al);
@@ -217,7 +218,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 
 		@Override
 		public void onClick(View v) {
-			Mall mall = mData.get((Integer)v.getTag());
+			Mall mall = mData.get(((Holder)v.getTag()).position);
 			String catId = mall.getId();
 			GoodsListActivity.startActivity(getActivity(),catId,mall.getCatName());
 		}
@@ -226,6 +227,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 			private ImageView iconIv;
 			private TextView titleTv;
 			private ViewGroup root;
+			private int position;
 		}
 		
 	}

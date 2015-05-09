@@ -3,9 +3,13 @@ package com.xiaomei.yanyu.module.user.center;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -210,7 +214,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			tv.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId()); 
+					showCancelOrderDialog();
 					// 临时测试
 //					CommentsActivity.startActivity(OrderDetailsActivity.this,mControl.getModel().getOrder());
 				}
@@ -219,7 +223,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			break;
 		case ORDER_CANCEL:
 			hidePay();
-			tv.setText("退款申请中");
+			tv.setText("退款审核中");
 			setEditEnable(false);
 			break;
 		case ORDER_FINISH:
@@ -272,9 +276,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	// ====================================  CallBack =========================================================
 	public void cancelUserOrderUrlCallBack(){ 
 		TextView tv = (TextView) findViewById(R.id.order_status);
-		tv.setText("退款申请中");
+		tv.setText("退款审核中");
 		setEditEnable(false);
-		Toast.makeText(this, "退款申请中", 0).show();
+		Toast.makeText(this, "退款审核中", 0).show();
 		STATE_CHANGED = true;
 	}
 	
@@ -350,8 +354,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 					tv.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							String id = mControl.getModel().getOrder().getDataList().getId();
-							mControl.cancelUserOrderUrl(id); 
+							showCancelOrderDialog();
 						}
 					});
 					STATE_CHANGED = true;
@@ -431,7 +434,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			isPay4WeiXin = false;
 		    if(!PayUtils.checkoutInputData(orderNameEd.getText().toString(),
 		            orderMobile.getText().toString(), 
-		            orderPassport.getText().toString())){
+		            orderPassport.getText().toString())){mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId()); 
 		        Toast.makeText(this, "请您完整的输入您的信息", 0).show();
 		        return;
 		    }
@@ -462,5 +465,26 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		default:
 			break;
 		}
+	}
+	
+	private void showCancelOrderDialog(){
+		AlertDialog.Builder builder = new Builder(this);
+        builder.setMessage("您确认申请退款吗?");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确认", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId()); 
+            }
+        });
+        builder.setNegativeButton("取消", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+
 	}
 }
