@@ -70,8 +70,8 @@ public class CommentsActivity extends AbstractActivity<CommentControl> implement
         setUpViews();
         initData();
         
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE); 
-        imm.hideSoftInputFromWindow(mCommentEdit.getWindowToken(),0); 
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE); 
+//        imm.hideSoftInputFromWindow(mCommentEdit.getWindowToken(),0); 
     }
     
     private void setUpViews(){

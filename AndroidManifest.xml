@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiaomei.yanyu"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -136,7 +136,7 @@
 		<!-- 评论页面 -->
 		<activity
 		    android:name="com.xiaomei.yanyu.comment.CommentsActivity"
-		     android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+		     android:windowSoftInputMode="stateHidden|adjustPan" >
 		</activity>
 		<!-- 评论列表页面 -->
 		<activity
