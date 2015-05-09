@@ -52,8 +52,8 @@ public class FeedbackActivity extends AbstractActivity<UserControl> implements V
 
 	@Override
 	public void onClick(View v) {
-		if(TextUtils.isEmpty(mTxtContent.getText()) || TextUtils.isEmpty(mMobileTv.getText())){
-			Toast.makeText(this, "反馈内容和电话号码不能为空", 0).show();
+		if(TextUtils.isEmpty(mTxtContent.getText()) /*|| TextUtils.isEmpty(mMobileTv.getText())*/){
+			Toast.makeText(this, "反馈内容不能为空", 0).show();
 			return;
 		}
 		mSubmit.setEnabled(false);

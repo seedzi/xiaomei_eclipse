@@ -85,6 +85,8 @@ public class ListOrderBuilder extends AbstractJSONBuilder<List<Order>> {
 						orderDataList.setId(jDataListObj.getString("id"));
 					if(jDataListObj.has("order_amount"))
 						orderDataList.setOrderAmount(jDataListObj.getString("order_amount"));
+					if(jDataListObj.has("goods_pay"))
+						orderDataList.setGoodsPay(jDataListObj.getString("goods_pay"));
 					if(jDataListObj.has("username"))
 						orderDataList.setUsername(jDataListObj.getString("username"));
 					if(jDataListObj.has("status"))

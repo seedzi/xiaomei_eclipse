@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.comment.CommentListActivity;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 
@@ -54,7 +55,9 @@ public class XMCommonUtil extends CordovaPlugin{
 		String goodsId;
 		try {
 	          if(UserUtil.getUser()==null){
-	                Toast.makeText(ac, "请您先登录账号", 0).show();
+	        	  LoginAndRegisterActivity.startActivity(ac, true);
+	        	  ac.finish();
+//	                Toast.makeText(ac, "请您先登录账号", 0).show();
 	                return false;
 	          }
 			goodsId = args.getJSONObject(0).getString("itemid");

@@ -23,6 +23,8 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
         }else{
             return null;
         }
+        if(jsonArray==null || jsonArray.length()==0)
+        	return null;
         for(int i=0;i<jsonArray.length();i++){
             JSONObject jsObj = jsonArray.getJSONObject(i);
             CommentItem commentItem = new CommentItem();

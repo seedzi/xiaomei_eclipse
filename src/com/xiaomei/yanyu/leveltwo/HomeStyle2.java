@@ -39,13 +39,14 @@ import com.xiaomei.yanyu.widget.ViewPager;
 import com.xiaomei.yanyu.widget.ViewPager.OnPageChangeListener;
 
 public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View.OnClickListener{
-	public static void startActivity(Activity ac,String data,String tilte,String des,String img_url){
+	public static void startActivity(Activity ac,String data,String tilte,String des,String img_url,String viewcount){
 		android.util.Log.d("111", "info = " + Info.toBean(data));
 		Intent intent = new Intent(ac,HomeStyle2.class);
 		intent.putExtra("data", Info.toBean(data));
 		intent.putExtra("tilte", tilte);
 		intent.putExtra("des", des);
 		intent.putExtra("img_url", img_url);
+		intent.putExtra("viewcount", viewcount);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
@@ -64,6 +65,8 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 	 private TextView pageSize;
 	 
 	 private ViewPager page;
+	 
+	 private TextView mBrowseSize;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.GONE);
 		backImageview = (ImageView) findViewById(R.id.img);
 		pageSize = (TextView) findViewById(R.id.page_size);
+		mBrowseSize = (TextView) findViewById(R.id.browse_size);
 		getView();
 		iniMenu();
 		initMenuBehindLayoutViews();
@@ -137,12 +141,14 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 	private String tilte;
 	private String des;
 	private String img_url;
+	private String viewcount;
 	private void initData(){
 		try {
 			Info data = (Info) getIntent().getSerializableExtra("data");
 			tilte = getIntent().getStringExtra("tilte");
 			des = getIntent().getStringExtra("des");
 			img_url = getIntent().getStringExtra("img_url");
+			viewcount = getIntent().getStringExtra("viewcount");
 			
 			android.util.Log.d("111", "title = " + tilte);
 			android.util.Log.d("111", "des = " + des);
@@ -150,10 +156,12 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 			
 			titleTv.setText(tilte);
 			descriptionTv.setText(des);
+			mBrowseSize.setText(viewcount + "次浏览");
 			ImageLoader.getInstance().displayImage(img_url, backImageview);
 			mAdapter.setData(data.list);
 			mAdapter.notifyDataSetChanged();
 			page.setOnPageChangeListener(new MyOnPageChangeListener(data.list));
+			
 		} catch (Exception e) {
 			android.util.Log.d("444", "e = " + e.toString());
 		}
@@ -354,6 +362,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 		private String des;
     	private String title;
     	private String img;
+    	private String viewcount;
     	private List<Bean> list;
     	
     	
@@ -390,6 +399,8 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
         			bean.price_xm = js.getString("price_xm");
         			beans.add(bean);
         		}
+        		if(jsonObject.has("viewcount"))
+        			info.viewcount = jsonObject.getString("viewcount");
         		info.list = beans;
         		return info;
 			} catch (Exception e) {

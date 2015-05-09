@@ -223,6 +223,7 @@ public class Order implements Serializable{
 		private String goodsName;
 		private String hospName;
 		private String goodsImg;
+		private String goodsPay;
 		private String city;
 		public String getId() {
 			return id;
@@ -290,6 +291,12 @@ public class Order implements Serializable{
 		public void setCity(String city) {
 			this.city = city;
 		}
+		public String getGoodsPay() {
+			return goodsPay;
+		}
+		public void setGoodsPay(String goodsPay) {
+			this.goodsPay = goodsPay;
+		}
 		@Override
 		public String toString() {
 			return "DataList [id=" + id + ", orderAmount=" + orderAmount
@@ -297,10 +304,8 @@ public class Order implements Serializable{
 					+ ", orderNum=" + orderNum + ", goodsId=" + goodsId
 					+ ", createdate=" + createdate + ", goodsName=" + goodsName
 					+ ", hospName=" + hospName + ", goodsImg=" + goodsImg
-					+ ", city=" + city + "]";
+					+ ", goodsPay=" + goodsPay + ", city=" + city + "]";
 		}
-		
-		
 	}
 	
 	

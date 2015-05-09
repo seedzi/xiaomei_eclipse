@@ -160,7 +160,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void getHomeListEntityMoreAsynCallBackException(){
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAc.showToast("没有更多数据啦");
+//		mAc.showToast("没有更多数据啦");
 	}
 	
 	// ===========================  Scroll ====================================

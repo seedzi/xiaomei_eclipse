@@ -28,6 +28,8 @@ public class SectionBuilder extends AbstractJSONBuilder<List<Section>> {
 				section.setKey(jobject.getString("key"));
 				section.setOrdering(jobject.getInt("ordering"));
 				section.setTitle(jobject.getString("title"));
+				if(jobject.has("viewcount"))
+					section.setViewCount(jobject.getString("viewcount"));
 				JSONArray jA  =  jobject.getJSONArray("data");
 				List<Entity> entityList = new ArrayList<Section.Entity>();
 				for( int j=0 ;j< jA.length();j++){
@@ -48,6 +50,8 @@ public class SectionBuilder extends AbstractJSONBuilder<List<Section>> {
 					section.setKey(jobject.getString("key"));
 					section.setOrdering(jobject.getInt("ordering"));
 					section.setTitle(jobject.getString("title"));
+					if(jobject.has("viewcount"))
+						section.setViewCount(jobject.getString("viewcount"));
 					if(jobject.has("title"))
 						section.setTitle(jobject.getString("title"));
 					if(jobject.has("des"))

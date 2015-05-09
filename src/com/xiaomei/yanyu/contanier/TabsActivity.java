@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.KeyCharacterMap.KeyData;
@@ -11,6 +12,9 @@ import android.view.KeyCharacterMap.KeyData;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengDownloadListener;
 import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.XiaoMeiApplication;
@@ -54,19 +58,28 @@ public class TabsActivity extends  AbstractActivity{
        //  (2)
        // ================== UM升级 =====================
         UmengUpdateAgent.setDefault();
-        UmengUpdateAgent.update(this);
-//        UmengUpdateAgent.setDownloadListener(new UmengDownloadListener() {
+//        UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
 //			@Override
-//			public void OnDownloadUpdate(int arg0) {
-//			}
-//			@Override
-//			public void OnDownloadStart() {
-//			}
-//			
-//			@Override
-//			public void OnDownloadEnd(int arg0, String arg1) {
+//			public void onUpdateReturned(int arg0, UpdateResponse updateInfo) {
+//				android.util.Log.d("222", "updateInfo = " + updateInfo + ",arg0  = " + arg0);
+//				switch (arg0) {
+//				case UpdateStatus.Yes:
+//					
+//					break;
+//
+//				default:
+//					break;
+//				}
 //			}
 //		});
+        new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+		        UmengUpdateAgent.update(TabsActivity.this);
+			}
+		}, 500);
+
         // ================== UM升级 =====================
     }
     

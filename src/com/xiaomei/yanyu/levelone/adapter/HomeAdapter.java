@@ -141,6 +141,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			if(entity!=null)
 				holder.jiangli.setTag(entity.getUrl());
 			holder.section_type = "nav";
+			holder.viewcount = section.getViewCount();
 			break;
 		case 3:  //分享
 			entity =  section.getList().get(0);
@@ -171,6 +172,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				holder.img_url = entity.getImg();
 				holder.section_type = "share";
 				holder.share_id = entity.getShareId();
+				holder.viewcount = section.getViewCount();
 			break;
 		case 0: //首张图
 			entity =  section.getList().get(0);
@@ -197,6 +199,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.tilte = section.getTitle();
 			holder.img_url = entity.getImg();
 			holder.section_type = "topic";
+			holder.viewcount = section.getViewCount();
 			break;
 		case 2: //商品精选
 			entity =  section.getList().get(0);
@@ -213,6 +216,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.tilte = section.getTitle();
 			holder.img_url = entity.getImg();
 			holder.section_type = "jingxua";
+			holder.viewcount = section.getViewCount();
 			break;
 		case 4: //会员活动
 			entity =  section.getList().get(0);
@@ -231,6 +235,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			holder.tilte = section.getTitle();
 			holder.img_url = entity.getImg();
 			holder.section_type = "vip";
+			holder.viewcount = section.getViewCount();
 			break;
 		default:
 			break;
@@ -302,6 +307,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private String img_url;
 			private String section_type; //区分 分享 热点 等。。。
 			private String share_id;//分享的id
+			private String viewcount;//浏览记录
 //		}
 	}
 
@@ -317,7 +323,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				android.util.Log.d("111", "holder.share_id = " + holder.share_id);
 				BeautifulRingDetailsActivity.startActivity((Activity)mContext, holder.share_id);
 			}else{
-				HomeStyle2.startActivity((Activity)mContext,holder.listData,holder.tilte,holder.des,holder.img_url);
+				HomeStyle2.startActivity((Activity)mContext,holder.listData,holder.tilte,holder.des,holder.img_url,holder.viewcount);
 			}
 		}
 

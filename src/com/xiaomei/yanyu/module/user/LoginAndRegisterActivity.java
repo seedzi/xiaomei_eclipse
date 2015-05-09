@@ -50,6 +50,7 @@ import com.xiaomei.yanyu.widget.TitleBar.Listener;
 public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		implements Listener,View.OnClickListener{
 	
+	private boolean isFromRegister = false;
 	@Deprecated
     public static void startActivity(Context context){
         Intent intent = new Intent(context,LoginAndRegisterActivity.class);
@@ -270,8 +271,11 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	}
 	
 	public void registeAsynCallBack(){
-		dismissDialog();
-		Toast.makeText(LoginAndRegisterActivity.this, "注册成功", 0).show();
+//		dismissDialog();
+//		Toast.makeText(LoginAndRegisterActivity.this, "注册成功", 0).show();
+		mControl.loginAsyn(mRegisterUserMobileEdit.getText().toString(),
+				mRegisterUserPasswordEdit.getText().toString());
+		isFromRegister = true;
 	}
 	public void registeAsynExceptionCallBack(){
 		dismissDialog();
@@ -280,7 +284,12 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	
 	public void loginAsynCallBack(){
 		dismissDialog();
-		Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
+		if(isFromRegister){
+			Toast.makeText(LoginAndRegisterActivity.this, "注册成功", 0).show();
+			isFromRegister = false;
+		}else{
+			Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
+		}
 		TabsActivity.startActivity(LoginAndRegisterActivity.this);
 		setResult(RESULT_OK);
 		finish();
@@ -288,7 +297,12 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	
 	public void loginAsynExceptionCallBack(){
 		dismissDialog();
-		Toast.makeText(LoginAndRegisterActivity.this, "登录失败", 0).show();
+		if(isFromRegister){
+			Toast.makeText(LoginAndRegisterActivity.this, "注册失败", 0).show();
+			isFromRegister = false;
+		}else{
+			Toast.makeText(LoginAndRegisterActivity.this, "登录失败", 0).show();
+		}
 	}
 	// =========================================== ProgressDialog ===================================================
 	

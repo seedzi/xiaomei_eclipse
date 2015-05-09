@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TitleBar extends FrameLayout implements View.OnClickListener{
 
 	private TextView mTitleView;
 	
-	private ImageButton mBackButton;
+	private ImageView mBackButton;
 	
 	private ViewGroup mCenterContainer;
 	
@@ -45,7 +46,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener{
 	
 	private void setupViews(){
 		mTitleView = (TextView) findViewById(R.id.title);
-		mBackButton = (ImageButton)findViewById(R.id.back);
+		mBackButton = (ImageView)findViewById(R.id.back);
 		mCenterContainer = (ViewGroup) findViewById(R.id.center_container);
 		mLoginButton =  (TextView) findViewById(R.id.login);
 		mRegisterButton =  (TextView) findViewById(R.id.register);

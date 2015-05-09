@@ -159,7 +159,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	    }else{ //产品页进入
 	    	android.util.Log.d("111", "产品页进入");
 	        goodsId = getIntent().getStringExtra("goods_id");
-	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "123");
+	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "");
 	        showProgress();
 	    }
 	}
@@ -175,7 +175,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
             return ;
         Order.DataDetail.GoodsInfo goodsInfo = orderDataDetail.getGoodsInfo();
         goodsTitleTv.setText(goodsInfo.getGoodsName());
-        goodsPriceTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + orderDataList.getOrderAmount());
+        goodsPriceTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + orderDataList.getGoodsPay());
         ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
         Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
         mechanismNameTv.setText(hospInfo.getHospName());
@@ -206,7 +206,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			break;
 		case ORDER_FINISH_PAY:
 			hidePay();
-			tv.setText("取消订单");
+			tv.setText("申请退款");
 			tv.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -319,9 +319,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			}else{
 				value.setText(info.getValue());
 			}
-		}else if(i==5){ //执照
+		}else if(i==5){ //护照号
 			if(TextUtils.isEmpty(info.getValue())||"0".equals(info.getValue())){
-				value.setHint("请输入执照");
+				value.setHint("请输入护照号");
 			}else{
 				value.setText(info.getValue());
 			}
@@ -344,16 +344,23 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 				@Override
 				public void successCallBack() {
 					setEditEnable(false);
-					hidePay();
 					TextView tv = (TextView) findViewById(R.id.order_status);
-					tv.setText("取消订单");
+					hidePay();
+					tv.setText("申请退款");
+					tv.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							String id = mControl.getModel().getOrder().getDataList().getId();
+							mControl.cancelUserOrderUrl(id); 
+						}
+					});
 					STATE_CHANGED = true;
 				}
 				@Override
 				public void failureCallBack() {
 				}
 			});
-			ZhifubaoPayManager.getInstance().pay(order.getDataList().getGoodsName(),order.getDataList().getGoodsName(),"0.01"/*order.getDataList().getOrderAmount()*/,order.getDataList().getId());
+			ZhifubaoPayManager.getInstance().pay(order.getDataList().getGoodsName(),order.getDataList().getGoodsName(),order.getDataList().getGoodsPay(),order.getDataList().getId());
 		}else{
 			mControl.getPayWechatInfo(order.getDataList().getId(), UserUtil.getUser().getToken());
 		}

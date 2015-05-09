@@ -6,14 +6,18 @@
     android:background="@color/color_titlebar_background"
     android:orientation="vertical" >
     
-<ImageButton 
+<ImageView 
     android:id="@+id/back"
     android:layout_gravity="center_vertical"
     android:layout_width="wrap_content"
+    android:paddingLeft="0dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:layout_height="wrap_content"        
     android:layout_marginLeft="@dimen/item_margin_normal"
     android:visibility="gone"
-    android:background="@drawable/back"/>    
+    android:src="@drawable/back"/>    
 	<LinearLayout 
 	    android:id="@+id/center_container"
 	    android:layout_width="match_parent"

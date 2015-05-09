@@ -188,7 +188,7 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				ImageLoader.getInstance().displayImage(dataList.getGoodsImg(), holder.goodsIconIv);
 				holder.goodsNameTv.setText(dataList.getGoodsName());
 				holder.statusTv.setText(dataList.getStatus());
-				holder.orderAmountTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + dataList.getOrderAmount());
+				holder.orderAmountTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + dataList.getGoodsPay());
 				holder.payButton.setTag(Integer.valueOf(position));
 				int status = Integer.valueOf(dataList.getStatus());
 				switch (status) {

@@ -14,6 +14,8 @@ public class Section {
 	
 	private String list_String;
 	
+	private String viewCount;
+	
 	private String des;
 	
 	private List<Entity> list = null;
@@ -73,6 +75,14 @@ public class Section {
 
 	public void setDes(String des) {
 		this.des = des;
+	}
+
+	public String getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(String viewCount) {
+		this.viewCount = viewCount;
 	}
 
 

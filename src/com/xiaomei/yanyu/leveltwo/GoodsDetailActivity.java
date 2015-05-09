@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -66,7 +67,16 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
 		});
 		mLoadingView = findViewById(R.id.loading_layout);
 	}
-	
+	public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        if (url.startsWith("tel:")) { 
+                Intent intent = new Intent(Intent.ACTION_DIAL,
+                        Uri.parse(url)); 
+                startActivity(intent); 
+        }else if(url.startsWith("http:") || url.startsWith("https:")) {
+            view.loadUrl(url);
+        }
+        return true;
+    }
 	private void initCordova(){
 		mCordovaWebView = (CordovaWebView) findViewById(R.id.tutoria_view);
 		mCordovaWebView.getSettings().setBlockNetworkImage(true);
@@ -76,6 +86,18 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
 				super.onPageFinished(view, url);
 				mCordovaWebView.getSettings().setBlockNetworkImage(false);
 			}
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				if (url.startsWith("tel:")) {
+					Intent intent = new Intent(Intent.ACTION_DIAL, Uri
+							.parse(url));
+					startActivity(intent);
+					return true;
+				} 
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+			
+			
 		});
 		String url = getIntent().getStringExtra("url");
         Config.init(this);

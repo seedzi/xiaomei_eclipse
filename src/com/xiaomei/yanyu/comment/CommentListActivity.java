@@ -175,6 +175,13 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         Toast.makeText(this, "加载完成", 0).show();
     }
     
+    public void getCommentListDataCallBackNull(){
+    	Toast.makeText(this, "暂无评论", 0).show();
+        dissProgress();
+        mPullToRefreshListView.onRefreshComplete();
+        showNull();
+    }
+    
     public void getCommentListDataExceptionCallBack(){
         Toast.makeText(this, "网络异常", 0).show();
         dissProgress();
@@ -214,6 +221,11 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
+	private void showNull(){
+		mLoadingView.setVisibility(View.GONE);
+		mPullToRefreshListView.setVisibility(View.GONE);
+		mEmptyView.setVisibility(View.GONE);
+	}
     
     // ====================================== Adapter ============================================
     private class MyAdapter extends BaseAdapter {

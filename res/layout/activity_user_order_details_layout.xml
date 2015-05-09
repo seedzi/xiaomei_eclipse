@@ -199,6 +199,7 @@
        android:background="@color/color_white">
     <!-- 微信支付 -->
 	    <RelativeLayout
+	        android:visibility="gone"
 	        android:id="@+id/pay_weixin"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" 
@@ -233,6 +234,7 @@
 	        android:layout_marginLeft="15dp"
 	        android:background="#e2e2e2"
 	    	android:layout_height="1px"        
+	    	android:visibility="gone"
 	        android:layout_width="match_parent"/>
 		    
 	        <!-- 支付宝支付 -->

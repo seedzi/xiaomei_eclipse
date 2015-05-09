@@ -64,7 +64,7 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
 		
 		ViewGroup item3 = (ViewGroup) findViewById(R.id.item3);
 	    item3.setOnClickListener(this);
-		setUpItem(item3, R.drawable.icon_about_us, "关于小美");
+		setUpItem(item3, R.drawable.icon_about_us, "关于颜语");
 		
 		ViewGroup item4 = (ViewGroup) findViewById(R.id.item4);
 		setUpItem(item4, R.drawable.icon_about_welcome, "欢迎页面");
@@ -94,7 +94,7 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
             GoodsDetailActivity.startActivity(this, url);
             break;
         case R.id.item1:
-            url = "http://z.drxiaomei.com/m/flow.html";
+            url = "http://z.drxiaomei.com/m/agreement.html";
             GoodsDetailActivity.startActivity(this, url);
             break;
         case R.id.item5:

@@ -181,7 +181,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		mAdapter.getData().addAll(mControl.getData());
 		mAdapter.notifyDataSetChanged();
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
+//		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
 	}
 	
 	public void getMoreListDataFromNetAysnExceptionCallBack(){
@@ -272,7 +272,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			int id = v.getId();
 			switch (id) {
 			case R.id.share:
-				SystemUtils.shareMsg(getActivity(), ""/*getActivity().getClass().getSimpleName()*/, "颜语", "小美医生", null);
+//				SystemUtils.shareMsg(getActivity(), ""/*getActivity().getClass().getSimpleName()*/, "颜语", "小美医生", null);
 				break;
 			case R.id.share_img:
 				try {

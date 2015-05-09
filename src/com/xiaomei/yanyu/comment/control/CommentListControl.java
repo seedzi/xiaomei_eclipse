@@ -34,11 +34,15 @@ public class CommentListControl extends BaseControl {
                     id, type, "1", PER_PAGE);
            mCommentModel.setCommentList(list);
            mCommentModel.setCurrentPage(1);
-           if(list!=null && list.size()>0)
+           if(list!=null && list.size()>0){
         	   sendMessage("getCommentListDataCallBack");
-           else
-        	   sendMessage("getCommentListDataExceptionCallBack");
+        	   android.util.Log.d("111", "getCommentListDataCallBack");
+           }else{
+        	   sendMessage("getCommentListDataCallBackNull");
+        	   android.util.Log.d("111", "getCommentListDataCallBackNull");
+           }
         } catch (Exception e) {
+        	android.util.Log.d("111", "getCommentListDataExceptionCallBack");
             sendMessage("getCommentListDataExceptionCallBack");
             e.printStackTrace();
         }
