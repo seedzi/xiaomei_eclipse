@@ -98,12 +98,14 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private final int ORDER_NO_PAY = 1;
 	/**已付款*/
 	private final int ORDER_FINISH_PAY = 2;
-	/**已取消*/
+	/**退款申请中*/
 	private final int ORDER_CANCEL = 3;
 	/**交易完成*/
 	private final int ORDER_FINISH = 4;
 	/**评论完成*/
 	private final int ORDER_COMMENT_FINISH = 5;
+	/**退款已完成*/
+	private final int ORDER_CANEL_FINISH = 6;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -217,7 +219,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			break;
 		case ORDER_CANCEL:
 			hidePay();
-			tv.setText("订单已取消");
+			tv.setText("退款申请中");
 			setEditEnable(false);
 			break;
 		case ORDER_FINISH:
@@ -234,6 +236,11 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		case ORDER_COMMENT_FINISH:
 			hidePay();
 			tv.setText("交易完成");
+			setEditEnable(false);
+			break;
+		case ORDER_CANEL_FINISH:
+			hidePay();
+			tv.setText("退款完成");
 			setEditEnable(false);
 			break;
 		default:
@@ -264,9 +271,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	// ====================================  CallBack =========================================================
 	public void cancelUserOrderUrlCallBack(){ 
 		TextView tv = (TextView) findViewById(R.id.order_status);
-		tv.setText("订单已取消");
+		tv.setText("退款申请中");
 		setEditEnable(false);
-		Toast.makeText(this, "订单已取消", 0).show();
+		Toast.makeText(this, "退款申请中", 0).show();
 		STATE_CHANGED = true;
 	}
 	

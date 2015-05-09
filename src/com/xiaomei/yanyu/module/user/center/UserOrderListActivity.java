@@ -202,7 +202,7 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 					break;
 				case 3: //
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("订单已取消");
+					holder.payButton.setText("退款申请中");
 					break;
 				case 4:
 					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
@@ -211,6 +211,10 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				case 5:
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
 					holder.payButton.setText("完成");
+					break;
+				case 6:
+					holder.payButton.setBackgroundResource(R.drawable.payment_over);
+					holder.payButton.setText("退款已完成");
 					break;
 				default:
 					break;
