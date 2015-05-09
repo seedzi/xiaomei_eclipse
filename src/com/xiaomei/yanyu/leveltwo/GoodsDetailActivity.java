@@ -17,6 +17,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,6 +69,14 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
 	
 	private void initCordova(){
 		mCordovaWebView = (CordovaWebView) findViewById(R.id.tutoria_view);
+		mCordovaWebView.getSettings().setBlockNetworkImage(true);
+		mCordovaWebView.setWebViewClient(new WebViewClient(){
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				super.onPageFinished(view, url);
+				mCordovaWebView.getSettings().setBlockNetworkImage(false);
+			}
+		});
 		String url = getIntent().getStringExtra("url");
         Config.init(this);
         Config.addWhiteListEntry(HttpUrlManager.GOODS_DETAIL_URL, true);

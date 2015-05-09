@@ -84,7 +84,7 @@
 	        android:layout_height="wrap_content"
 		 	android:layout_width="wrap_content"	   
 		 	android:textColor="#b5b5b5"     
-	        android:text="整形介绍"/>
+	        android:text="微整形"/>
 	</LinearLayout>
 	
         <!--积分奖励  -->

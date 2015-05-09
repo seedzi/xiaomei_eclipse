@@ -1,6 +1,7 @@
 package com.xiaomei.yanyu.levelone;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.levelone.adapter.HomeAdapter;
 import com.xiaomei.yanyu.levelone.control.HomeControl;
@@ -34,9 +35,12 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
 	
+	private AbstractActivity mAc;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		mAc = (AbstractActivity) getActivity();
 		if(mRootView == null){
 			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_home_layout, null);
 			initView();
@@ -124,7 +128,6 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void getHomeListEntityAsynCallBack(){
 		mIsRefresh = false;
 		dissProgress();
-		
 		if(mPullToRefreshListView.isRefreshing())
 			mPullToRefreshListView.onRefreshComplete();
 		mAdapter.setData(mControl.getSectionList());
@@ -152,14 +155,12 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
 		mAdapter.getData().addAll(mControl.getSectionList());
 		mAdapter.notifyDataSetChanged();
-		
-		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
 	public void getHomeListEntityMoreAsynCallBackException(){
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		Toast.makeText(getActivity(), "没有更多数据", 0).show();
+		mAc.showToast("没有更多数据啦");
 	}
 	
 	// ===========================  Scroll ====================================

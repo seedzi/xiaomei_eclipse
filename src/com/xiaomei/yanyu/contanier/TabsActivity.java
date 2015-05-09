@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.KeyCharacterMap.KeyData;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengDownloadListener;
 import com.umeng.update.UmengUpdateAgent;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
@@ -54,6 +55,18 @@ public class TabsActivity extends  AbstractActivity{
        // ================== UM升级 =====================
         UmengUpdateAgent.setDefault();
         UmengUpdateAgent.update(this);
+//        UmengUpdateAgent.setDownloadListener(new UmengDownloadListener() {
+//			@Override
+//			public void OnDownloadUpdate(int arg0) {
+//			}
+//			@Override
+//			public void OnDownloadStart() {
+//			}
+//			
+//			@Override
+//			public void OnDownloadEnd(int arg0, String arg1) {
+//			}
+//		});
         // ================== UM升级 =====================
     }
     

@@ -108,17 +108,14 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 		mlistViews = new ArrayList<View>();
 		ViewGroup  convertView = (ViewGroup) mLInflater.inflate(R.layout.item_beautiful_ring_details, null);
 		ImageView iv = (ImageView) convertView.findViewById(R.id.item_img);
-		iv.setImageResource(R.drawable.sex_1);
 		mlistViews.add(convertView);
 		
 		convertView = (ViewGroup) mLInflater.inflate(R.layout.item_beautiful_ring_details, null);
 		iv = (ImageView) convertView.findViewById(R.id.item_img);
-		iv.setImageResource(R.drawable.sex_2);
 		mlistViews.add(convertView);
 		
 		convertView = (ViewGroup) mLInflater.inflate(R.layout.item_beautiful_ring_details, null);
 		iv = (ImageView) convertView.findViewById(R.id.item_img);
-		iv.setImageResource(R.drawable.sex_3);
 		mlistViews.add(convertView);
 	}
 	

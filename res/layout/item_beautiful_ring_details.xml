@@ -17,8 +17,7 @@
     android:id="@+id/item_img"
     android:layout_width="310dp"
     android:layout_height="337dp"
-    android:scaleType="fitXY"
-    android:src="@drawable/sex_1"/>
+    android:scaleType="fitXY"/>
 <RelativeLayout 
         android:id="@+id/bottom"
         android:layout_alignParentBottom="true"
