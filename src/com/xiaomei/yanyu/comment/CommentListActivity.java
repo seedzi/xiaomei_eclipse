@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -118,6 +119,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         
         mAdapter = new MyAdapter(this);
         mListView.setAdapter(mAdapter);
+        mListView.setOnScrollListener(this);
         
         mPullToRefreshListView.setOnRefreshListener(this);
         
@@ -156,7 +158,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         int position = mListView.getLastVisiblePosition();
-        if(!mIsRefresh && position == mAdapter.getCount() && mAdapter.getCount()>=LOAD_MORE_COUNT){
+        android.util.Log.d("111", "position = " + position + ",mAdapter.getCount() = " + mAdapter.getCount() + ",mIsRefresh = " + mIsRefresh);
+        if(!mIsRefresh && position == mAdapter.getCount()/* && mAdapter.getCount()>=LOAD_MORE_COUNT*/){
             getMoreData();
         }
     }
@@ -183,12 +186,10 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     }
     
     private void getMoreData(){
-        if(mIsRefresh)
-            return;
         if(!mRefreshLayout.isShown())
-            mRefreshLayout.setVisibility(View.VISIBLE);
-        mPullToRefreshListView.addFooterView(mRefreshLayout);
-        mControl.getCommentListDataMore("1010", "goods");
+//            mRefreshLayout.setVisibility(View.VISIBLE);
+//        mPullToRefreshListView.addFooterView(mRefreshLayout);
+        mControl.getCommentListDataMore(goodsId, type);
         mIsRefresh = true;
     }
     
@@ -200,6 +201,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
         Toast.makeText(this, "加载完成", 0).show();
+        mIsRefresh = false;
     }
     
     public void getCommentListDataCallBackNull(){
@@ -207,6 +209,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
         showNull();
+        mIsRefresh = false;
     }
     
     public void getCommentListDataExceptionCallBack(){
@@ -214,24 +217,36 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         dissProgress();
         showEmpty();
         mPullToRefreshListView.onRefreshComplete();
+        mIsRefresh = false;
     }
     
     public void getCommentListDataMoreCallBack(){
         mAdapter.getData().addAll(mControl.getModel().getCommentList());
         mAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "加载完成", 0).show();
+        mIsRefresh = false;
+//        mPullToRefreshListView.removeFooterView(mRefreshLayout);
+//        Toast.makeText(this, "加载完成", 0).show();
     }
     
     public void getCommentListDataMoreExceptionCallBack(){
-        Toast.makeText(this, "网络异常", 0).show();
+//        Toast.makeText(this, "网络异常", 0).show();
+      	mIsRefresh = false;
+//  		mPullToRefreshListView.removeFooterView(mRefreshLayout);
     }
     
     public void actionShareCommentCallBack(){
     	Toast.makeText(this, "评论成功", 0).show();
+    	initData();
+    	commentEdit.setText("");
+    	InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+    	imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
     }
     
     public void actionShareCommentExceptionCallBack(){
     	Toast.makeText(this, "评论失败", 0).show();
+    	commentEdit.setText("");
+    	InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+    	imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
     }
     
     // ====================================== loading ============================================

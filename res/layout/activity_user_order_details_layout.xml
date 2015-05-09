@@ -140,7 +140,7 @@
              android:textSize="13sp"
              android:textColor="#b4b4b4"
              android:text="X1"
-             />
+             android:visibility="gone"/>
 
     </RelativeLayout>
     

@@ -41,6 +41,7 @@
     <include   layout="@layout/title_bar_layout"    android:id="@+id/title_bar"/>
     
     <RelativeLayout 
+        android:layout_below="@id/title_bar"
         android:layout_above="@id/comment_layout"
         android:layout_height="match_parent"
         android:layout_width="match_parent"

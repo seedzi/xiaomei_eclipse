@@ -210,12 +210,12 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				case 4:
 					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
 					holder.payButton.setText("去评论");
-					holder.statusTv.setText("交易完成");
+					holder.statusTv.setText("已消费");
 					break;
 				case 5:
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
 					holder.payButton.setText("订单详情");
-					holder.statusTv.setText("评论结束");
+					holder.statusTv.setText("交易结束");
 					break;
 				case 6:
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);

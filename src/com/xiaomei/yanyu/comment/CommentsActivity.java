@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,6 +69,9 @@ public class CommentsActivity extends AbstractActivity<CommentControl> implement
         setContentView(R.layout.activity_comment_layout);
         setUpViews();
         initData();
+        
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE); 
+        imm.hideSoftInputFromWindow(mCommentEdit.getWindowToken(),0); 
     }
     
     private void setUpViews(){
@@ -92,6 +96,7 @@ public class CommentsActivity extends AbstractActivity<CommentControl> implement
         mGradeEffect = (GoodsGrade) findViewById(R.id.grade_effect);
         
         mCommentEdit = (EditText) findViewById(R.id.comment_edit);
+        mCommentEdit.clearFocus();
         mCommentButton = (TextView) findViewById(R.id.comment_button);
         mCommentButton.setOnClickListener(this);
     }
