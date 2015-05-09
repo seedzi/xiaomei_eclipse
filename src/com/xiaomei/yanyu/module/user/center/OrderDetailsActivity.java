@@ -237,6 +237,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			hidePay();
 			tv.setText("交易完成");
 			setEditEnable(false);
+			findViewById(R.id.order_status).setVisibility(View.GONE);
 			break;
 		case ORDER_CANEL_FINISH:
 			hidePay();

@@ -160,6 +160,7 @@
         android:id="@+id/order_status"
         android:paddingTop="20dp"
         android:paddingRight="15dp"
+        android:paddingBottom="20dp"
         android:textColor="#969696"
         android:textSize="17sp"
         android:text="取消订单"

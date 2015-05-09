@@ -195,26 +195,32 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				case 1: //未支付
 					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
 					holder.payButton.setText("立即付款");
+					holder.statusTv.setText("未付款");
 					break;
 				case 2: //已付款
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
 					holder.payButton.setText("订单详情");
+					holder.statusTv.setText("已付款");
 					break;
 				case 3: //
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("退款申请中");
+					holder.payButton.setText("订单详情");
+					holder.statusTv.setText("退款审核中");
 					break;
 				case 4:
 					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
 					holder.payButton.setText("去评论");
+					holder.statusTv.setText("交易完成");
 					break;
 				case 5:
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("完成");
+					holder.payButton.setText("订单详情");
+					holder.statusTv.setText("评论结束");
 					break;
 				case 6:
 					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("退款已完成");
+					holder.payButton.setText("订单详情");
+					holder.statusTv.setText("退款完成");
 					break;
 				default:
 					break;
@@ -236,8 +242,17 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 			case 2:
 				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
 				break;
+			case 3:
+				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+				break;
 			case 4:
 				CommentsActivity.startActivity4Result(UserOrderListActivity.this, order);
+				break;
+			case 5:
+				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+				break;
+			case 6:
+				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
 				break;
 
 			default:
