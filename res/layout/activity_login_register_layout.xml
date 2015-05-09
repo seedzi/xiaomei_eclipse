@@ -129,7 +129,6 @@
         android:layout_margin="@dimen/activity_vertical_margin"
         android:layout_below="@id/root"
         android:layout_marginTop="22dp"
-        android:layout_marginRight="20dp"
         android:textColor="#bababa"
         android:textSize="15sp"
         android:layout_alignParentRight="true"
@@ -153,6 +152,19 @@
         android:textSize="16sp"/>
 
 
+    <TextView 
+        android:id="@+id/qq_sns"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/launch"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:background="@drawable/qq_login_btn"
+        android:textColor="#ffffff"
+        android:text="QQ登录"
+        android:textSize="16sp"/>
     <LinearLayout 
         android:id="@+id/sns"
         android:layout_marginTop="61dp"
@@ -160,20 +172,22 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"><!-- android:weightSum="2" -->
+        android:weightSum="2"
+        android:visibility="gone"
+        android:layout_margin="@dimen/activity_horizontal_margin"><!--  -->
         <ImageView 
             android:id="@+id/login_qq"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
 			android:layout_gravity="center"            
             android:layout_height="wrap_content"
-            android:src="@drawable/login_qq"/><!-- android:layout_weight="1" -->
+            android:layout_weight="1"
+            android:src="@drawable/login_qq"/><!--  -->
         <ImageView 
             android:id="@+id/login_weixin"
             android:layout_width="0dp"
-            
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-  			android:src="@drawable/login_weixin"
-  			android:visibility="gone"/><!-- android:layout_weight="1" -->
+  			android:src="@drawable/login_weixin"/>
     </LinearLayout> 
     
     <!--  SNS  -->

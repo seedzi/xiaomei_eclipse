@@ -10,6 +10,7 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.bean.CommentItem;
+import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.comment.model.CommentModel;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.yuekuapp.BaseControl;
@@ -30,7 +31,7 @@ public class CommentListControl extends BaseControl {
     @AsynMethod
     public void getCommentListData(String id,String type){
         try {
-            List<CommentItem> list = XiaoMeiApplication.getInstance().getApi().showCommentList(UserUtil.getUser().getToken(),
+            List<CommentItem> list = XiaoMeiApplication.getInstance().getApi().showCommentList(
                     id, type, "1", PER_PAGE);
            mCommentModel.setCommentList(list);
            mCommentModel.setCurrentPage(1);
@@ -51,7 +52,7 @@ public class CommentListControl extends BaseControl {
     @AsynMethod
     public void getCommentListDataMore(String id,String type){
         try {
-            List<CommentItem>  list =XiaoMeiApplication.getInstance().getApi().showCommentList(UserUtil.getUser().getToken(),
+            List<CommentItem>  list =XiaoMeiApplication.getInstance().getApi().showCommentList(
                     id, type, String.valueOf(mCommentModel.getCurrentPage() +1), PER_PAGE);
             mCommentModel.setCommentList(list);
             if(list!=null && list.size()>0){
@@ -67,11 +68,17 @@ public class CommentListControl extends BaseControl {
     @AsynMethod
     public void actionShareComment(String id,String type,String comment){
         try {
-            XiaoMeiApplication.getInstance().getApi().actionGoodsComment(UserUtil.getUser().getToken(),
+        	NetResult netResult = XiaoMeiApplication.getInstance().getApi().actionGoodsComment(UserUtil.getUser().getToken(),
                     id,
                     type, 
                     comment);
+        	if(netResult!=null && "0".equals(netResult.getCode())){
+        		sendMessage("actionShareCommentCallBack");
+        	}else{
+        		sendMessage("actionShareCommentExceptionCallBack");
+        	}
         } catch (Exception e) {
+        	sendMessage("actionShareCommentExceptionCallBack");
             e.printStackTrace();
         } 
     }

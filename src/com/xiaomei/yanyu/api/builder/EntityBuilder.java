@@ -28,8 +28,8 @@ public class EntityBuilder extends AbstractJSONBuilder<Entity> {
 			entity.setDate(jsonObject.getString("date"));
 		if(jsonObject.has("avator"))
 			entity.setAvator(jsonObject.getString("avator"));
-		if(jsonObject.has("type"))
-			entity.setTitle(jsonObject.getString("type"));
+//		if(jsonObject.has("type"))
+//			entity.setType(jsonObject.getString("type"));
 		return entity;
 	}
 }

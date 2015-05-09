@@ -24,7 +24,9 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.comment.control.CommentListControl;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -38,12 +40,21 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         Intent intent = new Intent(context,CommentListActivity.class);
         context.startActivity(intent);
     }
-    
+    @Deprecated
     public static void startActivity(Context context,String type,String goodsId){
         Intent intent = new Intent(context,CommentListActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("goodsId", goodsId);
         android.util.Log.d("111", "type = " + type + ",goodsId = " + goodsId);
+        context.startActivity(intent);
+    }
+    
+    public static void startActivity(Context context,String type,String goodsId,boolean showComment){
+        Intent intent = new Intent(context,CommentListActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("goodsId", goodsId);
+        intent.putExtra("showComment", showComment);
+        android.util.Log.d("111", "type = " + type + ",goodsId = " + goodsId + ",showComment = " + showComment);
         context.startActivity(intent);
     }
     
@@ -63,6 +74,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     private final int LOAD_MORE_COUNT = 10;
     
 	private View mEmptyView;
+	
+	private boolean showComment;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +84,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         if(getIntent().getExtras()!=null){
             type = getIntent().getExtras().getString("type");
             goodsId = getIntent().getExtras().getString("goodsId");
+            showComment = getIntent().getExtras().getBoolean("showComment");
         }
         setUpViews();
         initData();
@@ -112,7 +126,13 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mControl.actionShareComment(goodsId, type, commentEdit.getText().toString());
+            	android.util.Log.d("111", "goodsId = " + goodsId + ",type = " + type + ",comment = " + commentEdit.getText().toString());
+            	if(UserUtil.getUser()==null){
+            		LoginAndRegisterActivity.startActivity(CommentListActivity.this, true);
+            		finish();
+            	}else{
+            		 mControl.actionShareComment(goodsId, type, commentEdit.getText().toString());
+            	}
             }
         });
         
@@ -124,6 +144,13 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 				initData();
 			}
 		});
+		
+		View commentLayout = findViewById(R.id.comment_layout);
+		if(showComment){
+			commentLayout.setVisibility(View.VISIBLE);
+		}else{
+			commentLayout.setVisibility(View.GONE);
+		}
     }
     
     @Override
@@ -197,6 +224,14 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     
     public void getCommentListDataMoreExceptionCallBack(){
         Toast.makeText(this, "网络异常", 0).show();
+    }
+    
+    public void actionShareCommentCallBack(){
+    	Toast.makeText(this, "评论成功", 0).show();
+    }
+    
+    public void actionShareCommentExceptionCallBack(){
+    	Toast.makeText(this, "评论失败", 0).show();
     }
     
     // ====================================== loading ============================================

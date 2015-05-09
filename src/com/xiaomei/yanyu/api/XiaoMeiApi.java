@@ -461,14 +461,13 @@ public class XiaoMeiApi {
 	   /**
      * 获取用户列表列表
      */
-	public List<CommentItem> showCommentList(String token,String id,String type,String curpage,String perpage)
+	public List<CommentItem> showCommentList(String id,String type,String curpage,String perpage)
 	    throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 	       BasicNameValuePair[] values = {
 	    		    new BasicNameValuePair("id", id),
 	                new BasicNameValuePair("type", type),
 	                new BasicNameValuePair("curpage", curpage),
 	                new BasicNameValuePair("perpage", perpage),
-	                new BasicNameValuePair("token", token),
 	                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
 	        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.showCommentList(),
 	                values[0],
@@ -476,7 +475,6 @@ public class XiaoMeiApi {
 	                values[2],
 	                values[3],
 	                values[4],
-	                values[5],
 	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 	        return mHttpApi.doHttpRequestObject(httpGet, new ListCommentBuilder());
 	}
@@ -512,10 +510,10 @@ public class XiaoMeiApi {
 	/**
      * 针对分享提交评论
      */
-	public void actionGoodsComment(String token,String goodsId,String typeid,String comment)
+	public NetResult actionGoodsComment(String token,String goodsId,String typeid,String comment)
         throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {	    
 	       BasicNameValuePair[] values = {new BasicNameValuePair("token", token),
-	                new BasicNameValuePair("goods_id", goodsId),
+	                new BasicNameValuePair("shareid", goodsId),
 	                new BasicNameValuePair("type_id", typeid),
 	                new BasicNameValuePair("comment", comment),
 	                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
@@ -526,7 +524,7 @@ public class XiaoMeiApi {
 	                values[3],
 	                values[4],
 	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-	        mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
+	        return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
     // ========================================================================================
     // 第三方登录(NET)

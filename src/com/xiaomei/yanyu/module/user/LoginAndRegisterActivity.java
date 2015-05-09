@@ -212,6 +212,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		case	R.id.get_verification:
 			getVerification(mRegisterUserMobileEdit.getText().toString());
 			break;
+		case R.id.qq_sns:	
 		case R.id.login_qq:
 			loginQq(this);
 			break;
@@ -336,6 +337,8 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
 	    mQqLogin.setOnClickListener(this);
 	    mWeixinLogin.setOnClickListener(this);
+	    
+	    findViewById(R.id.qq_sns).setOnClickListener(this);
 	}
 	
 	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");

@@ -149,7 +149,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			if(holder.personIconView!=null && !TextUtils.isEmpty( entity.getNumcomment()))
 				ImageLoader.getInstance().displayImage(entity.getAvator(), holder.personIconView); 
 			if(holder.personnameView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
-				holder.personnameView.setText(entity.getNumfavorite());
+				holder.personnameView.setText(entity.getUsername());
 			if(holder.timeView!=null && !TextUtils.isEmpty( entity.getDate()))
 				holder.timeView.setText(entity.getDate());
 			if(holder.imgView!=null && !TextUtils.isEmpty( entity.getImg())){
@@ -157,10 +157,11 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 				ImageLoader.getInstance().displayImage(entity.getImg(), holder.imgView);
 				holder.imgView.getLayoutParams().height = ScreenUtils.getScreenWidth(mContext)*516/720;
 			}
-			if(holder.titleView!=null && !TextUtils.isEmpty( entity.getTitle()))
+
+//			if(holder.titleView!=null && !TextUtils.isEmpty( entity.getTitle()))
+			android.util.Log.d("333", "title = " + entity.getTitle() );
 				holder.titleView.setText(entity.getTitle());
-			if(holder.commontNumView!=null && !TextUtils.isEmpty( entity.getNumcomment()))
-				holder.commontNumView.setText(entity.getNumcomment());
+			holder.bubleSize.setText(entity.getNumcomment());
 			if(holder.favoriteNumView!=null && !TextUtils.isEmpty( entity.getNumfavorite()))
 				holder.favoriteNumView.setText(entity.getNumfavorite());
 				holder.url = entity.getUrl();
@@ -270,7 +271,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.timeView = (TextView) vGroup.findViewById(R.id.time);
 		holder.imgView = (ImageView) vGroup.findViewById(R.id.icon);
 		holder.titleView = (TextView) vGroup.findViewById(R.id.title);
-		holder.commontNumView = (TextView) vGroup.findViewById(R.id.like_size);
+		holder.favoriteNumView = (TextView) vGroup.findViewById(R.id.like_size);
 		
 		holder.youhui = vGroup.findViewById(R.id.youhui);
 		holder.payment = vGroup.findViewById(R.id.payment);
@@ -278,6 +279,7 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 		holder.riji = vGroup.findViewById(R.id.riji);
 		holder.root = (ViewGroup) vGroup.findViewById(R.id.root);
 		holder.line = vGroup.findViewById(R.id.line);
+		holder.bubleSize = (TextView) vGroup.findViewById(R.id.buble_size);
 		//TODO :处理图片大小
 //		holder.favoriteNumView.getLayoutParams().width = imageWidth;
 	}
@@ -290,8 +292,8 @@ public class HomeAdapter extends BaseAdapter implements View.OnClickListener{
 			private TextView timeView;  //时间
 			private ImageView imgView;  //icon图
 			private TextView titleView; //标题
-			private TextView commontNumView;  //评论数
 			private TextView favoriteNumView; //点赞
+			private TextView bubleSize;
 			private String url ;//详情页url
 			private View youhui; //优惠
 			private View payment; //赔付
