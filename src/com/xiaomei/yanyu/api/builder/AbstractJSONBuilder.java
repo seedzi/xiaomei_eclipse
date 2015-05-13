@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.api.builder;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 
 import org.json.JSONArray;
@@ -43,7 +44,8 @@ public abstract class AbstractJSONBuilder<T> implements JSONBuilder<T> {
      */
     public final void buildList(String json, Collection<T> collection) throws XiaoMeiJSONException {
         try {
-        	Log.d(TAG, "JSON="+json);
+            if(DebugRelease.isDebug)
+                Log.d(TAG, "JSON="+json);
         	if(json==null||json.trim().equals("")){
         		return;
         	}

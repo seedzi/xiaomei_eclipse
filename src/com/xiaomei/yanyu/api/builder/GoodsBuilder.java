@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.Goods;
 
 public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
@@ -16,7 +17,8 @@ public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
 	@Override
 	protected List<Goods> builder(JSONObject jsonObject) throws JSONException {
 		List<Goods> list = new ArrayList<Goods>();
-		Log.d("json", jsonObject.toString());
+		if(DebugRelease.isDebug)
+		    Log.d("json", jsonObject.toString());
 		jsonObject = jsonObject.getJSONObject("msg");
 		JSONArray jArray = jsonObject.getJSONArray("data");
 		for(int i = 0 ;i<jArray.length(); i++){

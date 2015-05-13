@@ -3,15 +3,19 @@ package com.xiaomei.yanyu.api.builder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.WechatBean;
 
 public class WechatBuilder extends AbstractJSONBuilder<WechatBean> {
 
 	@Override
 	protected WechatBean builder(JSONObject jsonObject) throws JSONException {
-		android.util.Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        android.util.Log.d("json", jsonObject.toString());
 		if(!jsonObject.has("code") || jsonObject.getInt("code")!=0){
-			android.util.Log.d("111", "null");
+		    if(DebugRelease.isDebug)
+		        if(DebugRelease.isDebug)
+		            android.util.Log.d("111", "null");
 			return null;
 		}
 		if(jsonObject.has("msg"))
@@ -31,7 +35,8 @@ public class WechatBuilder extends AbstractJSONBuilder<WechatBean> {
 			wechatBean.setAppid(jsonObject.getString("appid"));
 		if(jsonObject.has("prepayid"))
 			wechatBean.setPrepayid(jsonObject.getString("prepayid"));
-		android.util.Log.d("111", "wechatBean");
+		if(DebugRelease.isDebug)
+		    android.util.Log.d("111", "wechatBean");
 		return wechatBean;
 	}
 /*

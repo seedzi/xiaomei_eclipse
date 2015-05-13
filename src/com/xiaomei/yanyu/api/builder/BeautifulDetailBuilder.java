@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 
 public class BeautifulDetailBuilder extends AbstractJSONBuilder<BeautifulRingDetail> {
@@ -15,7 +16,8 @@ public class BeautifulDetailBuilder extends AbstractJSONBuilder<BeautifulRingDet
 	@Override
 	protected BeautifulRingDetail builder(JSONObject jsonObject)
 			throws JSONException {
-		android.util.Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        android.util.Log.d("json", jsonObject.toString());
 		jsonObject = jsonObject.getJSONObject("msg");
 		BeautifulRingDetail beautifulRingDetail = new BeautifulRingDetail();
 		if(jsonObject.has("id"))

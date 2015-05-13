@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.Section.Entity;
@@ -17,7 +18,8 @@ public class SectionBuilder extends AbstractJSONBuilder<List<Section>> {
 
 	@Override
 	protected List<Section> builder(JSONObject jsonObject) throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		jsonObject = jsonObject.getJSONObject("msg");
 		List<Section> list = new ArrayList<Section>();
 		JSONArray jsonArray = jsonObject.getJSONArray("sections");

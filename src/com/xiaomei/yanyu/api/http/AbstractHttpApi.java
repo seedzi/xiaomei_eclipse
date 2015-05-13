@@ -7,6 +7,7 @@ package com.xiaomei.yanyu.api.http;
 import android.util.Log;
 
 import com.umeng.socialize.net.utils.BaseNCodec;
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
@@ -115,7 +116,8 @@ abstract public class AbstractHttpApi implements HttpApi {
 
     protected InputStream executeHttp(HttpRequestBase httpRequest)
             throws XiaoMeiIOException, XiaoMeiCredentialsException, XiaoMeiOtherException {
-    	Log.d("URL", "url="+httpRequest.getURI().toString());
+        if(DebugRelease.isDebug)
+            Log.d("URL", "url="+httpRequest.getURI().toString());
         HttpResponse response = executeHttpRequest(httpRequest);
 
         int statusCode = response.getStatusLine().getStatusCode();
@@ -215,7 +217,8 @@ abstract public class AbstractHttpApi implements HttpApi {
     public HttpResponse doHttpRequestResponse(
             HttpRequestBase httpRequest) throws XiaoMeiCredentialsException,
             XiaoMeiIOException, XiaoMeiOtherException{
-    	Log.d("URL", "url="+httpRequest.getURI().toString());
+        if(DebugRelease.isDebug)
+            Log.d("URL", "url="+httpRequest.getURI().toString());
         HttpResponse response = executeHttpRequest(httpRequest);
         return response;
     }

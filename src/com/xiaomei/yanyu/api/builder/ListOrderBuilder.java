@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 import com.xiaomei.yanyu.bean.Order;
 
@@ -70,7 +71,8 @@ public class ListOrderBuilder extends AbstractJSONBuilder<List<Order>> {
 	*/
 	@Override
 	protected List<Order> builder(JSONObject jsonObject) throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		List<Order> list = new ArrayList<Order>();
 		if(jsonObject.has("msg")){
 			JSONArray jsonArray = jsonObject.getJSONArray("msg");

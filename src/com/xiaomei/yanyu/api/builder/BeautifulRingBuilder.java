@@ -9,13 +9,15 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 
 public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing>> {
 
 	@Override
 	protected List<BeautifulRing> builder(JSONObject jsonObject) throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		List<BeautifulRing> list = new ArrayList<BeautifulRing>();
 		if(jsonObject.has("msg"))
 			jsonObject = jsonObject.getJSONObject("msg");
@@ -59,7 +61,8 @@ public class BeautifulRingBuilder extends AbstractJSONBuilder<List<BeautifulRing
 				beautifulRing.setLink(jobject.getString("link"));
 			list.add(beautifulRing);
 		}
-		Log.d("111", "size = " + list.size());
+		if(DebugRelease.isDebug)
+		    Log.d("111", "size = " + list.size());
 		return list;
 	}
 

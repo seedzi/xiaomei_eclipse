@@ -1,6 +1,7 @@
 
 package com.xiaomei.yanyu.api.http;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.api.builder.JSONBuilder;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
@@ -64,12 +65,14 @@ public class HttpApiWithSession extends AbstractHttpApi {
     public String doHttpRequestString(HttpRequestBase httpRequest)
             throws XiaoMeiCredentialsException, XiaoMeiOtherException,
             XiaoMeiIOException {
-    	android.util.Log.d("111", "doHttpRequestString ");
+        if(DebugRelease.isDebug)
+            android.util.Log.d("111", "doHttpRequestString ");
         InputStream in = executeHttp(httpRequest);
         try {
 //            return StringUtil.convertStreamToString(in);
         	String s = StringUtil.convertStreamToString(in);
-        	android.util.Log.d("111", "sss = " + s);
+        	if(DebugRelease.isDebug)
+        	    android.util.Log.d("111", "sss = " + s);
         	return s;
         } finally {
             if (in != null) {

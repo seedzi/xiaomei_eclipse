@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.Hospital;
 
 public class HospitalBuilder extends AbstractJSONBuilder<List<Hospital>>{
@@ -44,7 +45,8 @@ public class HospitalBuilder extends AbstractJSONBuilder<List<Hospital>>{
 	@Override
 	protected List<Hospital> builder(JSONObject jsonObject)
 			throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		List<Hospital> list = new ArrayList<Hospital>();
 		JSONArray jsonArray = null;
 		if(jsonObject.has("msg"))

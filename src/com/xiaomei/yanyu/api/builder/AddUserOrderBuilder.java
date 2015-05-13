@@ -9,13 +9,15 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.Order;
 
 public class AddUserOrderBuilder extends AbstractJSONBuilder<Order> {
 
 	@Override
 	protected Order builder(JSONObject jsonObject) throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		Order order = null;
 		if(jsonObject.has("msg")){
 			JSONObject jObj = jsonObject.getJSONObject("msg");
@@ -92,7 +94,8 @@ public class AddUserOrderBuilder extends AbstractJSONBuilder<Order> {
 				}
 				order.setDataDetail(orderDataDetail);
 			}
-			android.util.Log.d("order", "order = " + order);
+			if(DebugRelease.isDebug)
+			    android.util.Log.d("order", "order = " + order);
 		}
 		return order;
 	}

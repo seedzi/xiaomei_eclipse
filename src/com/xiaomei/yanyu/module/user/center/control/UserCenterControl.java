@@ -7,6 +7,7 @@ import org.apache.cordova.api.LOG;
 import android.app.Activity;
 import android.text.TextUtils;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.Payment.WeiXinPayManager;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
@@ -51,7 +52,8 @@ public class UserCenterControl extends BaseControl {
 		String token = user.getToken();
 		try {
 			Order order = XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId, username, mobile, passport, token,"add");
-			android.util.Log.d("111", "order = " + order);
+			if(DebugRelease.isDebug)
+			    android.util.Log.d("111", "order = " + order);
 			mModel.setOrder(order);
 			if(order == null )
 				sendMessage("addUserOrderAsynExceptionCallBack");
@@ -65,7 +67,8 @@ public class UserCenterControl extends BaseControl {
 	
     @AsynMethod
     public void updateUserOrder2ServerAsyn(String orderId,String username, String goodsId, String passport,String mobile) {
-    	android.util.Log.d("111", "orderId = " + orderId);
+        if(DebugRelease.isDebug)
+            android.util.Log.d("111", "orderId = " + orderId);
         String token = UserUtil.getUser().getToken();
         String userid = UserUtil.getUser().getUserInfo().getUserid();
         try {
@@ -82,7 +85,8 @@ public class UserCenterControl extends BaseControl {
            }
         } catch (Exception e) {
             e.printStackTrace();
-            android.util.Log.d("111", "e = " + e.getMessage());
+            if(DebugRelease.isDebug)
+                android.util.Log.d("111", "e = " + e.getMessage());
             sendMessage("updateUserOrder2ServerAsynExceptionCallBack");
         }
     }
@@ -108,7 +112,8 @@ public class UserCenterControl extends BaseControl {
 	public void getUserOrdersAsyn(){
 		try {
 			List<Order> orderList = XiaoMeiApplication.getInstance().getApi().getUserOrderList(UserUtil.getUser().getUserInfo().getUserid(), UserUtil.getUser().getToken());
-			LOG.d("111", "size = " + orderList.size());
+			if(DebugRelease.isDebug)
+			    LOG.d("111", "size = " + orderList.size());
 			mModel.setOrderList(orderList);
 			sendMessage("getUserOrdersAsynCallBack");
 		} catch (Exception e) {
@@ -170,7 +175,8 @@ public class UserCenterControl extends BaseControl {
             	userInfo.setIdcard(shenfenzheng);
             if(!TextUtils.isEmpty(local))//地址
             	userInfo.setAddress(local);
-            android.util.Log.d("user", "user = " + user);
+            if(DebugRelease.isDebug)
+                android.util.Log.d("user", "user = " + user);
             User.save(user);
             sendMessage("uploadUserInfoCallBack");
         } catch (Exception e) {
@@ -180,7 +186,8 @@ public class UserCenterControl extends BaseControl {
 	}
 	
 	public void payWechat(Activity ac){
-		android.util.Log.d("111", "payWechat");
+	    if(DebugRelease.isDebug)
+	        android.util.Log.d("111", "payWechat");
 		WeiXinPayManager.getInstance().pay(mModel.getWechatBean(), ac);
 	}
 	

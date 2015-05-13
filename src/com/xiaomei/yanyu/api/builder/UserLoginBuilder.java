@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.LoginResult;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.User;
@@ -38,7 +39,8 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 		*/
 	@Override
 	protected User builder(JSONObject jsonObject) throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		if(jsonObject.has("msg"))
 			jsonObject = jsonObject.getJSONObject("msg");
 		else 

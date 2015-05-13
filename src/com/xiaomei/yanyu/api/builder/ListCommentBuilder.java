@@ -7,13 +7,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.CommentItem;
 
 public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
 
     @Override
     protected List<CommentItem> builder(JSONObject jsonObject) throws JSONException {
-        android.util.Log.d("json", jsonObject.toString());
+        if(DebugRelease.isDebug)
+            android.util.Log.d("json", jsonObject.toString());
         List<CommentItem> list = null;
         JSONArray jsonArray = null;
         if(jsonObject.has("msg")){

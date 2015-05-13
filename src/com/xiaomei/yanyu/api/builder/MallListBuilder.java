@@ -7,13 +7,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.Mall;
 
 public class MallListBuilder extends AbstractJSONBuilder<List<Mall>> {
 
 	@Override
 	protected List<Mall> builder(JSONObject jsonObject) throws JSONException {
-		android.util.Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        android.util.Log.d("json", jsonObject.toString());
 		List<Mall> list = new ArrayList<Mall>();
 		JSONArray jsonArray = null;
 		if(jsonObject.has("msg"))

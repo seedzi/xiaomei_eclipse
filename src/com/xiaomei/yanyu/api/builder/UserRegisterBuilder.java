@@ -5,13 +5,15 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.NetResult;
 
 public class UserRegisterBuilder extends AbstractJSONBuilder<NetResult> {
 
 	@Override
 	protected NetResult builder(JSONObject jsonObject) throws JSONException {
-		Log.d("json", jsonObject.toString());
+	    if(DebugRelease.isDebug)
+	        Log.d("json", jsonObject.toString());
 		NetResult netResult = new NetResult();
 		if(jsonObject.has("code"))
 			netResult.setCode(jsonObject.getString("code"));

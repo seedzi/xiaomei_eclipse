@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import android.util.Log;
 
 import com.google.dexmaker.stock.ProxyBuilder;
+import com.xiaomei.yanyu.DebugRelease;
 import com.yuekuapp.proxy.callback.Interceptor;
 import com.yuekuapp.proxy.callbackfilter.InterceptorFilter;
 
@@ -95,7 +96,8 @@ public class Enhancer<T> implements InvocationHandler {
 		try {
 			return proxy.build();
 		} catch (IOException e) {
-			Log.i("app", "error" + e.getClass() + "");
+		    if(DebugRelease.isDebug)
+		        Log.i("app", "error" + e.getClass() + "");
 			e.printStackTrace();
 		}
 		return null;
