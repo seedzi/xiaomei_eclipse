@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="tabs_names">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="tabs_names" tools:ignore="MissingTranslation">
         <item>首页</item>
         <item>分类</item>
         <item>机构</item>

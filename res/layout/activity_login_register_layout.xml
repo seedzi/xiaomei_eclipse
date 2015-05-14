@@ -153,6 +153,7 @@
 
 
     <TextView 
+        android:visibility="gone"
         android:id="@+id/qq_sns"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
@@ -173,7 +174,6 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:weightSum="2"
-        android:visibility="gone"
         android:layout_margin="@dimen/activity_horizontal_margin"><!--  -->
         <ImageView 
             android:id="@+id/login_qq"
