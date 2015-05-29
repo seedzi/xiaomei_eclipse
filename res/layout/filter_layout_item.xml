@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="44.0dip"
+    android:paddingBottom="1.0dip"
+    android:paddingLeft="6.0dip"
+    android:paddingTop="1.0dip"
+    android:visibility="visible" >
+
+    <HorizontalScrollView
+        android:id="@+id/filter_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fadingEdge="horizontal"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/filter_options"
+            android:layout_width="wrap_content"
+            android:layout_height="44.0dip"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+    <View
+       android:id="@+id/divilder" 
+       android:layout_below="@id/filter_scrollview"
+       android:layout_width="fill_parent"
+       android:layout_height="1.0dip"
+       android:background="#ffD3D3D3"
+    	/>    
+    <!-- com.letv.android.client.view.LetvHorizontalScrollView -->
+
+</RelativeLayout>

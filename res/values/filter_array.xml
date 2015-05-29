@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+<!-- movie -->
+
+    <string-array name="filter_movie_areo">
+
+        <item>全部</item>
+
+        <item>大陆</item>
+
+        <item>香港</item>  
+
+        <item>美国</item> 
+
+        <item>韩国</item> 
+
+        <item>日本</item> 
+
+        <item>台湾</item>
+
+        <item>法国</item> 
+
+        <item>印度</item>
+
+        <item>西班牙</item> 
+
+        <item>英国</item>
+
+        <item>德国</item>
+
+        <item>新加坡</item>
+
+        <item>泰国</item>
+
+    </string-array>
+
+    <string-array name="filter_movie_type">
+
+        <item>全部</item>
+
+        <item>剧情</item>
+
+        <item>爱情</item>  
+
+        <item>喜剧</item> 
+
+        <item>动作</item> 
+
+        <item>悬疑</item> 
+
+        <item>科幻</item> 
+
+        <item>战争</item> 
+
+        <item>冒险</item>
+
+        <item>短片</item>
+
+        <item>惊悚</item>
+
+        <item>武侠</item>
+
+        <item>灾难</item>
+
+        <item>警匪</item>       
+
+    </string-array>
+
+    
+
+    <!-- tv -->
+
+     <string-array name="filter_tv_areo">
+
+        <item>全部</item>
+
+        <item>大陆</item>
+
+        <item>韩国</item> 
+
+        <item>日本</item>   
+
+        <item>美国</item> 
+
+        <item>香港</item>
+
+        <item>台湾</item>
+
+        <item>泰国</item>
+
+        <item>新加坡</item>
+
+        <item>英国</item>
+
+    </string-array>
+
+    <string-array name="filter_tv_type">
+
+        <item>全部</item>
+
+        <item>剧情</item>
+
+        <item>爱情</item> 
+
+        <item>武侠</item>
+
+        <item>都市</item>
+
+        <item>警匪</item>
+
+        <item>科幻</item>
+
+        <item>古装</item>
+
+        <item>军事</item>
+
+        <item>言情</item> 
+
+        <item>神话</item>
+
+        <item>历史</item>
+
+    </string-array>
+
+    
+
+    <!-- cartoon -->
+
+     <string-array name="filter_cartoon_areo">
+
+        <item>全部</item>
+
+        <item>大陆</item> 
+
+        <item>日本</item> 
+
+        <item>韩国</item>
+
+        <item>美国</item> 
+
+        <item>法国</item>
+
+        <item>台湾</item>
+
+        <item>英国</item>
+
+    </string-array>
+
+    <string-array name="filter_cartoon_type">
+
+        <item>全部</item>
+
+        <item>热血</item>
+
+        <item>格斗</item>  
+
+        <item>科幻</item> 
+
+        <item>冒险</item> 
+
+        <item>战斗</item> 
+
+        <item>奇幻</item> 
+
+        <item>历史</item>
+
+        <item>搞笑</item>
+
+        <item>教育</item>
+
+        <item>剧情</item>
+
+        <item>校园</item>
+
+        <item>青春</item>
+
+        <item>战争</item>
+
+        <item>历史</item>
+
+        <item>励志</item>
+
+        <item>亲子</item> 
+
+    </string-array>
+
+</resources>
+
+
