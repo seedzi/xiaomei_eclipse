@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +16,10 @@ import com.xiaomei.yanyu.widget.TitleBar;
 
 public class CollectionActivity extends AbstractActivity {
 	
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,CollectionActivity.class);
-		context.startActivity(intent);
+	public static void startActivity(Activity ac){
+		Intent intent = new Intent(ac,CollectionActivity.class);
+		ac.startActivity(intent);
+		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 
 	private TitleBar mTitleBar;

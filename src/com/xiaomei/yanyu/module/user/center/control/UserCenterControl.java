@@ -17,6 +17,7 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.User;
+import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.bean.WechatBean;
 import com.xiaomei.yanyu.module.user.model.UserModel;
@@ -26,6 +27,8 @@ import com.yuekuapp.annotations.AsynMethod;
 import com.yuekuapp.proxy.MessageProxy;
 
 public class UserCenterControl extends BaseControl {
+	
+	private final String PER_PAGE = "10";
 	
 	private UserModel mModel;
 
@@ -201,6 +204,38 @@ public class UserCenterControl extends BaseControl {
             e.printStackTrace();
             sendMessage("getPayWechatInfoExceptionCallBack");
         } 
+	}
+	
+	@AsynMethod
+	public void getUserMsg() {
+		try {
+			mModel.setCurrentPage(1);
+			List<UserMessage> data = XiaoMeiApplication.getInstance().getApi().showUserMsg(String.valueOf(mModel.getCurrentPage()), PER_PAGE);
+			mModel.setUserMessage(data);
+			android.util.Log.d("111", "data = " + data.size());
+			sendMessage("getUserMsgCallBack");
+		} catch (Exception e) {
+			e.printStackTrace();
+			android.util.Log.d("111", " e = " +  e);
+			sendMessage("getUserMsgExceptionCallBack");
+		}
+	}
+	
+	@AsynMethod
+	public void getUserMsgMore() {
+		try {
+			mModel.inCreaseCurrentPage();
+			List<UserMessage> data = XiaoMeiApplication.getInstance().getApi().showUserMsg(String.valueOf(mModel.getCurrentPage()), PER_PAGE);
+			if(data==null || data.size()==0){
+				mModel.reduceCurrentPage();
+			}
+			mModel.setUserMessage(data);
+			sendMessage("getUserMsgMoreCallBack");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mModel.reduceCurrentPage();
+			sendMessage("getUserMsgMoreExceptionCallBack");
+		}
 	}
 	
 }

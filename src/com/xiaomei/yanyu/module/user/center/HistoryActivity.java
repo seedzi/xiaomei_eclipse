@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.module.user.center;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,9 +22,10 @@ import com.xiaomei.yanyu.widget.TitleBar;
 
 public class HistoryActivity extends AbstractActivity {
 	
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,HistoryActivity.class);
-		context.startActivity(intent);
+	public static void startActivity(Activity ac){
+		Intent intent = new Intent(ac,HistoryActivity.class);
+		ac.startActivity(intent);
+		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 
 	private TitleBar mTitleBar;

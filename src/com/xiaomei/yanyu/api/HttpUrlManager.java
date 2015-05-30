@@ -87,7 +87,7 @@ public class HttpUrlManager {
     }
 	/**用户消息*/
 	String getUserMsgUrl(){
-		return HOST + "/show/myMsg";
+		return HOST + "/server/show/myMsg.php";
 	}
 	/**用户阅读消息标记*/
 	String actionUserMsgUrl(){

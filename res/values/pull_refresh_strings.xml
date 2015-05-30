@@ -10,5 +10,5 @@
   <string name="pull_up_to_get_more" tools:ignore="MissingTranslation">上拉加载更多&#8230;</string>
   <string name="pull_up_to_refresh_release_label" tools:ignore="MissingTranslation">松手加载更多&#8230;</string>
   <string name="pull_up_refresh_refreshing_label" tools:ignore="MissingTranslation,MissingTranslation">正在加载更多&#8230;</string>
-  <string name="pull_to_refresh_update_tiem">更新于:</string>
+  <string name="pull_to_refresh_update_tiem" translatable="false">更新于:</string>
 </resources>

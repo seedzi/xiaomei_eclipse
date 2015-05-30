@@ -51,7 +51,6 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
         
         mContext = this;
         
-        
         MobclickAgent.setDebugMode(true);
         MobclickAgent.openActivityDurationTrack(false);
         MobclickAgent.updateOnlineConfig(this);

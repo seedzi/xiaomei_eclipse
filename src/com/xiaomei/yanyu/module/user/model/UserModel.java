@@ -5,6 +5,7 @@ import java.util.List;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order2;
 import com.xiaomei.yanyu.bean.User;
+import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.WechatBean;
 
 public class UserModel {
@@ -75,5 +76,32 @@ public class UserModel {
 		this.wechatBean = wechatBean;
 	}
     
+	// ===============================   用户消息 =====================================
+	private List<UserMessage> mUserMessgae;
 	
+	public List<UserMessage> getUserMessage(){
+		return mUserMessgae;
+	}
+	
+	public void setUserMessage(List<UserMessage> data){
+		mUserMessgae = data;
+	}
+	
+	private int currentPage;
+	
+	public void setCurrentPage(int page){
+		currentPage = page;
+	}
+	
+	public void inCreaseCurrentPage(){
+		currentPage ++;
+	}
+	
+	public void reduceCurrentPage(){
+		currentPage --;
+	}
+	
+	public int getCurrentPage(){
+		return currentPage;
+	}
 }

@@ -30,6 +30,7 @@ import com.xiaomei.yanyu.api.builder.OrderCommentBuilder;
 import com.xiaomei.yanyu.api.builder.SectionBuilder;
 import com.xiaomei.yanyu.api.builder.UploadFIleBuilder;
 import com.xiaomei.yanyu.api.builder.UserLoginBuilder;
+import com.xiaomei.yanyu.api.builder.UserMsgBuilder;
 import com.xiaomei.yanyu.api.builder.UserRegisterBuilder;
 import com.xiaomei.yanyu.api.builder.WechatBuilder;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
@@ -52,6 +53,7 @@ import com.xiaomei.yanyu.bean.Order2;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.bean.User.UserInfo;
+import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.WechatBean;
 import com.xiaomei.yanyu.util.FileUtils;
 import com.xiaomei.yanyu.util.Security;
@@ -355,15 +357,21 @@ public class XiaoMeiApi {
 	/**
 	 * 列出用户收到的对应消息
 	 */
-	public void showUserMsg()
+	public List<UserMessage> showUserMsg(String curpage,String perpage)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-			BasicNameValuePair[] values = {new BasicNameValuePair("token", UserUtil.getUser().getToken()) ,
-/*					new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))*/} ; 
+			BasicNameValuePair[] values = {
+					new BasicNameValuePair("token", UserUtil.getUser().getToken()) ,
+					new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
+					new BasicNameValuePair("curpage", curpage),
+					new BasicNameValuePair("perpage", perpage)
+			} ; 
 			HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getUserMsgUrl(),
 					values[0],
-//					values[1],
+					values[1],
+					values[2],
+					values[3],
 					new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-			 mHttpApi.doHttpRequestObject(httpGet, new NetResultBuilder());
+			 return mHttpApi.doHttpRequestObject(httpGet, new UserMsgBuilder());
 	}
 	
 	// ========================================================================================
