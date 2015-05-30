@@ -238,4 +238,20 @@ public class UserCenterControl extends BaseControl {
 		}
 	}
 	
+	@AsynMethod
+	public void getUserFav(){
+		try {
+//			mModel.setCurrentPage(1);
+//			List<UserMessage> data = 
+//			XiaoMeiApplication.getInstance().getApi().showUserFav(String.valueOf(mModel.getCurrentPage()), PER_PAGE);
+			XiaoMeiApplication.getInstance().getApi().showUserFav(String.valueOf(1), PER_PAGE);
+//			mModel.setUserMessage(data);
+//			android.util.Log.d("111", "data = " + data.size());
+			sendMessage("getUserFavCallBack");
+		} catch (Exception e) {
+			e.printStackTrace();
+			android.util.Log.d("111", " e = " +  e);
+			sendMessage("getUserFavExceptionCallBack");
+		}
+	}
 }

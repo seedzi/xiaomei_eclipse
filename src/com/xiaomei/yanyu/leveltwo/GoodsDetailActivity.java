@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -25,14 +26,23 @@ import android.widget.TextView;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.widget.TitleBar;
 
-public class GoodsDetailActivity extends AbstractActivity implements CordovaInterface{
+public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> implements CordovaInterface,View.OnClickListener{
 	
 	
 	public static void startActivity(Activity ac,String url){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
+		ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+	}
+	
+	public static void startActivity(Activity ac,String url,String goodsid){
+		Intent intent = new Intent(ac,GoodsDetailActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("goodsid", goodsid);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
@@ -46,6 +56,8 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
 	private TitleBar mTitleBar;
 	/**Loading 控件*/
 	private View mLoadingView; 
+	
+	private String goodsId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +77,15 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
 				finish();
 			}
 		});
+		goodsId = getIntent().getStringExtra("goodsid");
+		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
+		mTitleBar.findViewById(R.id.comment).setVisibility(View.GONE);
+		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
+		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
+		if(!TextUtils.isEmpty(goodsId)){
+			mTitleBar.findViewById(R.id.fav).setVisibility(View.VISIBLE);
+			mTitleBar.findViewById(R.id.fav).setOnClickListener(this);
+		}
 		mLoadingView = findViewById(R.id.loading_layout);
 	}
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -104,7 +125,6 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
         Config.addWhiteListEntry(HttpUrlManager.GOODS_DETAIL_URL, true);
         Config.addWhiteListEntry(HttpUrlManager.MECHANISM_DETAIL_URL, true);
         mCordovaWebView.setWebChromeClient(new MyWebChromeClient());  
-        android.util.Log.d("111", "url = " + url);
 		mCordovaWebView.loadUrl(url);
 	}
 	
@@ -190,5 +210,13 @@ public class GoodsDetailActivity extends AbstractActivity implements CordovaInte
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
 		mCordovaWebView.setVisibility(View.VISIBLE);
+	}
+	
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		if(id ==R.id.fav){
+			mControl.actionUserFavAdd(goodsId);
+		}
 	}
 }

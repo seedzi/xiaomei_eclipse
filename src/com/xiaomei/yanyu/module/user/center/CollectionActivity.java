@@ -12,9 +12,11 @@ import android.widget.ListView;
 
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.module.user.control.UserControl;
 import com.xiaomei.yanyu.widget.TitleBar;
 
-public class CollectionActivity extends AbstractActivity {
+public class CollectionActivity extends AbstractActivity<UserCenterControl> {
 	
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,CollectionActivity.class);
@@ -33,6 +35,7 @@ public class CollectionActivity extends AbstractActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_collection_layout);
 		setUpView();
+		initData();
 	}
 	
 	private void setUpView(){
@@ -48,6 +51,10 @@ public class CollectionActivity extends AbstractActivity {
 		mListView = (ListView) findViewById(R.id.list);
 		mAdapter = new ColleactionAdapter(CollectionActivity.this);
 		mListView.setAdapter(mAdapter);
+	}
+	
+	private void initData(){
+		mControl.getUserFav();
 	}
 	
 	private class ColleactionAdapter extends BaseAdapter{

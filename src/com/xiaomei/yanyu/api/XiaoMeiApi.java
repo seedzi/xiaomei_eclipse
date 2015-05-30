@@ -374,8 +374,28 @@ public class XiaoMeiApi {
 			 return mHttpApi.doHttpRequestObject(httpGet, new UserMsgBuilder());
 	}
 	
+	/**
+	 * 列出用户收藏的消息
+	 */
+	public List<UserMessage> showUserFav(String curpage,String perpage)
+		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
+			BasicNameValuePair[] values = {
+					new BasicNameValuePair("token", UserUtil.getUser().getToken()) ,
+					new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
+					new BasicNameValuePair("curpage", curpage),
+					new BasicNameValuePair("perpage", perpage)
+			} ; 
+			HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getUserMyFavUrl(),
+					values[0],
+					values[1],
+					values[2],
+					values[3],
+					new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+			 return mHttpApi.doHttpRequestObject(httpGet, new UserMsgBuilder());
+	}
+	
 	// ========================================================================================
-	// 订单
+	// 订单getUserFav()
 	// ========================================================================================
 	/**
 	 * 取消订单
@@ -614,5 +634,23 @@ public class XiaoMeiApi {
         	return true;
         }
         return false;
+    }
+    // ========================================================================================
+    // 删除或者添加用户收藏
+    // ========================================================================================
+    public void actionFav(String action,String goodsid,String token)
+    		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
+        BasicNameValuePair[] values = {
+        		new BasicNameValuePair("token", token),
+				new BasicNameValuePair("action", action),
+                new BasicNameValuePair("goodsid", goodsid),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))}; 
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.actionUserFavUrl(),
+                values[0],
+                values[1],
+                values[2],
+                values[3],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
     }
 }

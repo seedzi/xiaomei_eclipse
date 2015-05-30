@@ -1,7 +1,6 @@
 package com.xiaomei.yanyu.launch;
 
 
-import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,26 +12,13 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.SharePreferenceKey;
 import com.xiaomei.yanyu.SharePreferenceWrap;
-import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.Payment.ZhifubaoPayManager;
-import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
-import com.xiaomei.yanyu.bean.BeautifulRingDetail;
-import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.launch.control.LaunchControl;
-import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
-import com.xiaomei.yanyu.test.PhoneGapAc;
-import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.PagerAdapter;
 import com.xiaomei.yanyu.widget.ViewPager;
 

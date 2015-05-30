@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,15 +23,12 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
-import com.xiaomei.yanyu.levelone.module.FilterUtil;
-import com.xiaomei.yanyu.levelone.module.FilterUtil.Listener;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
-import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 
-public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener,View.OnClickListener{
+public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener{
 	
 	public static void startActivity(Activity ac,String catId,String title){
 		Intent intent = new Intent(ac,GoodsListActivity.class);
@@ -61,12 +56,6 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	
 	private String title;
 	
-	private ViewGroup mContainer;
-	
-	private ImageButton mFilterButton;
-	
-	private FilterUtil mFilter;
-	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_list_layout);
@@ -88,9 +77,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
 		mTitleBar.findViewById(R.id.comment).setVisibility(View.GONE);
 		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
-		mFilterButton = (ImageButton) mTitleBar.findViewById(R.id.filter_button);
-		mFilterButton.setVisibility(View.VISIBLE);
-		mFilterButton.setOnClickListener(this);
+		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		
 		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
 		mPullToRefreshListView.setOnRefreshListener(this);
@@ -100,22 +87,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mLoadingView = findViewById(R.id.loading_layout);
 		mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
-		mContainer = (ViewGroup) findViewById(R.id.container);
-		mFilter = new FilterUtil(mContainer, LayoutInflater.from(this), FilterUtil.FilterUtil_MOVIE);
-		mFilter.setListener(new Listener() {
-            @Override
-            public void onShow() {
-                mFilterButton.setBackgroundResource(R.drawable.direction_click);
-            }
-            @Override
-            public void onHide() {
-                mFilterButton.setBackgroundResource(R.drawable.direction);
-            }
-        });
 	}
 	
 	private void initData(){
-		android.util.Log.d("111", "catId = " + catId);
 		showProgress();
 		mIsRefresh = true;
 		mControl.getGoodsDataAsyn(catId);
@@ -144,8 +118,6 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		if(!mIsRefresh && position == mAdapter.getCount()){
 			getMoreData();
 		}
-		if(mFilter.isShow())
-		    mFilter.hide();
 	}
 
 	@Override
@@ -281,21 +253,12 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			Holder holder = (Holder) v.getTag();
 //			OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
 //			GoodsDetailActivity.startActivity(GoodsListActivity.this,holder.goodId);
-			GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId);
+//			GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId);
+			GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId,holder.goodId);
 			
 //			WebViewActivity.startActivity(GoodsListActivity.this ,"http://drxiaomei.duapp.com/goods.php?goods_id=1015");
 		}
 		
 	}
-
-    @Override
-    public void onClick(View v) {
-        if(mFilter.isShow()){
-            mFilter.hide();
-        }else{
-            mFilter.show();
-        }
-    }
-
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.leveltwo.model.LevelTwoModel;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
 import com.yuekuapp.proxy.MessageProxy;
@@ -72,6 +73,26 @@ public class LeveltwoControl extends BaseControl {
 		} catch (Exception e) {
 			e.printStackTrace();
 			sendMessage("getGoodsDataMoreAsynExceptionCallBack");
+			return;
+		}
+	}
+	
+	
+	// =======================================================================================
+	// 收藏
+	// =======================================================================================
+	@AsynMethod
+	public void actionUserFavAdd(String goodsid){
+		actionUserFav("add", goodsid);
+	}
+	public void actionUserFavRm(String goodsid){
+		actionUserFav("rm", goodsid);
+	}
+	private void actionUserFav(String action,String goodsid){
+		try {
+			 XiaoMeiApplication.getInstance().getApi().actionFav(action, goodsid,UserUtil.getUser().getToken());
+		} catch (Exception e) {
+			e.printStackTrace();
 			return;
 		}
 	}

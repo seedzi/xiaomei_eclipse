@@ -89,6 +89,14 @@ public class HttpUrlManager {
 	String getUserMsgUrl(){
 		return HOST + "/server/show/myMsg.php";
 	}
+	/**用户收藏*/
+	String getUserMyFavUrl(){
+		return HOST + "/server/show/myFav.php";
+	}
+	/**用户收藏操作*/
+	String actionUserFavUrl(){
+		return HOST + "/server/action/fav.php";
+	}
 	/**用户阅读消息标记*/
 	String actionUserMsgUrl(){
 		return HOST + "/action/msg";
