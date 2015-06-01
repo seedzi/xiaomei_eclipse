@@ -377,9 +377,10 @@ public class XiaoMeiApi {
 	/**
 	 * 列出用户收藏的消息
 	 */
-	public List<UserMessage> showUserFav(String curpage,String perpage)
+	public List<Goods> showUserFav(String curpage,String perpage)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 			BasicNameValuePair[] values = {
+			        new BasicNameValuePair("userid", UserUtil.getUser().getUserInfo().getUserid()) ,
 					new BasicNameValuePair("token", UserUtil.getUser().getToken()) ,
 					new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
 					new BasicNameValuePair("curpage", curpage),
@@ -390,8 +391,9 @@ public class XiaoMeiApi {
 					values[1],
 					values[2],
 					values[3],
+					values[4],
 					new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-			 return mHttpApi.doHttpRequestObject(httpGet, new UserMsgBuilder());
+			 return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
 	}
 	
 	// ========================================================================================

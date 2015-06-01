@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.module.user.model;
 
 import java.util.List;
 
+import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order2;
 import com.xiaomei.yanyu.bean.User;
@@ -104,4 +105,33 @@ public class UserModel {
 	public int getCurrentPage(){
 		return currentPage;
 	}
+	
+	// ===============================   用户收藏 =====================================
+	
+	private int mPage4Goods;
+	private List<Goods> mGoodsList;
+	
+	public void setGoodsList(List<Goods>  list){
+	    mGoodsList = list;
+	}
+	
+	public List<Goods> getGoodsList(){
+	    return mGoodsList;
+	}
+	
+   public void inCreaseCurrentPage4Goods(){
+       mPage4Goods ++;
+    }
+    
+    public void reduceCurrentPage4Goods(){
+        mPage4Goods --;
+    }
+    
+    public void setCurrentPage4Goods(int page){
+        mPage4Goods = page;
+    }
+    
+    public int getCurrentPage4Goods(){
+        return mPage4Goods;
+    }
 }

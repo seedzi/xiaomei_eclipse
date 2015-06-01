@@ -14,6 +14,7 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
+import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.User;
@@ -241,17 +242,30 @@ public class UserCenterControl extends BaseControl {
 	@AsynMethod
 	public void getUserFav(){
 		try {
-//			mModel.setCurrentPage(1);
-//			List<UserMessage> data = 
-//			XiaoMeiApplication.getInstance().getApi().showUserFav(String.valueOf(mModel.getCurrentPage()), PER_PAGE);
-			XiaoMeiApplication.getInstance().getApi().showUserFav(String.valueOf(1), PER_PAGE);
-//			mModel.setUserMessage(data);
-//			android.util.Log.d("111", "data = " + data.size());
+			mModel.setCurrentPage4Goods(1);
+		    List<Goods> data = XiaoMeiApplication.getInstance().getApi().showUserFav(String.valueOf(mModel.getCurrentPage4Goods()), PER_PAGE);
+		    mModel.setGoodsList(data);
 			sendMessage("getUserFavCallBack");
 		} catch (Exception e) {
 			e.printStackTrace();
-			android.util.Log.d("111", " e = " +  e);
 			sendMessage("getUserFavExceptionCallBack");
 		}
 	}
+	
+	   @AsynMethod
+	    public void getUserFavMore() {
+	        try {
+	            mModel.inCreaseCurrentPage4Goods();
+	            List<Goods> data = XiaoMeiApplication.getInstance().getApi().showUserFav(String.valueOf(mModel.getCurrentPage4Goods()), PER_PAGE);
+	            if(data==null || data.size()==0){
+	                mModel.reduceCurrentPage4Goods();
+	            }
+	            mModel.setGoodsList(data);
+	            sendMessage("getUserFavMoreCallBack");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            mModel.reduceCurrentPage4Goods();
+	            sendMessage("getUserFavMoreExceptionCallBack");
+	        }
+	    }
 }
