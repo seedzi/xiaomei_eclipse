@@ -1,6 +1,8 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,14 +32,18 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 
-public class CollectionActivity extends AbstractActivity<UserCenterControl> implements OnScrollListener,OnRefreshListener{
+public class CollectionActivity extends AbstractActivity<UserCenterControl> implements OnScrollListener,OnRefreshListener,View.OnClickListener{
 	
+    private Map< String, String> mCheckedData = new HashMap<String, String>();
+
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,CollectionActivity.class);
 		ac.startActivity(intent);
 		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 
+	private boolean showEdite = false ;
+	
 	private TitleBar mTitleBar;
 	
 	private ListView mListView;
@@ -50,6 +57,10 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	private ViewGroup mRefreshLayout;
 	
 	private PullToRefreshListView mPullToRefreshListView;
+	
+	private TextView mEdit;
+	
+	private TextView mDelete;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +79,19 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 				finish();
 			}
 		});
+		
+		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
+		mTitleBar.findViewById(R.id.comment).setVisibility(View.GONE);
+		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
+		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
+		mTitleBar.findViewById(R.id.edit).setVisibility(View.VISIBLE);
+		
+		mEdit = (TextView) findViewById(R.id.edit);
+		mEdit.setOnClickListener(this);
+		mEdit.setText("编辑");
+		
+		mDelete = (TextView) findViewById(R.id.delete);
+		mDelete.setOnClickListener(this);
 		
 		mLoadingView = findViewById(R.id.loading_layout);
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
@@ -186,21 +210,51 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                    holder.localTv = (TextView) convertView.findViewById(R.id.location);
 	                    holder.priceTv = (TextView) convertView.findViewById(R.id.price);
 	                    holder.localTv = (TextView) convertView.findViewById(R.id.location);
-	                    convertView.setOnClickListener(this);
+	                    holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+	                    if(showEdite){
+	                        holder.checkBox.setOnClickListener(this);
+	                    }else{
+	                        convertView.setOnClickListener(this);
+//	                        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    CheckBox checkBox = (CheckBox) v;
+//                                    int position = (Integer) checkBox.getTag();
+//                                    Goods item = mData.get(position);
+//                                    if(checkBox.isChecked()){
+//                                        checkBox.setChecked(false);
+//                                        mCheckedData.remove(item.getId());
+//                                        android.util.Log.d("111", "checked false");
+//                                    }else{
+//                                        checkBox.setChecked(true);
+//                                        android.util.Log.d("111", "checked true");
+//                                        mCheckedData.put(item.getId(),item.getId());
+//                                    }
+//                                }
+//                            });
+	                    }
 	                    convertView.setTag(holder);
 	                }
 	                holder = (Holder) convertView.getTag();
 	                Goods goods = mData.get(position);
 	                holder.iconIv.setImageResource(R.drawable.goods_list_default);
 	                ImageLoader.getInstance().displayImage(goods.getFileUrl(),holder.iconIv );
-	                android.util.Log.d("111", "holder.iconIv height = " + holder.iconIv.getHeight() + ",  width = " + holder.iconIv.getWidth());
 	                holder.titleTv .setText(goods.getTitle());
 	                holder.goodId = goods.getId();
 	                holder.sizeTv.setText("销量" + goods.getSales());
 	                holder.hospitalTv.setText(goods.getHospName());
 	                holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
 	                holder.localTv.setText(goods.getCityName());
-	                
+	                holder.checkBox.setTag(position);
+	                if(showEdite){
+	                    holder.checkBox.setVisibility(View.VISIBLE);
+	                    if(mCheckedData.get(goods.getId())!=null){
+	                        holder.checkBox.setChecked(true);
+	                    }else{
+	                        holder.checkBox.setChecked(false);
+	                    }
+	                }else
+	                    holder.checkBox.setVisibility(View.GONE);
 //	              holder.sizeTv.setText(goods.getPriceMarket());
 //	              holder.hospitalTv.setText(goods.ge);
 	                return convertView;
@@ -214,16 +268,29 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                String goodId;
 	                TextView localTv;
 	                TextView priceTv;
+	                CheckBox checkBox;
 	            }
 
 	            @Override
 	            public void onClick(View v) {
-	                Holder holder = (Holder) v.getTag();
-//	              OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
-//	              GoodsDetailActivity.startActivity(GoodsListActivity.this,holder.goodId);
-//	              GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId);
-	                GoodsDetailActivity.startActivity(CollectionActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId,holder.goodId);
-//	              WebViewActivity.startActivity(GoodsListActivity.this ,"http://drxiaomei.duapp.com/goods.php?goods_id=1015");
+	                int id = v.getId();
+	                if(id == R.id.checkbox){
+	                    CheckBox checkBox = (CheckBox) v;
+	                    int position = (Integer) checkBox.getTag();
+	                    Goods item = mData.get(position);
+	                    if(checkBox.isChecked()){
+	                        mCheckedData.put(item.getId(),item.getId());
+	                    }else{
+	                        mCheckedData.remove(item.getId());
+	                    }
+	                }else{
+	                    Holder holder = (Holder) v.getTag();
+//	                  OrderDetailsActivity.startActivity(GoodsListActivity.this,holder.goodId);
+//	                  GoodsDetailActivity.startActivity(GoodsListActivity.this,holder.goodId);
+//	                  GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId);
+	                      GoodsDetailActivity.startActivity(CollectionActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId,holder.goodId);
+//	                  WebViewActivity.startActivity(GoodsListActivity.this ,"http://drxiaomei.duapp.com/goods.php?goods_id=1015");
+	                }
 	            }
 	            
 	        }
@@ -246,8 +313,27 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
             int visibleItemCount, int totalItemCount) {
-        // TODO Auto-generated method stub
+    }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+        case R.id.delete:
+            
+            break;
+        case R.id.edit:
+            if(showEdite){
+                
+            }else{
+                showEdite = true;
+                mEdit.setText("完成");
+            }
+            mAdapter.notifyDataSetChanged();
+            break;
+        default:
+            break;
+        }
     }
 
 }
