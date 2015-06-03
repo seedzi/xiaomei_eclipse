@@ -5,7 +5,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,6 +220,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 				holder.localTv = (TextView) convertView.findViewById(R.id.location);
 				holder.priceTv = (TextView) convertView.findViewById(R.id.price);
 				holder.localTv = (TextView) convertView.findViewById(R.id.location);
+				holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
+				holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
+				holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
 				convertView.setOnClickListener(this);
 				convertView.setTag(holder);
 			}
@@ -233,6 +238,32 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
 			holder.localTv.setText(goods.getCityName());
 			
+			List<Goods.Mark> marks = goods.getMarks();
+			int i = 0;
+			if(marks!=null){
+				for(Goods.Mark mark:marks){
+					switch (i) {
+					case 0:
+						holder.mark1.setVisibility(View.VISIBLE);
+						holder.mark1.setBackgroundColor(Color.parseColor(mark.getColor()));
+						holder.mark1.setText(mark.getLabel());
+						break;
+					case 1:
+						holder.mark2.setVisibility(View.VISIBLE);
+						holder.mark2.setBackgroundColor(Color.parseColor(mark.getColor()));
+						holder.mark2.setText(mark.getLabel());
+						break;
+					case 2:
+						holder.mark3.setVisibility(View.VISIBLE);
+						holder.mark3.setBackgroundColor(Color.parseColor(mark.getColor()));
+						holder.mark3.setText(mark.getLabel());
+						break;
+					default:
+						break;
+					}
+					i++;
+				}
+			}
 //			holder.sizeTv.setText(goods.getPriceMarket());
 //			holder.hospitalTv.setText(goods.ge);
 			return convertView;
@@ -246,6 +277,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			String goodId;
 			TextView localTv;
 			TextView priceTv;
+			TextView mark1;
+			TextView mark2;
+			TextView mark3;
 		}
 
 		@Override

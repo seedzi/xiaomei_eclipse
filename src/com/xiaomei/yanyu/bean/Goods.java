@@ -1,5 +1,7 @@
 package com.xiaomei.yanyu.bean;
 
+import java.util.List;
+
 public class Goods {
 	
 	private String id;
@@ -25,6 +27,8 @@ public class Goods {
 	private String sales;
 	
 	private String cityName;
+	
+	private List<Mark> marks;
 
 	public String getId() {
 		return id;
@@ -122,6 +126,30 @@ public class Goods {
 		this.cityName = cityName;
 	}
 	
+	public List<Mark> getMarks() {
+		return marks;
+	}
+
+	public void setMarks(List<Mark> marks) {
+		this.marks = marks;
+	}
+
+	public static class Mark{
+		private String color;
+		private String label;
+		public String getColor() {
+			return color;
+		}
+		public void setColor(String color) {
+			this.color = color;
+		}
+		public String getLabel() {
+			return label;
+		}
+		public void setLabel(String label) {
+			this.label = label;
+		}
+	}
 }
 /*
  {

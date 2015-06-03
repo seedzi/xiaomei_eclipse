@@ -71,4 +71,47 @@
         android:text=""
         android:textSize="16sp"
         android:textColor="#d366f3"/> 
+        
+        <TextView 
+           android:id="@+id/tag_1"
+           android:paddingLeft="2dp"
+           android:paddingRight="2dp"
+           android:layout_marginTop="5dp"
+           android:layout_marginLeft="10dp"
+           android:layout_toRightOf="@id/icon"
+       	   android:layout_width="wrap_content"        
+           android:layout_height="wrap_content"        
+           android:layout_below="@id/price"
+           android:textSize="11sp"
+           android:visibility="gone"
+           android:textColor="#ffffff"
+            />
+		<TextView 
+           android:id="@+id/tag_2"
+   		   android:paddingLeft="2dp"
+           android:paddingRight="2dp"
+           android:layout_marginTop="5dp"
+           android:layout_marginLeft="10dp"
+           android:layout_toRightOf="@id/tag_1"
+       	   android:layout_width="wrap_content"        
+           android:layout_height="wrap_content"        
+           android:layout_alignBottom="@id/tag_1"
+           android:textSize="11sp"
+           android:visibility="gone"
+           android:textColor="#ffffff"
+            />
+		 <TextView 
+           android:id="@+id/tag_3"
+           android:paddingLeft="2dp"
+           android:paddingRight="2dp"
+           android:layout_marginTop="5dp"
+           android:layout_marginLeft="10dp"
+           android:layout_toRightOf="@id/tag_2"
+       	   android:layout_width="wrap_content"        
+           android:layout_height="wrap_content"        
+           android:layout_alignBottom="@id/tag_2"
+           android:textSize="11sp"
+           android:visibility="gone"
+           android:textColor="#ffffff"
+            />
 </RelativeLayout>

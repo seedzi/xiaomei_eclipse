@@ -48,6 +48,18 @@ public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
 				goods.setSales(jobj.getString("sales"));
 			if(jobj.has("city_name"))
 				goods.setCityName(jobj.getString("city_name"));
+			if(jobj.has("goods_mark")){
+				List<Goods.Mark> marks = new ArrayList<Goods.Mark>();
+				JSONArray array = jobj.getJSONArray("goods_mark");
+				for(int j=0;j<array.length();j++){
+					Goods.Mark mark = new Goods.Mark();
+					JSONObject jo = array.getJSONObject(j);
+					mark.setColor(jo.getString("color"));
+					mark.setLabel(jo.getString("label"));
+					marks.add(mark);
+				}
+				goods.setMarks(marks);
+			}
 			list.add(goods);
 		}
 		return list;
