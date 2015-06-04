@@ -20,6 +20,7 @@ import com.xiaomei.yanyu.api.builder.AddUserOrderBuilder;
 import com.xiaomei.yanyu.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.yanyu.api.builder.BeautifulRingBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
+import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
 import com.xiaomei.yanyu.api.builder.HospitalBuilder;
 import com.xiaomei.yanyu.api.builder.ListCommentBuilder;
 import com.xiaomei.yanyu.api.builder.ListOrderBuilder;
@@ -44,6 +45,7 @@ import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.bean.Hospital;
 import com.xiaomei.yanyu.bean.LoginResult;
 import com.xiaomei.yanyu.bean.Mall;
@@ -114,19 +116,39 @@ public class XiaoMeiApi {
 	}
 	
 	/**商品列表*/
-	public List<Goods> getGoodsListFromNet(String catId,String curpage,String perpage)
+	public List<Goods> getGoodsListFromNet(String catId,String curpage,String perpage, String subCat, String originPlace, String priceOrder)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		BasicNameValuePair[] values = {
 				new BasicNameValuePair("cat_id", catId),
 				new BasicNameValuePair("curpage", curpage),
-				new BasicNameValuePair("perpage", perpage)} ; 
+				new BasicNameValuePair("perpage", perpage),
+				new BasicNameValuePair("sub_cat", subCat),
+				new BasicNameValuePair("origin_place", originPlace),
+				new BasicNameValuePair("price_order", priceOrder)
+		};
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),
 				values[0],
 				values[1],
 				values[2],
+				values[3],
+				values[4],
+				values[5],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
+	}
+	
+	/**商品分类列表*/
+	public List<GoodsOption> getGoodsOptionFromNet(String catId)
+	        throws XiaoMeiCredentialsException, XiaoMeiIOException,
+            XiaoMeiJSONException, XiaoMeiOtherException {
+	    BasicNameValuePair[] values = {
+	            new BasicNameValuePair("cat_id", catId)
+	    };
+	    HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getGoodsFilterUrl(),
+	            values[0],
+	            new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+	    return mHttpApi.doHttpRequestObject(httpGet, new GoodsOptionBuilder());
 	}
 	
 	/**机构*/

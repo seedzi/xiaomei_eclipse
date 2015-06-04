@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:visibility="visible" >
+    
+    <Spinner
+        android:id="@+id/sub_cat"
+        style="@style/TopFilterSpinner" />
+    
+    <Spinner
+        android:id="@+id/origin_place"
+        style="@style/TopFilterSpinner" />
+    
+    <Spinner
+        android:id="@+id/price_order"
+        style="@style/TopFilterSpinner" />
+</LinearLayout>

@@ -32,6 +32,10 @@ public class HttpUrlManager {
 	String getMallListUrl(){
 		return HOST + "/server/show/goods_list.php";
 	}
+	/**商品分类*/
+	String getGoodsFilterUrl(){
+	    return HOST + "/server/show/goods_filter.php";
+	}
 	/**商城首页*/
 	String getMallHomeListUrl(){
 		return HOST + "/server/show/goods_home.php";

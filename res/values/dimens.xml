@@ -65,4 +65,6 @@
     <dimen name="actionbar_height">45dip</dimen>
     <dimen name="actionbar_item_height">45dip</dimen>
     <dimen name="actionbar_item_width">45dip</dimen>
+    
+    <dimen name="top_filter_height">60dp</dimen>
 </resources>

@@ -8,6 +8,7 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.leveltwo.model.LevelTwoModel;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.yuekuapp.BaseControl;
@@ -47,10 +48,10 @@ public class LeveltwoControl extends BaseControl {
 	
 	// ============================== 商品 ====================================
 	@AsynMethod
-	public void getGoodsDataAsyn(String catId){
+	public void getGoodsDataAsyn(String catId, String subCat, String originPlace, String priceOrder){
 		try {
 			mModel.setPage(1);
-			mModel.setGoodsListList(XiaoMeiApplication.getInstance().getApi().getGoodsListFromNet(catId,String.valueOf(mModel.getPage()),PER_PAGE));
+			mModel.setGoodsListList(XiaoMeiApplication.getInstance().getApi().getGoodsListFromNet(catId,String.valueOf(mModel.getPage()),PER_PAGE,subCat, originPlace, priceOrder));
 			if(mModel.getGoodsList()!=null)
 				sendMessage("getGoodsDataAsynCallBack");
 			else
@@ -63,10 +64,10 @@ public class LeveltwoControl extends BaseControl {
 	}
 	
 	@AsynMethod
-	public void getGoodsDataMoreAsyn(String catId){
+	public void getGoodsDataMoreAsyn(String catId, String subCat, String originPlace, String priceOrder){
 		try {
 			mModel.increaePage();
-			List<Goods> data = XiaoMeiApplication.getInstance().getApi().getGoodsListFromNet(catId,String.valueOf(mModel.getPage()),PER_PAGE);
+			List<Goods> data = XiaoMeiApplication.getInstance().getApi().getGoodsListFromNet(catId,String.valueOf(mModel.getPage()),PER_PAGE,subCat, originPlace, priceOrder);
 			if(data==null || data.size() == 0){
 				mModel.reducePage();
 				sendMessage("getGoodsDataMoreAsynExceptionCallBack");
@@ -79,6 +80,23 @@ public class LeveltwoControl extends BaseControl {
 			sendMessage("getGoodsDataMoreAsynExceptionCallBack");
 			return;
 		}
+	}
+	
+	@AsynMethod
+	public void getGoodsOptionAsyn(String catId) {
+	    try {
+            List<GoodsOption> data = XiaoMeiApplication.getInstance().getApi().getGoodsOptionFromNet(catId);
+            if(data==null || data.size() == 0){
+                sendMessage("getGoodsOptionAsynExceptionCallBack");
+            }else{
+                mModel.setGoodsOptions(data);
+                sendMessage("getGoodsOptionAsynCallBack");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendMessage("getGoodsOptionAsynExceptionCallBack");
+            return;
+        }
 	}
 	
 	

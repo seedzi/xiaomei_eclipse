@@ -4,11 +4,14 @@ import java.util.List;
 
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.GoodsOption;
 
 public class LevelTwoModel {
 	
 	
 	private List<Goods> mGoodsList;
+	
+	private List<GoodsOption> mGoodsOptions;
 
 	private BeautifulRingDetail mBeautifulRingDetailData;
 	
@@ -22,6 +25,14 @@ public class LevelTwoModel {
 		return mGoodsList;
 	}
 	
+   public List<GoodsOption> getGoodsOptions() {
+        return mGoodsOptions;
+    }
+
+    public void setGoodsOptions(List<GoodsOption> options) {
+        this.mGoodsOptions = options;
+    }
+    
 	public void setBeautifulRingDetail(BeautifulRingDetail data){
 		mBeautifulRingDetailData = data;
 	}

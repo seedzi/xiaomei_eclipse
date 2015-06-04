@@ -1,6 +1,8 @@
 package com.xiaomei.yanyu.leveltwo;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -9,21 +11,31 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -32,7 +44,13 @@ import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListe
 @SuppressLint("NewApi")
 public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener{
 	
-	public static void startActivity(Activity ac,String catId,String title){
+	private static final int SUB_CAT = 0;
+
+    private static final int ORIGIN_PLACE = 1;
+
+    private static final int PRICE_ORDER = 2;
+
+    public static void startActivity(Activity ac,String catId,String title){
 		Intent intent = new Intent(ac,GoodsListActivity.class);
 		intent.putExtra("cat_id", catId);
 		intent.putExtra("title", title);
@@ -41,6 +59,8 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	}
 
 	private TitleBar mTitleBar;
+	
+	private Spinner[] mFilters = new Spinner[3];
 	
 	private PullToRefreshListView mPullToRefreshListView;
 	
@@ -51,12 +71,17 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	private boolean mIsRefresh;
 	
 	private String catId;
+    private String mSubCat = "";
+    private String mOriginPlace = "";
+    private String mPriceOrder = "";
 	
 	private View mLoadingView; 
 	
 	private ViewGroup mRefreshLayout;
 	
 	private String title;
+
+    private List<GoodsOption> mGoodsOptions;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,6 +106,53 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
 		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		
+		mFilters[SUB_CAT] = (Spinner) findViewById(R.id.sub_cat);
+		mFilters[ORIGIN_PLACE] = (Spinner) findViewById(R.id.origin_place);
+		mFilters[PRICE_ORDER] = (Spinner) findViewById(R.id.price_order);
+		OnItemSelectedListener filterItemSelectedListener = new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
+                switch(parent.getId()) {
+                    case R.id.sub_cat:
+                        if (!item.second.equals(mSubCat)) {
+                            mSubCat = item.second;
+                            onRefresh();
+                        }
+                        break;
+                    case R.id.origin_place:
+                        if (!item.second.equals(mOriginPlace)) {
+                            mSubCat = item.second;
+                            onRefresh();
+                        }
+                        break;
+                    case R.id.price_order:
+                        if (!item.second.equals(mPriceOrder)) {
+                            mSubCat = item.second;
+                            onRefresh();
+                        }
+                        break;
+                    default:
+                        return;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                
+            }
+		    
+		};
+		for(Spinner spinner : mFilters) {
+            spinner.setOnItemSelectedListener(filterItemSelectedListener);
+		}
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		for(Spinner spinner : mFilters) {
+		    spinner.setDropDownWidth(displaymetrics.widthPixels);
+		}
+		
 		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
 		mPullToRefreshListView.setOnRefreshListener(this);
 		mAdapter = new MyAdapter(this);
@@ -94,13 +166,20 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	private void initData(){
 		showProgress();
 		mIsRefresh = true;
-		mControl.getGoodsDataAsyn(catId);
+		mControl.getGoodsDataAsyn(catId, mSubCat, mOriginPlace, mPriceOrder);
+		mControl.getGoodsOptionAsyn(catId);
+	    
+	    String[] default_selection = new String[]{"全部"};
+        for(int i = 0; i < mFilters.length; i++) {
+            mFilters[i].setAdapter(new FilterAdapter(this));
+        }
+        
 	}
 	
 	@Override
 	public void onRefresh() {
 		mIsRefresh = true;
-		mControl.getGoodsDataAsyn(catId);
+		mControl.getGoodsDataAsyn(catId, mSubCat, mOriginPlace, mPriceOrder);
 	}
 	
 	private void getMoreData(){
@@ -109,7 +188,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		if(!mRefreshLayout.isShown())
 			mRefreshLayout.setVisibility(View.VISIBLE);
 		mPullToRefreshListView.addFooterView(mRefreshLayout);
-		mControl.getGoodsDataMoreAsyn(catId);
+		mControl.getGoodsDataMoreAsyn(catId, mSubCat, mOriginPlace, mPriceOrder);
 		mIsRefresh = true;
 	}
 	
@@ -171,6 +250,36 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		dissProgress();
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+	}
+	
+	public void getGoodsOptionAsynCallBack() {
+	    mGoodsOptions = mControl.getModel().getGoodsOptions();
+	    
+	    ArrayAdapter<Pair<String, String>> adapter;
+	    adapter = (ArrayAdapter<Pair<String, String>>) mFilters[SUB_CAT].getAdapter();
+	    adapter.addAll(findByOptionType(mGoodsOptions, "sub_cat").getItems());
+	    
+	    adapter = (ArrayAdapter<Pair<String, String>>) mFilters[ORIGIN_PLACE].getAdapter();
+	    adapter.addAll(findByOptionType(mGoodsOptions, "origin_place").getItems());
+	    
+	    adapter = (ArrayAdapter<Pair<String, String>>) mFilters[PRICE_ORDER].getAdapter();
+	    adapter.addAll(findByOptionType(mGoodsOptions, "price_order").getItems());
+	}
+	
+	private GoodsOption findByOptionType(List<GoodsOption> options, String type) {
+	    if (type == null || type.isEmpty()) {
+	        return null;
+	    }
+	    for(GoodsOption option : options) {
+	        if (type.equals(option.getType())) {
+	            return option;
+	        }
+	    }
+	    return null;
+	}
+	
+	public void getGoodsOptionAsynExceptionCallBack() {
+	    // TODO Try again or show some warnings
 	}
 	
 	// ============================== Adapter ==========================================
@@ -306,4 +415,24 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		
 	}
 
+    private class FilterAdapter extends ArrayAdapter<Pair<String, String>> {
+
+        public FilterAdapter(Context context) {
+            super(context, 0);
+        }
+        
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View root = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.top_filter_item, parent, false);
+            ((TextView) root.findViewById(android.R.id.text1)).setText(getItem(position).first);
+            return root;
+        }
+        
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View root = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.top_filter_dropdown_item, parent, false);
+            ((TextView) root.findViewById(android.R.id.text1)).setText(getItem(position).first);
+            return root;
+        }
+    }
 }
