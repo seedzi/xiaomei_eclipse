@@ -1,13 +1,13 @@
 package com.xiaomei.yanyu.leveltwo;
 
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
@@ -30,6 +29,7 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 
+@SuppressLint("NewApi")
 public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener{
 	
 	public static void startActivity(Activity ac,String catId,String title){
@@ -207,7 +207,8 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			return 0;
 		}
 
-		@Override
+		@SuppressLint("NewApi")
+        @Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder holder = null;
 			if(convertView == null){
@@ -240,22 +241,32 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			
 			List<Goods.Mark> marks = goods.getMarks();
 			int i = 0;
+			GradientDrawable shapeDrawable  = null;
 			if(marks!=null){
 				for(Goods.Mark mark:marks){
 					switch (i) {
 					case 0:
 						holder.mark1.setVisibility(View.VISIBLE);
-						holder.mark1.setBackgroundColor(Color.parseColor(mark.getColor()));
+						shapeDrawable = new GradientDrawable();
+						shapeDrawable.setCornerRadius(15);
+						shapeDrawable.setColor(Color.parseColor(mark.getColor()));
+						holder.mark1.setBackground(shapeDrawable);
 						holder.mark1.setText(mark.getLabel());
 						break;
 					case 1:
 						holder.mark2.setVisibility(View.VISIBLE);
-						holder.mark2.setBackgroundColor(Color.parseColor(mark.getColor()));
+	                    shapeDrawable = new GradientDrawable();
+	                    shapeDrawable.setCornerRadius(15);
+	                    shapeDrawable.setColor(Color.parseColor(mark.getColor()));
+	                    holder.mark2.setBackground(shapeDrawable);
 						holder.mark2.setText(mark.getLabel());
 						break;
 					case 2:
 						holder.mark3.setVisibility(View.VISIBLE);
-						holder.mark3.setBackgroundColor(Color.parseColor(mark.getColor()));
+                        shapeDrawable = new GradientDrawable();
+                        shapeDrawable.setCornerRadius(15);
+                        shapeDrawable.setColor(Color.parseColor(mark.getColor()));
+                        holder.mark3.setBackground(shapeDrawable);
 						holder.mark3.setText(mark.getLabel());
 						break;
 					default:
