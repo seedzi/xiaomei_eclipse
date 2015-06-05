@@ -125,5 +125,9 @@ public class HttpUrlManager {
     String feedbackUrl(){
     	return HOST + "/server/action/feedback.php";
     }
+    /**促销消息*/
+    String myPromotionUrl(){
+        return HOST + "/server/show/myPromotion.php";
+    }
 }
 

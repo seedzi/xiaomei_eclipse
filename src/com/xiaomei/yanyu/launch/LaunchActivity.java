@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.launch;
 
 
 
+import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -51,8 +52,12 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
         },1500);
         
         
+        android.util.Log.d("111", "3.2 isNumeric" + isNumeric("3.2"));
         
+        android.util.Log.d("111", "355  isNumeric" + isNumeric("3555"));
     	
+        
+        android.util.Log.d("111", "35a5  isNumeric" + isNumeric("355a5"));
     }
     
     private void  init(){
@@ -173,4 +178,13 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
 		}
 	}
 
+    public static boolean isNumeric(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            System.out.println(str.charAt(i));
+            if (!Character.isDigit(str.charAt(i)) && '.' != str.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

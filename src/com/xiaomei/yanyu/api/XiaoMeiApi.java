@@ -655,4 +655,20 @@ public class XiaoMeiApi {
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
         mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
     }
+    /**促销消息*/
+    public List<Goods> myPromotion(String curpage,String perpage,String token)
+            throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair("token", token),
+                new BasicNameValuePair("curpage", curpage),
+                new BasicNameValuePair("perpage", perpage),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.myPromotionUrl(),
+                values[0],
+                values[1],
+                values[2],
+                values[3],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
+    }
 }

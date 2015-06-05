@@ -11,6 +11,7 @@ import com.xiaomei.yanyu.module.user.center.FeedbackActivity;
 import com.xiaomei.yanyu.module.user.center.HistoryActivity;
 import com.xiaomei.yanyu.module.user.center.MessageActivity;
 import com.xiaomei.yanyu.module.user.center.UserInfoActivity;
+import com.xiaomei.yanyu.module.user.center.UserMessageActivity;
 import com.xiaomei.yanyu.module.user.center.UserOrderListActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -169,7 +170,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 			UserOrderListActivity.startActivity(getActivity());
 			break;
 		case R.id.line2: //我的消息
-			MessageActivity.startActivity(getActivity());
+		    UserMessageActivity.startActivity(getActivity());
 			break;
 		case R.id.line3: //我的收藏
 			CollectionActivity.startActivity(getActivity());
