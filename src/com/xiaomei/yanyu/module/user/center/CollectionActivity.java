@@ -3,11 +3,13 @@ package com.xiaomei.yanyu.module.user.center;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
@@ -32,6 +33,7 @@ import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 
+@SuppressLint("NewApi")
 public class CollectionActivity extends AbstractActivity<UserCenterControl> implements OnScrollListener,OnRefreshListener,View.OnClickListener{
 	
     private Map< String, String> mCheckedData = new HashMap<String, String>();
@@ -197,7 +199,8 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                return 0;
 	            }
 
-	            @Override
+	            @SuppressLint("NewApi")
+				@Override
 	            public View getView(int position, View convertView, ViewGroup parent) {
 	                Holder holder = null;
 	                if(convertView == null){
@@ -211,6 +214,9 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                    holder.priceTv = (TextView) convertView.findViewById(R.id.price);
 	                    holder.localTv = (TextView) convertView.findViewById(R.id.location);
 	                    holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+	                    holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
+	                    holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
+	                    holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
 	                    if(showEdite){
 	                        holder.checkBox.setOnClickListener(this);
 	                    }else{
@@ -253,10 +259,46 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                    }else{
 	                        holder.checkBox.setChecked(false);
 	                    }
-	                }else
+	                }else{
 	                    holder.checkBox.setVisibility(View.GONE);
-//	              holder.sizeTv.setText(goods.getPriceMarket());
-//	              holder.hospitalTv.setText(goods.ge);
+	                }
+	                
+	                List<Goods.Mark> marks = goods.getMarks();
+	                int i = 0;
+	                GradientDrawable shapeDrawable  = null;
+	                if(marks!=null){
+	                    for(Goods.Mark mark:marks){
+	                        switch (i) {
+	                        case 0:
+	                            holder.mark1.setVisibility(View.VISIBLE);
+	                            shapeDrawable = new GradientDrawable();
+	                            shapeDrawable.setCornerRadius(15);
+	                            shapeDrawable.setColor(Color.parseColor(mark.getColor()));
+	                            holder.mark1.setBackground(shapeDrawable);
+	                            holder.mark1.setText(mark.getLabel());
+	                            break;
+	                        case 1:
+	                            holder.mark2.setVisibility(View.VISIBLE);
+	                            shapeDrawable = new GradientDrawable();
+	                            shapeDrawable.setCornerRadius(15);
+	                            shapeDrawable.setColor(Color.parseColor(mark.getColor()));
+	                            holder.mark2.setBackground(shapeDrawable);
+	                            holder.mark2.setText(mark.getLabel());
+	                            break;
+	                        case 2:
+	                            holder.mark3.setVisibility(View.VISIBLE);
+	                            shapeDrawable = new GradientDrawable();
+	                            shapeDrawable.setCornerRadius(15);
+	                            shapeDrawable.setColor(Color.parseColor(mark.getColor()));
+	                            holder.mark3.setBackground(shapeDrawable);
+	                            holder.mark3.setText(mark.getLabel());
+	                            break;
+	                        default:
+	                            break;
+	                        }
+	                        i++;
+	                    }
+	                }
 	                return convertView;
 	            }
 	            
@@ -269,6 +311,9 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                TextView localTv;
 	                TextView priceTv;
 	                CheckBox checkBox;
+	                TextView mark1;
+	                TextView mark2;
+	                TextView mark3;
 	            }
 
 	            @Override
