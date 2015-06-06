@@ -640,6 +640,9 @@ public class XiaoMeiApi {
     // ========================================================================================
     // 删除或者添加用户收藏
     // ========================================================================================
+    /**
+     * action: del add
+     */
     public void actionFav(String action,String goodsid,String token)
     		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
         BasicNameValuePair[] values = {
@@ -670,5 +673,23 @@ public class XiaoMeiApi {
                 values[3],
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
         return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
+    }
+    
+    /**是否收藏*/
+    public boolean isFav(String goodsid,String userid,String token)
+            throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {     
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair("token", token),
+                new BasicNameValuePair("goodsid", goodsid),
+                new BasicNameValuePair("userid", userid),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.isFav(),
+                values[0],
+                values[1],
+                values[2],
+                values[3],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        NetResult netResult = mHttpApi.doHttpRequestObject(httpGet, new NetResultBuilder());
+        return Boolean.valueOf(netResult.getMsg());
     }
 }

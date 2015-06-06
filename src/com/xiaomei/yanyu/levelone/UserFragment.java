@@ -167,12 +167,24 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 			LoginAndRegisterActivity.startActivity(getActivity(), false);
 			break;
 		case R.id.line1:  //我的订单
+			if(UserUtil.getUser()==null){
+				LoginAndRegisterActivity.startActivity(getActivity(), false);
+				return;
+			}
 			UserOrderListActivity.startActivity(getActivity());
 			break;
 		case R.id.line2: //我的消息
+			if(UserUtil.getUser()==null){
+				LoginAndRegisterActivity.startActivity(getActivity(), false);
+				return;
+			}
 		    UserMessageActivity.startActivity(getActivity());
 			break;
 		case R.id.line3: //我的收藏
+			if(UserUtil.getUser()==null){
+				LoginAndRegisterActivity.startActivity(getActivity(), false);
+				return;
+			}
 			CollectionActivity.startActivity(getActivity());
 			break;
 		case R.id.line4: //浏览历史

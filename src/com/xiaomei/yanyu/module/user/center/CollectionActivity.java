@@ -3,14 +3,18 @@ package com.xiaomei.yanyu.module.user.center;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
@@ -106,6 +111,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	}
 	
 	private void initData(){
+		mEdit.setEnabled(false);
         showProgress();
         mIsRefresh = true;
         mControl.getUserFav();
@@ -142,6 +148,8 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	        dissProgress();
 	        mPullToRefreshListView.onRefreshComplete();
 	        Toast.makeText(this, "加载成功", 0).show();
+	        dismissDialog();
+	        mEdit.setEnabled(true);
 	}
 	
 	public void getUserFavExceptionCallBack(){
@@ -149,6 +157,8 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	        mIsRefresh = false;
 	        dissProgress();
 	        mPullToRefreshListView.onRefreshComplete();
+	        dismissDialog();
+	        mEdit.setEnabled(true);
 	}
 	
 	public void getUserFavMoreCallBack(){
@@ -158,12 +168,52 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	        mAdapter.notifyDataSetChanged();
 	        mPullToRefreshListView.removeFooterView(mRefreshLayout);
 	        Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
+	        dismissDialog();
+	        mEdit.setEnabled(true);
 	}
 	
 	public void getUserFavMoreExceptionCallBack(){
 	       dissProgress();
 	        mIsRefresh = false;
 	        mPullToRefreshListView.removeFooterView(mRefreshLayout);
+	        dismissDialog();
+	        mEdit.setEnabled(true);
+	}
+	
+	public void deleteUserFavCallBack(){
+		showEdite = false;
+        mEdit.setText("编辑");
+        mDelete.setVisibility(View.GONE);
+        mCheckedData.clear();
+        dismissDialog();
+        Toast.makeText(this, "删除成功", 0).show();
+        initData();
+	}
+	
+	public void deleteUserFavExceptionCallBack(){
+		showEdite = false;
+        mEdit.setText("编辑");
+        mDelete.setVisibility(View.GONE);
+        mCheckedData.clear();
+        dismissDialog();
+        Toast.makeText(this, "删除失败", 0).show();
+        mEdit.setEnabled(true);
+	}
+	// =========================================== ProgressDialog ==========================================
+	private ProgressDialog mProgressDialog;
+	private void showProgressDialog(String message){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setTitle("提示");
+		mProgressDialog.setMessage(message);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.show();
+	}
+	
+	private void dismissDialog(){
+		if(mProgressDialog!=null && mProgressDialog.isShowing())
+			mProgressDialog.dismiss();
 	}
 	// ============================== Adapter ==========================================
 	        private class MyAdapter extends BaseAdapter implements View.OnClickListener{
@@ -217,32 +267,18 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                    holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
 	                    holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
 	                    holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
-	                    if(showEdite){
-	                        holder.checkBox.setOnClickListener(this);
-	                    }else{
-	                        convertView.setOnClickListener(this);
-//	                        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    CheckBox checkBox = (CheckBox) v;
-//                                    int position = (Integer) checkBox.getTag();
-//                                    Goods item = mData.get(position);
-//                                    if(checkBox.isChecked()){
-//                                        checkBox.setChecked(false);
-//                                        mCheckedData.remove(item.getId());
-//                                        android.util.Log.d("111", "checked false");
-//                                    }else{
-//                                        checkBox.setChecked(true);
-//                                        android.util.Log.d("111", "checked true");
-//                                        mCheckedData.put(item.getId(),item.getId());
-//                                    }
-//                                }
-//                            });
-	                    }
 	                    convertView.setTag(holder);
 	                }
 	                holder = (Holder) convertView.getTag();
 	                Goods goods = mData.get(position);
+	                
+                    if(showEdite){
+                        holder.checkBox.setOnClickListener(this);
+                        convertView.setOnClickListener(null);
+                    }else{
+                        convertView.setOnClickListener(this);
+                    }
+	                
 	                holder.iconIv.setImageResource(R.drawable.goods_list_default);
 	                ImageLoader.getInstance().displayImage(goods.getFileUrl(),holder.iconIv );
 	                holder.titleTv .setText(goods.getTitle());
@@ -342,6 +378,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 
     @Override
     public void onRefresh() {
+    	mEdit.setEnabled(false);
         mIsRefresh = true;
         mControl.getUserFav();
 
@@ -365,14 +402,17 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
         int id = v.getId();
         switch (id) {
         case R.id.delete:
-            
+        	DeleteCollectionDailogActivity.startActivity(this,mCheckedData.size());
             break;
         case R.id.edit:
+        	if(mAdapter.getData()==null || mAdapter.getData().size()==0){
+        		return;
+        	}
             if(showEdite){
-                
             }else{
                 showEdite = true;
                 mEdit.setText("完成");
+                mDelete.setVisibility(View.VISIBLE);
             }
             mAdapter.notifyDataSetChanged();
             break;
@@ -380,5 +420,38 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
             break;
         }
     }
-
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if(requestCode == 1 && resultCode == RESULT_OK){
+    		StringBuilder goodsIds = new StringBuilder();
+    		Set<String> set = mCheckedData.keySet();
+    		int i = 0;
+    		for(String str : set){
+    			goodsIds.append(str);
+    			if(i!=mCheckedData.size()-1){
+    				goodsIds.append(",");
+    			}
+    			i++;
+    		}
+    		showProgressDialog("删除中...");
+    		mControl.deleteUserFav(goodsIds.toString());
+    	}
+    	super.onActivityResult(requestCode, resultCode, data);
+    }
+    
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    	if(keyCode==KeyEvent.KEYCODE_BACK){
+    		if(showEdite){
+    			showEdite = false;
+    	        mEdit.setText("编辑");
+                mDelete.setVisibility(View.GONE);
+                mCheckedData.clear();
+                return true;
+    		}
+    	}
+    	return super.onKeyUp(keyCode, event);
+    }
+    
 }

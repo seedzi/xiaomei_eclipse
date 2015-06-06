@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#66000000">
+    
+    <TextView 
+        android:layout_above="@+id/cancel"
+        android:id="@+id/confim"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="确定删除x个收藏"
+        android:textSize="16sp"
+        android:textColor="#d366f3"
+        android:background="#ffffff"/>
+    <View
+        android:id="@+id/divid"
+        android:layout_above="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f2f2f2"/>
+    <TextView 
+        android:id="@+id/cancel"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textSize="16sp"
+        android:textColor="#505050"
+        android:background="#ffffff"/>
+    
+</RelativeLayout>

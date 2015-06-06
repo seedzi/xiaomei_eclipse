@@ -3,6 +3,10 @@ package com.xiaomei.yanyu.leveltwo.control;
 import java.util.List;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.leveltwo.model.LevelTwoModel;
 import com.xiaomei.yanyu.util.UserUtil;
@@ -82,7 +86,7 @@ public class LeveltwoControl extends BaseControl {
 	// 收藏
 	// =======================================================================================
 	@AsynMethod
-	public void actionUserFavAdd(String goodsid){
+	public void actionUserFavAdd(String goodsid){sendMessage("isFavCallBack");
 		actionUserFav("add", goodsid);
 	}
 	public void actionUserFavRm(String goodsid){
@@ -91,9 +95,23 @@ public class LeveltwoControl extends BaseControl {
 	private void actionUserFav(String action,String goodsid){
 		try {
 			 XiaoMeiApplication.getInstance().getApi().actionFav(action, goodsid,UserUtil.getUser().getToken());
+			 sendMessage("actionUserFavCallBack");
 		} catch (Exception e) {
 			e.printStackTrace();
+			sendMessage("actionUserFavExceptionCallBack");
 			return;
 		}
+	}
+	/**是否收藏*/
+	@AsynMethod
+	public void isFav(String goodsid){
+		try {
+			boolean  isFav = XiaoMeiApplication.getInstance().getApi().isFav(goodsid, UserUtil.getUser().getUserInfo().getUserid(), UserUtil.getUser().getToken());
+			mModel.setmIsFav(isFav);
+			sendMessage("isFavCallBack");
+		} catch (Exception e) {
+			e.printStackTrace();
+			sendMessage("isFavExceptionCallBack");
+		} 
 	}
 }

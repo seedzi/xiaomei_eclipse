@@ -27,6 +27,8 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> implements CordovaInterface,View.OnClickListener{
@@ -66,6 +68,12 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		setContentView(R.layout.activity_goods_detail_layout);
 		initView();
 		initCordova();
+		isCollection(goodsId);
+	}
+	
+	/**是否收藏*/
+	private void isCollection(String goodsid){
+		mControl.isFav(goodsid);
 	}
 	
 	private void initView(){
@@ -181,6 +189,27 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		}  
 	}
 	
+	// ============================== CallBack ==========================================
+	public void isFavCallBack(){
+		if(mControl.getModel().ismIsFav()){
+			mTitleBar.findViewById(R.id.fav).setBackgroundResource(R.drawable.shoucang_press);
+			mTitleBar.findViewById(R.id.fav).setOnClickListener(null);
+		}
+	}
+	
+	public void actionUserFavCallBack(){
+		mTitleBar.findViewById(R.id.fav).setBackgroundResource(R.drawable.shoucang_press);
+		mTitleBar.findViewById(R.id.fav).setOnClickListener(null);
+		mTitleBar.findViewById(R.id.fav).setEnabled(true);
+	}
+	
+	public void actionUserFavExceptionCallBack(){
+		mTitleBar.findViewById(R.id.fav).setEnabled(true);
+	}
+	
+	public void isFavExceptionCallBack(){
+		
+	}
 	
 	// ============================== 进度条 ==========================================
 	private class MyWebChromeClient extends WebChromeClient {
@@ -214,9 +243,14 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	
 	@Override
 	public void onClick(View v) {
+		if(UserUtil.getUser()==null){
+			LoginAndRegisterActivity.startActivity(this, false);
+			return;
+		}
 		int id = v.getId();
 		if(id ==R.id.fav){
 			mControl.actionUserFavAdd(goodsId);
+			v.setEnabled(false);
 		}
 	}
 }

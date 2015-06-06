@@ -12,6 +12,8 @@ public class LevelTwoModel {
 
 	private BeautifulRingDetail mBeautifulRingDetailData;
 	
+	private boolean mIsFav;
+	
 	public void setGoodsListList(List<Goods> list){
 		mGoodsList = list;
 	}
@@ -45,4 +47,13 @@ public class LevelTwoModel {
 	public void reducePage(){
 		mPage --;
 	}
+
+	public boolean ismIsFav() {
+		return mIsFav;
+	}
+
+	public void setmIsFav(boolean mIsFav) {
+		this.mIsFav = mIsFav;
+	}
+	
 }

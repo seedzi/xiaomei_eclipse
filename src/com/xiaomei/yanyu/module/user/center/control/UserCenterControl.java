@@ -268,4 +268,14 @@ public class UserCenterControl extends BaseControl {
 	            sendMessage("getUserFavMoreExceptionCallBack");
 	        }
 	    }
+	   @AsynMethod
+	  public void deleteUserFav(String goodsIds){
+		  try {
+			XiaoMeiApplication.getInstance().getApi().actionFav("del", goodsIds, UserUtil.getUser().getToken());
+			sendMessage("deleteUserFavCallBack");
+		} catch (Exception e) {
+			sendMessage("deleteUserFavExceptionCallBack");
+			e.printStackTrace();
+		}
+	  }
 }

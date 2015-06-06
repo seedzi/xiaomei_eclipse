@@ -118,7 +118,7 @@ abstract public class AbstractHttpApi implements HttpApi {
             throws XiaoMeiIOException, XiaoMeiCredentialsException, XiaoMeiOtherException {
         if(DebugRelease.isDebug)
             Log.d("URL", "url="+httpRequest.getURI().toString());
-        httpRequest.addHeader("host", "api.drxiaomei.com");
+//        httpRequest.addHeader("host", "api.drxiaomei.com");
         HttpResponse response = executeHttpRequest(httpRequest);
 
         int statusCode = response.getStatusLine().getStatusCode();

@@ -155,7 +155,11 @@
 		    android:theme="@style/activityTheme"
             android:name="com.xiaomei.yanyu.comment.CommentListActivity">
         </activity>
-        
+        <!-- 删除收藏确定页面 -->
+        <activity 
+            android:theme="@android:style/Theme.Translucent"
+            android:name="com.xiaomei.yanyu.module.user.center.DeleteCollectionDailogActivity">
+        </activity>
 		<!-- 微信支付结果页面 -->
 		 <activity
 		     android:theme="@style/activityTheme"

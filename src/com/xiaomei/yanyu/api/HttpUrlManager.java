@@ -2,7 +2,7 @@ package com.xiaomei.yanyu.api;
 
 public class HttpUrlManager {
 	
-	private static String HOST = "http://180.76.146.212"/*"http://api.drxiaomei.com"*/; 
+	private static String HOST = /*"http://180.76.146.212"*/"http://api.drxiaomei.com"; 
 	/**产品详情*/
 	public static String GOODS_DETAIL_URL  = "http://z.drxiaomei.com/goods.php";
 	/**机构详情*/
@@ -128,6 +128,10 @@ public class HttpUrlManager {
     /**促销消息*/
     String myPromotionUrl(){
         return HOST + "/server/show/myPromotion.php";
+    }
+    /**是否收藏*/
+    String isFav(){
+        return HOST + "/server/show/isfav.php";
     }
 }
 
