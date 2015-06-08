@@ -31,18 +31,18 @@ public class MyLayout extends RelativeLayout {
 		case MotionEvent.ACTION_MOVE:
 			if (startX == event.getX()) {
 				if (0 == child_viewpager.getCurrentItem()
-						|| child_viewpager.getCurrentItem() == child_viewpager
-								.getAdapter().getCount() - 1) {
+						/*|| child_viewpager.getCurrentItem() == child_viewpager
+								.getAdapter().getCount() - 1*/) {
 					getParent().requestDisallowInterceptTouchEvent(false);
 				}
 			}
 			// 里层viewpager已经是最后一页，此时继续向右滑（手指从右往左滑）
-			else if (startX > event.getX()) {
-				if (child_viewpager.getCurrentItem() == child_viewpager
-						.getAdapter().getCount() - 1) {
-					getParent().requestDisallowInterceptTouchEvent(false);
-				}
-			}
+//			else if (startX > event.getX()) {
+//				if (child_viewpager.getCurrentItem() == child_viewpager
+//						.getAdapter().getCount() - 1) {
+//					getParent().requestDisallowInterceptTouchEvent(false);
+//				}
+//			}
 			// 里层viewpager已经是第一页，此时继续向左滑（手指从左往右滑）
 			else if (startX < event.getX()) {
 				if (child_viewpager.getCurrentItem() == 0) {
