@@ -69,8 +69,6 @@ public class HttpApiWithSession extends AbstractHttpApi {
         try {
 //            return StringUtil.convertStreamToString(in);
         	String s = StringUtil.convertStreamToString(in);
-        	if(DebugRelease.isDebug)
-        	    android.util.Log.d("111", "sss = " + s);
         	return s;
         } finally {
             if (in != null) {

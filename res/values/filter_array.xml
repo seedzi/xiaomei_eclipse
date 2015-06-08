@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 <!-- movie -->
 
-    <string-array name="filter_movie_areo">
+    <string-array name="filter_movie_areo" tools:ignore="MissingTranslation">
 
         <item>全部</item>
 
@@ -36,7 +36,7 @@
 
     </string-array>
 
-    <string-array name="filter_movie_type">
+    <string-array name="filter_movie_type" tools:ignore="MissingTranslation">
 
         <item>全部</item>
 
@@ -72,7 +72,7 @@
 
     <!-- tv -->
 
-     <string-array name="filter_tv_areo">
+     <string-array name="filter_tv_areo" tools:ignore="MissingTranslation">
 
         <item>全部</item>
 
@@ -96,7 +96,7 @@
 
     </string-array>
 
-    <string-array name="filter_tv_type">
+    <string-array name="filter_tv_type" tools:ignore="MissingTranslation">
 
         <item>全部</item>
 
@@ -128,7 +128,7 @@
 
     <!-- cartoon -->
 
-     <string-array name="filter_cartoon_areo">
+     <string-array name="filter_cartoon_areo" tools:ignore="MissingTranslation">
 
         <item>全部</item>
 
@@ -148,7 +148,7 @@
 
     </string-array>
 
-    <string-array name="filter_cartoon_type">
+    <string-array name="filter_cartoon_type" tools:ignore="MissingTranslation">
 
         <item>全部</item>
 
