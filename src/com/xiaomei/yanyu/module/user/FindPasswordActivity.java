@@ -124,6 +124,10 @@ public class FindPasswordActivity extends AbstractActivity<UserControl>
 		int id = v.getId();
 		switch (id) {
 		case R.id.launch:
+			if(!checkInputData4Registe()){
+				Toast.makeText(FindPasswordActivity.this, "请输入正确的数据", 0).show();
+				return;
+			}
 			InputUtils.hidSoftInput(FindPasswordActivity.this);
 			showProgressDialog("加载...");
 			mLaunchListener.onLaunch();
