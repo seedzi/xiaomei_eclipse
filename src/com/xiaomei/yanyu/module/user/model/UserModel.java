@@ -134,4 +134,15 @@ public class UserModel {
     public int getCurrentPage4Goods(){
         return mPage4Goods;
     }
+    
+	// ===============================   注册信息  =====================================
+    private String mRegisterFailureMsg;
+    
+    public String getRegisterFailureMsg(){
+    	return mRegisterFailureMsg;
+    }
+    
+    public void setRegisterFailureMsg(String msg){
+    	mRegisterFailureMsg = msg;
+    }
 }

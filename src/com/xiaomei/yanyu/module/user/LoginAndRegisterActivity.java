@@ -280,7 +280,11 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	}
 	public void registeAsynExceptionCallBack(){
 		dismissDialog();
-		Toast.makeText(LoginAndRegisterActivity.this, "注册失败", 0).show();
+		String msg = mControl.getModel().getRegisterFailureMsg();
+		if(TextUtils.isEmpty(msg)){
+			msg = "注册失败";
+		}
+		Toast.makeText(LoginAndRegisterActivity.this, msg, 0).show();
 	}
 	
 	public void loginAsynCallBack(){

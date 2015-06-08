@@ -69,8 +69,10 @@ public class UserControl extends BaseControl{
 			NetResult result = XiaoMeiApplication.getInstance().getApi().userRegister(username, password, verificationCode);
 			if("0".equals(result.getCode()))
 				sendMessage("registeAsynCallBack");
-			else
+			else{
+				mUserModel.setRegisterFailureMsg(result.getMsg());
 				sendMessage("registeAsynExceptionCallBack");
+			}
 			if(DEBUG)
 				Log.d("111", "registeAsyn()  msg = " + result.getMsg());
 		} catch (Exception e) {
@@ -110,6 +112,10 @@ public class UserControl extends BaseControl{
 				e.printStackTrace();
 				return;
 		} 
+	}
+	
+	public UserModel getModel(){
+		return mUserModel;
 	}
 	
 }
