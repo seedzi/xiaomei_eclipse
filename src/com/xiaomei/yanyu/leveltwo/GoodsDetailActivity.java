@@ -34,6 +34,14 @@ import com.xiaomei.yanyu.widget.TitleBar;
 public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> implements CordovaInterface,View.OnClickListener{
 	
 	
+	public static void startActivityWithTitle(Activity ac,String url,String title){
+		Intent intent = new Intent(ac,GoodsDetailActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("title", title);
+		ac.startActivity(intent);
+        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+	}
+	
 	public static void startActivity(Activity ac,String url){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
@@ -85,6 +93,10 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 				finish();
 			}
 		});
+		String title = getIntent().getStringExtra("title");
+		if(!TextUtils.isEmpty(title))
+			mTitleBar.setTitle(title);
+			
 		goodsId = getIntent().getStringExtra("goodsid");
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
 		mTitleBar.findViewById(R.id.comment).setVisibility(View.GONE);
