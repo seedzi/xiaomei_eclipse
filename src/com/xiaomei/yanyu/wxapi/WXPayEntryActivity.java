@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 	
@@ -56,5 +57,64 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 			builder.setMessage(getString(R.string.pay_result_callback_msg, resp.errStr +";code=" + String.valueOf(resp.errCode)));
 			builder.show();
 		}*/
+		String msg = "支付失败";
+		switch (resp.errCode) {
+        case 0:
+            msg = "支付成功";
+            break;
+        case -1:
+            msg = "支付失败";
+            
+            break;
+        case -2:
+            msg = "已取消支付";
+            break;
+        default:
+            break;
+        }
+		 if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+		     Toast.makeText(getApplicationContext(), msg, 0).show();
+		 }
+		 finish();
 	}
+	
+	/*
+	public void onResp(BaseResp resp) {
+        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+
+        String msg = "";
+        
+        if(resp.errCode == 0)
+        {
+            msg = "支付成功";
+        }
+        else if(resp.errCode == -1)
+        {
+            msg = "已取消支付";
+        }
+        else if(resp.errCode == -2)
+        {
+            msg = "支付失败";
+        }
+        if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+             mDialog = new MyDialog(this, "支付结果", msg);
+             mDialog.show();
+
+             mDialog.positive.setOnClickListener(new OnClickListener() {
+                 @Override
+                 public void onClick(View v) {                        
+                     mDialog.dismiss();
+                     finish();
+                 }
+             });
+             
+             mDialog.negative.setOnClickListener(new OnClickListener() {
+                 @Override
+                 public void onClick(View v) {                        
+                     mDialog.dismiss();
+                     finish();
+                 }
+             });
+        }
+    }*/
 }
