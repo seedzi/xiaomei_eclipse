@@ -129,6 +129,7 @@
         <TextView 
             android:id="@+id/like_size"
             android:textSize="16sp"
+            android:textColor="#d7d7d7"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"

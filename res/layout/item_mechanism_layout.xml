@@ -38,7 +38,7 @@
         android:text="J-Star整形外科医院"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        />
+        android:textColor="#787878"/>
     
         
     <TextView 
@@ -51,7 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="center"
-        android:drawableLeft="@drawable/icon_address"/>
+        android:drawableLeft="@drawable/icon_address"
+        android:textColor="#787878"/>
     
     <com.xiaomei.yanyu.widget.StarsView
         android:id="@+id/grades"
