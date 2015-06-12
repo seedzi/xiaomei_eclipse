@@ -20,7 +20,10 @@ public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
 		if(DebugRelease.isDebug)
 		    Log.d("json", jsonObject.toString());
 		jsonObject = jsonObject.getJSONObject("msg");
-		JSONArray jArray = jsonObject.getJSONArray("data");
+		JSONArray jArray = jsonObject.optJSONArray("data");
+		if (jArray == null) {
+		    return list;
+		}
 		for(int i = 0 ;i<jArray.length(); i++){
 			Goods goods = new Goods();
 			JSONObject jobj = jArray.getJSONObject(i);
