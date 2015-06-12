@@ -123,13 +123,13 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
                         break;
                     case R.id.origin_place:
                         if (!item.second.equals(mOriginPlace)) {
-                            mSubCat = item.second;
+                            mOriginPlace = item.second;
                             onRefresh();
                         }
                         break;
                     case R.id.price_order:
                         if (!item.second.equals(mPriceOrder)) {
-                            mSubCat = item.second;
+                            mPriceOrder = item.second;
                             onRefresh();
                         }
                         break;
