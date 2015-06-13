@@ -268,7 +268,7 @@ public class XiaoMeiApi {
 	/**
 	 *  找回密码
 	 */
-	public NetResult findPassword(String userid,String passwd,String rdcode)
+	public User findPassword(String userid,String passwd,String rdcode)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
 		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid) ,
 				new BasicNameValuePair("passwd", passwd),
@@ -280,7 +280,7 @@ public class XiaoMeiApi {
 				values[2],
 				values[3],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-		return  mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+		return  mHttpApi.doHttpRequestObject(httpPost, new UserLoginBuilder());
 	}
 	
 	// ========================================================================================

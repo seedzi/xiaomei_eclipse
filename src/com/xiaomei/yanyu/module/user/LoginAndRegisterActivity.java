@@ -326,6 +326,16 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		if(mProgressDialog!=null && mProgressDialog.isShowing())
 			mProgressDialog.dismiss();
 	}
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if(arg0==1 && arg1== RESULT_OK){
+			TabsActivity.startActivity(LoginAndRegisterActivity.this);
+			setResult(RESULT_OK);
+			finish();
+		}
+	}
 	// ===============================  Sns qq登录=======================================
 	private void initSns(){
 		  //参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.

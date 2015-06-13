@@ -25,16 +25,23 @@ public class UserControl extends BaseControl{
 	
 	@AsynMethod
 	public void findPasswordAsyn(String username,String password,String verificationCode){
+		User user = null;
 		try {
-			NetResult result = XiaoMeiApplication.getInstance().getApi().findPassword(username, password, verificationCode);
+			user = XiaoMeiApplication.getInstance().getApi().findPassword(username, password, verificationCode);
+			mUserModel.setUser(user);
 			if(DEBUG)
-				Log.d("111", "findPasswordAsyn()  msg = " + result.getMsg());
+				Log.d("111", "loginAsyn()  user = " + user);
 		} catch (Exception e) {
 			sendMessage("findPasswordAsynExceptionCallBack");
 			e.printStackTrace();
 			return;
 		} 
-		sendMessage("findPasswordAsynCallBack");
+		if(UserUtil.isUserValid(user)){
+			UserUtil.userloginSuccess(user);
+			sendMessage("findPasswordAsynCallBack");
+		}else{
+			sendMessage("findPasswordAsynExceptionCallBack");
+		}
 	}
 
 

@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.module.user;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.module.user.control.UserControl;
 import com.xiaomei.yanyu.util.InputUtils;
 import com.xiaomei.yanyu.util.MobileUtil;
@@ -23,9 +25,9 @@ import com.xiaomei.yanyu.widget.TitleBar;
 public class FindPasswordActivity extends AbstractActivity<UserControl>
 	implements View.OnClickListener{
 	
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,FindPasswordActivity.class);
-		context.startActivity(intent);
+	public static void startActivity(Activity ac){
+		Intent intent = new Intent(ac,FindPasswordActivity.class);
+		ac.startActivityForResult(intent, 1);
 	}
 	
 	private TitleBar mTitleBar;
@@ -176,7 +178,7 @@ public class FindPasswordActivity extends AbstractActivity<UserControl>
 			mProgressDialog.dismiss();
 	}
 	
-	// ===============================  Call Back =======================================
+	// ==============================================  Call Back ======================================================
 	
 		public void getVerificationCodeAsynExceptionCallBack(){
 			dismissDialog();
@@ -188,6 +190,9 @@ public class FindPasswordActivity extends AbstractActivity<UserControl>
 		public void findPasswordAsynCallBack(){
 			dismissDialog();
 			Toast.makeText(FindPasswordActivity.this, "找回密码成功", 0).show();
+			setResult(RESULT_OK);
+			finish();
+
 		}
 		public void findPasswordAsynExceptionCallBack(){
 			dismissDialog();
