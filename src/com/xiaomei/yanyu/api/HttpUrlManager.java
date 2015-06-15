@@ -1,5 +1,7 @@
 package com.xiaomei.yanyu.api;
 
+import com.xiaomei.yanyu.DebugRelease;
+
 public class HttpUrlManager {
 	
 	private static String HOST = "http://api.drxiaomei.com"; 
@@ -12,9 +14,8 @@ public class HttpUrlManager {
 	
 	public static String UPDATE_USER_ICON = HOST + "/server/action/upoadAvatar.php";
  	
-	public static boolean IS_DEBUG = true;
 	static{
-		if(IS_DEBUG){
+		if(DebugRelease.isDebug){
 			HOST = "http://180.76.146.212";
 		}else{
 			HOST = "http://api.drxiaomei.com";
