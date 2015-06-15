@@ -472,6 +472,38 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		                   sb.append(key+"="+info.get(key).toString()+"\r\n");
 		                }
 		                Log.d("TestData",sb.toString());
+		                
+		                /*
+		                new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "qq", access_token, username, avatar, sex);
+                                    if(user != null && UserUtil.isUserValid(user)){
+                                        android.util.Log.d("111", "user = " + user);
+                                        User.save(user);
+                                        TabsActivity.startActivity(LoginAndRegisterActivity.this);
+                                        finish();
+                                    }else{
+                                        mHandler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(mContext, "网络异常", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                } catch (Exception e) {
+                                    mHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(mContext, "网络异常", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();*/
+		                
 		            }else{
 		               Log.d("TestData","发生错误："+status);
 		           }
