@@ -31,7 +31,7 @@
 	            android:layout_marginLeft="@dimen/item_margin_normal"
 	            app:border_width="3dp"
 	            app:border_color="#ffffff"
-	            android:src="@drawable/joke_channel_offline_icon"/>
+	            android:src="@drawable/user_head_default"/>
 	        <LinearLayout
 	            android:layout_width="wrap_content"
 	            android:layout_height="match_parent"
