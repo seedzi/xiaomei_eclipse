@@ -80,27 +80,33 @@
         android:textColor="#787878"
         android:drawableLeft="@drawable/icon_address"/>
     
-      <TextView 
-        android:id="@+id/origin_price"
-		android:layout_alignBottom="@id/size"
-		android:layout_alignParentRight="true"
+      <LinearLayout 
+         android:id="@+id/price_root"
+        android:layout_alignBottom="@id/size"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_width="wrap_content"        
-        android:layout_height="wrap_content"        
-        android:text="原价8500元"
-        android:textSize="10sp"
-        android:textColor="#aaaaaa"/> 
-        <TextView 
+        android:layout_height="wrap_content"     
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+                  <TextView 
         android:id="@+id/price"
-		android:layout_alignBottom="@id/origin_price"
-		android:layout_toLeftOf="@id/origin_price"
         android:layout_marginRight="5dp"
         android:layout_width="wrap_content"        
         android:layout_height="wrap_content"        
         android:text=""
         android:textSize="16sp"
         android:textColor="#d366f3"/> 
-         -->
+      <com.xiaomei.yanyu.widget.OriginTextView 
+        android:id="@+id/origin_price"
+        android:layout_width="wrap_content"        
+        android:layout_height="wrap_content"        
+        android:text="原价8500元"
+        android:textSize="10sp"
+        android:textColor="#aaaaaa"/> 
+      </LinearLayout>
+
+
         <TextView 
            android:id="@+id/tag_1"
            android:paddingLeft="2dp"
@@ -110,7 +116,7 @@
            android:layout_toRightOf="@id/icon"
        	   android:layout_width="wrap_content"        
            android:layout_height="wrap_content"        
-           android:layout_below="@id/price"
+           android:layout_below="@id/price_root"
            android:textSize="11sp"
            android:visibility="gone"
            android:textColor="#ffffff"
