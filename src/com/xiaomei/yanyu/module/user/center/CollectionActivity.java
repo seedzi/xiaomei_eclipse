@@ -267,6 +267,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                    holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
 	                    holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
 	                    holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
+	                    holder.priceMarketTv = (TextView) convertView.findViewById(R.id.origin_price);
 	                    convertView.setTag(holder);
 	                }
 	                holder = (Holder) convertView.getTag();
@@ -288,6 +289,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
 	                holder.localTv.setText(goods.getCityName());
 	                holder.checkBox.setTag(position);
+	                holder.priceMarketTv.setText("原价"+goods.getPriceMarket()+"元");
 	                if(showEdite){
 	                    holder.checkBox.setVisibility(View.VISIBLE);
 	                    if(mCheckedData.get(goods.getId())!=null){
@@ -350,6 +352,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                TextView mark1;
 	                TextView mark2;
 	                TextView mark3;
+	                TextView priceMarketTv;
 	            }
 
 	            @Override

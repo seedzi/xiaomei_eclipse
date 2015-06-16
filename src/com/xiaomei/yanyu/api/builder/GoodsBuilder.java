@@ -17,7 +17,7 @@ public class GoodsBuilder extends AbstractJSONBuilder<List<Goods>> {
 	@Override
 	protected List<Goods> builder(JSONObject jsonObject) throws JSONException {
 		List<Goods> list = new ArrayList<Goods>();
-		if(DebugRelease.isDebug)
+//		if(DebugRelease.isDebug)
 		    Log.d("json", jsonObject.toString());
 		jsonObject = jsonObject.getJSONObject("msg");
 		JSONArray jArray = jsonObject.optJSONArray("data");

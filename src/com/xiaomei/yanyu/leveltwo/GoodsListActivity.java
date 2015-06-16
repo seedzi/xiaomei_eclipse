@@ -334,6 +334,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 				holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
 				holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
 				holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
+				holder.priceMarketTv = (TextView) convertView.findViewById(R.id.origin_price);
 				convertView.setOnClickListener(this);
 				convertView.setTag(holder);
 			}
@@ -348,6 +349,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			holder.hospitalTv.setText(goods.getHospName());
 			holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
 			holder.localTv.setText(goods.getCityName());
+			holder.priceMarketTv.setText("原价"+goods.getPriceMarket()+"元");
 			
 			List<Goods.Mark> marks = goods.getMarks();
 			int i = 0;
@@ -395,6 +397,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			TextView titleTv; 
 			TextView sizeTv;
 			TextView hospitalTv;
+			TextView priceMarketTv;
 			String goodId;
 			TextView localTv;
 			TextView priceTv;
