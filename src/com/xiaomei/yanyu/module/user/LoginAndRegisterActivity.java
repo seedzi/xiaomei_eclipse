@@ -456,6 +456,8 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
 		    	android.util.Log.d("111", "授权完成");
 		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
+                openid = value.getString("openid");
+                access_token = value.getString("access_token");
 		    	android.util.Log.d("111", "value = " + value);
 		        //获取相关授权信息
 		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.WEIXIN, new UMDataListener() {
@@ -470,15 +472,18 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		                Set<String> keys = info.keySet();
 		                for(String key : keys){
 		                   sb.append(key+"="+info.get(key).toString()+"\r\n");
+		                   if("nickname".equals(key.trim()))
+		                       username = info.get(key).toString();
+		                   else if("headimgurl".equals(key.trim()))
+		                       avatar = info.get(key).toString();
 		                }
-		                Log.d("TestData",sb.toString());
+		                Log.d("111",sb.toString());
 		                
-		                /*
 		                new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "qq", access_token, username, avatar, sex);
+                                    User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "weixin", access_token, username, avatar, sex);
                                     if(user != null && UserUtil.isUserValid(user)){
                                         android.util.Log.d("111", "user = " + user);
                                         User.save(user);
@@ -502,7 +507,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
                                     e.printStackTrace();
                                 }
                             }
-                        }).start();*/
+                        }).start();
 		                
 		            }else{
 		               Log.d("TestData","发生错误："+status);
