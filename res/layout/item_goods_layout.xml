@@ -56,17 +56,7 @@
         android:text="LK外科医院" 
         android:textColor="#787878"/>
 
-    <TextView 
-        android:id="@+id/size"
-        android:layout_below="@id/hospital_name"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/icon"
-        android:layout_width="wrap_content"        
-        android:layout_height="wrap_content"        
-        android:textSize="12sp"
-        android:textColor="#787878"
-        android:text="" /> 
+
         
     
     <TextView 
@@ -74,18 +64,21 @@
         android:layout_alignBottom="@id/hospital_name"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
+        
         android:layout_width="wrap_content"        
         android:layout_height="wrap_content"        
         android:textSize="12sp"
         android:textColor="#787878"
         android:drawableLeft="@drawable/icon_address"/>
     
+    <!--         -->
       <LinearLayout 
          android:id="@+id/price_root"
-        android:layout_alignBottom="@id/size"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"        
+        android:layout_below="@id/hospital_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/icon"       
+        android:layout_width="match_parent"        
         android:layout_height="wrap_content"     
         android:orientation="horizontal"
         android:gravity="center_vertical">
@@ -105,7 +98,16 @@
         android:textSize="10sp"
         android:textColor="#aaaaaa"/> 
       </LinearLayout>
-
+    <TextView 
+        android:id="@+id/size"
+ 		android:layout_alignBottom="@id/price_root"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"        
+        android:layout_height="wrap_content"        
+        android:textSize="12sp"
+        android:textColor="#787878"
+        android:text="" /> 
 
         <TextView 
            android:id="@+id/tag_1"
