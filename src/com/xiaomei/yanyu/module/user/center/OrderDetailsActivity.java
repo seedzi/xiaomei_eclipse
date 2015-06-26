@@ -62,9 +62,12 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	 * @param context
 	 * @param goodsId  商品id
 	 */
-	public static void startActivity(Activity ac,String goodsId){
+	public static void startActivity(Activity ac,String goodsId,String username,String mobile,String passport){
 		Intent intent = new Intent(ac,OrderDetailsActivity.class);
 		 intent.putExtra("goods_id", goodsId);
+	      intent.putExtra("username", username);
+	      intent.putExtra("mobile", mobile);
+	      intent.putExtra("passport", passport);
 		 ac.startActivity(intent);
 		 ac.overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_in_from_right);
 	}
@@ -94,6 +97,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private View mLoadingView; 
 	
 	private String goodsId; //产品id
+	private String passport;//护照
+	private String username; // 姓名
+	private String mobile;//手机号
 	
 	private ProgressDialog mProgressDialog;
 	
@@ -163,7 +169,10 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	    }else{ //产品页进入
 	    	android.util.Log.d("111", "产品页进入");
 	        goodsId = getIntent().getStringExtra("goods_id");
-	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, "");
+	        username = getIntent().getStringExtra("username");
+	        mobile = getIntent().getStringExtra("mobile");
+	        passport = getIntent().getStringExtra("passport");
+	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, username,mobile,passport);
 	        showProgress();
 	    }
 	}

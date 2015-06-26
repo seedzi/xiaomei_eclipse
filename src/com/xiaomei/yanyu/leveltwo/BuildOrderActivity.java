@@ -8,15 +8,20 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.Payment.PayUtils;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 public class BuildOrderActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
@@ -57,6 +62,11 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     private String goodsId; //产品id
     private TitleBar mTitlebar;
     
+    private EditText mUsername;
+    private EditText mUserMobile;
+    private EditText mUserPassport;
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +98,16 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         mark3 = (TextView)itemGoodsLayout.findViewById(R.id.tag_3);
         priceMarketTv = (TextView) findViewById(R.id.origin_price);
         
+        TextView title = (TextView) findViewById(R.id.item1).findViewById(R.id.title);     
+        title.setText("客户姓名");
+        title = (TextView) findViewById(R.id.item2).findViewById(R.id.title);     
+        title.setText("客户电话");
+        title = (TextView) findViewById(R.id.item3).findViewById(R.id.title);     
+        title.setText("客户护照");
+        mUsername = (EditText) findViewById(R.id.item1).findViewById(R.id.value);     
+        mUserMobile = (EditText) findViewById(R.id.item2).findViewById(R.id.value);     
+        mUserPassport = (EditText) findViewById(R.id.item3).findViewById(R.id.value);     
+        
         goodsId = getIntent().getStringExtra("goods_id");
     }
     
@@ -97,6 +117,11 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
 
     // =========================================== CallBack =====================================================
     public void getGoodsFromNetAsynCallback(){
+        UserInfo userInfo = UserUtil.getUser().getUserInfo();
+        mUsername.setText(userInfo.getUsername());
+        mUserMobile.setText(userInfo.getMobile());
+        mUserPassport.setText("");
+        
         Goods goods = mControl.getModel().getGoods();
         
         ImageLoader.getInstance().displayImage(goods.getFileUrl(),iconIv );
@@ -154,11 +179,23 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         int id = v.getId();
         switch (id) {
         case R.id.build_order:
-            OrderDetailsActivity.startActivity(this, "");
+            if(!PayUtils.checkoutInputData(mUsername.getText().toString(),
+                    mUserMobile.getText().toString(), 
+                    mUserPassport.getText().toString())){
+                Toast.makeText(this, "请您完整的输入您的信息", 0).show();
+                return;
+            }
+            OrderDetailsActivity.startActivity(this, goodsId, mUsername
+                    .getText().toString(), mUserMobile.getText().toString(),
+                    mUserPassport.getText().toString());
+            finish();
             break;
 
         default:
             break;
         }
     }
+    
+    // =========================================== 业务 =====================================================
+
 }

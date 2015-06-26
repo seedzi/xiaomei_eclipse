@@ -48,11 +48,9 @@ public class UserCenterControl extends BaseControl {
 	}
 	
 	@AsynMethod
-	public void addUserOrderAsyn(User user,String goodsId, String passport){
+	public void addUserOrderAsyn(User user,String goodsId, String username,String mobile,String passport){
 		UserInfo userInfo = user.getUserInfo();
 		String userid = userInfo.getUserid();
-		String username = userInfo.getUsername();
-		String mobile = userInfo.getMobile();
 		String token = user.getToken();
 		try {
 			Order order = XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId, username, mobile, passport, token,"add");

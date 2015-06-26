@@ -15,11 +15,15 @@
     <include android:id="@+id/titlebar"  layout="@layout/title_bar_layout"/>
         
     <include android:id="@+id/item_goods_layout"  layout="@layout/item_goods_layout"
-        android:paddingBottom="15dp"
         />
 
-
-    <include android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
+     <View
+         android:layout_marginTop="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"          
+         />
+    
+    <include   android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
     
     <include android:id="@+id/item2" layout="@layout/item_user_order_details_layout"/>
     
