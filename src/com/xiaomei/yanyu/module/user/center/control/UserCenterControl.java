@@ -278,7 +278,6 @@ public class UserCenterControl extends BaseControl {
 			e.printStackTrace();
 		}
 	  }
-	   
        @AsynMethod	   
 	   public void getGoodsFromNetAsyn(String goodsId){
            try {
