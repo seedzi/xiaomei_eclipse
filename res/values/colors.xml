@@ -37,7 +37,10 @@
       
       <color name="color_transparent">#00000000</color>
       
+      <color name="drop_item_text_normal">#000000</color>
+      <color name="drop_item_text_checked">#d366f3</color>
       
+      <color name="divider">#E0E0E0</color>
       
       <!-- 友盟 -->
           <color name="body_text_1">#ff000000</color>

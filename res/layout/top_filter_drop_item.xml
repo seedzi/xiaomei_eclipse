@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-    style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/top_filter_height"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:layout_height="@dimen/top_filter_drop_item_height"
+    android:paddingLeft="19dp"
+    android:paddingRight="27dp"
+    android:background="@null"
+    android:gravity="center_vertical"
+    android:textColor="@color/drop_item_text"
     android:checkMark="@drawable/filter_check_mark" />
