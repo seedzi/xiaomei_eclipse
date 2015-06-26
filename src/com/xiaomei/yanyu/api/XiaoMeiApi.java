@@ -29,6 +29,7 @@ import com.xiaomei.yanyu.api.builder.MallListBuilder;
 import com.xiaomei.yanyu.api.builder.NetResultBuilder;
 import com.xiaomei.yanyu.api.builder.OrderCommentBuilder;
 import com.xiaomei.yanyu.api.builder.SectionBuilder;
+import com.xiaomei.yanyu.api.builder.SingleGoodsBuilder;
 import com.xiaomei.yanyu.api.builder.UploadFIleBuilder;
 import com.xiaomei.yanyu.api.builder.UserLoginBuilder;
 import com.xiaomei.yanyu.api.builder.UserMsgBuilder;
@@ -137,6 +138,19 @@ public class XiaoMeiApi {
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
 	}
+	
+	   /**获取单条商品信息*/
+    public Goods getGoodsFromNet(String goodsId)
+            throws XiaoMeiCredentialsException, XiaoMeiIOException,
+            XiaoMeiJSONException, XiaoMeiOtherException {
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair("goods_id", goodsId)
+        };
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.goodsDetailUrl(),
+                values[0],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        return mHttpApi.doHttpRequestObject(httpGet, new SingleGoodsBuilder());
+    }
 	
 	/**商品分类列表*/
 	public List<GoodsOption> getGoodsOptionFromNet(String catId)

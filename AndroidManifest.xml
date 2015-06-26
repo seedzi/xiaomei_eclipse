@@ -166,7 +166,10 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
-        
+        <!-- 生成订单 -->
+        <activity 
+            android:theme="@style/activityTheme"
+            android:name=".leveltwo.BuildOrderActivity"/>
 		
 	   <!-- ################### 支付宝 ###################### -->
 		<activity
@@ -215,7 +218,6 @@
    android:configChanges="keyboardHidden|orientation|screenSize"
    android:exported="true"
    android:screenOrientation="portrait" />
-        
     <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"

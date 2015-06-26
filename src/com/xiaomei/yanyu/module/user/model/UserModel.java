@@ -145,4 +145,15 @@ public class UserModel {
     public void setRegisterFailureMsg(String msg){
     	mRegisterFailureMsg = msg;
     }
+    
+ // ===============================   单条商品信息  =====================================
+    private Goods mGoods;
+    
+    public void setGoods(Goods goods){
+        mGoods = goods;
+    }
+    
+    public Goods getGoods(){
+        return mGoods;
+    }
 }
