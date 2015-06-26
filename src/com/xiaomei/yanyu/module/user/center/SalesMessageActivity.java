@@ -236,6 +236,9 @@ private class MyAdapter extends BaseAdapter implements View.OnClickListener{
             List<Goods.Mark> marks = goods.getMarks();
             int i = 0;
             GradientDrawable shapeDrawable  = null;
+            holder.mark1.setVisibility(View.GONE);
+            holder.mark2.setVisibility(View.GONE);
+            holder.mark3.setVisibility(View.GONE);
             if(marks!=null){
                 for(Goods.Mark mark:marks){
                     switch (i) {
