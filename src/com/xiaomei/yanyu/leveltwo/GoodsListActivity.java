@@ -37,6 +37,7 @@ import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -60,7 +61,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 
 	private TitleBar mTitleBar;
 	
-	private Spinner[] mFilters = new Spinner[3];
+	private DropMenu[] mFilters = new DropMenu[3];
 	
 	private PullToRefreshListView mPullToRefreshListView;
 	
@@ -106,52 +107,58 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
 		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		
-		mFilters[SUB_CAT] = (Spinner) findViewById(R.id.sub_cat);
-		mFilters[ORIGIN_PLACE] = (Spinner) findViewById(R.id.origin_place);
-		mFilters[PRICE_ORDER] = (Spinner) findViewById(R.id.price_order);
-		OnItemSelectedListener filterItemSelectedListener = new OnItemSelectedListener() {
-
+		mFilters[SUB_CAT] = (DropMenu) findViewById(R.id.sub_cat);
+		mFilters[ORIGIN_PLACE] = (DropMenu) findViewById(R.id.origin_place);
+		mFilters[PRICE_ORDER] = (DropMenu) findViewById(R.id.price_order);
+		
+		mFilters[SUB_CAT].setOnItemSelectedListener(new OnItemSelectedListener() {
+		    @Override
+		    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		        Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
+		        if (!item.second.equals(mSubCat)) {
+		            mSubCat = item.second;
+		            onRefresh();
+		        }
+		    }
+		    @Override
+		    public void onNothingSelected(AdapterView<?> parent) {
+		    }
+		    
+		});
+		mFilters[ORIGIN_PLACE].setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
-                switch(parent.getId()) {
-                    case R.id.sub_cat:
-                        if (!item.second.equals(mSubCat)) {
-                            mSubCat = item.second;
-                            onRefresh();
-                        }
-                        break;
-                    case R.id.origin_place:
-                        if (!item.second.equals(mOriginPlace)) {
-                            mOriginPlace = item.second;
-                            onRefresh();
-                        }
-                        break;
-                    case R.id.price_order:
-                        if (!item.second.equals(mPriceOrder)) {
-                            mPriceOrder = item.second;
-                            onRefresh();
-                        }
-                        break;
-                    default:
-                        return;
+                if (!item.second.equals(mOriginPlace)) {
+                    mOriginPlace = item.second;
+                    onRefresh();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                
             }
-		    
-		};
-		for(Spinner spinner : mFilters) {
-            spinner.setOnItemSelectedListener(filterItemSelectedListener);
-		}
+            
+        });
+		mFilters[PRICE_ORDER].setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
+                if (!item.second.equals(mPriceOrder)) {
+                    mPriceOrder = item.second;
+                    onRefresh();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+            
+        });
+
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		for(Spinner spinner : mFilters) {
-		    spinner.setDropDownWidth(displaymetrics.widthPixels);
-		}
+//		for(DropMenu filter : mFilters) {
+//		    filter.setDropDownWidth(displaymetrics.widthPixels);
+//		}
 		
 		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
 		mPullToRefreshListView.setOnRefreshListener(this);
@@ -427,14 +434,12 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
         
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View root = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.top_filter_item, parent, false);
-            ((TextView) root.findViewById(android.R.id.text1)).setText(getItem(position).first);
-            return root;
+            return getDropDownView(position, convertView, parent);
         }
         
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            View root = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.top_filter_dropdown_item, parent, false);
+            View root = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.top_filter_drop_item, parent, false);
             ((TextView) root.findViewById(android.R.id.text1)).setText(getItem(position).first);
             return root;
         }
