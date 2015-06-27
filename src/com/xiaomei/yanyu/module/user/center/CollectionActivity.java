@@ -301,6 +301,9 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	                    holder.checkBox.setVisibility(View.GONE);
 	                }
 	                
+	                holder.mark1.setVisibility(View.GONE);
+	                holder.mark2.setVisibility(View.GONE);
+	                holder.mark3.setVisibility(View.GONE);
 	                List<Goods.Mark> marks = goods.getMarks();
 	                int i = 0;
 	                GradientDrawable shapeDrawable  = null;

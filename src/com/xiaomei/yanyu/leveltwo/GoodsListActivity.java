@@ -358,6 +358,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			holder.localTv.setText(goods.getCityName());
 			holder.priceMarketTv.setText("原价"+goods.getPriceMarket()+"元");
 			
+			holder.mark1.setVisibility(View.GONE);
+            holder.mark2.setVisibility(View.GONE);
+            holder.mark3.setVisibility(View.GONE);
 			List<Goods.Mark> marks = goods.getMarks();
 			int i = 0;
 			GradientDrawable shapeDrawable  = null;
