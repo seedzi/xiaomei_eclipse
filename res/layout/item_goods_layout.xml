@@ -111,8 +111,8 @@
 
         <TextView 
            android:id="@+id/tag_1"
-           android:paddingLeft="2dp"
-           android:paddingRight="2dp"
+           android:paddingLeft="@dimen/tag_padding_horizontal"
+           android:paddingRight="@dimen/tag_padding_horizontal"
            android:layout_marginTop="5dp"
            android:layout_marginLeft="10dp"
            android:layout_toRightOf="@id/icon"
@@ -125,10 +125,10 @@
             />
 		<TextView 
            android:id="@+id/tag_2"
-   		   android:paddingLeft="2dp"
-           android:paddingRight="2dp"
+   		   android:paddingLeft="@dimen/tag_padding_horizontal"
+           android:paddingRight="@dimen/tag_padding_horizontal"
            android:layout_marginTop="5dp"
-           android:layout_marginLeft="10dp"
+           android:layout_marginLeft="@dimen/tag_space_horizontal"
            android:layout_toRightOf="@id/tag_1"
        	   android:layout_width="wrap_content"        
            android:layout_height="wrap_content"        
@@ -139,10 +139,10 @@
             />
 		 <TextView 
            android:id="@+id/tag_3"
-           android:paddingLeft="2dp"
-           android:paddingRight="2dp"
+           android:paddingLeft="@dimen/tag_padding_horizontal"
+           android:paddingRight="@dimen/tag_padding_horizontal"
            android:layout_marginTop="5dp"
-           android:layout_marginLeft="10dp"
+           android:layout_marginLeft="@dimen/tag_space_horizontal"
            android:layout_toRightOf="@id/tag_2"
        	   android:layout_width="wrap_content"        
            android:layout_height="wrap_content"        

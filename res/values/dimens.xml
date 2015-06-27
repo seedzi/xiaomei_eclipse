@@ -50,7 +50,8 @@
     
     <dimen name="title_bar_button_padding">5dp</dimen>
     
-    
+    <dimen name="tag_padding_horizontal">4dp</dimen>
+    <dimen name="tag_space_horizontal">6dp</dimen>
     
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>
