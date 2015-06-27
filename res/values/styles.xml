@@ -57,4 +57,18 @@
     </style> 
     <style name="Widget">
     </style>
+    
+    <style name="TextAppearance" />
+    
+    <style name="TextAppearance.Filter">
+        <item name="android:textSize">16sp</item>
+    </style>
+    
+    <style name="TextAppearance.Filter.Item">
+        <item name="android:textColor">@color/filter_item_text</item>
+    </style>
+    
+    <style name="TextAppearance.Filter.Title">
+        <item name="android:textColor">@color/filter_title_text</item>
+    </style>
 </resources>

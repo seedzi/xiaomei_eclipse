@@ -52,13 +52,20 @@ public class DropMenu extends FrameLayout implements View.OnClickListener {
     private void init() {
         setOnClickListener(this);
         View popupView = LayoutInflater.from(getContext()).inflate(R.layout.drop_menu_pop_view, null);
-        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         mPopupWindow.setBackgroundDrawable(getColorDrawable(android.R.color.transparent));
         mListView = (ListView) popupView.findViewById(android.R.id.list);
         mPopupWindow.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
                 mTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
+                mTitle.setActivated(false);
             }
         });
         
@@ -117,6 +124,7 @@ public class DropMenu extends FrameLayout implements View.OnClickListener {
             mPopupWindow.dismiss();
         } else {
             mTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
+            mTitle.setActivated(true);
             mPopupWindow.showAsDropDown(this);
         }
     }
