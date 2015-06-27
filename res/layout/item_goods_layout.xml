@@ -27,8 +27,8 @@
     
     <ImageView 
         android:id="@+id/icon"
-        android:layout_width="100dp"        
-        android:layout_height="92dp"
+        android:layout_width="114dp"        
+        android:layout_height="110dp"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:src="@drawable/goods_list_default"/>
@@ -75,7 +75,7 @@
       <LinearLayout 
          android:id="@+id/price_root"
         android:layout_below="@id/hospital_name"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/icon"       
         android:layout_width="match_parent"        
