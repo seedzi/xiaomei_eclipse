@@ -204,13 +204,13 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	// ============================== CallBack ==========================================
 	public void isFavCallBack(){
 		if(mControl.getModel().ismIsFav()){
-			mTitleBar.findViewById(R.id.fav).setBackgroundResource(R.drawable.shoucang_press);
+			mTitleBar.findViewById(R.id.fav).setActivated(true);;
 			mTitleBar.findViewById(R.id.fav).setOnClickListener(null);
 		}
 	}
 	
 	public void actionUserFavCallBack(){
-		mTitleBar.findViewById(R.id.fav).setBackgroundResource(R.drawable.shoucang_press);
+		mTitleBar.findViewById(R.id.fav).setActivated(true);;
 		mTitleBar.findViewById(R.id.fav).setOnClickListener(null);
 		mTitleBar.findViewById(R.id.fav).setEnabled(true);
 	}
