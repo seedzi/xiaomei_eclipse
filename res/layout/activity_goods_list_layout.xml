@@ -25,7 +25,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/filter"
-    android:background="#ffe2e2e2"
+    android:background="@color/color_white"
     android:scrollbarStyle="outsideOverlay"
     android:showDividers="middle|end"
     ptr:ptrMode="pullDownFromTop"

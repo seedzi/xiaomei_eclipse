@@ -93,6 +93,9 @@
     android:layout_marginRight="@dimen/item_margin_normal"/>   
 </RelativeLayout>
 
-
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:layout_gravity="bottom"
+        android:src="@color/action_bar_divider" />
 </com.xiaomei.yanyu.widget.TitleBar>

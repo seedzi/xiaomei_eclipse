@@ -42,6 +42,7 @@
       <color name="filter_text_activated">#d366f3</color>
       
       <color name="divider">#E4E4E4</color>
+      <color name="action_bar_divider">#e4e4e4</color>
       
       <color name="semi_transparent">#40000000</color>
       
