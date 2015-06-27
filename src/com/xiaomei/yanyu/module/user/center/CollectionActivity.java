@@ -181,10 +181,10 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	}
 	
 	public void deleteUserFavCallBack(){
-		showEdite = false;
-        mEdit.setText("编辑");
-        mDelete.setVisibility(View.GONE);
-        mCheckedData.clear();
+//		showEdite = false;
+//        mEdit.setText("编辑");
+//        mDelete.setVisibility(View.GONE);
+//        mCheckedData.clear();
         dismissDialog();
         Toast.makeText(this, "删除成功", 0).show();
         initData();
@@ -415,6 +415,10 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
         		return;
         	}
             if(showEdite){
+            	  showEdite = false;
+                  mEdit.setText("编辑");
+                  mDelete.setVisibility(View.GONE);
+                  mCheckedData.clear();
             }else{
                 showEdite = true;
                 mEdit.setText("完成");
