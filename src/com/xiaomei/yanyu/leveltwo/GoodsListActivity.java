@@ -370,7 +370,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 					case 0:
 						holder.mark1.setVisibility(View.VISIBLE);
 						shapeDrawable = new GradientDrawable();
-						shapeDrawable.setCornerRadius(15);
+						shapeDrawable.setCornerRadius(8);
 						shapeDrawable.setColor(Color.parseColor(mark.getColor()));
 						holder.mark1.setBackground(shapeDrawable);
 						holder.mark1.setText(mark.getLabel());
@@ -378,7 +378,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 					case 1:
 						holder.mark2.setVisibility(View.VISIBLE);
 	                    shapeDrawable = new GradientDrawable();
-	                    shapeDrawable.setCornerRadius(15);
+	                    shapeDrawable.setCornerRadius(8);
 	                    shapeDrawable.setColor(Color.parseColor(mark.getColor()));
 	                    holder.mark2.setBackground(shapeDrawable);
 						holder.mark2.setText(mark.getLabel());
@@ -386,7 +386,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 					case 2:
 						holder.mark3.setVisibility(View.VISIBLE);
                         shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(15);
+                        shapeDrawable.setCornerRadius(8);
                         shapeDrawable.setColor(Color.parseColor(mark.getColor()));
                         holder.mark3.setBackground(shapeDrawable);
 						holder.mark3.setText(mark.getLabel());
