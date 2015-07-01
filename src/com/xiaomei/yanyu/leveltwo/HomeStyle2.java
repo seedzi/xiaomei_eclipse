@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -226,9 +227,15 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 				TextView title = (TextView) converView.findViewById(R.id.title);
 				title.setText(mList.get(position).title);
 				TextView price = (TextView) converView.findViewById(R.id.price);
-				price.setText(getResources().getString(R.string.ren_ming_bi) +" " +  mList.get(position).price_xm);
+				if(!TextUtils.isEmpty( mList.get(position).price_xm))
+				    price.setText(getResources().getString(R.string.ren_ming_bi) +" " +  mList.get(position).price_xm);
+				else
+				    price.setText("");
 				TextView originPrice = (TextView) converView.findViewById(R.id.original_price);
-				originPrice.setText(getResources().getString(R.string.ren_ming_bi) + "" + mList.get(position).price_market);
+				if(!TextUtils.isEmpty( mList.get(position).price_market))
+				    originPrice.setText(getResources().getString(R.string.ren_ming_bi) + "" + mList.get(position).price_market);
+		        else
+                    price.setText("");
 				return converView;
 			}
 			@Override
