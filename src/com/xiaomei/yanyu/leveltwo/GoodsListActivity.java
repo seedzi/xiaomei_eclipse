@@ -107,6 +107,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
 		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		
+		findViewById(R.id.filter).setVisibility(View.VISIBLE);
 		mFilters[SUB_CAT] = (DropMenu) findViewById(R.id.sub_cat);
 		mFilters[ORIGIN_PLACE] = (DropMenu) findViewById(R.id.origin_place);
 		mFilters[PRICE_ORDER] = (DropMenu) findViewById(R.id.price_order);
