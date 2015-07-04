@@ -232,8 +232,9 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
 	public void loginOutAsynCallBack(){
 	    UserUtil.clearUser();
 		dismissDialog();
-		AbstractActivity.clearActivity();
-		LoginAndRegisterActivity.startActivity(this);
+//		AbstractActivity.clearActivity();
+		finish();
+		LoginAndRegisterActivity.startActivity(this,true);
 	}
 	
 	public void loginOutAsynExceptionCallBack(){
