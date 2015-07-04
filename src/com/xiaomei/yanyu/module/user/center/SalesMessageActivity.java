@@ -55,6 +55,8 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     
     private ViewGroup mRefreshLayout;
     
+    private View emptyView;
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_list_layout);
@@ -84,6 +86,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         mListView = mPullToRefreshListView.getRefreshableView();
         mLoadingView = findViewById(R.id.loading_layout);
         mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
+        emptyView = findViewById(R.id.empty);
     }
     
     private void initData(){
@@ -144,6 +147,9 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
         Toast.makeText(this, "加载成功", 0).show();
+        if(mControl.getModel().getGoodsList()!=null &&mControl.getModel().getGoodsList().size()>0){
+        	emptyView.setVisibility(View.GONE);
+        }
     }
     
     public void getGoodsDataAsynExceptionCallBack(){
