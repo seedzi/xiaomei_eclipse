@@ -252,7 +252,11 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			holder.bubleSizeTv.setText(bean.getNumComments());
 			holder.likeSizeTv.setText(bean.getNumFavors());
 			holder.titleTv.setText(bean.getShareMark());
-			holder.timeTv.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
+			try {
+				holder.timeTv.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
+			} catch (Exception e) {
+				holder.timeTv.setText("");
+			}
 			holder.shareImg.setTag(holder);
 			holder.id = bean.getId();
 			holder.share_type = bean.getShareType();
