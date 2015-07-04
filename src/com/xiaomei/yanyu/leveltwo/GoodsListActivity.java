@@ -167,7 +167,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
 		mPullToRefreshListView.setOnScrollListener(this);
 		mListView = mPullToRefreshListView.getRefreshableView();
-		mListView.setEmptyView(findViewById(android.R.id.empty));
+		mListView.setEmptyView(findViewById(R.id.empty));
 		mLoadingView = findViewById(R.id.loading_layout);
 		mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
 	}
