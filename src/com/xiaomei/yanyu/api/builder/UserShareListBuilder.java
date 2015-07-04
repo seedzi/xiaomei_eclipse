@@ -40,7 +40,7 @@ public class UserShareListBuilder extends AbstractJSONBuilder<List<UserShare>> {
     			userShare.setContent(jObj.getString("share_des"));
     		if(jObj.has("createdate"))
     			userShare.setTime(jObj.getString("createdate"));
-    		// photo
+    		// photototal
     		if(jObj.has("images")){
     			List<String> imgs = new ArrayList<String>();
     			JSONArray imgsArray = jObj.getJSONArray("images");
@@ -56,6 +56,8 @@ public class UserShareListBuilder extends AbstractJSONBuilder<List<UserShare>> {
     			List<UserShare.Comment> comments = new ArrayList<UserShare.Comment>();
     			JSONObject commentsObj = jObj.getJSONObject("comments");
     			JSONArray commentsArray = null;
+    			if(commentsObj.has("total"))
+    				userShare.setCommentSize(commentsObj.getInt("total"));
 				if(commentsObj.has("list")){
 					commentsArray = commentsObj.getJSONArray("list");
 	    			for(int k=0;k<commentsArray.length();k++){

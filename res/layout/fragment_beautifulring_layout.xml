@@ -55,6 +55,13 @@
         </FrameLayout>
     </LinearLayout>
     
+        
+    <View 
+        android:background="@color/divider"
+        android:layout_height="1px"
+        android:layout_width="match_parent"
+        />
+    
     <FrameLayout 
         android:id="@+id/root"
         android:layout_width="match_parent"

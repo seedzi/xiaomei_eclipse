@@ -5,12 +5,18 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.UserShare;
+import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.ScreenUtils;
 
+import android.app.ActionBar.LayoutParams;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class UserPostAdapter extends BaseAdapter {
@@ -49,11 +55,14 @@ public class UserPostAdapter extends BaseAdapter {
             holder = new Holder();
             holder.posterUserIcon = (ImageView) convertView.findViewById(R.id.poster_user_icon);
             holder.posterUserName = (TextView) convertView.findViewById(R.id.poster_user_name);
+            holder.posterUserName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
+            holder.posterUserName.getPaint().setFakeBoldText(true);//加粗
             holder.posterUserTime = (TextView) convertView.findViewById(R.id.poster_user_time);
             holder.posterContent = (TextView) convertView.findViewById(R.id.poster_content);
             holder.img1 = (ImageView) convertView.findViewById(R.id.img1);
             holder.img2 = (ImageView) convertView.findViewById(R.id.img2);
             holder.img3 = (ImageView) convertView.findViewById(R.id.img3);
+            
             holder.commentSize = (TextView) convertView.findViewById(R.id.comment_size);
             holder.favSize = (TextView) convertView.findViewById(R.id.fav_size);
             holder.browseSize = (TextView) convertView.findViewById(R.id.browse_size);
@@ -86,13 +95,26 @@ public class UserPostAdapter extends BaseAdapter {
         }
         holder = (Holder) convertView.getTag();
         
+        int width = ScreenUtils.getScreenWidth(parent.getContext());
+        int imgWidth = (width - ScreenUtils.dip2px(parent.getContext(), 63))/3;
+        LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams
+                (imgWidth,imgWidth);
+        LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams
+                (imgWidth,imgWidth);
+        ll2.setMargins(ScreenUtils.dip2px(parent.getContext(), 8), 0, ScreenUtils.dip2px(parent.getContext(), 8), 0);
+        LinearLayout.LayoutParams ll3 = new LinearLayout.LayoutParams
+                (imgWidth,imgWidth);
+        holder.img1.setLayoutParams(ll1);
+        holder.img2.setLayoutParams(ll2);
+        holder.img3.setLayoutParams(ll3);
+        
         UserShare item =mData.get(position);
         
         holder.posterUserIcon.setImageResource(R.drawable.user_head_default);
         ImageLoader.getInstance().displayImage(item.getAvatar(), holder.posterUserIcon);
         holder.posterUserName.setText(item.getUsername());
         holder.posterContent.setText(item.getContent());
-        holder.posterUserTime.setText(item.getTime());
+        holder.posterUserTime.setText(DateUtils.formateDate(Long.valueOf(item.getTime())*1000));
         
         List<String> imgs = item.getImgs();
 		holder.img1.setVisibility(View.INVISIBLE);
@@ -138,7 +160,7 @@ public class UserPostAdapter extends BaseAdapter {
 					ImageLoader.getInstance().displayImage(comment.getAvatar(),holder.userIcon1);
 					holder.userName1.setText(comment.getUsername());
 					holder.content1.setText(comment.getContent());
-					holder.time1.setText(comment.getTime());
+					holder.time1.setText(DateUtils.formateDate(Long.valueOf(comment.getTime())*1000));
 					break;
 				case 1:
 					holder.commentLayout2.setVisibility(View.VISIBLE);
@@ -146,7 +168,7 @@ public class UserPostAdapter extends BaseAdapter {
 					ImageLoader.getInstance().displayImage(comment.getAvatar(),holder.userIcon2);
 					holder.userName2.setText(comment.getUsername());
 					holder.content2.setText(comment.getContent());
-					holder.time2.setText(comment.getTime());
+					holder.time2.setText(DateUtils.formateDate(Long.valueOf(comment.getTime())*1000));
 					break;
 				case 2:
 					holder.commentLayout3.setVisibility(View.VISIBLE);
@@ -154,11 +176,18 @@ public class UserPostAdapter extends BaseAdapter {
 					ImageLoader.getInstance().displayImage(comment.getAvatar(),holder.userIcon3);
 					holder.userName3.setText(comment.getUsername());
 					holder.content3.setText(comment.getContent());
-					holder.time3.setText(comment.getTime());
+					holder.time3.setText(DateUtils.formateDate(Long.valueOf(comment.getTime())*1000));
 					break;
 				default:
 					break;
 				}
+        		j++;
+        	}
+        	
+        	if(item.getCommentSize()>3){
+        		holder.moreComment.setVisibility(View.VISIBLE);
+        	}else{
+        		holder.moreComment.setVisibility(View.GONE);
         	}
         }
         return convertView;

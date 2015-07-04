@@ -16,6 +16,8 @@ public class UserShare {
 	
 	private List<Comment> commtents;
 	
+	private int commentSize;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -63,6 +65,16 @@ public class UserShare {
 	public void setCommtents(List<Comment> commtents) {
 		this.commtents = commtents;
 	}
+	
+	public int getCommentSize() {
+		return commentSize;
+	}
+
+	public void setCommentSize(int commentSize) {
+		this.commentSize = commentSize;
+	}
+
+
 
 
 

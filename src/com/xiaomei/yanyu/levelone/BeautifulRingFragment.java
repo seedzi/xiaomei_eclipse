@@ -57,7 +57,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			setUpView();
 			mJinghua.performClick();
 		} else {
-			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			try {
+				((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			} catch (Exception e) {
+			}
 		}
 		setViewHeight();
 		return mRootView;
