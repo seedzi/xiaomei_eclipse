@@ -93,14 +93,17 @@
     android:textSize="20sp"
     android:textColor="#727272"
     android:layout_marginRight="@dimen/item_margin_normal"/>   
-    <ImageButton 
+    <TextView 
     android:id="@+id/build_order"
     android:layout_alignParentRight="true"
     android:layout_gravity="center_vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"        
+    android:gravity="center"
     android:layout_marginRight="@dimen/item_margin_normal"
-    android:background="@drawable/bubble_selector"
+    android:background="@drawable/queren_selector"
+    android:text="确认"
+    android:textColor="#ffffff"
     android:visibility="gone"/>            
 </RelativeLayout>
 

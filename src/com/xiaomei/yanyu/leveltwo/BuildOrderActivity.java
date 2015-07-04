@@ -78,6 +78,12 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     private void setupView(){
         mTitlebar = (TitleBar) findViewById(R.id.titlebar);
         mTitlebar.setTitle("生成订单");
+        mTitlebar.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mTitlebar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
         mTitlebar.findViewById(R.id.edit).setVisibility(View.GONE);
         mTitlebar.findViewById(R.id.fav).setVisibility(View.GONE);
