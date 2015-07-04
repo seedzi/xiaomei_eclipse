@@ -11,16 +11,20 @@ import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListe
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,8 +40,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	private ViewHolder mGuangchangViewHolder;
 	
 	private ViewGroup mJinghua;
-	
 	private ViewGroup mGuangchang;
+	
+	private ViewGroup mJinghuaLayout;
+	private ViewGroup mGuangchangLayout;
 	
 	private int mCurrentState = STATE_JINGHUA;
 	private static int STATE_JINGHUA = 0;
@@ -49,9 +55,11 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		if(mRootView ==null){
 			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_beautifulring_layout, null);
 			setUpView();
+			mJinghua.performClick();
 		} else {
 			((ViewGroup)mRootView.getParent()).removeView(mRootView);
 		}
+		setViewHeight();
 		return mRootView;
 	}
 	
@@ -64,18 +72,33 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
         mGuangchang = (ViewGroup) mRootView.findViewById(R.id.guang_chang);
         mGuangchang.setOnClickListener(this);
 		
+        mJinghuaLayout = (ViewGroup) mRootView.findViewById(R.id.jing_hua_layout);
+        mGuangchangLayout = (ViewGroup) mRootView.findViewById(R.id.guang_chang_layout);
+        
 		mJinghuaViewHolder = new ViewHolder();
-		setUpViewHolder(mJinghuaViewHolder, mJinghua);
+		setUpViewHolder(mJinghuaViewHolder, mJinghuaLayout);
 		mGuangchangViewHolder = new ViewHolder();
-	    setUpViewHolder(mJinghuaViewHolder, mGuangchang);
+	    setUpViewHolder(mGuangchangViewHolder, mGuangchangLayout);
+	}
+	
+	/** setup layout height*/
+	private void setViewHeight() {
+		View root = mRootView.findViewById(R.id.root);
+		LinearLayout.LayoutParams ll = (LayoutParams) root.getLayoutParams();
+
+		WindowManager wm = (WindowManager) getActivity().getSystemService(
+				Context.WINDOW_SERVICE);
+
+		int height = wm.getDefaultDisplay().getHeight();
+		ll.height = (int) (height - 2*getResources().getDimension(R.dimen.title_bar_heigt));
 	}
 	
 	private void setUpViewHolder(final ViewHolder viewHolder,ViewGroup root){
 	    LayoutInflater inflater = LayoutInflater.from(getActivity());
 	    viewHolder.mPullToRefreshListView = (PullToRefreshListView) root.findViewById(R.id.list);
-	    viewHolder.mListView = mJinghuaViewHolder.mPullToRefreshListView.getRefreshableView();
+	    viewHolder.mListView = viewHolder.mPullToRefreshListView.getRefreshableView();
 	    viewHolder.mAdapter = new RingAdapter(getActivity());
-	    viewHolder.mListView.setAdapter(mJinghuaViewHolder.mAdapter);
+	    viewHolder.mListView.setAdapter(viewHolder.mAdapter);
         
 
 	    viewHolder.mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
@@ -99,12 +122,16 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
         case R.id.jing_hua:
             mJinghua.getChildAt(1).setVisibility(View.VISIBLE);
             mGuangchang.getChildAt(1).setVisibility(View.GONE);
+            mJinghuaLayout.setVisibility(View.VISIBLE);
+            mGuangchangLayout.setVisibility(View.GONE);
             mCurrentState = STATE_JINGHUA;
             initdata();
             break;
         case R.id.guang_chang:
             mJinghua.getChildAt(1).setVisibility(View.GONE);
-            mGuangchang.getChildAt(1).setVisibility(View.VISIBLE); 
+            mGuangchang.getChildAt(1).setVisibility(View.VISIBLE);
+            mJinghuaLayout.setVisibility(View.GONE);
+            mGuangchangLayout.setVisibility(View.VISIBLE);
             mCurrentState = STATE_GUANGCHANG;
             initdata();
             break;
@@ -115,8 +142,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	
 	private void initdata(){
 	    if(mCurrentState == STATE_JINGHUA){
-	        mControl.getJinghuaListDataFromNetAysn();
-	        showProgress(mJinghuaViewHolder);
+	    	if(mControl.getModel().getBeautifulData()==null || mControl.getModel().getBeautifulData().size()==0){
+		        mControl.getJinghuaListDataFromNetAysn();
+		        showProgress(mJinghuaViewHolder);
+	    	}
 	    }else {
            mControl.getGuangchangListDataFromNetAysn();
             showProgress(mGuangchangViewHolder);
