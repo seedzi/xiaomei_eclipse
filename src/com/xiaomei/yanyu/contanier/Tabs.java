@@ -3,27 +3,19 @@ package com.xiaomei.yanyu.contanier;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.android.dx.util.Uint;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.Tab;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 
 /**
  * Created by huzhi on 15-3-9.
@@ -110,7 +102,7 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
 	        ((Tab)v).setCompoundDrawables(null,topDrawable , null, null);
 	        ((Tab)v).setTextColor(getResources().getColor(R.color.color_button_normal));
     	}
-    	mMTabsFragmentManager.commitFragment(tag, (FragmentActivity)mContext);
+    	mMTabsFragmentManager.commitFragment(tag, (Activity) mContext);
     }
 
 }

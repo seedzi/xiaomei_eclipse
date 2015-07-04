@@ -1,11 +1,7 @@
 package com.xiaomei.yanyu.contanier;
 
-import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.levelone.BeautifulRingFragment;
@@ -14,12 +10,12 @@ import com.xiaomei.yanyu.levelone.MallFragment;
 import com.xiaomei.yanyu.levelone.MechanismFragment;
 import com.xiaomei.yanyu.levelone.UserFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.cordova.api.LOG;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.util.Log;
 
 /**
  * Created by huzhi on 15-3-9.
@@ -62,8 +58,8 @@ public class TabsFragmentManager {
     }
 
     @SuppressLint("NewApi")
-	public void commitFragment(int position,FragmentActivity ac){
-        FragmentManager fragmentManager = ac.getSupportFragmentManager();
+	public void commitFragment(int position, Activity ac){
+        FragmentManager fragmentManager = ac.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment;
 //        Fragment fragment = fragmentManager.findFragmentByTag(String.valueOf(position));

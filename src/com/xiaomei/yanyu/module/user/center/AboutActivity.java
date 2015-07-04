@@ -1,28 +1,24 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.util.AppUtil;
+import com.xiaomei.yanyu.widget.TitleBar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
-import android.graphics.Shader.TileMode;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
-import com.xiaomei.yanyu.util.AppUtil;
-import com.xiaomei.yanyu.widget.TitleBar;
 
 public class AboutActivity extends AbstractActivity implements View.OnClickListener{
 	
