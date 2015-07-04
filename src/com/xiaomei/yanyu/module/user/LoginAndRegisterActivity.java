@@ -295,7 +295,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		}else{
 			Toast.makeText(LoginAndRegisterActivity.this, "登录成功", 0).show();
 		}
-		TabsActivity.startActivity(LoginAndRegisterActivity.this);
+//		TabsActivity.startActivity(LoginAndRegisterActivity.this);
 		setResult(RESULT_OK);
 		finish();
 	}
@@ -331,7 +331,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		super.onActivityResult(arg0, arg1, arg2);
 		if(arg0==1 && arg1== RESULT_OK){
-			TabsActivity.startActivity(LoginAndRegisterActivity.this);
+//			TabsActivity.startActivity(LoginAndRegisterActivity.this);
 			setResult(RESULT_OK);
 			finish();
 		}
@@ -405,7 +405,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 										if(user != null && UserUtil.isUserValid(user)){
 											android.util.Log.d("111", "user = " + user);
 											User.save(user);
-											TabsActivity.startActivity(LoginAndRegisterActivity.this);
+//											TabsActivity.startActivity(LoginAndRegisterActivity.this);
 											finish();
 										}else{
 											mHandler.post(new Runnable() {
@@ -487,7 +487,7 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
                                     if(user != null && UserUtil.isUserValid(user)){
                                         android.util.Log.d("111", "user = " + user);
                                         User.save(user);
-                                        TabsActivity.startActivity(LoginAndRegisterActivity.this);
+//                                        TabsActivity.startActivity(LoginAndRegisterActivity.this);
                                         finish();
                                     }else{
                                         mHandler.post(new Runnable() {
