@@ -67,7 +67,10 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 			setListener();
 			initData();
 		}else{
-			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			try {
+				((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			} catch (Exception e) {
+			}
 		}
 		return mRootView;
 	}

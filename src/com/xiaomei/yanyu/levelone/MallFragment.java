@@ -57,7 +57,10 @@ public class MallFragment extends BaseFragment<MallControl> {
 			setUpView();
 			initData();
 		}else{
-			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			try {
+				((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			} catch (Exception e) {
+			}
 		}
 		return mRootView;
 	}
