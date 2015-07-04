@@ -71,7 +71,7 @@ public class ListOrderBuilder extends AbstractJSONBuilder<List<Order>> {
 	*/
 	@Override
 	protected List<Order> builder(JSONObject jsonObject) throws JSONException {
-	    if(DebugRelease.isDebug)
+//	    if(DebugRelease.isDebug)
 	        Log.d("json", jsonObject.toString());
 		List<Order> list = new ArrayList<Order>();
 		if(jsonObject.has("msg")){
