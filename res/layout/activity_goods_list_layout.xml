@@ -19,18 +19,20 @@
             layout="@layout/top_filter" />
         
  <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
-     android:divider="#00000000"
+     android:divider="@color/divider"
+     android:dividerHeight="@dimen/divider"
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/filter"
-    android:background="#ffe2e2e2"
+    android:background="@color/color_white"
     android:scrollbarStyle="outsideOverlay"
+    android:showDividers="middle|end"
     ptr:ptrMode="pullDownFromTop"
     android:visibility="visible"/>     
     
     <include
-        android:id="@android:id/empty"
+        android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         layout="@layout/goods_list_empty_view" />

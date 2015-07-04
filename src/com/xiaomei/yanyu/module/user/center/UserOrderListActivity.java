@@ -173,6 +173,8 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				holder.statusTv = (TextView) convertView.findViewById(R.id.status);
 				holder.orderAmountTv = (TextView) convertView.findViewById(R.id.order_amount);
 				holder.payButton = (TextView) convertView.findViewById(R.id.pay_button);
+				holder.hospNameTv = (TextView) convertView.findViewById(R.id.hosp_name);
+				holder.cityTv = (TextView) convertView.findViewById(R.id.city);
 				holder.payButton.setOnClickListener(this);
 				convertView.setTag(holder);
 			}
@@ -190,6 +192,8 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 				holder.statusTv.setText(dataList.getStatus());
 				holder.orderAmountTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + dataList.getGoodsPay());
 				holder.payButton.setTag(Integer.valueOf(position));
+				holder.cityTv.setText(dataList.getCity());
+				holder.hospNameTv.setText(dataList.getHospName());
 				int status = Integer.valueOf(dataList.getStatus());
 				switch (status) {
 				case 1: //未支付
@@ -269,6 +273,8 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 			TextView statusTv;//订单状态
 			TextView orderAmountTv; //订单价格
 			TextView payButton; //按钮
+			TextView hospNameTv;
+			TextView cityTv;
 		}
 	}
 	

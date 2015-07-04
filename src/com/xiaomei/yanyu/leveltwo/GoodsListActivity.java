@@ -107,6 +107,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
 		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		
+		findViewById(R.id.filter).setVisibility(View.VISIBLE);
 		mFilters[SUB_CAT] = (DropMenu) findViewById(R.id.sub_cat);
 		mFilters[ORIGIN_PLACE] = (DropMenu) findViewById(R.id.origin_place);
 		mFilters[PRICE_ORDER] = (DropMenu) findViewById(R.id.price_order);
@@ -166,7 +167,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
 		mPullToRefreshListView.setOnScrollListener(this);
 		mListView = mPullToRefreshListView.getRefreshableView();
-		mListView.setEmptyView(findViewById(android.R.id.empty));
+		mListView.setEmptyView(findViewById(R.id.empty));
 		mLoadingView = findViewById(R.id.loading_layout);
 		mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
 	}
@@ -358,6 +359,9 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			holder.localTv.setText(goods.getCityName());
 			holder.priceMarketTv.setText("原价"+goods.getPriceMarket()+"元");
 			
+			holder.mark1.setVisibility(View.GONE);
+            holder.mark2.setVisibility(View.GONE);
+            holder.mark3.setVisibility(View.GONE);
 			List<Goods.Mark> marks = goods.getMarks();
 			int i = 0;
 			GradientDrawable shapeDrawable  = null;
@@ -370,7 +374,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 					case 0:
 						holder.mark1.setVisibility(View.VISIBLE);
 						shapeDrawable = new GradientDrawable();
-						shapeDrawable.setCornerRadius(15);
+						shapeDrawable.setCornerRadius(8);
 						shapeDrawable.setColor(Color.parseColor(mark.getColor()));
 						holder.mark1.setBackground(shapeDrawable);
 						holder.mark1.setText(mark.getLabel());
@@ -378,7 +382,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 					case 1:
 						holder.mark2.setVisibility(View.VISIBLE);
 	                    shapeDrawable = new GradientDrawable();
-	                    shapeDrawable.setCornerRadius(15);
+	                    shapeDrawable.setCornerRadius(8);
 	                    shapeDrawable.setColor(Color.parseColor(mark.getColor()));
 	                    holder.mark2.setBackground(shapeDrawable);
 						holder.mark2.setText(mark.getLabel());
@@ -386,7 +390,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 					case 2:
 						holder.mark3.setVisibility(View.VISIBLE);
                         shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(15);
+                        shapeDrawable.setCornerRadius(8);
                         shapeDrawable.setColor(Color.parseColor(mark.getColor()));
                         holder.mark3.setBackground(shapeDrawable);
 						holder.mark3.setText(mark.getLabel());

@@ -82,6 +82,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
         mPullToRefreshListView.setOnScrollListener(this);
         mListView = mPullToRefreshListView.getRefreshableView();
+        mListView.setEmptyView(findViewById(R.id.empty));
         mLoadingView = findViewById(R.id.loading_layout);
         mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
     }
@@ -233,6 +234,9 @@ private class MyAdapter extends BaseAdapter implements View.OnClickListener{
             holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
             holder.localTv.setText(goods.getCityName());
             
+            holder.mark1.setVisibility(View.GONE);
+            holder.mark2.setVisibility(View.GONE);
+            holder.mark3.setVisibility(View.GONE);
             List<Goods.Mark> marks = goods.getMarks();
             int i = 0;
             GradientDrawable shapeDrawable  = null;
@@ -245,7 +249,7 @@ private class MyAdapter extends BaseAdapter implements View.OnClickListener{
                     case 0:
                         holder.mark1.setVisibility(View.VISIBLE);
                         shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(15);
+                        shapeDrawable.setCornerRadius(8);
                         shapeDrawable.setColor(Color.parseColor(mark.getColor()));
                         holder.mark1.setBackground(shapeDrawable);
                         holder.mark1.setText(mark.getLabel());
@@ -253,7 +257,7 @@ private class MyAdapter extends BaseAdapter implements View.OnClickListener{
                     case 1:
                         holder.mark2.setVisibility(View.VISIBLE);
                         shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(15);
+                        shapeDrawable.setCornerRadius(8);
                         shapeDrawable.setColor(Color.parseColor(mark.getColor()));
                         holder.mark2.setBackground(shapeDrawable);
                         holder.mark2.setText(mark.getLabel());
@@ -261,7 +265,7 @@ private class MyAdapter extends BaseAdapter implements View.OnClickListener{
                     case 2:
                         holder.mark3.setVisibility(View.VISIBLE);
                         shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(15);
+                        shapeDrawable.setCornerRadius(8);
                         shapeDrawable.setColor(Color.parseColor(mark.getColor()));
                         holder.mark3.setBackground(shapeDrawable);
                         holder.mark3.setText(mark.getLabel());

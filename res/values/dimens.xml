@@ -45,11 +45,13 @@
     <!-- title bar  2边的间距 -->
     <dimen name="title_bar_padding_left_right">10dp</dimen>
     
+    <dimen name="divider">1px</dimen>
+    <dimen name="divider_image_height">2px</dimen>
     
+    <dimen name="title_bar_button_padding">5dp</dimen>
     
-    
-    
-    
+    <dimen name="tag_padding_horizontal">4dp</dimen>
+    <dimen name="tag_space_horizontal">6dp</dimen>
     
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>
@@ -68,5 +70,5 @@
     
     <dimen name="top_filter_height">40dp</dimen>
     <dimen name="top_filter_divider_height">20dp</dimen>
-    <dimen name="top_filter_drop_item_height">60dp</dimen>
+    <dimen name="top_filter_drop_item_height">45dp</dimen>
 </resources>

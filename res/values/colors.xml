@@ -40,7 +40,14 @@
       <color name="drop_item_text_normal">#000000</color>
       <color name="drop_item_text_checked">#d366f3</color>
       
-      <color name="divider">#E0E0E0</color>
+      <color name="filter_item_text_normal">#373737</color>
+      <color name="filter_title_text_normal">#787878</color>
+      <color name="filter_text_activated">#d366f3</color>
+      
+      <color name="divider">#E4E4E4</color>
+      <color name="action_bar_divider">#e4e4e4</color>
+      
+      <color name="semi_transparent">#40000000</color>
       
       <!-- 友盟 -->
           <color name="body_text_1">#ff000000</color>

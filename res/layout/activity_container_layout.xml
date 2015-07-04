@@ -21,7 +21,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"        
-        android:background="#e4e4e4"
+        android:background="@color/action_bar_divider"
         android:layout_above="@id/container_tabs"/>
     
     <!-- center -->

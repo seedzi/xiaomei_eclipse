@@ -22,25 +22,39 @@
         android:id="@+id/bottom"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginBottom="15dp">
-        <TextView 
+   
+       
+        <com.xiaomei.yanyu.widget.OriginTextView
+            android:id="@+id/original_price"
+            android:textSize="13sp"
+            android:textColor="#c8c8c8"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>                     
+         <TextView 
+            android:id="@+id/price"
+            android:textSize="20sp"
+            android:textColor="#d366f3"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/original_price"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignBaseline="@id/original_price"
+            android:layout_alignParentBottom="true"
+            />    
+            <TextView 
             android:id="@+id/title"
             android:textSize="13sp"
             android:layout_marginLeft="15dp"
             android:layout_alignParentLeft="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            />
-         <TextView 
-            android:id="@+id/price"
-            android:textSize="13sp"
-            android:textColor="#d366f3"
-            android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            />
+            android:layout_alignBottom="@id/original_price"
+            android:layout_toLeftOf="@id/original_price"/> 
 </RelativeLayout>
 	<TextView
 	    android:layout_centerHorizontal="true"

@@ -94,7 +94,31 @@
             android:layout_height="wrap_content"
             android:textColor="#333333" 
             android:textSize="15sp"
+            android:maxLines="1"
             android:text="suhu尚惠"/>
+        
+        <TextView 
+            android:id="@+id/hosp_name"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="@dimen/item_margin_small"
+            android:layout_below="@id/goods_name"
+            android:layout_toRightOf="@id/goods_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#aaaaaa"
+            android:text="content"/>
+        <TextView 
+            android:id="@+id/city"
+            android:layout_marginTop="7dp"
+            android:layout_below="@id/goods_name"
+            android:drawableLeft="@drawable/icon_address"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#aaaaaa"
+            android:textSize="12sp"
+            android:text="shouer"/>    
          <TextView 
             android:id="@+id/status"
             android:layout_marginLeft="@dimen/item_margin_small"
@@ -114,6 +138,7 @@
             android:layout_height="wrap_content"
             android:textColor="#d366f3" 
             android:textSize="16sp"
+            android:layout_alignBaseline="@id/status"
             android:text="￥ 599"/>                
     </RelativeLayout>
     

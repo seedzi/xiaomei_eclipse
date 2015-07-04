@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.cordova.api.LOG;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,6 +13,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -150,10 +153,6 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 			img_url = getIntent().getStringExtra("img_url");
 			viewcount = getIntent().getStringExtra("viewcount");
 			
-			android.util.Log.d("111", "title = " + tilte);
-			android.util.Log.d("111", "des = " + des);
-			android.util.Log.d("111", "img_url = " + img_url);
-			
 			titleTv.setText(tilte);
 			descriptionTv.setText(des);
 			mBrowseSize.setText(viewcount + "次浏览");
@@ -224,7 +223,16 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 				TextView title = (TextView) converView.findViewById(R.id.title);
 				title.setText(mList.get(position).title);
 				TextView price = (TextView) converView.findViewById(R.id.price);
-				price.setText(getResources().getString(R.string.ren_ming_bi) +" " +  mList.get(position).price_xm);
+				if(!TextUtils.isEmpty( mList.get(position).price_xm))
+				    price.setText(getResources().getString(R.string.ren_ming_bi) +" " +  mList.get(position).price_xm);
+				else
+				    price.setText("");
+				TextView originPrice = (TextView) converView.findViewById(R.id.original_price);
+				if(!TextUtils.isEmpty( mList.get(position).price_market)){
+					originPrice.setVisibility(View.VISIBLE);
+				    originPrice.setText(getResources().getString(R.string.ren_ming_bi) + "" + mList.get(position).price_market);
+				}else
+		        	originPrice.setVisibility(View.INVISIBLE);
 				return converView;
 			}
 			@Override
@@ -244,7 +252,6 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 
 			@Override
 			public void onClick(View v) {
-				android.util.Log.d("111", "url = " + link);
 				GoodsDetailActivity.startActivity(HomeStyle2.this ,link);
 			}
 		}
@@ -255,6 +262,9 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 
 			MyOnPageChangeListener( List<Info.Bean> channelEntities) {
 				this.channelEntities = channelEntities;
+				if(this.channelEntities!=null && this.channelEntities.size()>0){
+					link = channelEntities.get(0).link;
+				}
 			}
 
 			@Override
@@ -374,15 +384,18 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
     		private String link;
     		private String des;
     		private String price_xm;
+    		private String price_market;
 			@Override
 			public String toString() {
 				return "Bean [image=" + image + ", title=" + title + ", link="
 						+ link + ", des=" + des + ", price_xm=" + price_xm
-						+ "]";
+						+ ", price_market=" + price_market +
+						"]";
 			}
     	}
     	
     	public  static Info toBean(String str){
+    		Log.d("333", "str = " + str);
     		try {
         		JSONObject jsonObject = new JSONObject(str);
         		Info info = new Info();
@@ -397,6 +410,7 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
         			bean.link = js.getString("link");
         			bean.des = js.getString("des");
         			bean.price_xm = js.getString("price_xm");
+        			bean.price_market = js.getString("price_market");
         			beans.add(bean);
         		}
         		if(jsonObject.has("viewcount"))

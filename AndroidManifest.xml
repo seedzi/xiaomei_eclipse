@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiaomei.yanyu"
-    android:versionCode="2"
-    android:versionName="1.1.0" >
+    android:versionCode="3"
+    android:versionName="1.1.1" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -28,7 +28,6 @@
         <!-- 主页面 -->
          <activity
              android:theme="@style/activityTheme"
-              android:launchMode="singleInstance"
 	            android:name="com.xiaomei.yanyu.contanier.TabsActivity"
 	            android:label="@string/app_name" ><!-- 
 	            android:launchMode="singleInstance" -->
