@@ -174,7 +174,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 
 		@Override
 		public int getCount() {
-			return mData == null ? 0 : mData.size();
+			return 9;
+//			return mData == null ? 0 : mData.size();
 		}
 
 		@Override
