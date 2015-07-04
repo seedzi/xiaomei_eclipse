@@ -6,12 +6,12 @@ import java.lang.reflect.Type;
 import com.yuekuapp.proxy.ControlFactory;
 import com.yuekuapp.proxy.MessageProxy;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 
 
-public class BaseActivity<T extends BaseControl> extends FragmentActivity {
+public class BaseActivity<T extends BaseControl> extends Activity {
 
 	protected T mControl;
     

@@ -1,29 +1,14 @@
 package com.xiaomei.yanyu.contanier;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
-import android.view.KeyEvent;
-import android.view.KeyCharacterMap.KeyData;
-
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.update.UmengDownloadListener;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
-import com.xiaomei.yanyu.comment.CommentListActivity;
-import com.xiaomei.yanyu.util.UserUtil;
 
 /**
  * Created by huzhi on 15-2-17.
