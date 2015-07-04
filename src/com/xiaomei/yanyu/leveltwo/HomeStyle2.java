@@ -255,7 +255,6 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 
 			@Override
 			public void onClick(View v) {
-				android.util.Log.d("111", "url = " + link);
 				GoodsDetailActivity.startActivity(HomeStyle2.this ,link);
 			}
 		}
@@ -266,6 +265,9 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 
 			MyOnPageChangeListener( List<Info.Bean> channelEntities) {
 				this.channelEntities = channelEntities;
+				if(this.channelEntities!=null && this.channelEntities.size()>0){
+					link = channelEntities.get(0).link;
+				}
 			}
 
 			@Override
