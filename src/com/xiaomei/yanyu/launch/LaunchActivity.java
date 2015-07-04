@@ -55,27 +55,6 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
             	init();
             }
         },1500);
-        
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    XiaoMeiApplication.getInstance().getApi().getUserShareListFromNet("1", "10");
-                } catch (XiaoMeiCredentialsException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (XiaoMeiIOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (XiaoMeiJSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (XiaoMeiOtherException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
     
     private void  init(){

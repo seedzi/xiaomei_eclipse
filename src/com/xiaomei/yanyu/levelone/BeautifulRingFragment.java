@@ -97,7 +97,11 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	    LayoutInflater inflater = LayoutInflater.from(getActivity());
 	    viewHolder.mPullToRefreshListView = (PullToRefreshListView) root.findViewById(R.id.list);
 	    viewHolder.mListView = viewHolder.mPullToRefreshListView.getRefreshableView();
-	    viewHolder.mAdapter = new RingAdapter(getActivity());
+	    if(viewHolder == mJinghuaViewHolder){
+	    	viewHolder.mAdapter = new RingAdapter(getActivity());
+	    }else{
+	    	viewHolder.mAdapter = new UserPostAdapter();
+	    }
 	    viewHolder.mListView.setAdapter(viewHolder.mAdapter);
         
 
@@ -258,7 +262,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	
 	   // ================================== Guchang Call back ==========================================
     public void getGuangchangListDataFromNetAysnCallBack(){
-        dissProgress(mJinghuaViewHolder);
+        dissProgress(mGuangchangViewHolder);
         mGuangchangViewHolder.mIsRefresh = false;
         ((UserPostAdapter)mGuangchangViewHolder.mAdapter).setData(mControl.getModel().getUserShareData());
         mGuangchangViewHolder.mAdapter.notifyDataSetChanged();

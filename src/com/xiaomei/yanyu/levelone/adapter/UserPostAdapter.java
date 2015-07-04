@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.levelone.adapter;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.UserShare;
 
@@ -26,7 +27,7 @@ public class UserPostAdapter extends BaseAdapter {
     
     @Override
     public int getCount() {
-        return 10;
+        return mData==null?0:mData.size();
     }
 
     @Override
@@ -60,18 +61,21 @@ public class UserPostAdapter extends BaseAdapter {
             ViewGroup viewGroup = null;
             
             viewGroup = (ViewGroup) convertView.findViewById(R.id.commont_1);
+            holder.commentLayout1 = viewGroup;
             holder.userIcon1 =  (ImageView) viewGroup.findViewById(R.id.user_icon);
             holder.userName1 = (TextView) viewGroup.findViewById(R.id.user_name);
             holder.content1 = (TextView) viewGroup.findViewById(R.id.content);
             holder.time1 = (TextView) viewGroup.findViewById(R.id.time);
             
             viewGroup = (ViewGroup) convertView.findViewById(R.id.commont_2);
+            holder.commentLayout2 = viewGroup;
             holder.userIcon2 =  (ImageView) viewGroup.findViewById(R.id.user_icon);
             holder.userName2 = (TextView) viewGroup.findViewById(R.id.user_name);
             holder.content2 = (TextView) viewGroup.findViewById(R.id.content);
             holder.time2 = (TextView) viewGroup.findViewById(R.id.time);
             
             viewGroup = (ViewGroup) convertView.findViewById(R.id.commont_3);
+            holder.commentLayout3 = viewGroup;
             holder.userIcon3 =  (ImageView) viewGroup.findViewById(R.id.user_icon);
             holder.userName3 = (TextView) viewGroup.findViewById(R.id.user_name);
             holder.content3 = (TextView) viewGroup.findViewById(R.id.content);
@@ -82,6 +86,81 @@ public class UserPostAdapter extends BaseAdapter {
         }
         holder = (Holder) convertView.getTag();
         
+        UserShare item =mData.get(position);
+        
+        holder.posterUserIcon.setImageResource(R.drawable.user_head_default);
+        ImageLoader.getInstance().displayImage(item.getAvatar(), holder.posterUserIcon);
+        holder.posterUserName.setText(item.getUsername());
+        holder.posterContent.setText(item.getContent());
+        holder.posterUserTime.setText(item.getTime());
+        
+        List<String> imgs = item.getImgs();
+		holder.img1.setVisibility(View.INVISIBLE);
+		holder.img2.setVisibility(View.INVISIBLE);
+		holder.img3.setVisibility(View.INVISIBLE);
+		holder.img1.setImageResource(R.drawable.tiezi_zhanwei);
+		holder.img2.setImageResource(R.drawable.tiezi_zhanwei);
+		holder.img3.setImageResource(R.drawable.tiezi_zhanwei);
+        if(imgs!=null){
+        	int index = 0;
+        	for(String img :imgs){
+        		switch (index) {
+				case 0:
+					holder.img1.setVisibility(View.VISIBLE);
+			        ImageLoader.getInstance().displayImage(img,holder.img1);
+					break;
+				case 1:
+					holder.img2.setVisibility(View.VISIBLE);
+			        ImageLoader.getInstance().displayImage(img,holder.img2);
+					break;
+				case 2:
+					holder.img3.setVisibility(View.VISIBLE);
+			        ImageLoader.getInstance().displayImage(img,holder.img3);
+					break;	
+				default:
+					break;
+				}
+        		index ++;
+        	}
+        }
+        
+        holder.commentLayout1.setVisibility(View.GONE);
+        holder.commentLayout2.setVisibility(View.GONE);
+        holder.commentLayout3.setVisibility(View.GONE);
+        List<UserShare.Comment> comments =  item.getCommtents();
+        if(comments!=null){
+        	int j = 0;
+        	for(UserShare.Comment comment :comments){
+        		switch (j) {
+				case 0:
+					holder.commentLayout1.setVisibility(View.VISIBLE);
+					holder.userIcon1.setImageResource(R.drawable.user_head_default);
+					ImageLoader.getInstance().displayImage(comment.getAvatar(),holder.userIcon1);
+					holder.userName1.setText(comment.getUsername());
+					holder.content1.setText(comment.getContent());
+					holder.time1.setText(comment.getTime());
+					break;
+				case 1:
+					holder.commentLayout2.setVisibility(View.VISIBLE);
+					holder.userIcon2.setImageResource(R.drawable.user_head_default);
+					ImageLoader.getInstance().displayImage(comment.getAvatar(),holder.userIcon2);
+					holder.userName2.setText(comment.getUsername());
+					holder.content2.setText(comment.getContent());
+					holder.time2.setText(comment.getTime());
+					break;
+				case 2:
+					holder.commentLayout3.setVisibility(View.VISIBLE);
+					holder.userIcon3.setImageResource(R.drawable.user_head_default);
+					ImageLoader.getInstance().displayImage(comment.getAvatar(),holder.userIcon3);
+					holder.userName3.setText(comment.getUsername());
+					holder.content3.setText(comment.getContent());
+					holder.time3.setText(comment.getTime());
+					break;
+				default:
+					break;
+				}
+        	}
+        }
         return convertView;
     }
 
@@ -97,16 +176,19 @@ public class UserPostAdapter extends BaseAdapter {
         private TextView favSize;
         private TextView browseSize;
         //TODO
+        private ViewGroup commentLayout1;
         private ImageView userIcon1;
         private TextView userName1;
         private TextView content1;
         private TextView time1;
         
+        private ViewGroup commentLayout2;
         private ImageView userIcon2;
         private TextView userName2;
         private TextView content2;
         private TextView time2;
         
+        private ViewGroup commentLayout3;
         private ImageView userIcon3;
         private TextView userName3;
         private TextView content3;

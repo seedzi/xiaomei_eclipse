@@ -34,6 +34,7 @@ import com.xiaomei.yanyu.api.builder.UploadFIleBuilder;
 import com.xiaomei.yanyu.api.builder.UserLoginBuilder;
 import com.xiaomei.yanyu.api.builder.UserMsgBuilder;
 import com.xiaomei.yanyu.api.builder.UserRegisterBuilder;
+import com.xiaomei.yanyu.api.builder.UserShareListBuilder;
 import com.xiaomei.yanyu.api.builder.WechatBuilder;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
@@ -226,8 +227,7 @@ public class XiaoMeiApi {
                 values[2],
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
        
-                mHttpApi.doHttpRequestObject(httpGet, new NetResultBuilder());
-                return null;
+        return mHttpApi.doHttpRequestObject(httpGet, new UserShareListBuilder());
     }
     
 	
