@@ -70,7 +70,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 			setListener();
 			initdata();
 		} else {
-			((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			try {
+				((ViewGroup)mRootView.getParent()).removeView(mRootView);
+			} catch (Exception e) {
+			}
 		}
 		return mRootView;
 	}
