@@ -18,6 +18,11 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.SharePreferenceKey;
 import com.xiaomei.yanyu.SharePreferenceWrap;
+import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.launch.control.LaunchControl;
 import com.xiaomei.yanyu.widget.PagerAdapter;
@@ -51,13 +56,26 @@ public class LaunchActivity extends  AbstractActivity<LaunchControl>{
             }
         },1500);
         
-        
-        android.util.Log.d("111", "3.2 isNumeric" + isNumeric("3.2"));
-        
-        android.util.Log.d("111", "355  isNumeric" + isNumeric("3555"));
-    	
-        
-        android.util.Log.d("111", "35a5  isNumeric" + isNumeric("355a5"));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    XiaoMeiApplication.getInstance().getApi().getUserShareListFromNet("1", "10");
+                } catch (XiaoMeiCredentialsException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (XiaoMeiIOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (XiaoMeiJSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (XiaoMeiOtherException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
     
     private void  init(){

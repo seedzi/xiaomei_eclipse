@@ -147,5 +147,10 @@ public class HttpUrlManager {
     String isFav(){
         return HOST + "/server/show/isfav.php";
     }
+    /**广场列表*/
+    String userShareList(){
+        return HOST + "/server/show/user_share_list.php";
+    }
+    
 }
 

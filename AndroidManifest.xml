@@ -170,7 +170,16 @@
         <activity 
             android:theme="@style/activityTheme"
             android:name=".leveltwo.BuildOrderActivity"/>
-		
+        <!-- 测试的test Activity -->
+		<activity
+		    android:name="com.xiaomei.yanyu.levelone.TestActivity" 
+		    android:theme="@style/activityTheme">
+              <!-- 
+           <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+		</activity>
 	   <!-- ################### 支付宝 ###################### -->
 		<activity
             android:name="com.alipay.sdk.app.H5PayActivity"

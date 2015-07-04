@@ -55,6 +55,7 @@ import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order2;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.User;
+import com.xiaomei.yanyu.bean.UserShare;
 import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.WechatBean;
@@ -210,6 +211,25 @@ public class XiaoMeiApi {
 		android.util.Log.d("111", "getBeatifulRingDetailFromNet");
 		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulDetailBuilder());
 	}
+	
+	   /**广场*/
+    public List<UserShare> getUserShareListFromNet(String curpage,String perpage)
+            throws XiaoMeiCredentialsException, XiaoMeiIOException,
+            XiaoMeiJSONException, XiaoMeiOtherException {
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair("curpage", curpage),
+                new BasicNameValuePair("perpage", perpage),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.userShareList(),
+                values[0],
+                values[1],
+                values[2],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+       
+                mHttpApi.doHttpRequestObject(httpGet, new NetResultBuilder());
+                return null;
+    }
+    
 	
 	// ========================================================================================
 	// 用户注册与登录(NET)

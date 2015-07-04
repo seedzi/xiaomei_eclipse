@@ -12,7 +12,7 @@ public class NetResultBuilder extends AbstractJSONBuilder<NetResult> {
 
 	@Override
 	protected NetResult builder(JSONObject jsonObject) throws JSONException {
-	    if(DebugRelease.isDebug)
+//	    if(DebugRelease.isDebug)
 	        Log.d("json", jsonObject.toString());
 		NetResult netResult = new NetResult();
 		if(jsonObject.has("code"))

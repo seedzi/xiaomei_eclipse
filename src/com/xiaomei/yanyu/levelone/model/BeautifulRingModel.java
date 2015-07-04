@@ -3,34 +3,68 @@ package com.xiaomei.yanyu.levelone.model;
 import java.util.List;
 
 import com.xiaomei.yanyu.bean.BeautifulRing;
+import com.xiaomei.yanyu.bean.UserShare;
 
 public class BeautifulRingModel {
+    
+    // ================================ Jingxuan============================================
 	
-	private List<BeautifulRing> mData;
+	private List<BeautifulRing> mBeautifulData;
 	
-	public List<BeautifulRing> getData(){
-		return mData;
+	private int mBeautifulPage;
+	
+	public List<BeautifulRing> getBeautifulData(){
+		return mBeautifulData;
 	}
 	
-	public void setData(List<BeautifulRing> data){
-		mData = data;
+	public void setBeautifulData(List<BeautifulRing> data){
+	    mBeautifulData = data;
 	}
 	
-	private int mPage;
-	
-	public int getPage(){
-		return mPage;
+	public int getBeautifulPage(){
+		return mBeautifulPage;
 	}
 	
-	public void setPage(int page){
-		mPage  = page;
+	public void setBeautifulPage(int page){
+	    mBeautifulPage  = page;
 	}
 
-	public void increaePage(){
-		mPage ++;
+	public void increaeBeautifulPage(){
+	    mBeautifulPage ++;
 	}
 	
-	public void reducePage(){
-		mPage --;
+	public void reduceBeautifulPage(){
+	    mBeautifulPage --;
 	}
+	
+	// ================================ guangchang============================================
+	
+	private List<UserShare> mUserShareData;
+	
+    private int mUserSharePage;
+	
+	public List<UserShare> getUserShareData(){
+	    return mUserShareData;
+	}
+	
+	public void setUserShareData(List<UserShare> data){
+	    mUserShareData = data;
+	}
+	
+   public int getUserSharePage(){
+        return mUserSharePage;
+    }
+	
+   public void setUserSharePage(int page){
+       mUserSharePage  = page;
+    }
+	
+    public void increaeUserSharePage() {
+        mUserSharePage++;
+    }
+
+    public void reduceUserSharePage() {
+        mUserSharePage--;
+    }
+	    
 }
