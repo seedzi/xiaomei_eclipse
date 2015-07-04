@@ -153,10 +153,6 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 			img_url = getIntent().getStringExtra("img_url");
 			viewcount = getIntent().getStringExtra("viewcount");
 			
-			android.util.Log.d("111", "title = " + tilte);
-			android.util.Log.d("111", "des = " + des);
-			android.util.Log.d("111", "img_url = " + img_url);
-			
 			titleTv.setText(tilte);
 			descriptionTv.setText(des);
 			mBrowseSize.setText(viewcount + "次浏览");
@@ -232,10 +228,11 @@ public class HomeStyle2 extends AbstractActivity implements OnTouchListener,View
 				else
 				    price.setText("");
 				TextView originPrice = (TextView) converView.findViewById(R.id.original_price);
-				if(!TextUtils.isEmpty( mList.get(position).price_market))
+				if(!TextUtils.isEmpty( mList.get(position).price_market)){
+					originPrice.setVisibility(View.VISIBLE);
 				    originPrice.setText(getResources().getString(R.string.ren_ming_bi) + "" + mList.get(position).price_market);
-		        else
-                    price.setText("");
+				}else
+		        	originPrice.setVisibility(View.INVISIBLE);
 				return converView;
 			}
 			@Override
