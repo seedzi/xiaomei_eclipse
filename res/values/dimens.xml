@@ -52,6 +52,11 @@
     
     <dimen name="tag_padding_horizontal">4dp</dimen>
     <dimen name="tag_space_horizontal">6dp</dimen>
+
+    <dimen name="content_padding_horizontal">16dp</dimen>
+    
+    <dimen name="action_bar_padding_horizontal">15dp</dimen>
+    
     
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>

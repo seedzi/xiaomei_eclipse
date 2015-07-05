@@ -60,6 +60,9 @@
        
     <string name="submit">提交</string>        
     
+    <string name="new_post_hint">输入你想说的话</string>
+    <string name="title_activity_post">发帖</string>
+    
     <!-- 商城 -->
 	<string name="mall_item_nam_1">肉毒素除皱</string>    
 	<string name="mall_item_nam_2">填充朔形</string>   

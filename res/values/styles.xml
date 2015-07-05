@@ -7,9 +7,17 @@
 
     <!-- Application theme. -->
     <!-- Activity主题 --> 
-    <style name="activityTheme" parent="@android:style/Theme"> 
+    <style name="activityTheme" parent="@android:style/Theme.NoTitleBar"> 
         <item name="android:windowIsTranslucent">true</item> 
     </style> 
+    
+    <style name="Theme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+    </style>
+    
+    <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/color_titlebar_background</item>
+    </style>
     
     <style name="DashboardButton">
         <item name="android:layout_gravity">center_vertical</item>
@@ -70,5 +78,13 @@
     
     <style name="TextAppearance.Filter.Title">
         <item name="android:textColor">@color/filter_title_text</item>
+    </style>
+
+    <style name="ActionBarTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="@color/title_text">@color/title_text</item>
     </style>
 </resources>

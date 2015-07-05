@@ -5,6 +5,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.levelone.adapter.RingAdapter;
 import com.xiaomei.yanyu.levelone.adapter.UserPostAdapter;
 import com.xiaomei.yanyu.levelone.control.BeautifulRingControl;
+import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -12,6 +13,7 @@ import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,15 +28,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> 
 	implements OnRefreshListener,OnScrollListener,OnClickListener{
 	
-	private ViewGroup mRootView;
+	private static final int REQUEST_NEW_POST = 0;
+
+    private ViewGroup mRootView;
 	
-	private TitleBar mTitleBar;
+	private View mTitleBar;
 	
 	private ViewHolder mJinghuaViewHolder;
 	private ViewHolder mGuangchangViewHolder;
@@ -67,8 +72,9 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	}
 	
 	private void setUpView(){
-		mTitleBar = (TitleBar) mRootView.findViewById(R.id.title_bar);
-		mTitleBar.setTitle(getResources().getString(R.string.fragment_beautiful_ring));
+		mTitleBar = mRootView.findViewById(R.id.title_bar);
+		((TextView) mTitleBar.findViewById(android.R.id.title)).setText(getString(R.string.fragment_beautiful_ring));
+		mTitleBar.findViewById(R.id.new_post).setOnClickListener(this);
 
         mJinghua = (ViewGroup) mRootView.findViewById(R.id.jing_hua);
         mJinghua.setOnClickListener(this);
@@ -141,6 +147,9 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
             mGuangchangLayout.setVisibility(View.VISIBLE);
             mCurrentState = STATE_GUANGCHANG;
             initdata();
+            break;
+        case R.id.new_post:
+            startActivityForResult(new Intent(getActivity(), BeautifulRingPostActivity.class), REQUEST_NEW_POST);
             break;
         default:
             break;

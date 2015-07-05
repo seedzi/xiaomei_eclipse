@@ -126,6 +126,10 @@
 		    android:theme="@style/activityTheme"
 			android:name="com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity">
 		</activity>
+		<activity
+		    android:theme="@style/Theme"
+			android:name="com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity">
+		</activity>
 		<!-- 用户消息 -->		
 		<activity
             android:theme="@style/activityTheme"
