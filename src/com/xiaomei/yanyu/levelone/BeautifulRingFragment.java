@@ -110,6 +110,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	    	viewHolder.mAdapter = new RingAdapter(getActivity());
 	    }else{
 	    	viewHolder.mAdapter = new UserPostAdapter();
+	    	((UserPostAdapter)viewHolder.mAdapter).setActivity(getActivity());
 	    }
 	    viewHolder.mListView.setAdapter(viewHolder.mAdapter);
         
@@ -163,8 +164,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 		        showProgress(mJinghuaViewHolder);
 	    	}
 	    }else {
-           mControl.getGuangchangListDataFromNetAysn();
-            showProgress(mGuangchangViewHolder);
+	    	if(mControl.getModel().getUserShareData()==null ||mControl.getModel().getUserShareData().size()==0){
+	    		mControl.getGuangchangListDataFromNetAysn();
+	    		showProgress(mGuangchangViewHolder);
+	    	}
 	    }
 
 	}

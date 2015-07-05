@@ -32,6 +32,8 @@ public class UserShareListBuilder extends AbstractJSONBuilder<List<UserShare>> {
     	for(int i=0;i<jsonArray.length();i++){
     		JSONObject jObj = jsonArray.getJSONObject(i);
     		userShare = new UserShare();
+    		if(jObj.has("id"))
+    			userShare.setId(jObj.getString("id"));
     		if(jObj.has("username"))
     			userShare.setUsername(jObj.getString("username"));
     		if(jObj.has("avatar"))

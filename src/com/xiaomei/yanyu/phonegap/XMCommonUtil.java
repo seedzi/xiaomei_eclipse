@@ -76,9 +76,9 @@ public class XMCommonUtil extends CordovaPlugin{
 	            itemid = args.getJSONObject(0).getString("itemid");
 	            type = args.getJSONObject(0).getString("type");
 	            if("goods".equals(type)){
-	            	CommentListActivity.startActivity(XiaoMeiApplication.getInstance().getCurrentActivity(),type, itemid,false);
+	            	CommentListActivity.startActivity(XiaoMeiApplication.getInstance().getCurrentActivity(),type, itemid,false,false);
 	            }else{
-	            	CommentListActivity.startActivity(XiaoMeiApplication.getInstance().getCurrentActivity(),type, itemid,true);
+	            	CommentListActivity.startActivity(XiaoMeiApplication.getInstance().getCurrentActivity(),type, itemid,true,false);
 	            }
 	        } catch (Exception e) {
 	        }

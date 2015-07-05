@@ -5,10 +5,13 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.UserShare;
+import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.ScreenUtils;
 
 import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class UserPostAdapter extends BaseAdapter {
+public class UserPostAdapter extends BaseAdapter implements View.OnClickListener{
     
+	private Activity mAc;
+	
+	public void setActivity(Activity ac){
+		mAc = ac;
+	}
+	
     private List<UserShare> mData;
 
     public List<UserShare>  getData(){
@@ -190,6 +199,11 @@ public class UserPostAdapter extends BaseAdapter {
         		holder.moreComment.setVisibility(View.GONE);
         	}
         }
+        
+        holder.commentSize.setOnClickListener(this);
+        holder.commentSize.setTag(item.getId());
+        holder.moreComment.setOnClickListener(this);
+        holder.moreComment.setTag(item.getId());
         return convertView;
     }
 
@@ -225,4 +239,19 @@ public class UserPostAdapter extends BaseAdapter {
         
         private View moreComment;
     }
+
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+		case R.id.more_commont:
+			CommentListActivity.startActivity(mAc,"share",(String)v.getTag(),true,false);
+			break;
+		case R.id.comment_size:
+			CommentListActivity.startActivity(mAc,"share",(String)v.getTag(),true,true);
+			break;
+		default:
+			break;
+		}
+	}
 }

@@ -31,7 +31,7 @@
         android:layout_toRightOf="@id/user_icon"
         android:layout_marginTop="6dp"
         android:text="做后效果棒棒的！"
-        android:maxLength="1"
+        android:maxLines="1"
         android:ellipsize="end"
         android:textColor="#969696"
         android:layout_height="wrap_content"

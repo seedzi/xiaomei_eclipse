@@ -96,7 +96,7 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 			@Override
 			public void onClick(View v) {
 				if(!TextUtils.isEmpty(commentId))
-					CommentListActivity.startActivity(BeautifulRingDetailsActivity.this, "share", commentId,true);
+					CommentListActivity.startActivity(BeautifulRingDetailsActivity.this, "share", commentId,true,false);
 			}
 		});
 		

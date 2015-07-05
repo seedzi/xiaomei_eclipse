@@ -3,6 +3,8 @@ package com.xiaomei.yanyu.bean;
 import java.util.List;
 
 public class UserShare {
+	
+	private String id;
 
 	private String username;
 	
@@ -18,6 +20,14 @@ public class UserShare {
 	
 	private int commentSize;
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getUsername() {
 		return username;
 	}

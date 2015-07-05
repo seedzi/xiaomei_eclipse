@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,20 +44,27 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         context.startActivity(intent);
     }
     @Deprecated
-    public static void startActivity(Context context,String type,String goodsId){
+    public static void startActivity(Context context,String type,String typeid){
         Intent intent = new Intent(context,CommentListActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("goodsId", goodsId);
-        android.util.Log.d("111", "type = " + type + ",goodsId = " + goodsId);
+        intent.putExtra("typeid", typeid);
+        context.startActivity(intent);
+    }
+    @Deprecated
+    public static void startActivity(Context context,String type,String typeid,boolean showComment){
+        Intent intent = new Intent(context,CommentListActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("typeid", typeid);
+        intent.putExtra("showComment", showComment);
         context.startActivity(intent);
     }
     
-    public static void startActivity(Context context,String type,String goodsId,boolean showComment){
+    public static void startActivity(Context context,String type,String typeid,boolean showComment,boolean isOnFouce){
         Intent intent = new Intent(context,CommentListActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("goodsId", goodsId);
+        intent.putExtra("typeid", typeid);
         intent.putExtra("showComment", showComment);
-        android.util.Log.d("111", "type = " + type + ",goodsId = " + goodsId + ",showComment = " + showComment);
+        intent.putExtra("isOnFouce", isOnFouce);
         context.startActivity(intent);
     }
     
@@ -70,13 +79,15 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     private EditText commentEdit;
     
     private String type;
-    private String goodsId;
+    private String typeid;
     
     private final int LOAD_MORE_COUNT = 10;
     
 	private View mEmptyView;
 	
 	private boolean showComment;
+	
+	private boolean isOnFouce = true;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,20 +95,28 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         setContentView(R.layout.activity_comment_list_layout);
         if(getIntent().getExtras()!=null){
             type = getIntent().getExtras().getString("type");
-            goodsId = getIntent().getExtras().getString("goodsId");
+            typeid = getIntent().getExtras().getString("typeid");
             showComment = getIntent().getExtras().getBoolean("showComment");
+            isOnFouce = getIntent().getExtras().getBoolean("isOnFouce");
+            android.util.Log.d("111", "isOnFouce = " + isOnFouce + ",showComment = " + showComment);
         }
         setUpViews();
         initData();
         
-        // test 
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mControl.actionShareComment(goodsId, type, "哈哈哈哈哈哈");
-            }
-        }).start();*/
+        new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+			  if(isOnFouce){
+			    	commentEdit.setFocusable(true);
+			        commentEdit.setFocusableInTouchMode(true);
+			        commentEdit.requestFocus();
+			        InputMethodManager inputManager =
+			                    (InputMethodManager)commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			        inputManager.showSoftInput(commentEdit, 0);	
+		        }				
+			}
+		}, 1000);
     }
 
     private void setUpViews(){
@@ -128,12 +147,11 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            	android.util.Log.d("111", "goodsId = " + goodsId + ",type = " + type + ",comment = " + commentEdit.getText().toString());
             	if(UserUtil.getUser()==null){
             		LoginAndRegisterActivity.startActivity(CommentListActivity.this, true);
             		finish();
             	}else{
-            		 mControl.actionShareComment(goodsId, type, commentEdit.getText().toString());
+            		 mControl.actionShareComment(typeid, type, commentEdit.getText().toString());
             	}
             }
         });
@@ -174,22 +192,21 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     public void onRefresh() {
         mIsRefresh = true;
 //        mControl.getCommentListData("1010", "goods");
-        mControl.getCommentListData(goodsId, type);
+        mControl.getCommentListData(typeid, type);
     }
     
     private void initData(){
         mIsRefresh = true;
 //        mControl.getCommentListData("1010", "goods");
         showProgress();
-        android.util.Log.d("111", "goodsId = " + goodsId + ",type = " + type);
-        mControl.getCommentListData(goodsId, type);
+        mControl.getCommentListData(typeid, type);
     }
     
     private void getMoreData(){
         if(!mRefreshLayout.isShown())
 //            mRefreshLayout.setVisibility(View.VISIBLE);
 //        mPullToRefreshListView.addFooterView(mRefreshLayout);
-        mControl.getCommentListDataMore(goodsId, type);
+        mControl.getCommentListDataMore(typeid, type);
         mIsRefresh = true;
     }
     
