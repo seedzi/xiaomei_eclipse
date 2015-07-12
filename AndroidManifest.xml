@@ -254,6 +254,10 @@
             android:process=":DownloadingService" >
         </service>      
               
+        <service
+            android:name=".AsyncRequestService"
+            android:exported="false" >
+        </service>
     </application>
     
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

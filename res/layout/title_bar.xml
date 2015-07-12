@@ -26,4 +26,10 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/btn_new_post"
         android:background="@null" />
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:layout_gravity="bottom"
+        android:src="@color/action_bar_divider" />
 </RelativeLayout>

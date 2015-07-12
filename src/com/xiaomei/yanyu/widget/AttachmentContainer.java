@@ -49,7 +49,7 @@ public class AttachmentContainer extends LinearLayout implements View.OnClickLis
             }
         });
 
-        findViewById(R.id.delete).setOnClickListener(this);
+        attachView.findViewById(R.id.delete).setOnClickListener(this);
     }
 
     public ArrayList<Uri> getAttachmentUris() {

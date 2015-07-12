@@ -12,6 +12,7 @@ import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
+import com.xiaomei.yanyu.util.Security;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -30,6 +31,7 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -224,5 +226,17 @@ abstract public class AbstractHttpApi implements HttpApi {
             Log.d("URL", "url="+httpRequest.getURI().toString());
         HttpResponse response = executeHttpRequest(httpRequest);
         return response;
+    }
+
+
+    public static NameValuePair[] signValuePairs(BasicNameValuePair... unsigned) {
+        if (unsigned == null || unsigned.length == 0) {
+            return unsigned;
+        }
+        int length = unsigned.length;
+        NameValuePair[] signed = new NameValuePair[length + 1];
+        System.arraycopy(unsigned, 0, signed, 0, length);
+        signed[length] = new BasicNameValuePair("fig", Security.get32MD5Str(unsigned));
+        return signed;
     }
 }

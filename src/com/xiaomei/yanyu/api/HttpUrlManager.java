@@ -22,6 +22,10 @@ public class HttpUrlManager {
 		}
 	}
 	
+	public static String NEW_POST = HOST + "/action/sharePublish.php";
+
+	public static String UPLOAD_FILE = HOST + "/action/uploadUserShare.php";
+	
 	/**首页*/
 	String getHomeListUrl(){
 		return HOST + "/server/show/start.php";

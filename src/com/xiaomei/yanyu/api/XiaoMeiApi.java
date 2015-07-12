@@ -77,6 +77,10 @@ public class XiaoMeiApi {
                 clientVersion);
         urlManager = new HttpUrlManager();
     }
+    
+    public HttpApi getHttpApi() {
+        return mHttpApi;
+    }
 
 	// ========================================================================================
 	// 一级页面(NET)

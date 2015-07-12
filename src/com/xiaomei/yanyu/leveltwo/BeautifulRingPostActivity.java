@@ -1,6 +1,8 @@
 package com.xiaomei.yanyu.leveltwo;
 
+import com.xiaomei.yanyu.AsyncRequestService;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.AttachmentContainer;
 
 import android.app.ActionBar;
@@ -8,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -18,6 +21,8 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
     
     private TextView mTitle;
     private View mHome;
+    private View mPost;
+    private TextView mMessage;
     private AttachmentContainer mImageContainer;
     private View mAttachImage;
 
@@ -39,7 +44,10 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
                 BeautifulRingPostActivity.this.onBackPressed();
             }
         });
+        mPost = actionbarView.findViewById(R.id.new_post);
+        mPost.setOnClickListener(this);
         
+        mMessage = (TextView) findViewById(R.id.message);
         mImageContainer = (AttachmentContainer) findViewById(R.id.attachment_container);
         mAttachImage = mImageContainer.findViewById(R.id.attach_image);
         mAttachImage.setOnClickListener(this);
@@ -72,11 +80,24 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.new_post:
+                if (ensureField()) {
+                    AsyncRequestService.startNewPost(this, mMessage.getText().toString(), mImageContainer.getAttachmentUris());
+                }
+                break;
             case R.id.attach_image:
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, REQUEST_PICK_IMAGE);
                 break;
         }
+    }
+
+    private boolean ensureField() {
+        if (TextUtils.isEmpty(mMessage.getText())) {
+            UiUtil.showToast(this, getString(R.string.warning_field_empty, getString(R.string.ring_content_label)));
+            return false;
+        }
+        return true;
     }
 }
