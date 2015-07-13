@@ -45,13 +45,16 @@ public class UserShareListBuilder extends AbstractJSONBuilder<List<UserShare>> {
     		// photototal
     		if(jObj.has("images")){
     			List<String> imgs = new ArrayList<String>();
-    			JSONArray imgsArray = jObj.getJSONArray("images");
-    			for(int j=0;j<imgsArray.length();j++){
-    				JSONObject imgObj = imgsArray.getJSONObject(j);
-    				if(imgObj.has("image_plus"))
-    					imgs.add(imgObj.getString("image_plus"));
-    			}
-    			userShare.setImgs(imgs);
+    			try {
+    				JSONArray imgsArray = jObj.getJSONArray("images");
+        			for(int j=0;j<imgsArray.length();j++){
+        				JSONObject imgObj = imgsArray.getJSONObject(j);
+        				if(imgObj.has("image_plus"))
+        					imgs.add(imgObj.getString("image_plus"));
+        			}
+        			userShare.setImgs(imgs);
+				} catch (Exception e) {
+				}
     		}
     		// comments
      		if(jObj.has("comments")){
