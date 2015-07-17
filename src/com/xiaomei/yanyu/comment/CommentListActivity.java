@@ -134,6 +134,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mListView = mPullToRefreshListView.getRefreshableView();
+        mListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_comment_list, null));
         mLoadingView = findViewById(R.id.loading_layout);
         
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -308,10 +309,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_comment_layout, parent, false);
-            if (position != 0) {
-                UiUtil.findViewById(itemView, R.id.line).setVisibility(View.GONE);
-                UiUtil.findViewById(itemView, R.id.top_layout).setVisibility(View.GONE);
-            }
+
             CommentItem item = getItem(position);
             ImageLoader.getInstance().displayImage(item.getAvatar(), UiUtil.findImageViewById(itemView, R.id.user_icon));
             UiUtil.findTextViewById(itemView, R.id.user_name).setText(item.getUsername());
