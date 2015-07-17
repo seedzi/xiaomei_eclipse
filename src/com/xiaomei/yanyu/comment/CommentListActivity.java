@@ -21,14 +21,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ArrayAdapter;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.comment.control.CommentListControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -213,7 +216,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     // ====================================== CallBack ============================================
     
     public void getCommentListDataCallBack(){
-        mAdapter.setData(mControl.getModel().getCommentList());
+        mAdapter.clear();
+        mAdapter.addAll(mControl.getModel().getCommentList());
         mAdapter.notifyDataSetChanged();
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
@@ -238,7 +242,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     }
     
     public void getCommentListDataMoreCallBack(){
-        mAdapter.getData().addAll(mControl.getModel().getCommentList());
+        mAdapter.addAll(mControl.getModel().getCommentList());
         mAdapter.notifyDataSetChanged();
         mIsRefresh = false;
 //        mPullToRefreshListView.removeFooterView(mRefreshLayout);
@@ -295,86 +299,25 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 	}
     
     // ====================================== Adapter ============================================
-    private class MyAdapter extends BaseAdapter {
-        
-        private LayoutInflater mLayoutInflater;
-
-        private List<CommentItem> mData;
+    private class MyAdapter extends ArrayAdapter<CommentItem> {
         
         public MyAdapter(Context context) {
-            mLayoutInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public int getCount() {
-            return mData == null ? 0 : mData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
+            super(context, 0);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Holder holder = null;
-            if(convertView == null){
-                convertView = mLayoutInflater.inflate(R.layout.item_comment_layout, null);
-                holder = new Holder();
-                holder.topLayout = convertView.findViewById(R.id.top_layout);
-                holder.commentSize = (TextView) convertView.findViewById(R.id.comment_size_tag);
-                holder.userIcon = (ImageView) convertView.findViewById(R.id.user_icon);
-                holder.userName = (TextView) convertView.findViewById(R.id.user_name);
-                holder.userSex = (TextView) convertView.findViewById(R.id.user_sex);
-                holder.userLocation = (TextView) convertView.findViewById(R.id.user_location);
-                holder.createTime = (TextView) convertView.findViewById(R.id.create_time);
-                holder.commentTxt = (TextView) convertView.findViewById(R.id.comment_txt);
-                holder.gentieSize = (TextView) convertView.findViewById(R.id.gentie_size);
-                holder.line = convertView.findViewById(R.id.line);
-                convertView.setTag(holder);
+            View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_comment_layout, parent, false);
+            if (position != 0) {
+                UiUtil.findViewById(itemView, R.id.line).setVisibility(View.GONE);
+                UiUtil.findViewById(itemView, R.id.top_layout).setVisibility(View.GONE);
             }
-            holder = (Holder) convertView.getTag();
-            if(position!=0){
-            	holder.line.setVisibility(View.GONE);
-                holder.topLayout.setVisibility(View.GONE);
-            }
-            attachDate(holder, mData.get(position));
-            return convertView;
+            CommentItem item = getItem(position);
+            ImageLoader.getInstance().displayImage(item.getAvatar(), UiUtil.findImageViewById(itemView, R.id.user_icon));
+            UiUtil.findTextViewById(itemView, R.id.user_name).setText(item.getUsername());
+            UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.formateDate(Long.valueOf(item.getCreatedate())*1000));
+            UiUtil.findTextViewById(itemView, R.id.comment_txt).setText(item.getContent());;
+            return itemView;
         }
-        
-        private void attachDate(Holder holder,CommentItem bean){
-        	android.util.Log.d("111", "avata = " + bean.getAvatar());
-            ImageLoader.getInstance().displayImage(bean.getAvatar(), holder.userIcon);
-            holder.userName.setText(bean.getUsername());
-            holder.createTime.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
-            holder.commentTxt.setText(bean.getContent());
-        }
-        
-        private void setData(List<CommentItem> data){
-            mData = data;
-        }
-        
-        private List<CommentItem> getData(){
-            return mData;
-        }
-        
-        private class Holder{
-            private View topLayout; //顶部view 
-            private TextView commentSize; //用户评论数
-            private ImageView userIcon; //用户头像
-            private TextView userName; //用户名
-            private TextView userSex; //用户性别
-            private TextView userLocation;  //用户地址
-            private TextView createTime;  //创建时间
-            private TextView commentTxt;//评论文案
-            private TextView gentieSize; //跟帖数
-            private View line;
-        }
-        
     }
 }
