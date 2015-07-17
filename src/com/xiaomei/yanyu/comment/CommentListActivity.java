@@ -17,6 +17,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.CommentItem;
+import com.xiaomei.yanyu.bean.Subcomment;
 import com.xiaomei.yanyu.comment.control.CommentListControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.DateUtils;
@@ -315,7 +317,24 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             UiUtil.findTextViewById(itemView, R.id.user_name).setText(item.getUsername());
             UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.formateDate(Long.valueOf(item.getCreatedate())*1000));
             UiUtil.findTextViewById(itemView, R.id.comment_txt).setText(item.getContent());;
+            LinearLayout subcommentList = UiUtil.<LinearLayout>findById(itemView, R.id.subcomment_list);
+            Subcomment[] subcomments = item.getSubcomments();
+            if (subcomments != null && subcomments.length > 0) {
+                addSubcommentView(subcommentList, subcomments);
+            } else {
+                subcommentList.removeAllViews();
+            }
             return itemView;
+        }
+
+        private void addSubcommentView(ViewGroup list, Subcomment[] subcomments) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            for (Subcomment subcomment : subcomments) {
+                View itemView = inflater.inflate(R.layout.subcomment_list_item, list, false);
+                String subcommentString = String.format("%s：%s", subcomment.username, subcomment.content);
+                UiUtil.findTextViewById(itemView, android.R.id.text1).setText(subcommentString);
+                list.addView(itemView);
+            }
         }
     }
 }

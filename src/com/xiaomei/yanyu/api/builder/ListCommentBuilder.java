@@ -7,8 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.CommentItem;
+import com.xiaomei.yanyu.bean.Subcomment;
 
 public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
 
@@ -27,6 +29,7 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
         }
         if(jsonArray==null || jsonArray.length()==0)
         	return null;
+        Gson gson = new Gson();
         for(int i=0;i<jsonArray.length();i++){
             JSONObject jsObj = jsonArray.getJSONObject(i);
             CommentItem commentItem = new CommentItem();
@@ -64,6 +67,10 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
                 commentItem.setReply(jsObj.getString("reply"));
             if(jsObj.has("content"))
                 commentItem.setContent(jsObj.getString("content"));
+            if (jsObj.has("subcomments")) {
+                Subcomment[] subcomments = gson.fromJson(jsObj.getString("subcomments"), Subcomment[].class);
+                commentItem.setSubcomments(subcomments);
+            }
             list.add(commentItem);
         }
         return list;

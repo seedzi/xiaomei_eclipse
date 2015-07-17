@@ -17,6 +17,8 @@ public class CommentItem {
     private String replyRoot;
     private String reply;
     private String content;
+    private Subcomment[] subcoments;
+
     public String getMarkService() {
         return markService;
     }
@@ -107,6 +109,15 @@ public class CommentItem {
     public void setContent(String content) {
         this.content = content;
     }
+    
+    public Subcomment[] getSubcomments() {
+        return subcoments;
+    }
+
+    public void setSubcomments(Subcomment[] subcomments) {
+        this.subcoments = subcomments;
+    }
+
     @Override
     public String toString() {
         return "CommentItem [markService=" + markService + ", userType="

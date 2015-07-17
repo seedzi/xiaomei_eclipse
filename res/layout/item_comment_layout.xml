@@ -5,13 +5,6 @@
     android:orientation="vertical" 
     android:background="@color/color_white">
 
-     <View 
-         android:id="@+id/line"
-         android:background="#e4e4e4"
-         android:layout_marginLeft="15dp"
-         android:layout_width="match_parent"
-         android:layout_height="1px"/>
-     
      <RelativeLayout 
          android:layout_marginLeft="15dp"
          android:layout_marginRight="15dp"
@@ -105,4 +98,11 @@
 	         android:layout_width="match_parent"
 	         android:layout_height="1px"
 	         android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/subcomment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="57dp"
+        android:orientation="vertical" />
 </LinearLayout>
