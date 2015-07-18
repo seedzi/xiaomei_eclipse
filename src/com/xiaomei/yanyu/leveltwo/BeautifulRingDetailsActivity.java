@@ -31,6 +31,8 @@ import com.xiaomei.yanyu.bean.ChannelEntity;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.CircleImageView;
 import com.xiaomei.yanyu.widget.MyLayout;
 import com.xiaomei.yanyu.widget.PagerAdapter;
@@ -96,7 +98,10 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 			@Override
 			public void onClick(View v) {
 				if(!TextUtils.isEmpty(commentId))
-					CommentListActivity.startActivity(BeautifulRingDetailsActivity.this, "share", commentId,true,false);
+					if(UserUtil.getUser()==null)
+						LoginAndRegisterActivity.startActivity(BeautifulRingDetailsActivity.this, true);
+					else
+						CommentListActivity.startActivity(BeautifulRingDetailsActivity.this, "share", commentId,true,false);
 			}
 		});
 		
