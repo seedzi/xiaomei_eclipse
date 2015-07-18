@@ -60,6 +60,8 @@
        
     <string name="submit">提交</string>        
     
+    <string name="share_comment_hint">请输入</string>
+    <string name="share_subcomment_hint">"回复 %1$s"</string>
     <string name="new_post_hint">输入你想说的话</string>
     <string name="title_activity_post">发帖</string>
     

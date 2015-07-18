@@ -73,22 +73,15 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>              
             
-           <TextView 
-               android:id="@+id/gentie_size"
-               android:layout_below="@id/comment_txt"
+           <Button
+               android:id="@+id/subcomment"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
                android:layout_alignParentRight="true"
-               android:layout_marginTop="18dp"
-               android:text="12"
-               android:layout_marginRight="15dp"
-               android:layout_height="wrap_content"
-               android:layout_width="wrap_content"
-               android:visibility="gone"/>     
-           <ImageView 
-               android:layout_below="@id/comment_txt"
-               android:layout_toLeftOf="@id/gentie_size"
-               android:layout_height="wrap_content"
-               android:layout_width="wrap_content"
-               />
+               android:layout_alignParentBottom="true"
+               android:background="@null"
+               android:drawableLeft="@drawable/ic_subcomment"
+               android:drawablePadding="10dp" />
      </RelativeLayout>
    
            <View 

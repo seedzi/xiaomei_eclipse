@@ -616,6 +616,27 @@ public class XiaoMeiApi {
 	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 	        return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
 	}
+	/**
+     * 针对分享的评论提交子评论
+     */
+	public NetResult actionShareSubcomment(String token, String shareId, String commentId, String targetId, String comment)
+        throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {	    
+	       BasicNameValuePair[] values = {new BasicNameValuePair("token", token),
+	                new BasicNameValuePair("shareid", shareId),
+	                new BasicNameValuePair("commentid", commentId),
+	                new BasicNameValuePair("targetid", targetId),
+	                new BasicNameValuePair("comment", comment),
+	                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+	        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.actionShareSubcomment(),
+	                values[0],
+	                values[1],
+	                values[2],
+	                values[3],
+	                values[4],
+	                values[5],
+	                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+	        return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
+	}
     // ========================================================================================
     // 第三方登录(NET)
     // ========================================================================================

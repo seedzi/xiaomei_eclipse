@@ -135,6 +135,12 @@ public class HttpUrlManager {
     String actionShareComment(){
         return HOST + "/server/action/shareComment.php";
     }	
+    
+    /**添加分享子评论接口*/
+    String actionShareSubcomment(){
+        return HOST + "/server/action/shareSubcomment.php";
+    }
+    
     /**微信支付*/
     String payWechat(){
 		return HOST + "/server/pay/wechat.php";

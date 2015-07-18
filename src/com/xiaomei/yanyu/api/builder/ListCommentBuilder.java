@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.bean.CommentItem;
-import com.xiaomei.yanyu.bean.Subcomment;
+import com.xiaomei.yanyu.bean.ShareSubcomment;
 
 public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
 
@@ -36,27 +36,23 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
             if(jsObj.has("mark_service"))
                 commentItem.setMarkService(jsObj.getString("mark_service"));
             if(jsObj.has("user_type"))
-                commentItem.setMarkService(jsObj.getString("user_type"));
+                commentItem.setUserType(jsObj.getString("user_type"));
             if(jsObj.has("createdate"))
                 commentItem.setCreatedate(jsObj.getString("createdate"));
             if(jsObj.has("userid"))
-                commentItem.setMarkService(jsObj.getString("userid"));
-            if(jsObj.has("mark_service"))
-                commentItem.setMarkService(jsObj.getString("mark_service"));
+                commentItem.setUserid(jsObj.getString("userid"));
             if(jsObj.has("is_delete"))
-                commentItem.setMarkService(jsObj.getString("is_delete"));
+                commentItem.setIsDelete(jsObj.getString("is_delete"));
             if(jsObj.has("mark_environment"))
-                commentItem.setMarkService(jsObj.getString("mark_environment"));
+                commentItem.setMarkEnvironment(jsObj.getString("mark_environment"));
             if(jsObj.has("type"))
-                commentItem.setMarkService(jsObj.getString("type"));
+                commentItem.setType(jsObj.getString("type"));
             if(jsObj.has("avatar"))
                 commentItem.setAvatar(jsObj.getString("avatar"));
-            if(jsObj.has("content"))
-                commentItem.setMarkService(jsObj.getString("content"));
             if(jsObj.has("id"))
-                commentItem.setMarkService(jsObj.getString("id"));
+                commentItem.setId(jsObj.getString("id"));
             if(jsObj.has("mark_effect"))
-                commentItem.setMarkService(jsObj.getString("mark_effect"));
+                commentItem.setMarkEffect(jsObj.getString("mark_effect"));
             if(jsObj.has("username"))
                 commentItem.setUsername(jsObj.getString("username"));
             if(jsObj.has("typeid"))
@@ -68,7 +64,7 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
             if(jsObj.has("content"))
                 commentItem.setContent(jsObj.getString("content"));
             if (jsObj.has("subcomments")) {
-                Subcomment[] subcomments = gson.fromJson(jsObj.getString("subcomments"), Subcomment[].class);
+                ShareSubcomment[] subcomments = gson.fromJson(jsObj.getString("subcomments"), ShareSubcomment[].class);
                 commentItem.setSubcomments(subcomments);
             }
             list.add(commentItem);

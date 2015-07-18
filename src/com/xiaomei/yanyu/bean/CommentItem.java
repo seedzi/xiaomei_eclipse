@@ -17,7 +17,7 @@ public class CommentItem {
     private String replyRoot;
     private String reply;
     private String content;
-    private Subcomment[] subcoments;
+    private ShareSubcomment[] subcoments;
 
     public String getMarkService() {
         return markService;
@@ -110,11 +110,11 @@ public class CommentItem {
         this.content = content;
     }
     
-    public Subcomment[] getSubcomments() {
+    public ShareSubcomment[] getSubcomments() {
         return subcoments;
     }
 
-    public void setSubcomments(Subcomment[] subcomments) {
+    public void setSubcomments(ShareSubcomment[] subcomments) {
         this.subcoments = subcomments;
     }
 

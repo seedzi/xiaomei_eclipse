@@ -83,6 +83,25 @@ public class CommentListControl extends BaseControl {
         } 
     }
     
+    @AsynMethod
+    public void actionShareSubcomment(String shareId, String commentId, String targetId, String comment){
+        try {
+            NetResult netResult = XiaoMeiApplication.getInstance().getApi().actionShareSubcomment(UserUtil.getUser().getToken(),
+                    shareId,
+                    commentId, 
+                    targetId,
+                    comment);
+            if(netResult!=null && "0".equals(netResult.getCode())){
+                sendMessage("actionShareSubcommentCallBack");
+            }else{
+                sendMessage("actionShareSubcommentExceptionCallBack");
+            }
+        } catch (Exception e) {
+            sendMessage("actionShareSubcommentExceptionCallBack");
+            e.printStackTrace();
+        } 
+    } 
+    
     public CommentModel getModel(){
         return mCommentModel;
     }

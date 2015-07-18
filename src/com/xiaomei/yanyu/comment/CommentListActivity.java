@@ -29,7 +29,7 @@ import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.CommentItem;
-import com.xiaomei.yanyu.bean.Subcomment;
+import com.xiaomei.yanyu.bean.ShareSubcomment;
 import com.xiaomei.yanyu.comment.control.CommentListControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.DateUtils;
@@ -85,6 +85,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     
     private String type;
     private String typeid;
+    private String mFocusCommentId;
+    private String mFocusUserId;
     
     private final int LOAD_MORE_COUNT = 10;
     
@@ -98,11 +100,11 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_list_layout);
-        if(getIntent().getExtras()!=null){
-            type = getIntent().getExtras().getString("type");
-            typeid = getIntent().getExtras().getString("typeid");
-            showComment = getIntent().getExtras().getBoolean("showComment");
-            isOnFouce = getIntent().getExtras().getBoolean("isOnFouce");
+        if(getIntent()!=null){
+            type = getIntent().getStringExtra("type");
+            typeid = getIntent().getStringExtra("typeid");
+            showComment = getIntent().getBooleanExtra("showComment", false);
+            isOnFouce = getIntent().getBooleanExtra("isOnFouce", true);
             android.util.Log.d("111", "isOnFouce = " + isOnFouce + ",showComment = " + showComment);
         }
         setUpViews();
@@ -157,7 +159,11 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             		LoginAndRegisterActivity.startActivity(CommentListActivity.this, true);
             		finish();
             	}else{
-            		 mControl.actionShareComment(typeid, type, commentEdit.getText().toString());
+            	    if (mFocusCommentId != null) {
+            	        mControl.actionShareSubcomment(typeid, mFocusCommentId, mFocusUserId, commentEdit.getText().toString());
+            	    } else {
+            	        mControl.actionShareComment(typeid, type, commentEdit.getText().toString());
+                    }
             	}
             }
         });
@@ -261,16 +267,30 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     public void actionShareCommentCallBack(){
     	Toast.makeText(this, "评论成功", 0).show();
     	initData();
-    	commentEdit.setText("");
-    	InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
-    	imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
+    	clearInput();  
     }
     
     public void actionShareCommentExceptionCallBack(){
     	Toast.makeText(this, "评论失败", 0).show();
-    	commentEdit.setText("");
-    	InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
-    	imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
+    	clearInput();  
+    }
+    
+    public void actionShareSubcommentCallBack() {
+        Toast.makeText(this, "子评论成功", 0).show();
+        initData();
+        clearInput();
+    }
+    
+    public void actionShareSubcommentExceptionCallBack() {
+        Toast.makeText(this, "子评论失败", 0).show();
+        clearInput();
+    }
+    
+    private void clearInput() {
+        commentEdit.setText("");
+        commentEdit.setHint(R.string.share_comment_hint);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);  
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
     
     // ====================================== loading ============================================
@@ -312,26 +332,37 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_comment_layout, parent, false);
 
-            CommentItem item = getItem(position);
+            final CommentItem item = getItem(position);
             ImageLoader.getInstance().displayImage(item.getAvatar(), UiUtil.findImageViewById(itemView, R.id.user_icon));
             UiUtil.findTextViewById(itemView, R.id.user_name).setText(item.getUsername());
             UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.formateDate(Long.valueOf(item.getCreatedate())*1000));
             UiUtil.findTextViewById(itemView, R.id.comment_txt).setText(item.getContent());;
             LinearLayout subcommentList = UiUtil.<LinearLayout>findById(itemView, R.id.subcomment_list);
-            Subcomment[] subcomments = item.getSubcomments();
+            TextView subcomment = UiUtil.findTextViewById(itemView, R.id.subcomment);
+            subcomment.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mFocusCommentId = item.getId();
+                    mFocusUserId = item.getUserid();
+                    commentEdit.setHint(getString(R.string.share_subcomment_hint, item.getUsername()));
+                }
+            });
+            ShareSubcomment[] subcomments = item.getSubcomments();
             if (subcomments != null && subcomments.length > 0) {
                 addSubcommentView(subcommentList, subcomments);
+                subcomment.setText(String.valueOf(subcomments.length));
             } else {
                 subcommentList.removeAllViews();
+                subcomment.setText(null);
             }
             return itemView;
         }
 
-        private void addSubcommentView(ViewGroup list, Subcomment[] subcomments) {
+        private void addSubcommentView(ViewGroup list, ShareSubcomment[] subcomments) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            for (Subcomment subcomment : subcomments) {
+            for (ShareSubcomment subcomment : subcomments) {
                 View itemView = inflater.inflate(R.layout.subcomment_list_item, list, false);
-                String subcommentString = String.format("%s：%s", subcomment.username, subcomment.content);
+                String subcommentString = String.format("%s：%s", subcomment.from_name, subcomment.comment);
                 UiUtil.findTextViewById(itemView, android.R.id.text1).setText(subcommentString);
                 list.addView(itemView);
             }
