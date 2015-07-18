@@ -264,14 +264,14 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	public void getJinghuaMoreListDataFromNetAysnExceptionCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
-		((RingAdapter)mJinghuaViewHolder.mAdapter).getData().addAll(mControl.getModel().getBeautifulData());
-		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
 		mJinghuaViewHolder.mPullToRefreshListView.removeFooterView(mJinghuaViewHolder.mRefreshLayout);
 	}
 	
 	public void getJinghuaMoreListDataFromNetAysnCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
+		((RingAdapter)mJinghuaViewHolder.mAdapter).getData().addAll(mControl.getModel().getBeautifulData());
+		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
 		mJinghuaViewHolder.mPullToRefreshListView.removeFooterView(mJinghuaViewHolder.mRefreshLayout);
 	}
 	

@@ -102,7 +102,6 @@ public class BeautifulRingDetailsActivity extends AbstractActivity<LeveltwoContr
 		
 		backImageview = (ImageView) findViewById(R.id.img);
 		pageSize = (TextView) findViewById(R.id.page_size);
-		findViewById(R.id.right_root).setVisibility(View.GONE);
 		getView();
 		iniMenu();
 		initMenuBehindLayoutViews();
