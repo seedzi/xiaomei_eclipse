@@ -2,10 +2,13 @@ package com.xiaomei.yanyu.levelone;
 
 
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.levelone.adapter.RingAdapter;
 import com.xiaomei.yanyu.levelone.adapter.UserPostAdapter;
 import com.xiaomei.yanyu.levelone.control.BeautifulRingControl;
 import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -150,7 +153,11 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
             initdata();
             break;
         case R.id.new_post:
-            startActivityForResult(new Intent(getActivity(), BeautifulRingPostActivity.class), REQUEST_NEW_POST);
+            if (UserUtil.getUser() == null) {
+                LoginAndRegisterActivity.startActivity(getActivity(), true);
+            } else {
+                startActivityForResult(new Intent(getActivity(), BeautifulRingPostActivity.class), REQUEST_NEW_POST);
+            }
             break;
         default:
             break;

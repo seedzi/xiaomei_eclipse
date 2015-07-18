@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +28,9 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.AbstractHttpApi;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.bean.NetResult;
+import com.xiaomei.yanyu.util.Security;
 import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.util.UserUtil;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -93,7 +96,9 @@ public class AsyncRequestService extends IntentService {
     private String requestNewPost(String content, JSONArray attahcmentArray) {
         HttpApi httpApi = XiaoMeiApplication.getInstance().getApi().getHttpApi();
         NameValuePair[] signedValuePairs = AbstractHttpApi.signValuePairs(
+                new BasicNameValuePair("token", UserUtil.getUser().getToken()),
                 new BasicNameValuePair("content", content),
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
                 new BasicNameValuePair("files", attahcmentArray.toString())
         );
         try {
@@ -125,17 +130,24 @@ public class AsyncRequestService extends IntentService {
         try {
             HttpPost httpPost = httpApi.createHttpPost(HttpUrlManager.UPLOAD_FILE);
             MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+            NameValuePair[] signedValuePairs = AbstractHttpApi.signValuePairs(
+                    new BasicNameValuePair("token", UserUtil.getUser().getToken()),
+                    new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))
+            );
+            for (NameValuePair pair : signedValuePairs) {
+                multipartEntity.addPart(pair.getName(), new StringBody(pair.getValue()));
+            }
             AssetFileDescriptor fileDescriptor = getContentResolver().openAssetFileDescriptor(uri, "r");
             FileInputStream input = new FileInputStream(fileDescriptor.getFileDescriptor());
             byte[] data = readStream(input);
             input.close();
-            multipartEntity.addPart("file", new ByteArrayBody(data, "file", uri.getLastPathSegment()));
+            multipartEntity.addPart("imgFile", new ByteArrayBody(data, "file", uri.getLastPathSegment()));
             httpPost.setEntity(multipartEntity);
             String response = httpApi.doHttpRequestString(httpPost);
             JSONObject json = new JSONObject(response);
             int code = json.getInt("code");
             if (code == 0) {
-                return json.getString("file_url");
+                return json.getJSONObject("msg").getString("file_url");
             } else {
                 UiUtil.showToast(this, json.getString("msg"));
                 return null;

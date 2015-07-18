@@ -83,6 +83,7 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
             case R.id.new_post:
                 if (ensureField()) {
                     AsyncRequestService.startNewPost(this, mMessage.getText().toString(), mImageContainer.getAttachmentUris());
+                    onBackPressed();
                 }
                 break;
             case R.id.attach_image:
