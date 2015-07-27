@@ -104,15 +104,23 @@ public class LeveltwoControl extends BaseControl {
 	// 收藏
 	// =======================================================================================
 	@AsynMethod
-	public void actionUserFavAdd(String goodsid){sendMessage("isFavCallBack");
+	public void actionUserFavAdd(String goodsid){
 		actionUserFav("add", goodsid);
+		sendMessage("isFavCallBack");
 	}
+	@AsynMethod
 	public void actionUserFavRm(String goodsid){
-		actionUserFav("rm", goodsid);
+		actionUserFav("del", goodsid);
+		sendMessage("isFavCallBack");
 	}
 	private void actionUserFav(String action,String goodsid){
 		try {
 			 XiaoMeiApplication.getInstance().getApi().actionFav(action, goodsid,UserUtil.getUser().getToken());
+			 if(action.equals("add")){
+				 mModel.setmIsFav(true);
+			 }else{
+				 mModel.setmIsFav(false);
+			 }
 			 sendMessage("actionUserFavCallBack");
 		} catch (Exception e) {
 			e.printStackTrace();
