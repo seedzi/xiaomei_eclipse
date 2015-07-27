@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.R.id;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
@@ -29,6 +30,7 @@ import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.module.user.control.UserControl;
 import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.util.YanYuUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseActivity;
@@ -110,6 +112,13 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 		mLoadingView.setVisibility(View.GONE);
 		mPullToRefreshListView.setVisibility(View.GONE);
 		mEmptyView.setVisibility(View.VISIBLE);
+		if(!YanYuUtils.isConnect(this)){
+			((TextView)mEmptyView.findViewById(R.id.txt)).setText("网络不给力哦！");
+			((TextView)mEmptyView.findViewById(R.id.sub_txt)).setText("");
+		}else{
+			((TextView)mEmptyView.findViewById(R.id.txt)).setText("暂无订单记录");
+			((TextView)mEmptyView.findViewById(R.id.sub_txt)).setText("去看看分类商铺吧");
+		}
 	}
 	
 	// =============================================== CallBack  =================================================
