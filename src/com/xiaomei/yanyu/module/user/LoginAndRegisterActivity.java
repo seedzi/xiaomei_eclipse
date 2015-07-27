@@ -44,6 +44,7 @@ import com.xiaomei.yanyu.module.user.control.UserControl;
 import com.xiaomei.yanyu.util.InputUtils;
 import com.xiaomei.yanyu.util.MobileUtil;
 import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.util.YanYuUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.TitleBar.Listener;
 
@@ -235,6 +236,10 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	private void getVerification(String mobile){
 		if(!MobileUtil.isMobileNO(mobile)){
 			Toast.makeText(LoginAndRegisterActivity.this, "输入的号码格式有误", 0).show();
+			return;
+		}
+		if(!YanYuUtils.isConnect(this)){
+			Toast.makeText(LoginAndRegisterActivity.this, "网络异常", 0).show();
 			return;
 		}
 		mControl.getVerificationCodeAsyn(mobile);

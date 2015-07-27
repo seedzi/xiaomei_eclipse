@@ -60,14 +60,14 @@
        
     <string name="submit">提交</string>        
     
-    <string name="share_comment_hint">请输入</string>
-    <string name="share_subcomment_hint">"回复 %1$s"</string>
-    <string name="new_post_hint">输入你想说的话</string>
-    <string name="title_activity_post">发帖</string>
+    <string name="share_comment_hint" tools:ignore="MissingTranslation">请输入</string>
+    <string name="share_subcomment_hint" tools:ignore="MissingTranslation">"回复 %1$s"</string>
+    <string name="new_post_hint" tools:ignore="MissingTranslation">输入你想说的话</string>
+    <string name="title_activity_post" tools:ignore="MissingTranslation">发帖</string>
     
-    <string name="warning_field_empty">%1$s不能为空！</string>
-    <string name="ring_content_label">美丽圈内容</string>
-    <string name="error_upload_file">文件上传失败!</string>
+    <string name="warning_field_empty" tools:ignore="MissingTranslation">%1$s不能为空！</string>
+    <string name="ring_content_label" tools:ignore="MissingTranslation">美丽圈内容</string>
+    <string name="error_upload_file" tools:ignore="MissingTranslation">文件上传失败!</string>
     
     <!-- 商城 -->
 	<string name="mall_item_nam_1">肉毒素除皱</string>    
