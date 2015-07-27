@@ -14,6 +14,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -178,6 +179,13 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 			mTitleBar.findViewById(R.id.login).performClick();
 		else 
 			mTitleBar.findViewById(R.id.register).performClick();
+		
+		mTitleBar.setBackListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
 	@Override

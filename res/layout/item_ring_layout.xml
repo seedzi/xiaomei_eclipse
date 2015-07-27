@@ -97,6 +97,8 @@
         android:background="#ebebeb"/>
 
     <RelativeLayout 
+        android:visibility="gone"
+		android:id="@+id/operation_root"        
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:paddingLeft="35dp"
