@@ -90,7 +90,11 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		mTitleBar.setBackListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				if(mCordovaWebView.canGoBack()){
+					mCordovaWebView.goBack();
+				}else{
+					finish();
+				}
 			}
 		});
 		String title = getIntent().getStringExtra("title");
