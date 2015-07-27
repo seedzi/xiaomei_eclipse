@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -141,9 +142,23 @@ public class MallFragment extends BaseFragment<MallControl> {
 	}
 	
 	// ============================================  MailAdapter ==================================================
+	/**
+	 * 计算每个item的高度
+	 */
+	private int calculationHeight(){
+		int totalHeight = ScreenUtils.getScreenHeight(getActivity())
+				- (int) getResources().getDimension(R.dimen.title_bar_heigt)
+				- (int) getResources().getDimension(R.dimen.tabs_height_dp)
+				- ScreenUtils.getScreenWidth(getActivity()) * 346 / 720
+				- ScreenUtils.getStatusBarHeight(getActivity());
+		return totalHeight/3;
+	}
+	
 	private class MailAdapter extends BaseAdapter implements View.OnClickListener{
 		
 		private List<Mall> mData;
+		
+		private int mItemHeight;
 		
 		public List<Mall> getData(){
 			return mData;
@@ -153,26 +168,11 @@ public class MallFragment extends BaseFragment<MallControl> {
 			mData = data;
 		}
 		
-//		private int[] icon_reses = { R.drawable.icon_roudushuchuzou_selector,
-//				R.drawable.icon_tichongsuxing_selector,
-//				R.drawable.icon_jinfutisheng_selector,
-//				R.drawable.icon_roudusumeixing_selector,
-//				R.drawable.icon_tianchognsuxing_selector,
-//				R.drawable.icon_jiguangmeifu_selector,
-//				R.drawable.icon_hanguotesemeirong_selector,
-//				R.drawable.icon_jiguangchumao_selector,
-//				R.drawable.icon_tixinagtiaosu_selector };
-//
-//		private int[] txt_reses = { R.string.mall_item_nam_1,
-//				R.string.mall_item_nam_2, R.string.mall_item_nam_3,
-//				R.string.mall_item_nam_4, R.string.mall_item_nam_5,
-//				R.string.mall_item_nam_6, R.string.mall_item_nam_7,
-//				R.string.mall_item_nam_8, R.string.mall_item_nam_9 };
-		
 		private LayoutInflater mLayoutInflater;
 		
 		public MailAdapter(Context context){
 			mLayoutInflater = LayoutInflater.from(context);
+			mItemHeight = calculationHeight();
 		}
 
 		@Override
@@ -203,6 +203,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 				holder.root = (ViewGroup) convertView.findViewById(R.id.root);
 				convertView.setTag(holder);
 				convertView.setOnClickListener(this);
+				LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, mItemHeight);
+				convertView.setLayoutParams(lp);
 			}
 			holder = (Holder) convertView.getTag();
 			attachHolder(holder, position,mall);
