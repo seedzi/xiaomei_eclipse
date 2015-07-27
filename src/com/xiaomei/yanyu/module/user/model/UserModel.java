@@ -156,4 +156,15 @@ public class UserModel {
     public Goods getGoods(){
         return mGoods;
     }
+    
+    // ===============================   单条商品信息  =====================================
+    private String mFailureMessage;
+    
+    public void setFailureMessage(String msg){
+    	mFailureMessage = msg;
+    }
+    
+    public String getFailureMessage(){
+        return mFailureMessage;
+    }
 }

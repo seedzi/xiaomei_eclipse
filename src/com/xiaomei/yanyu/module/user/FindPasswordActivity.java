@@ -196,6 +196,14 @@ public class FindPasswordActivity extends AbstractActivity<UserControl>
 		}
 		public void findPasswordAsynExceptionCallBack(){
 			dismissDialog();
+			if(mControl.getModel().getUser().isFailure()){
+				String msg = mControl.getModel().getUser().getFailureMsg();
+				if(TextUtils.isEmpty(msg)){
+					msg = "找回密码失败";
+				}
+				Toast.makeText(FindPasswordActivity.this, msg, 0).show();
+				return;
+			}
 			Toast.makeText(FindPasswordActivity.this, "找回密码失败", 0).show();
 		}
 

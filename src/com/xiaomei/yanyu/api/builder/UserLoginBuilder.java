@@ -3,6 +3,7 @@ package com.xiaomei.yanyu.api.builder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.xiaomei.yanyu.DebugRelease;
@@ -41,11 +42,20 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 	protected User builder(JSONObject jsonObject) throws JSONException {
 	    if(DebugRelease.isDebug)
 	        Log.d("json", jsonObject.toString());
-		if(jsonObject.has("msg"))
-			jsonObject = jsonObject.getJSONObject("msg");
-		else 
-			return null;
 		User user = new User();
+		if(jsonObject.has("msg")){
+			try {
+				jsonObject = jsonObject.getJSONObject("msg");
+			} catch (Exception e) {
+				String msg = jsonObject.getString("msg");
+				if(!TextUtils.isEmpty(msg)){
+					user.setFailureMsg(msg);
+					user.setFailure(true);
+					return user;
+				}
+				return null;
+			}
+		}
 		if(jsonObject.has("token"))
 			user.setToken(jsonObject.getString("token"));
 		if(jsonObject.has("userinfo")){
@@ -80,6 +90,7 @@ public class UserLoginBuilder extends AbstractJSONBuilder<User> {
 			user.setUserInfo(userInfo);
 			android.util.Log.d("user", "user = " + user);
 		}
+		user.setFailure(false);
 		return user;
 	}
 //	{"msg":{"token":"75ced4559baf29cc7ba5c80add96c39afa3bc39357685881bc1d12242e315ad1",

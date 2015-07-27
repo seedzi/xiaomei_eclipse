@@ -33,6 +33,26 @@ import com.xiaomei.yanyu.SharePreferenceWrap;
 	*/
 public class User {
 	
+	private String mFailureMsg;
+	
+	private boolean isFailure;
+
+	public boolean isFailure() {
+		return isFailure;
+	}
+
+	public void setFailure(boolean isFailue) {
+		this.isFailure = isFailue;
+	}
+
+	public void setFailureMsg(String msg){
+		mFailureMsg = msg;
+	}
+	
+	public String getFailureMsg(){
+		return mFailureMsg;
+	}
+	
 	private String token;
 	
 	public String getToken() {
