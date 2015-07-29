@@ -58,6 +58,11 @@
     <dimen name="action_bar_padding_horizontal">15dp</dimen>
     
     <dimen name="user_shares_padding_left">24dp</dimen>
+    <dimen name="user_shares_action_space">22dp</dimen>
+    <dimen name="user_shares_action_drawable_padding">4dp</dimen>
+    
+    <!-- Text size -->
+    <dimen name="user_shares_action_text">11sp</dimen>
     
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>
