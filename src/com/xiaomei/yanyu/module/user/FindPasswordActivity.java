@@ -19,6 +19,7 @@ import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.module.user.control.UserControl;
 import com.xiaomei.yanyu.util.InputUtils;
 import com.xiaomei.yanyu.util.MobileUtil;
+import com.xiaomei.yanyu.util.YanYuUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 
@@ -147,6 +148,10 @@ public class FindPasswordActivity extends AbstractActivity<UserControl>
 		if(!MobileUtil.isMobileNO(mobile)){
 			Toast.makeText(FindPasswordActivity.this, "输入的号码格式有误", 0).show();
 			return;
+		}
+		if(!YanYuUtils.isConnect(getApplicationContext())){
+	          Toast.makeText(FindPasswordActivity.this,"网络不给力哦！", 0).show();
+	            return;
 		}
 		mControl.getVerificationCodeAsyn(mobile);
 		Message msg = Message.obtain();
