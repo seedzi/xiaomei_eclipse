@@ -65,7 +65,7 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = convertView != null ? convertView : LayoutInflater.from(mAc).inflate(R.layout.item_user_post_layout, parent, false);
         
-        UserShare item =mData.get(position);
+        final UserShare item =mData.get(position);
         
         ImageView userIcon = UiUtil.findImageViewById(itemView, R.id.poster_user_icon);
         userIcon.setImageResource(R.drawable.user_head_default);
@@ -111,13 +111,25 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         }
         
         View moreComment = UiUtil.findViewById(itemView, R.id.more_commont);
-        moreComment.setVisibility(commentsSize > 3 ? View.VISIBLE : View.GONE);
-        moreComment.setOnClickListener(this);
-        moreComment.setTag(item.getId());
+        moreComment.setVisibility(commentsSize >= 3 ? View.VISIBLE : View.GONE);
+        moreComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentListActivity.startActivity(mAc,"share", item.getId(), true, false);
+            }
+        });
+        
+        UiUtil.findTextViewById(itemView, R.id.browse_size).setText(item.getNumView());
+        UiUtil.findTextViewById(itemView, R.id.fav_size).setText(item.getNumFavors());
+        UiUtil.findTextViewById(itemView, R.id.comment_size).setText(item.getNumComments());
         
         View commentSize = UiUtil.findViewById(itemView, R.id.comment_size);
-        commentSize.setOnClickListener(this);
-        commentSize.setTag(item.getId());
+        commentSize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentListActivity.startActivity(mAc,"share", item.getId(), true, true);
+            }
+        });
         return itemView ;
     }
     
