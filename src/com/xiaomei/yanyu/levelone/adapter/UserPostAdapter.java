@@ -6,6 +6,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.UserShare;
+import com.xiaomei.yanyu.bean.UserShare.ShareImage;
 import com.xiaomei.yanyu.bean.UserShare.Comment;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.util.DateUtils;
@@ -70,11 +71,11 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         userIcon.setImageResource(R.drawable.user_head_default);
         ImageLoader.getInstance().displayImage(item.getAvatar(), userIcon);
         UiUtil.findTextViewById(itemView, R.id.poster_user_name).setText(item.getUsername());
-        UiUtil.findTextViewById(itemView, R.id.poster_content).setText(item.getContent());
-        UiUtil.findTextViewById(itemView, R.id.poster_user_time).setText(DateUtils.formateDate(Long.valueOf(item.getTime())*1000));
+        UiUtil.findTextViewById(itemView, R.id.poster_content).setText(item.getShareDes());
+        UiUtil.findTextViewById(itemView, R.id.poster_user_time).setText(item.getFormatedDate());
         
         
-        inflateImages(itemView, item.getImgs());
+        inflateImages(itemView, item.getShareImages());
         
         View commentLayout1 = UiUtil.findViewById(itemView, R.id.commont_1);
         View commentLayout2 = UiUtil.findViewById(itemView, R.id.commont_2);
@@ -82,8 +83,8 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         commentLayout1.setVisibility(View.GONE);
         commentLayout2.setVisibility(View.GONE);
         commentLayout3.setVisibility(View.GONE);
-        List<UserShare.Comment> comments =  item.getCommtents();
-        int commentsSize = comments != null ? comments.size() : 0;
+        Comment[] comments =  item.getPreviewComments();
+        int commentsSize = comments != null ? comments.length : 0;
         for (int j = 0; j < 3 && j < commentsSize; j++) {
             View commentLayout; 
             switch (j) {
@@ -101,13 +102,12 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
             }
             commentLayout.setVisibility(View.VISIBLE);
             ImageView commentUserIcon = UiUtil.findImageViewById(commentLayout, R.id.user_icon);
-            Comment comment = comments.get(j);
+            Comment comment = comments[j];
             ImageLoader.getInstance().displayImage(comment.getAvatar(), commentUserIcon);
             UiUtil.findTextViewById(commentLayout, R.id.user_name)
             .setText(comment.getUsername());
             UiUtil.findTextViewById(commentLayout, R.id.content).setText(comment.getContent());
-            UiUtil.findTextViewById(commentLayout, R.id.time)
-            .setText(DateUtils.formateDate(Long.valueOf(comment.getTime()) * 1000));
+            UiUtil.findTextViewById(commentLayout, R.id.time).setText(comment.getFormatedDate());
         }
         
         View moreComment = UiUtil.findViewById(itemView, R.id.more_commont);
@@ -121,20 +121,20 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         return itemView ;
     }
     
-    private void inflateImages(View itemView, List<String> shareImages) {
+    private void inflateImages(View itemView, ShareImage[] shareImages) {
         GridLayout gridLayout = UiUtil.findById(itemView, R.id.share_images);
         gridLayout.removeAllViews();
-        if (shareImages == null || shareImages.size() == 0) {
+        if (shareImages == null || shareImages.length == 0) {
             gridLayout.setVisibility(View.GONE);
         } else {
             gridLayout.setVisibility(View.VISIBLE);
-            int length = shareImages.size();
+            int length = shareImages.length;
             int imageLayout = length == 1 ? R.layout.user_shares_image_item_large : R.layout.user_shares_image_item;
             LayoutInflater inflater = LayoutInflater.from(mAc);
             for (int i = 0; i < length &&  i < MAX_IMAGE_COUNT; i++) {
                 ImageView imageView = (ImageView) inflater.inflate(imageLayout, gridLayout, false);
                 gridLayout.addView(imageView);
-                ImageLoader.getInstance().displayImage(shareImages.get(i), imageView, mImageOption);
+                ImageLoader.getInstance().displayImage(shareImages[i].getImage(), imageView, mImageOption);
             }
         }
     }
