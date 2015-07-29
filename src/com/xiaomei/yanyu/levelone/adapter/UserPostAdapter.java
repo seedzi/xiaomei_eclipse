@@ -2,29 +2,32 @@ package com.xiaomei.yanyu.levelone.adapter;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.UserShare;
 import com.xiaomei.yanyu.bean.UserShare.Comment;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.util.DateUtils;
-import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class UserPostAdapter extends BaseAdapter implements View.OnClickListener{
+
+    private static final int MAX_IMAGE_COUNT = 9;
+    
+    private DisplayImageOptions mImageOption;
+
+    public UserPostAdapter() {
+        mImageOption = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.tiezi_zhanwei).build();
+    }
     
 	private Activity mAc;
 	
@@ -61,22 +64,6 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = convertView != null ? convertView : LayoutInflater.from(mAc).inflate(R.layout.item_user_post_layout, parent, false);
         
-        int width = ScreenUtils.getScreenWidth(mAc);
-        int imgWidth = (width - ScreenUtils.dip2px(mAc, 63))/3;
-        LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams
-                (imgWidth,imgWidth);
-        LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams
-                (imgWidth,imgWidth);
-        ll2.setMargins(ScreenUtils.dip2px(mAc, 8), 0, ScreenUtils.dip2px(mAc, 8), 0);
-        LinearLayout.LayoutParams ll3 = new LinearLayout.LayoutParams
-                (imgWidth,imgWidth);
-        ImageView img1 = UiUtil.findImageViewById(itemView, R.id.img1);
-        ImageView img2 = UiUtil.findImageViewById(itemView, R.id.img2);
-        ImageView img3 = UiUtil.findImageViewById(itemView, R.id.img3);
-        img1.setLayoutParams(ll1);
-        img2.setLayoutParams(ll2);
-        img3.setLayoutParams(ll3);
-        
         UserShare item =mData.get(position);
         
         ImageView userIcon = UiUtil.findImageViewById(itemView, R.id.poster_user_icon);
@@ -86,35 +73,8 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         UiUtil.findTextViewById(itemView, R.id.poster_content).setText(item.getContent());
         UiUtil.findTextViewById(itemView, R.id.poster_user_time).setText(DateUtils.formateDate(Long.valueOf(item.getTime())*1000));
         
-        List<String> imgs = item.getImgs();
-		img1.setVisibility(View.INVISIBLE);
-		img2.setVisibility(View.INVISIBLE);
-		img3.setVisibility(View.INVISIBLE);
-		img1.setImageResource(R.drawable.tiezi_zhanwei);
-		img2.setImageResource(R.drawable.tiezi_zhanwei);
-		img3.setImageResource(R.drawable.tiezi_zhanwei);
-        if(imgs!=null){
-        	int index = 0;
-        	for(String img :imgs){
-        		switch (index) {
-				case 0:
-					img1.setVisibility(View.VISIBLE);
-			        ImageLoader.getInstance().displayImage(img,img1);
-					break;
-				case 1:
-					img2.setVisibility(View.VISIBLE);
-			        ImageLoader.getInstance().displayImage(img,img2);
-					break;
-				case 2:
-					img3.setVisibility(View.VISIBLE);
-			        ImageLoader.getInstance().displayImage(img,img3);
-					break;	
-				default:
-					break;
-				}
-        		index ++;
-        	}
-        }
+        
+        inflateImages(itemView, item.getImgs());
         
         View commentLayout1 = UiUtil.findViewById(itemView, R.id.commont_1);
         View commentLayout2 = UiUtil.findViewById(itemView, R.id.commont_2);
@@ -159,6 +119,24 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         commentSize.setOnClickListener(this);
         commentSize.setTag(item.getId());
         return itemView ;
+    }
+    
+    private void inflateImages(View itemView, List<String> shareImages) {
+        GridLayout gridLayout = UiUtil.findById(itemView, R.id.share_images);
+        gridLayout.removeAllViews();
+        if (shareImages == null || shareImages.size() == 0) {
+            gridLayout.setVisibility(View.GONE);
+        } else {
+            gridLayout.setVisibility(View.VISIBLE);
+            int length = shareImages.size();
+            int imageLayout = length == 1 ? R.layout.user_shares_image_item_large : R.layout.user_shares_image_item;
+            LayoutInflater inflater = LayoutInflater.from(mAc);
+            for (int i = 0; i < length &&  i < MAX_IMAGE_COUNT; i++) {
+                ImageView imageView = (ImageView) inflater.inflate(imageLayout, gridLayout, false);
+                gridLayout.addView(imageView);
+                ImageLoader.getInstance().displayImage(shareImages.get(i), imageView, mImageOption);
+            }
+        }
     }
 
 	@Override

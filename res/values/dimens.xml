@@ -57,6 +57,7 @@
     
     <dimen name="action_bar_padding_horizontal">15dp</dimen>
     
+    <dimen name="user_shares_padding_left">24dp</dimen>
     
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>
