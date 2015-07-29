@@ -348,11 +348,11 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
                 }
             });
             ShareSubcomment[] subcomments = item.getSubcomments();
+            subcommentList.removeAllViews();
             if (subcomments != null && subcomments.length > 0) {
                 addSubcommentView(subcommentList, subcomments);
                 subcomment.setText(String.valueOf(subcomments.length));
             } else {
-                subcommentList.removeAllViews();
                 subcomment.setText(null);
             }
             return itemView;
