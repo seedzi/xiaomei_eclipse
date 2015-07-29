@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.module.user.control.UserControl;
+import com.xiaomei.yanyu.util.MobileUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 public class FeedbackActivity extends AbstractActivity<UserControl> implements View.OnClickListener{
@@ -56,8 +57,10 @@ public class FeedbackActivity extends AbstractActivity<UserControl> implements V
 			Toast.makeText(this, "反馈内容不能为空", 0).show();
 			return;
 		}
+		if(TextUtils.isEmpty(mMobileTv.getText().toString())||!MobileUtil.isMobileNO(mMobileTv.getText().toString())){
+	          Toast.makeText(this, "请输入正确的手机号码", 0).show();
+		}
 		mSubmit.setEnabled(false);
-		android.util.Log.d("111", "onClick txt = " + mTxtContent.getText().toString());
 		mControl.feedback(mTxtContent.getText().toString(),mMobileTv.getText().toString());
 	}
 	

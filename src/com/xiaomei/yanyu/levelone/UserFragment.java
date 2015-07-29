@@ -191,7 +191,11 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 			HistoryActivity.startActivity(getActivity());
 			break;
 		case R.id.line5: //意见反馈
-			FeedbackActivity.startActivity(getActivity());
+            if (UserUtil.getUser() == null) {
+                LoginAndRegisterActivity.startActivity(getActivity(), false);
+                return;
+            }
+            FeedbackActivity.startActivity(getActivity());
 			break;
 		case R.id.line6: //关于我们
 			AboutActivity.startActivity(getActivity());
