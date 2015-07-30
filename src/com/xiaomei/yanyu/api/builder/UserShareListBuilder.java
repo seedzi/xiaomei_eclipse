@@ -19,6 +19,7 @@ public class UserShareListBuilder extends AbstractJSONBuilder<List<UserShare>> {
     @Override
     protected List<UserShare> builder(JSONObject jsonObject) throws JSONException {
         String json = jsonObject.getJSONObject("msg").toString();
+        android.util.Log.d("111", "json = " + json);
         ArrayList<UserShare> list = new ArrayList<UserShare>();
         JsonParser parser = new JsonParser();
         JsonArray jsonArray = parser.parse(json).getAsJsonObject().getAsJsonArray("shares");

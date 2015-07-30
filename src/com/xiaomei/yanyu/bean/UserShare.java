@@ -44,9 +44,14 @@ public class UserShare {
     }
 
     public String getFormatedDate() {
+        long time = System.currentTimeMillis();
+        try {
+            time = Long.valueOf(createdate);
+        } catch (Exception e) {
+        }
         return DateUtils.getTextByTime(
                 XiaoMeiApplication.getInstance(),
-                Long.valueOf(createdate),
+                time,
                 R.string.date_fromate_anecdote);//DateUtils.formateDate(Long.valueOf(createdate) * 1000);
     }
 
@@ -105,9 +110,14 @@ public class UserShare {
         }
 
         public String getFormatedDate() {
+            long time = System.currentTimeMillis();
+            try {
+                time = Long.valueOf(createdate);
+            } catch (Exception e) {
+            }
             return DateUtils.getTextByTime(
                     XiaoMeiApplication.getInstance(),
-                    Long.valueOf(createdate),
+                    time,
                     R.string.date_fromate_anecdote);
 //            return DateUtils.formateDate(Long.valueOf(createdate) * 1000);
         }
