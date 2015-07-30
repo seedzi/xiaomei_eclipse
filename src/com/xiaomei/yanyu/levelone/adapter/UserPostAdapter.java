@@ -13,6 +13,7 @@ import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,9 +145,14 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
             int imageLayout = length == 1 ? R.layout.user_shares_image_item_large : R.layout.user_shares_image_item;
             LayoutInflater inflater = LayoutInflater.from(mAc);
             for (int i = 0; i < length &&  i < MAX_IMAGE_COUNT; i++) {
+                android.util.Log.d("111", "url = " + shareImages[i].getImage());
                 ImageView imageView = (ImageView) inflater.inflate(imageLayout, gridLayout, false);
                 gridLayout.addView(imageView);
-                ImageLoader.getInstance().displayImage(shareImages[i].getImage(), imageView, mImageOption);
+                if(TextUtils.isEmpty(shareImages[i].getImage())){
+                    imageView.setImageResource(R.drawable.tiezi_zhanwei);
+                }else{
+                    ImageLoader.getInstance().displayImage(shareImages[i].getImage(), imageView, mImageOption);
+                }
             }
         }
     }
