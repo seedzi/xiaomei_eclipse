@@ -4,6 +4,9 @@
 
 package com.xiaomei.yanyu.bean;
 
+
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.util.DateUtils;
 
 /**
@@ -38,7 +41,10 @@ public class UserShare {
     }
 
     public String getFormatedDate() {
-        return DateUtils.formateDate(Long.valueOf(createdate) * 1000);
+        return DateUtils.getTextByTime(
+                XiaoMeiApplication.getInstance(),
+                Long.valueOf(createdate),
+                R.string.date_fromate_anecdote);//DateUtils.formateDate(Long.valueOf(createdate) * 1000);
     }
 
     public ShareImage[] getShareImages() {
@@ -96,7 +102,11 @@ public class UserShare {
         }
 
         public String getFormatedDate() {
-            return DateUtils.formateDate(Long.valueOf(createdate) * 1000);
+            return DateUtils.getTextByTime(
+                    XiaoMeiApplication.getInstance(),
+                    Long.valueOf(createdate),
+                    R.string.date_fromate_anecdote);
+//            return DateUtils.formateDate(Long.valueOf(createdate) * 1000);
         }
     }
 }

@@ -145,7 +145,6 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
             int imageLayout = length == 1 ? R.layout.user_shares_image_item_large : R.layout.user_shares_image_item;
             LayoutInflater inflater = LayoutInflater.from(mAc);
             for (int i = 0; i < length &&  i < MAX_IMAGE_COUNT; i++) {
-                android.util.Log.d("111", "url = " + shareImages[i].getImage());
                 ImageView imageView = (ImageView) inflater.inflate(imageLayout, gridLayout, false);
                 gridLayout.addView(imageView);
                 if(TextUtils.isEmpty(shareImages[i].getImage())){
