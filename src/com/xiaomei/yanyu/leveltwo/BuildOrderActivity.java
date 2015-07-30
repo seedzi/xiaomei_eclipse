@@ -126,7 +126,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         UserInfo userInfo = UserUtil.getUser().getUserInfo();
         mUsername.setText(userInfo.getUsername());
         mUserMobile.setText(userInfo.getMobile());
-        mUserPassport.setText("");
+        mUserPassport.setText(userInfo.getIdcard());
         
         Goods goods = mControl.getModel().getGoods();
         
