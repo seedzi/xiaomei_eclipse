@@ -30,7 +30,7 @@
                android:layout_gravity="center|bottom"
                android:layout_width="84dp"
                android:layout_height="2dp"
-               android:background="#c96cf1"/>
+               android:background="@color/color_main"/>
         </FrameLayout>
     
       <FrameLayout 
@@ -51,7 +51,7 @@
                android:layout_gravity="center|bottom"
                android:layout_width="84dp"
                android:layout_height="2dp"
-               android:background="#c96cf1"/>
+               android:background="@color/color_main"/>
         </FrameLayout>
     </LinearLayout>
     

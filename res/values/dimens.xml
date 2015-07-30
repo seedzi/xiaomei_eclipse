@@ -64,6 +64,8 @@
     <!-- Text size -->
     <dimen name="user_shares_action_text">11sp</dimen>
     
+    <dimen name="title_text">20sp</dimen>
+    
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>
     <dimen name="body_padding_large">10dp</dimen>
