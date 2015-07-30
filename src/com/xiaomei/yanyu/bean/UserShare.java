@@ -13,6 +13,9 @@ import com.xiaomei.yanyu.util.DateUtils;
  * Created by sunbreak on 7/25/15.
  */
 public class UserShare {
+    
+    public static final int MAX_IMAGE_COUNT = 9;
+    
     private String id;
     private String username;
     private String avatar;

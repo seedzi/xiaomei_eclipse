@@ -23,8 +23,6 @@ import android.widget.ImageView;
 
 public class UserPostAdapter extends BaseAdapter implements View.OnClickListener{
 
-    private static final int MAX_IMAGE_COUNT = 9;
-    
     private DisplayImageOptions mImageOption;
 
     public UserPostAdapter() {
@@ -144,7 +142,7 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
             int length = shareImages.length;
             int imageLayout = length == 1 ? R.layout.user_shares_image_item_large : R.layout.user_shares_image_item;
             LayoutInflater inflater = LayoutInflater.from(mAc);
-            for (int i = 0; i < length &&  i < MAX_IMAGE_COUNT; i++) {
+            for (int i = 0; i < length &&  i < UserShare.MAX_IMAGE_COUNT; i++) {
                 ImageView imageView = (ImageView) inflater.inflate(imageLayout, gridLayout, false);
                 gridLayout.addView(imageView);
                 if(TextUtils.isEmpty(shareImages[i].getImage())){

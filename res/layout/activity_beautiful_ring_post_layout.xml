@@ -44,6 +44,7 @@
                 android:id="@+id/attachment_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:columnCount="3"
                 android:orientation="horizontal" >
                 
                 <ImageButton
@@ -53,6 +54,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="18dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/btn_add_attach"
                     android:background="@null" />
             </com.xiaomei.yanyu.widget.AttachmentContainer>

@@ -8,18 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.bean.UserShare;
 
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 /**
  * Created by wangkun1 on 6/30/15.
  */
-public class AttachmentContainer extends LinearLayout implements View.OnClickListener {
+public class AttachmentContainer extends GridLayout implements View.OnClickListener {
 
     private List<Uri> mAttachmentUris = new ArrayList<Uri>();
 
@@ -50,6 +52,10 @@ public class AttachmentContainer extends LinearLayout implements View.OnClickLis
         });
 
         attachView.findViewById(R.id.delete).setOnClickListener(this);
+        
+        if (mAttachmentUris.size() == UserShare.MAX_IMAGE_COUNT) {
+            findViewById(R.id.attach_image).setVisibility(GONE);
+        }
     }
 
     public ArrayList<Uri> getAttachmentUris() {
@@ -62,5 +68,7 @@ public class AttachmentContainer extends LinearLayout implements View.OnClickLis
         int i = indexOfChild(attachView);
         mAttachmentUris.remove(i);
         removeView(attachView);
+        
+        findViewById(R.id.attach_image).setVisibility(View.VISIBLE);
     }
 }

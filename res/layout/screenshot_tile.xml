@@ -3,7 +3,7 @@
     android:layout_width="85dp"
     android:layout_height="85dp"
     android:layout_gravity="center_vertical"
-    android:layout_marginRight="10dp" >
+    android:layout_margin="10dp" >
 
     <com.xiaomei.yanyu.widget.ThumbnailView
         android:id="@+id/screenshot_thumbnail"
