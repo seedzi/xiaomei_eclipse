@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.comment;
 
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -340,7 +341,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             final CommentItem item = getItem(position);
             ImageLoader.getInstance().displayImage(item.getAvatar(), UiUtil.findImageViewById(itemView, R.id.user_icon));
             UiUtil.findTextViewById(itemView, R.id.user_name).setText(item.getUsername());
-            UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.formateDate(Long.valueOf(item.getCreatedate())*1000));
+            UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.getTextByTime(getContext(), Long.valueOf(item.getCreatedate()), R.string.date_fromate_anecdote));
             UiUtil.findTextViewById(itemView, R.id.comment_txt).setText(item.getContent());;
             LinearLayout subcommentList = UiUtil.<LinearLayout>findById(itemView, R.id.subcomment_list);
             TextView subcomment = UiUtil.findTextViewById(itemView, R.id.subcomment);
