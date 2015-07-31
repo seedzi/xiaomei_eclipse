@@ -129,6 +129,16 @@ public class CommentItem {
                 + ", reply=" + reply + ", content=" + content + "]";
     }
     
+    /**
+     * 存储列表评论总数，临时这么处理
+     */
+    private int total;
+    public int getTotal() {
+        return total;
+    }
+    public void setTotal(int total) {
+        this.total = total;
+    }
     
 }
 /*

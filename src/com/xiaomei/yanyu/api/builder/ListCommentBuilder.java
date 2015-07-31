@@ -18,11 +18,14 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
     protected List<CommentItem> builder(JSONObject jsonObject) throws JSONException {
         if(DebugRelease.isDebug)
             android.util.Log.d("json", jsonObject.toString());
+        int total = 0;
         List<CommentItem> list = null;
         JSONArray jsonArray = null;
         if(jsonObject.has("msg")){
         	jsonObject = jsonObject.getJSONObject("msg");
             jsonArray = jsonObject.getJSONArray("list");
+            if(jsonObject.has("total"))
+                total = jsonObject.getInt("total");
             list = new ArrayList<CommentItem>();
         }else{
             return null;
@@ -67,6 +70,7 @@ public class ListCommentBuilder extends AbstractJSONBuilder<List<CommentItem>> {
                 ShareSubcomment[] subcomments = gson.fromJson(jsObj.getString("subcomments"), ShareSubcomment[].class);
                 commentItem.setSubcomments(subcomments);
             }
+            commentItem.setTotal(total);
             list.add(commentItem);
         }
         return list;

@@ -82,7 +82,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     
     private View sendButton;
     private EditText commentEdit;
-    
+    private TextView commentSize;
     private String type;
     private String typeid;
     private String mFocusCommentId;
@@ -139,6 +139,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mListView = mPullToRefreshListView.getRefreshableView();
         mListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_comment_list, null));
+        commentSize = (TextView) findViewById(R.id.comment_size);
         mLoadingView = findViewById(R.id.loading_layout);
         
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -232,6 +233,10 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         mPullToRefreshListView.onRefreshComplete();
         Toast.makeText(this, "加载完成", 0).show();
         mIsRefresh = false;
+        try {
+            commentSize.setText("(" + mControl.getModel().getCommentList().get(0).getTotal()+ ")");
+        } catch (Exception e) {
+        }
     }
     
     public void getCommentListDataCallBackNull(){
