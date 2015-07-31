@@ -97,6 +97,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 	
 	private boolean isOnFouce = true;
     
+	private boolean isInit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,20 +112,13 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         setUpViews();
         initData();
         
-        new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-			  if(isOnFouce){
-			    	commentEdit.setFocusable(true);
-			        commentEdit.setFocusableInTouchMode(true);
-			        commentEdit.requestFocus();
-			        InputMethodManager inputManager =
-			                    (InputMethodManager)commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			        inputManager.showSoftInput(commentEdit, 0);	
-		        }				
-			}
-		}, 1000);
+//        new Handler().postDelayed(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				
+//			}
+//		}, 1000);
     }
 
     private void setUpViews(){
@@ -235,8 +229,21 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         Toast.makeText(this, "加载完成", 0).show();
         mIsRefresh = false;
         try {
+            ((View)commentSize.getParent()).setVisibility(View.VISIBLE);
             commentSize.setText("(" + mControl.getModel().getCommentList().get(0).getTotal()+ ")");
         } catch (Exception e) {
+        }
+        if(!isInit){
+            if(isOnFouce){
+                commentEdit.setFocusable(true);
+                commentEdit.setFocusableInTouchMode(true);
+                commentEdit.requestFocus();
+                InputMethodManager inputManager =
+                            (InputMethodManager)commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                inputManager.showSoftInput(commentEdit, InputMethodManager.SHOW_IMPLICIT);
+            }   
+            isInit = true;
         }
     }
     
@@ -244,7 +251,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     	Toast.makeText(this, "暂无评论", 0).show();
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
-        showNull();
+//        showNull();
+        ((View)commentSize.getParent()).setVisibility(View.GONE);
         mIsRefresh = false;
     }
     
@@ -253,6 +261,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         dissProgress();
         showEmpty();
         mPullToRefreshListView.onRefreshComplete();
+        ((View)commentSize.getParent()).setVisibility(View.VISIBLE);
         mIsRefresh = false;
     }
     
