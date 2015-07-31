@@ -85,7 +85,7 @@ public class RingAdapter extends BaseAdapter implements View.OnClickListener{
         holder.bubleSizeTv.setText(bean.getNumComments());
         holder.likeSizeTv.setText(bean.getNumFavors());
         holder.titleTv.setText(bean.getShareMark());
-        holder.timeTv.setText(DateUtils.formateDate(Long.valueOf(bean.getCreatedate())*1000));
+        holder.timeTv.setText(DateUtils.getTextByTime(mActivity, Long.valueOf(bean.getCreatedate()),R.string.date_fromate_anecdote));
         holder.shareImg.setTag(holder);
         holder.id = bean.getId();
         holder.share_type = bean.getShareType();
