@@ -23,7 +23,6 @@ public class UserShare {
     private String createdate;
     private int num_view;
     private String num_favors;
-    private String num_comments;
     private CommentPreview comments;
     private transient ShareImage[] images;
 
@@ -71,8 +70,8 @@ public class UserShare {
         return num_favors;
     }
 
-    public String getNumComments() {
-        return num_comments;
+    public int getCommentCount() {
+        return comments != null ? comments.total : 0;
     }
 
     public Comment[] getPreviewComments() {
@@ -88,6 +87,7 @@ public class UserShare {
     }
 
     public static class CommentPreview {
+        private int total;
         private Comment[] list;
     }
 

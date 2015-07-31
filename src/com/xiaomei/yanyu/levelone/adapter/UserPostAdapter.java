@@ -120,7 +120,7 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         
         UiUtil.findTextViewById(itemView, R.id.browse_size).setText(item.getNumView());
         UiUtil.findTextViewById(itemView, R.id.fav_size).setText(item.getNumFavors());
-        UiUtil.findTextViewById(itemView, R.id.comment_size).setText(item.getNumComments());
+        UiUtil.findTextViewById(itemView, R.id.comment_size).setText(String.valueOf(item.getCommentCount()));
         
         View commentSize = UiUtil.findViewById(itemView, R.id.comment_size);
         commentSize.setOnClickListener(new View.OnClickListener() {
