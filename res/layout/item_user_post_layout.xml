@@ -86,10 +86,14 @@
 
         <TextView
             android:id="@+id/comment_size"
-            style="@style/UserSharesActionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/user_shares_action_space"
+            android:drawablePadding="@dimen/user_shares_action_drawable_padding"
+            android:textColor="@color/color_gray"
+            android:textSize="@dimen/user_shares_action_text"
             android:drawableLeft="@drawable/poster_comment" />
     </LinearLayout>
-    
     <View 
         android:layout_marginTop="15dp"
         android:background="@color/divider"
