@@ -132,7 +132,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 			@Override
 			public void onClick(View v) {
 			   Activity activity = (Activity)v.getContext();
-			   UiUtil.hideSoftInputFromActivity(activity);
+			   UiUtil.closeBoard(commentEdit);
 			   activity.finish();
 			}
 		});

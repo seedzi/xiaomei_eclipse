@@ -67,6 +67,13 @@ public class UiUtil {
         return UiUtil.<ImageView>findById(parent, id);
     }
 
+    public static void closeBoard(View v) {
+        InputMethodManager imm = ( InputMethodManager ) v.getContext( ).getSystemService( Context.INPUT_METHOD_SERVICE );     
+        if ( imm.isActive( ) ) {     
+            imm.hideSoftInputFromWindow( v.getApplicationWindowToken( ) , 0 );   
+        }  
+    }
+
     public static void hideSoftInputFromActivity(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
