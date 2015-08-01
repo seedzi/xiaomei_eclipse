@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="85dp"
-    android:layout_height="85dp"
-    android:layout_gravity="center_vertical"
-    android:layout_margin="10dp" >
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_gravity="center_vertical" >
 
     <com.xiaomei.yanyu.widget.ThumbnailView
         android:id="@+id/screenshot_thumbnail"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop" />
     
     <ImageButton
         android:id="@+id/delete"

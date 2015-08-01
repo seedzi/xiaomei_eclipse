@@ -62,7 +62,7 @@
     
     <string name="share_comment_hint" tools:ignore="MissingTranslation">请输入</string>
     <string name="share_subcomment_hint" tools:ignore="MissingTranslation">"回复 %1$s"</string>
-    <string name="new_post_hint" tools:ignore="MissingTranslation">输入你想说的话</string>
+    <string name="new_post_hint" tools:ignore="MissingTranslation">输入你想说的话...</string>
     <string name="title_activity_post" tools:ignore="MissingTranslation">发帖</string>
     
     <string name="warning_field_empty" tools:ignore="MissingTranslation">%1$s不能为空！</string>

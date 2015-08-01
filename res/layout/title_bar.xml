@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/action_bar_padding_horizontal"
-    android:paddingRight="@dimen/action_bar_padding_horizontal" >
+    android:layout_height="match_parent" >
     
     <ImageButton
         android:id="@android:id/home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:scaleType="centerInside"
         android:src="@drawable/back"
         android:background="@null" />
     
@@ -24,14 +23,15 @@
         android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/action_bar_padding_horizontal"
         android:background="@null"
         android:textColor="@color/color_main"
         android:textSize="@dimen/title_text"
         android:text="@string/submit" />
     
-    <ImageView
+    <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:layout_gravity="bottom"
-        android:src="@color/action_bar_divider" />
+        android:layout_alignParentBottom="true"
+        android:background="@android:drawable/divider_horizontal_bright" />
 </RelativeLayout>
