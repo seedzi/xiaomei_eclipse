@@ -85,9 +85,9 @@
     	<string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
     <string name="all" tools:ignore="MissingTranslation">全部</string>
 
-    <string name="rss_list_time_text_hour">小时前</string>
-    <string name="rss_list_time_text_min">分钟前</string>
-    <string name="rss_list_time_text_sec">秒前</string>
-    <string name="rss_list_time_text_just">刚刚</string>
-    <string name="date_fromate_anecdote">"yyyy-MM-dd"</string>
+    <string name="rss_list_time_text_hour" translatable="false">小时前</string>
+    <string name="rss_list_time_text_min" translatable="false" tools:ignore="MissingTranslation">分钟前</string>
+    <string name="rss_list_time_text_sec" translatable="false">秒前</string>
+    <string name="rss_list_time_text_just" tools:ignore="MissingTranslation,MissingTranslation">刚刚</string>
+    <string name="date_fromate_anecdote" translatable="false">"yyyy-MM-dd"</string>
 </resources>

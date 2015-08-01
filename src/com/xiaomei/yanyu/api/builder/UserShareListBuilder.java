@@ -30,7 +30,9 @@ public class UserShareListBuilder extends AbstractJSONBuilder<List<UserShare>> {
             JsonElement images = element.get("images");
             // images may be BOOLEAN false. Bad design...
             userShares.setShareImages(images.isJsonArray() ? gson.fromJson(images, ShareImage[].class) : null);
-            list.add(userShares);
+            if(!userShares.getId().equals("false")){
+            	list.add(userShares);
+            }
         }
         return list;
     }
