@@ -255,7 +255,9 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	public void getJinghuaListDataFromNetAysnCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
-		((RingAdapter)mJinghuaViewHolder.mAdapter).setData(mControl.getModel().getBeautifulData());
+		RingAdapter ringAdapter = (RingAdapter)mJinghuaViewHolder.mAdapter;
+		ringAdapter.clear();
+        ringAdapter.addAll(mControl.getModel().getBeautifulData());
 		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
 		mJinghuaViewHolder.mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
@@ -276,7 +278,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	public void getJinghuaMoreListDataFromNetAysnCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
-		((RingAdapter)mJinghuaViewHolder.mAdapter).getData().addAll(mControl.getModel().getBeautifulData());
+		((RingAdapter)mJinghuaViewHolder.mAdapter).addAll(mControl.getModel().getBeautifulData());
 		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
 		mJinghuaViewHolder.mPullToRefreshListView.removeFooterView(mJinghuaViewHolder.mRefreshLayout);
 	}
