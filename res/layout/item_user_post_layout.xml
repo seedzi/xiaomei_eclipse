@@ -69,7 +69,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="@dimen/content_padding_horizontal"
         android:layout_gravity="right"
         android:orientation="horizontal">
@@ -86,12 +86,7 @@
 
         <TextView
             android:id="@+id/comment_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/user_shares_action_space"
-            android:drawablePadding="@dimen/user_shares_action_drawable_padding"
-            android:textColor="@color/color_gray"
-            android:textSize="@dimen/user_shares_action_text"
+            style="@style/UserSharesActionText"
             android:drawableLeft="@drawable/poster_comment" />
     </LinearLayout>
     <View 
