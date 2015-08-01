@@ -229,7 +229,7 @@ abstract public class AbstractHttpApi implements HttpApi {
     }
 
 
-    public static NameValuePair[] signValuePairs(BasicNameValuePair... unsigned) {
+    public static NameValuePair[] signValuePairs(NameValuePair... unsigned) {
         if (unsigned == null || unsigned.length == 0) {
             return unsigned;
         }

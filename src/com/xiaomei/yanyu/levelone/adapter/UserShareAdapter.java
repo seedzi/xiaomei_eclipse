@@ -1,15 +1,35 @@
 package com.xiaomei.yanyu.levelone.adapter;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.api.builder.NetResultBuilder;
+import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
+import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
+import com.xiaomei.yanyu.api.http.AbstractHttpApi;
+import com.xiaomei.yanyu.api.http.HttpApi;
+import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.UserShare;
 import com.xiaomei.yanyu.bean.UserShare.Comment;
 import com.xiaomei.yanyu.bean.UserShare.ShareImage;
 import com.xiaomei.yanyu.comment.CommentListActivity;
+import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.util.UserUtil;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class UserShareAdapter extends ArrayAdapter<UserShare> {
 
@@ -90,10 +111,23 @@ public class UserShareAdapter extends ArrayAdapter<UserShare> {
         });
         
         UiUtil.findTextViewById(itemView, R.id.browse_size).setText(item.getNumView());
-        UiUtil.findTextViewById(itemView, R.id.fav_size).setText(item.getNumFavors());
-        UiUtil.findTextViewById(itemView, R.id.comment_size).setText(String.valueOf(item.getCommentCount()));
         
-        View commentSize = UiUtil.findViewById(itemView, R.id.comment_size);
+        TextView favSize = UiUtil.findTextViewById(itemView, R.id.fav_size);
+        favSize.setText(item.getNumFavors());
+        favSize.setActivated(item.islike());
+        favSize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserUtil.getUser() == null) {
+                    LoginAndRegisterActivity.startActivity((Activity)getContext(), true);
+                } else {
+                    new DoLikeTask().execute(item, v);
+                }
+            }
+        });;
+        
+        TextView commentSize = UiUtil.findTextViewById(itemView, R.id.comment_size);
+        commentSize.setText(String.valueOf(item.getCommentCount()));
         commentSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +156,56 @@ public class UserShareAdapter extends ArrayAdapter<UserShare> {
                     ImageLoader.getInstance().displayImage(shareImages[i].getImage(), imageView, mImageOption);
                 }
             }
+        }
+    }
+    
+    private class DoLikeTask extends AsyncTask<Object, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Object... params) {
+            final UserShare userShare = (UserShare) params[0];
+            final TextView userShareView = (TextView) params[1];
+            boolean islike = userShare.islike();
+            String url = islike ? HttpUrlManager.DEL_LIKE : HttpUrlManager.ADD_LIKE;
+            String action = islike ? "del" : "add";
+            HttpApi httpApi = XiaoMeiApplication.getInstance().getApi().getHttpApi();
+            NameValuePair[] signedValuePairs = AbstractHttpApi.signValuePairs(
+                    new BasicNameValuePair("token", UserUtil.getUser().getToken()),
+                    new BasicNameValuePair("action", action),
+                    new BasicNameValuePair("shareid", userShare.getId()),
+                    new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))
+            );
+            NetResult response = null;
+            try {
+                HttpPost request = httpApi.createHttpPost(url, signedValuePairs);
+                response = httpApi.doHttpRequestObject(request, new NetResultBuilder());
+            } catch (XiaoMeiIOException e) {
+                e.printStackTrace();
+            } catch (XiaoMeiCredentialsException e) {
+                e.printStackTrace();
+            } catch (XiaoMeiJSONException e) {
+                e.printStackTrace();
+            } catch (XiaoMeiOtherException e) {
+                e.printStackTrace();
+            }
+            
+            if (response != null && NetResult.RESULT_OK.equals(response.getCode())) {
+                if (islike) {
+                    userShare.delLike();
+                } else {
+                    userShare.addLike();
+                }
+                userShareView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        userShareView.setActivated(userShare.islike());
+                        userShareView.setText(userShare.getNumFavors());
+                    }
+                });
+            } else {
+                UiUtil.postToast(getContext(), response != null ? response.getMsg() : getContext().getString(R.string.warning_network_unavailable));
+            }
+            return null;
         }
     }
 }

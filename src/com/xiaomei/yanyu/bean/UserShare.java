@@ -23,6 +23,7 @@ public class UserShare {
     private String createdate;
     private int num_view;
     private String num_favors;
+    private boolean islike;
     private CommentPreview comments;
     private transient ShareImage[] images;
 
@@ -72,6 +73,24 @@ public class UserShare {
 
     public int getCommentCount() {
         return comments != null ? comments.total : 0;
+    }
+
+    public boolean islike() {
+        return islike;
+    }
+    
+    public void addLike() {
+        if (!islike) {
+            num_favors = String.valueOf(Integer.valueOf(num_favors) + 1);
+            islike = true;
+        }
+    }
+    
+    public void delLike() {
+        if (islike) {
+            num_favors = String.valueOf(Math.max(Integer.valueOf(num_favors) - 1, 0));
+            islike = false;
+        }
     }
 
     public Comment[] getPreviewComments() {

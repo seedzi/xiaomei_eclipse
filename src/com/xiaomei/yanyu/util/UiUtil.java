@@ -5,6 +5,7 @@ import com.xiaomei.yanyu.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +25,15 @@ public class UiUtil {
 
     public static void showToast(Context context, int res) {
         showToast(context, context.getResources().getString(res));
+    }
+    
+    public static void postToast(final Context context, final String text) {
+        new Handler(context.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                showToast(context, text);
+            }
+        });
     }
     
     public static <T extends View> T findById(View parent, int id) {

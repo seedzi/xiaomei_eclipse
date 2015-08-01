@@ -2,7 +2,9 @@ package com.xiaomei.yanyu.bean;
 
 public class NetResult {
 	
-	private String code;
+	public static final String RESULT_OK = "0";
+
+    private String code;
 	
 	private String msg;
 

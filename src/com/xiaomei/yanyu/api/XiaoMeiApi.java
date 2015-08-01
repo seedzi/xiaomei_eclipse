@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
@@ -221,16 +222,15 @@ public class XiaoMeiApi {
     public List<UserShare> getUserShareListFromNet(String curpage,String perpage)
             throws XiaoMeiCredentialsException, XiaoMeiIOException,
             XiaoMeiJSONException, XiaoMeiOtherException {
-        BasicNameValuePair[] values = {
-                new BasicNameValuePair("curpage", curpage),
-                new BasicNameValuePair("perpage", perpage),
-                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.userShareList(),
-                values[0],
-                values[1],
-                values[2],
-                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-       
+        List<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair("curpage", curpage));
+        list.add(new BasicNameValuePair("perpage", perpage));
+        list.add(new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)));
+        if (UserUtil.getUser() != null) {
+            list.add(new BasicNameValuePair("token", UserUtil.getUser().getToken()));
+        }
+        NameValuePair[] values = list.toArray(new NameValuePair[list.size()]);
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.userShareList(), AbstractHttpApi.signValuePairs(values));
         return mHttpApi.doHttpRequestObject(httpGet, new UserShareListBuilder());
     }
     

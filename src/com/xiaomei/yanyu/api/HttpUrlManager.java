@@ -5,6 +5,11 @@ import com.xiaomei.yanyu.DebugRelease;
 public class HttpUrlManager {
 	
 	private static String HOST = "http://api.drxiaomei.com"; 
+	
+	private static final String SERVER = HOST + "/server";
+	
+    private static final String ACTION = SERVER + "/action";
+	
 	/**产品详情*/
 	public static String GOODS_DETAIL_URL  = "http://z.drxiaomei.com/goods.php";
 	/**机构详情*/
@@ -13,6 +18,10 @@ public class HttpUrlManager {
 	public static String COMMENT_DETAIL_URL = HOST +"/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
 	
 	public static String UPDATE_USER_ICON = HOST + "/server/action/upoadAvatar.php";
+	
+	public static String ADD_LIKE = ACTION +  "/addlike.php";
+	
+	public static String DEL_LIKE = ACTION +  "/dellike.php";
  	
 	static{
 		if(DebugRelease.isDebug){

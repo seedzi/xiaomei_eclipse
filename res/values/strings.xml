@@ -66,8 +66,9 @@
     <string name="title_activity_post" tools:ignore="MissingTranslation">发帖</string>
     
     <string name="warning_field_empty" tools:ignore="MissingTranslation">%1$s不能为空！</string>
-    <string name="ring_content_label" tools:ignore="MissingTranslation">美丽圈内容</string>
+    <string name="warning_network_unavailable">网络不给力呢～</string>
     <string name="error_upload_file" tools:ignore="MissingTranslation">文件上传失败!</string>
+    <string name="ring_content_label" tools:ignore="MissingTranslation">美丽圈内容</string>
     
     <!-- 商城 -->
 	<string name="mall_item_nam_1">肉毒素除皱</string>    

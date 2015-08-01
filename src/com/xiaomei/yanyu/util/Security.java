@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 public class Security {
@@ -17,7 +18,7 @@ public class Security {
 	
 	private static String EQUAL_CHAR = "=";
 	
-	public static String get32MD5Str(BasicNameValuePair... values) {
+	public static String get32MD5Str(NameValuePair... values) {
 		String str = getMd5Parameters(values);
 		
 		java.security.MessageDigest messageDigest = null;
@@ -43,14 +44,14 @@ public class Security {
 		return md5StrBuff.toString();
 	}
 	 
-	private static String getMd5Parameters(BasicNameValuePair... values){
+	private static String getMd5Parameters(NameValuePair... values){
 		StringBuilder sb = new StringBuilder();
-		List<BasicNameValuePair> list = Arrays.asList(values);
+		List<NameValuePair> list = Arrays.asList(values);
 		ComparatorUser comparator = new ComparatorUser();
 		Collections.sort(list,comparator);
 		int i = 0;
 		int size = list.size();
-		for(BasicNameValuePair value:list){
+		for(NameValuePair value:list){
 			sb.append(value.getName());
 			sb.append(EQUAL_CHAR);
 			sb.append(value.getValue());
@@ -62,9 +63,9 @@ public class Security {
 		return sb.toString().trim();
 	}
 	
-	private static class ComparatorUser implements Comparator<BasicNameValuePair>{
+	private static class ComparatorUser implements Comparator<NameValuePair>{
 		@Override
-		public int compare(BasicNameValuePair lhs, BasicNameValuePair rhs) {
+		public int compare(NameValuePair lhs, NameValuePair rhs) {
 			return lhs.getName().compareTo(rhs.getName());
 		}
 	}
