@@ -123,10 +123,17 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 
     private void setUpViews(){
         TitleBar mTitleBar = (TitleBar) findViewById(R.id.title_bar);
-        mTitleBar.setBackListener(new OnClickListener() {
+		mTitleBar.setBackListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				/*先关闭软键盘再退出*/
+				InputMethodManager imm = (InputMethodManager) getApplicationContext()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				if (imm.isActive()) // 一直是true
+					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,
+							InputMethodManager.HIDE_NOT_ALWAYS);
+			   imm.hideSoftInputFromWindow(commentEdit.getWindowToken(), 0);
+			   finish();
 			}
 		});
         mTitleBar.setTitle("评论");
