@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class BeautifulRingPostActivity extends Activity implements OnClickListener {
@@ -107,6 +108,13 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
     @Override
     public void setTitle(int titleId) {
         mTitle.setText(titleId);
+    }
+
+    @Override
+    public void onBackPressed() {
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        super.onBackPressed();
     }
 
     @Override
