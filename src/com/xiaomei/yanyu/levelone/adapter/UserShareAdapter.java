@@ -65,7 +65,7 @@ public class UserShareAdapter extends ArrayAdapter<UserShare> {
                     break;
                 default:
                     throw new IllegalStateException("More than 3 comments");
-            }
+            }	
             commentLayout.setVisibility(View.VISIBLE);
             ImageView commentUserIcon = UiUtil.findImageViewById(commentLayout, R.id.user_icon);
             Comment comment = comments[j];

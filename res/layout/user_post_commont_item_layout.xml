@@ -11,7 +11,7 @@
         android:layout_height="32dp"
         android:layout_width="32dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/anquanbaoz"/>
+        android:src="@drawable/user_head_default"/>
     <TextView 
         android:id="@+id/user_name"
         android:text="基调蔷薇"
