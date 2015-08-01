@@ -6,7 +6,6 @@
     android:background="@color/color_white">
 
      <RelativeLayout 
-         android:layout_marginLeft="15dp"
          android:layout_marginRight="15dp"
          android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
@@ -17,7 +16,7 @@
           android:id="@+id/user_icon"  
           android:layout_height="28dp"
           android:layout_width="28dp"
-          android:src="@drawable/icon_tianchognsuxing"/> 
+          android:src="@drawable/user_head_default"/> 
         <TextView 
             android:id="@+id/user_name"
             android:layout_alignTop="@id/user_icon"
@@ -79,7 +78,7 @@
                android:layout_height="wrap_content"
                android:layout_alignParentRight="true"
                android:layout_alignParentBottom="true"
-               android:background="@null"
+               android:background="@null"	         android:layout_marginLeft="15dp"
                android:drawableLeft="@drawable/ic_subcomment"
                android:drawablePadding="10dp" />
      </RelativeLayout>
@@ -88,7 +87,7 @@
              android:id="@+id/divider"
    			 android:layout_marginTop="3dp"	
 	         android:background="#e4e4e4"
-	         android:layout_marginLeft="15dp"
+        	 android:layout_marginLeft="40dp"
 	         android:layout_width="match_parent"
 	         android:layout_height="1px"
 	         android:visibility="gone"/>
@@ -98,7 +97,7 @@
         android:id="@+id/subcomment_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="57dp"
+        android:layout_marginLeft="42dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical" />
 </LinearLayout>

@@ -92,6 +92,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     private String typeid;
     private String mFocusCommentId;
     private String mFocusUserId;
+    private View headView;
     
     private final int LOAD_MORE_COUNT = 10;
     
@@ -139,7 +140,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mListView = mPullToRefreshListView.getRefreshableView();
-        mListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_comment_list, null));
+        headView = getLayoutInflater().inflate(R.layout.header_comment_list, null);
+        mListView.addHeaderView(headView);
         commentSize = (TextView) findViewById(R.id.comment_size);
         mLoadingView = findViewById(R.id.loading_layout);
         
@@ -246,6 +248,10 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     // ====================================== CallBack ============================================
     
     public void getCommentListDataCallBack(){
+        if(headView.getVisibility() != View.VISIBLE){
+            headView.setVisibility(View.VISIBLE);
+            mPullToRefreshListView.getRefreshableView().addHeaderView(headView);
+        }
         mAdapter.clear();
         mAdapter.addAll(mControl.getModel().getCommentList());
         mAdapter.notifyDataSetChanged();
@@ -276,6 +282,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     	Toast.makeText(this, "暂无评论", 0).show();
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
+        headView.setVisibility(View.INVISIBLE);
+        mPullToRefreshListView.getRefreshableView().removeHeaderView(headView);
 //        showNull();
         ((View)commentSize.getParent()).setVisibility(View.GONE);
         mIsRefresh = false;
@@ -373,7 +381,11 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_comment_layout, parent, false);
 
             final CommentItem item = getItem(position);
-            ImageLoader.getInstance().displayImage(item.getAvatar(), UiUtil.findImageViewById(itemView, R.id.user_icon));
+            if(TextUtils.isEmpty(item.getAvatar())){
+            	UiUtil.findImageViewById(itemView, R.id.user_icon).setImageResource(R.drawable.user_head_default);
+            }else{
+                ImageLoader.getInstance().displayImage(item.getAvatar(), UiUtil.findImageViewById(itemView, R.id.user_icon));
+            }
             UiUtil.findTextViewById(itemView, R.id.user_name).setText(item.getUsername());
             UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.getTextByTime(getContext(), Long.valueOf(item.getCreatedate()), R.string.date_fromate_anecdote));
             UiUtil.findTextViewById(itemView, R.id.comment_txt).setText(item.getContent());;

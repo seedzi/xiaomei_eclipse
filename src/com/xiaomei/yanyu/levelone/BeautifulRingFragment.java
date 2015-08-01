@@ -141,6 +141,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
             mJinghuaLayout.setVisibility(View.VISIBLE);
             mGuangchangLayout.setVisibility(View.GONE);
             mCurrentState = STATE_JINGHUA;
+            mTitleBar.findViewById(R.id.new_post).setVisibility(View.INVISIBLE);
             initdata();
             break;
         case R.id.guang_chang:
@@ -149,6 +150,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
             mJinghuaLayout.setVisibility(View.GONE);
             mGuangchangLayout.setVisibility(View.VISIBLE);
             mCurrentState = STATE_GUANGCHANG;
+            mTitleBar.findViewById(R.id.new_post).setVisibility(View.VISIBLE);
             initdata();
             break;
         case R.id.new_post:

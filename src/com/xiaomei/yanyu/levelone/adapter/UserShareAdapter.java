@@ -69,7 +69,11 @@ public class UserShareAdapter extends ArrayAdapter<UserShare> {
             commentLayout.setVisibility(View.VISIBLE);
             ImageView commentUserIcon = UiUtil.findImageViewById(commentLayout, R.id.user_icon);
             Comment comment = comments[j];
-            ImageLoader.getInstance().displayImage(comment.getAvatar(), commentUserIcon);
+            if(TextUtils.isEmpty(comment.getAvatar())){
+            	UiUtil.findImageViewById(itemView, R.id.user_icon).setImageResource(R.drawable.user_head_default);
+            }else{
+                ImageLoader.getInstance().displayImage(comment.getAvatar(), commentUserIcon);
+            }
             UiUtil.findTextViewById(commentLayout, R.id.user_name)
             .setText(comment.getUsername());
             UiUtil.findTextViewById(commentLayout, R.id.content).setText(comment.getContent());

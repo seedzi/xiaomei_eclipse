@@ -49,6 +49,7 @@
         android:divider="@color/divider"
      	android:dividerHeight="@dimen/divider"
         android:id="@+id/list"
+        android:paddingLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
