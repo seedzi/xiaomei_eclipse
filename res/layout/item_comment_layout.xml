@@ -85,7 +85,8 @@
      </RelativeLayout>
    
            <View 
-              android:layout_marginTop="7dp"
+             android:id="@+id/divider"
+   			 android:layout_marginTop="3dp"	
 	         android:background="#e4e4e4"
 	         android:layout_marginLeft="15dp"
 	         android:layout_width="match_parent"
@@ -93,9 +94,11 @@
 	         android:visibility="gone"/>
 
     <LinearLayout
+        android:layout_marginTop="7dp"
         android:id="@+id/subcomment_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="57dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical" />
 </LinearLayout>
