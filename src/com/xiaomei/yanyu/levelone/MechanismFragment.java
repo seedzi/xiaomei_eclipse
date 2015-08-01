@@ -10,6 +10,8 @@ import com.xiaomei.yanyu.levelone.control.MechanismControl;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.MechanismDetailActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.widget.GoodsGrade;
 import com.xiaomei.yanyu.widget.StarsView;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -18,6 +20,7 @@ import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -28,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -161,7 +165,8 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	public void getMechanismLismListCallBack(){
 		dissProgress();
 		mIsRefresh = false;
-		mAdapter.setData(mControl.getModel().getData());
+		mAdapter.clear();
+		mAdapter.addAll(mControl.getModel().getData());
 		mAdapter.notifyDataSetChanged();
 		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
@@ -178,7 +183,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		dissProgress();
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAdapter.getData().addAll(mControl.getModel().getData());
+		mAdapter.addAll(mControl.getModel().getData());
 		mAdapter.notifyDataSetChanged();
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
@@ -195,94 +200,39 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		mIsRefresh = true;
 	}
 	
-	private class MechanismAdapter extends BaseAdapter{
+	private static class MechanismAdapter extends ArrayAdapter<Hospital>{
 
-		private  List<Hospital> mData;
-		
-		private LayoutInflater mLayoutInflater;
-		
 		public MechanismAdapter(Context context){
-			mLayoutInflater = LayoutInflater.from(context);
-		}
-		public void setData(List<Hospital> data){
-			mData = data;
-		}
-		
-		public List<Hospital> getData(){
-			return mData;
-		}
-		
-		@Override
-		public int getCount() {
-			return mData == null ? 0 : mData.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
+		    super(context, 0);
+			LayoutInflater.from(context);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Holder holder = null;
-			if(convertView == null){
-				convertView = mLayoutInflater.inflate(R.layout.item_mechanism_layout, null);
-				holder = new Holder();
-				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
-				holder.locationTv = (TextView) convertView.findViewById(R.id.location);
-				holder.hospitalTv = (TextView) convertView.findViewById(R.id.hospital);
-				holder.iconIv = (ImageView) convertView.findViewById(R.id.icon);
-				holder.serverTv = (TextView) convertView.findViewById(R.id.server);
-				holder.effectTv = (TextView) convertView.findViewById(R.id.effect);
-				holder.environmentalTv = (TextView) convertView.findViewById(R.id.environmental);
-				holder.startsView = (StarsView) convertView.findViewById(R.id.grades);
-				convertView.setTag(holder);
-				convertView.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Holder holder = (Holder) v.getTag();
-						GoodsDetailActivity.startActivity(getActivity(), HttpUrlManager.MECHANISM_DETAIL_URL + "?hosp_id=" + holder.id);
-					}
-				});
-			}
-			holder = (Holder) convertView.getTag();
-			attachData2UI(holder, position);
-			return convertView;
+		    View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_mechanism_layout, parent, false);
+		    
+            final Hospital hospital = getItem(position);
+            ImageView icon = UiUtil.findImageViewById(itemView, R.id.icon);
+            icon.setImageResource(R.drawable.mechanism_default_img);
+            ImageLoader.getInstance().displayImage(getItem(position).getFile(), icon);
+            RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getContext())*3/5));
+            icon.setLayoutParams(ll);
+            UiUtil.findTextViewById(itemView, R.id.hospital).setText(hospital.getHospName());
+            UiUtil.findTextViewById(itemView, R.id.location).setText(hospital.getAddr());
+            UiUtil.findTextViewById(itemView, R.id.title).setText(hospital.getHospDes());;
+            UiUtil.findTextViewById(itemView, R.id.server).setText("服务" + hospital.getRateService());
+            UiUtil.findTextViewById(itemView, R.id.environmental).setText("环境" + hospital.getRateEnvironment());
+            UiUtil.findTextViewById(itemView, R.id.effect).setText("效果" + hospital.getRateEffect());
+            UiUtil.<GoodsGrade>findById(itemView, R.id.grades).setGrade(Integer.valueOf(hospital.getRateService()));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GoodsDetailActivity.startActivity((Activity)getContext(), HttpUrlManager.MECHANISM_DETAIL_URL + "?hosp_id=" + hospital.getId());
+                }
+            });
+			return itemView;
 		}
-		
-		private void attachData2UI(Holder holder ,int position){
-			Hospital hospital = mData.get(position);
-			holder.iconIv.setImageResource(R.drawable.mechanism_default_img);
-			ImageLoader.getInstance().displayImage(mData.get(position).getFile(), holder.iconIv);
-			RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getActivity())*3/5));
-			holder.iconIv.setLayoutParams(ll);
-			holder.id = mData.get(position).getId();
-			holder.hospitalTv.setText(hospital.getHospName());
-			holder.locationTv.setText(hospital.getAddr());
-			holder.titleTv.setText(hospital.getHospDes());
-			holder.serverTv .setText("服务" + hospital.getRateService());
-			holder.environmentalTv.setText("环境" + hospital.getRateEnvironment());
-			holder.effectTv.setText("效果" + hospital.getRateEffect());
-			holder.startsView.setGrade(Integer.valueOf(hospital.getRateService()));
-		}
-		
-		private class Holder{
-			private ImageView iconIv;
-			private TextView titleTv;
-			private TextView hospitalTv;
-			private TextView locationTv;
-			private TextView serverTv;
-			private TextView effectTv;
-			private TextView environmentalTv;
-			private String id;
-			private StarsView startsView;
-		}
-		
 	}
 	
 }
