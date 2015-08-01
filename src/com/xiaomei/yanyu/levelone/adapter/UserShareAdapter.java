@@ -1,70 +1,37 @@
 package com.xiaomei.yanyu.levelone.adapter;
 
-import java.util.List;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.UserShare;
-import com.xiaomei.yanyu.bean.UserShare.ShareImage;
 import com.xiaomei.yanyu.bean.UserShare.Comment;
+import com.xiaomei.yanyu.bean.UserShare.ShareImage;
 import com.xiaomei.yanyu.comment.CommentListActivity;
-import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 
-import android.app.Activity;
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 
-public class UserPostAdapter extends BaseAdapter implements View.OnClickListener{
+public class UserShareAdapter extends ArrayAdapter<UserShare> {
 
     private DisplayImageOptions mImageOption;
 
-    public UserPostAdapter() {
+    public UserShareAdapter(Context context) {
+        super(context, 0);
         mImageOption = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.tiezi_zhanwei).build();
-    }
-    
-	private Activity mAc;
-	
-	public void setActivity(Activity ac){
-		mAc = ac;
-	}
-	
-    private List<UserShare> mData;
-
-    public List<UserShare>  getData(){
-        return mData;
-    }
-    
-    public void setData(List<UserShare> data){
-        mData = data;
-    }
-    
-    @Override
-    public int getCount() {
-        return mData==null?0:mData.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View itemView = convertView != null ? convertView : LayoutInflater.from(mAc).inflate(R.layout.item_user_post_layout, parent, false);
+        View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_user_post_layout, parent, false);
         
-        final UserShare item =mData.get(position);
+        final UserShare item = getItem(position);
         
         ImageView userIcon = UiUtil.findImageViewById(itemView, R.id.poster_user_icon);
         userIcon.setImageResource(R.drawable.user_head_default);
@@ -114,7 +81,7 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         moreComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentListActivity.startActivity(mAc,"share", item.getId(), true, false);
+                CommentListActivity.startActivity(getContext(),"share", item.getId(), true, false);
             }
         });
         
@@ -126,7 +93,7 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
         commentSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentListActivity.startActivity(mAc,"share", item.getId(), true, true);
+                CommentListActivity.startActivity(getContext(),"share", item.getId(), true, true);
             }
         });
         return itemView ;
@@ -141,7 +108,7 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
             gridLayout.setVisibility(View.VISIBLE);
             int length = shareImages.length;
             int imageLayout = length == 1 ? R.layout.user_shares_image_item_large : R.layout.user_shares_image_item;
-            LayoutInflater inflater = LayoutInflater.from(mAc);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
             for (int i = 0; i < length &&  i < UserShare.MAX_IMAGE_COUNT; i++) {
                 ImageView imageView = (ImageView) inflater.inflate(imageLayout, gridLayout, false);
                 gridLayout.addView(imageView);
@@ -153,19 +120,4 @@ public class UserPostAdapter extends BaseAdapter implements View.OnClickListener
             }
         }
     }
-
-	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		switch (id) {
-		case R.id.more_commont:
-			CommentListActivity.startActivity(mAc,"share",(String)v.getTag(),true,false);
-			break;
-		case R.id.comment_size:
-			CommentListActivity.startActivity(mAc,"share",(String)v.getTag(),true,true);
-			break;
-		default:
-			break;
-		}
-	}
 }

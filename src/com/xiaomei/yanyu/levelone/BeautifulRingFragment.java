@@ -4,7 +4,7 @@ package com.xiaomei.yanyu.levelone;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.levelone.adapter.RingAdapter;
-import com.xiaomei.yanyu.levelone.adapter.UserPostAdapter;
+import com.xiaomei.yanyu.levelone.adapter.UserShareAdapter;
 import com.xiaomei.yanyu.levelone.control.BeautifulRingControl;
 import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
@@ -112,8 +112,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	    if(viewHolder == mJinghuaViewHolder){
 	    	viewHolder.mAdapter = new RingAdapter(getActivity());
 	    }else{
-	    	viewHolder.mAdapter = new UserPostAdapter();
-	    	((UserPostAdapter)viewHolder.mAdapter).setActivity(getActivity());
+	    	viewHolder.mAdapter = new UserShareAdapter(getActivity());
 	    }
 	    viewHolder.mListView.setAdapter(viewHolder.mAdapter);
         
@@ -286,7 +285,10 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
     public void getGuangchangListDataFromNetAysnCallBack(){
         dissProgress(mGuangchangViewHolder);
         mGuangchangViewHolder.mIsRefresh = false;
-        ((UserPostAdapter)mGuangchangViewHolder.mAdapter).setData(mControl.getModel().getUserShareData());
+        
+        UserShareAdapter userShareAdapter = (UserShareAdapter)mGuangchangViewHolder.mAdapter;
+        userShareAdapter.clear();
+        userShareAdapter.addAll(mControl.getModel().getUserShareData());
         mGuangchangViewHolder.mAdapter.notifyDataSetChanged();
         mGuangchangViewHolder.mPullToRefreshListView.onRefreshComplete();
         Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
@@ -301,7 +303,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
     public void getGuangchangMoreListDataFromNetAysnCallBack(){
         dissProgress(mGuangchangViewHolder);
         mGuangchangViewHolder.mIsRefresh = false;
-        ((UserPostAdapter)mGuangchangViewHolder.mAdapter).getData().addAll(mControl.getModel().getUserShareData());
+        ((UserShareAdapter)mGuangchangViewHolder.mAdapter).addAll(mControl.getModel().getUserShareData());
         mGuangchangViewHolder.mAdapter.notifyDataSetChanged();
         mGuangchangViewHolder.mPullToRefreshListView.removeFooterView(mGuangchangViewHolder.mRefreshLayout);
     }
