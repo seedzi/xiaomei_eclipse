@@ -7,6 +7,7 @@ import com.xiaomei.yanyu.widget.AttachmentContainer;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -47,7 +48,9 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
         mHome.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                BeautifulRingPostActivity.this.onBackPressed();
+                Activity activity = (Activity) v.getContext();
+                UiUtil.hideSoftInputFromActivity(activity);
+                activity.onBackPressed();
             }
         });
         mPost = actionbarView.findViewById(R.id.new_post);
@@ -108,13 +111,6 @@ public class BeautifulRingPostActivity extends Activity implements OnClickListen
     @Override
     public void setTitle(int titleId) {
         mTitle.setText(titleId);
-    }
-
-    @Override
-    public void onBackPressed() {
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        super.onBackPressed();
     }
 
     @Override

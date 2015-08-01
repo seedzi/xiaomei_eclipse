@@ -3,6 +3,7 @@ package com.xiaomei.yanyu.comment;
 import java.util.Date;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -129,14 +130,9 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 		mTitleBar.setBackListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*先关闭软键盘再退出*/
-				InputMethodManager imm = (InputMethodManager) getApplicationContext()
-						.getSystemService(Context.INPUT_METHOD_SERVICE);
-				if (imm.isActive()) // 一直是true
-					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,
-							InputMethodManager.HIDE_NOT_ALWAYS);
-			   imm.hideSoftInputFromWindow(commentEdit.getWindowToken(), 0);
-			   finish();
+			   Activity activity = (Activity)v.getContext();
+			   UiUtil.hideSoftInputFromActivity(activity);
+			   activity.finish();
 			}
 		});
         mTitleBar.setTitle("评论");

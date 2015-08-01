@@ -3,9 +3,11 @@ package com.xiaomei.yanyu.util;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.xiaomei.yanyu.R;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,5 +55,10 @@ public class UiUtil {
 
     public static ImageView findImageViewById(View parent, int id) {
         return UiUtil.<ImageView>findById(parent, id);
+    }
+
+    public static void hideSoftInputFromActivity(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
