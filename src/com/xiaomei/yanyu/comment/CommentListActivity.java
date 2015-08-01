@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,6 +158,25 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         
         sendButton = findViewById(R.id.send_button);
         commentEdit = (EditText) findViewById(R.id.comment_edit);
+        commentEdit.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(TextUtils.isEmpty(commentEdit.getText().toString())){
+					sendButton.setEnabled(false);
+					sendButton.getBackground().setAlpha(255/2);
+				}else{
+					sendButton.setEnabled(true);				
+					sendButton.getBackground().setAlpha(255);
+				}
+			}
+		});
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +192,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             	}
             }
         });
-        
+		sendButton.getBackground().setAlpha(255/2);
         mEmptyView= findViewById(R.id.empty_view);
 		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
 			@Override
