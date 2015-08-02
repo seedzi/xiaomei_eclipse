@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -55,60 +56,18 @@ public class HistoryActivity extends AbstractActivity {
 		mListView.setAdapter(mAdapter);
 	}
 	
-	private class HistoryAdapter extends BaseAdapter{
+    private class HistoryAdapter extends ArrayAdapter<HistroyItem> {
 
-		private List<HistroyItem>  mData;
-		
-		public void setData(List<HistroyItem> data){
-			mData = data;
-		}
-		
-		private LayoutInflater mInflater;
-		
-		public HistoryAdapter(Context context){
-			mInflater = LayoutInflater.from(context);
-		}
-		
-		@Override
-		public int getCount() {
-//			return mData == null ? 0 : mData.size();
-			return 10;
-		}
+        public HistoryAdapter(Context context) {
+            super(context, 0);
+        }
 
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			Holder holder = null;
-			if(convertView == null){
-				convertView  = mInflater.inflate(R.layout.item_history_layout, null);
-				holder = new Holder();
-				holder.titleView = (TextView) convertView.findViewById(R.id.title);
-				holder.iconView = (ImageView) convertView.findViewById(R.id.icon);
-				holder.starView = (ImageButton) convertView.findViewById(R.id.and_star);
-				convertView.setTag(holder);
-			}
-			holder = (Holder) convertView.getTag();
-			
-			return convertView;
-		}
-		
-		private class Holder{
-			private TextView titleView;
-			private ImageView iconView;
-			private ImageButton deleteView;
-			private ImageButton starView;
-		}
-		
-		
-	}
-	
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View itemView = convertView != null ? convertView
+                    : LayoutInflater.from(getContext()).inflate(R.layout.item_history_layout,
+                            parent, false);
+            return itemView;
+        }
+    }
 }
