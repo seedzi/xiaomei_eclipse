@@ -114,12 +114,12 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
         mAdapter = new CollectionAdapter(CollectionActivity.this);
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(this);
-        mListView.setOnItemClickListener(new OnItemClickListener() {
+        mListView.setOnItemClickListener(new GoodsAdapter.GoodsItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Goods goods = (Goods) parent.getItemAtPosition(position);
-                String goodsId = goods.getId();
                 if (showEdite) {
+                    Goods goods = (Goods) parent.getItemAtPosition(position);
+                    String goodsId = goods.getId();
                     boolean checked = mCheckedData.get(goodsId) != null;
                     UiUtil.<CheckBox>findById(view, R.id.checkbox).setChecked(!checked);
                     if (checked) {
@@ -127,9 +127,10 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
                     } else {
                         mCheckedData.put(goodsId, goodsId);
                     }
-                } else {
-                    GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId);
+                    return;
                 }
+
+                super.onItemClick(parent, view, position, id);
             }
         });
 	}

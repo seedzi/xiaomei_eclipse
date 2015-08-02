@@ -169,14 +169,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mListView.setEmptyView(findViewById(R.id.empty));
 		mLoadingView = findViewById(R.id.loading_layout);
 		mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Goods goods = (Goods) parent.getItemAtPosition(position);
-                String goodsId = goods.getId();
-                GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId);
-            }
-        });
+		mListView.setOnItemClickListener(new GoodsAdapter.GoodsItemClickListener());
 	}
 	
 	private void initData(){

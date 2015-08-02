@@ -14,19 +14,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.leveltwo.GoodsAdapter;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.leveltwo.GoodsListActivity;
 import com.xiaomei.yanyu.module.user.center.control.SalesControl;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -44,7 +48,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     
     private PullToRefreshListView mPullToRefreshListView;
     
-    private MyAdapter mAdapter;
+    private GoodsAdapter mAdapter;
     
     private ListView mListView;
     
@@ -78,13 +82,15 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mPullToRefreshListView.setOnRefreshListener(this);
-        mAdapter = new MyAdapter(this);
+        mAdapter = new GoodsAdapter(this);
         mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
         mPullToRefreshListView.setOnScrollListener(this);
         mListView = mPullToRefreshListView.getRefreshableView();
         mListView.setEmptyView(findViewById(R.id.empty));
+        mListView.setOnItemClickListener(new GoodsAdapter.GoodsItemClickListener());
         mLoadingView = findViewById(R.id.loading_layout);
         mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
+        
     }
     
     private void initData(){
@@ -139,7 +145,8 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     
     // ============================== CallBack ==========================================
     public void getGoodsDataAsynCallBack(){
-        mAdapter.setData(mControl.getModel().getGoodsList());
+        mAdapter.clear();
+        mAdapter.addAll(mControl.getModel().getGoodsList());
         mAdapter.notifyDataSetChanged();
         mIsRefresh = false;
         dissProgress();
@@ -157,7 +164,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     public void getGoodsDataMoreAsynCallBack(){
         dissProgress();
         mIsRefresh = false;
-        mAdapter.getData().addAll(mControl.getModel().getGoodsList());
+        mAdapter.addAll(mControl.getModel().getGoodsList());
         mAdapter.notifyDataSetChanged();
         mPullToRefreshListView.removeFooterView(mRefreshLayout);
         Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
@@ -167,138 +174,5 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         dissProgress();
         mIsRefresh = false;
         mPullToRefreshListView.removeFooterView(mRefreshLayout);
-    }
-    
-    // ============================== Adapter ==========================================
-private class MyAdapter extends BaseAdapter implements View.OnClickListener{
-        
-        private LayoutInflater mLayoutInflater;
-        
-        private List<Goods> mData;
-        
-        public MyAdapter(Context context){
-            mLayoutInflater = LayoutInflater.from(context);
-        }
-        
-        public void setData(List<Goods> data){
-            mData = data;
-        }
-        
-        public List<Goods> getData(){
-            return mData;
-        }
-        
-        @Override
-        public int getCount() {
-            return mData==null ?0 : mData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @SuppressLint("NewApi")
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Holder holder = null;
-            if(convertView == null){
-                convertView = mLayoutInflater.inflate(R.layout.item_goods_layout, null);
-                holder = new Holder();
-                holder.iconIv = (ImageView) convertView.findViewById(R.id.icon);
-                holder.titleTv = (TextView) convertView.findViewById(R.id.title);
-                holder.sizeTv = (TextView) convertView.findViewById(R.id.size);
-                holder.hospitalTv = (TextView) convertView.findViewById(R.id.hospital_name);
-                holder.localTv = (TextView) convertView.findViewById(R.id.location);
-                holder.priceTv = (TextView) convertView.findViewById(R.id.price);
-                holder.localTv = (TextView) convertView.findViewById(R.id.location);
-                holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
-                holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
-                holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
-                convertView.setOnClickListener(this);
-                convertView.setTag(holder);
-            }
-            holder = (Holder) convertView.getTag();
-            Goods goods = mData.get(position);
-            holder.iconIv.setImageResource(R.drawable.goods_list_default);
-            ImageLoader.getInstance().displayImage(goods.getFileUrl(),holder.iconIv );
-            holder.titleTv .setText(goods.getTitle());
-            holder.goodId = goods.getId();
-            holder.sizeTv.setText("销量" + goods.getSales());
-            holder.hospitalTv.setText(goods.getHospName());
-            holder.priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
-            holder.localTv.setText(goods.getCityName());
-            
-            holder.mark1.setVisibility(View.GONE);
-            holder.mark2.setVisibility(View.GONE);
-            holder.mark3.setVisibility(View.GONE);
-            List<Goods.Mark> marks = goods.getMarks();
-            int i = 0;
-            GradientDrawable shapeDrawable  = null;
-            holder.mark1.setVisibility(View.GONE);
-            holder.mark2.setVisibility(View.GONE);
-            holder.mark3.setVisibility(View.GONE);
-            if(marks!=null){
-                for(Goods.Mark mark:marks){
-                    switch (i) {
-                    case 0:
-                        holder.mark1.setVisibility(View.VISIBLE);
-                        shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(8);
-                        shapeDrawable.setColor(Color.parseColor(mark.getColor()));
-                        holder.mark1.setBackground(shapeDrawable);
-                        holder.mark1.setText(mark.getLabel());
-                        break;
-                    case 1:
-                        holder.mark2.setVisibility(View.VISIBLE);
-                        shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(8);
-                        shapeDrawable.setColor(Color.parseColor(mark.getColor()));
-                        holder.mark2.setBackground(shapeDrawable);
-                        holder.mark2.setText(mark.getLabel());
-                        break;
-                    case 2:
-                        holder.mark3.setVisibility(View.VISIBLE);
-                        shapeDrawable = new GradientDrawable();
-                        shapeDrawable.setCornerRadius(8);
-                        shapeDrawable.setColor(Color.parseColor(mark.getColor()));
-                        holder.mark3.setBackground(shapeDrawable);
-                        holder.mark3.setText(mark.getLabel());
-                        break;
-                    default:
-                        break;
-                    }
-                    i++;
-                }
-            }
-//          holder.sizeTv.setText(goods.getPriceMarket());
-//          holder.hospitalTv.setText(goods.ge);
-            return convertView;
-        }
-        
-        private class Holder{
-            ImageView iconIv;
-            TextView titleTv; 
-            TextView sizeTv;
-            TextView hospitalTv;
-            String goodId;
-            TextView localTv;
-            TextView priceTv;
-            TextView mark1;
-            TextView mark2;
-            TextView mark3;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Holder holder = (Holder) v.getTag();
-            GoodsDetailActivity.startActivity(SalesMessageActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id="+holder.goodId,holder.goodId);
-        }
-        
     }
 }

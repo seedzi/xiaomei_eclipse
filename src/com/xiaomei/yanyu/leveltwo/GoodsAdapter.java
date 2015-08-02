@@ -5,10 +5,12 @@ import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Goods.Mark;
 import com.xiaomei.yanyu.util.UiUtil;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -16,6 +18,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,5 +79,16 @@ public class GoodsAdapter extends ArrayAdapter<Goods> {
         shapeDrawable.setCornerRadius(8);
         shapeDrawable.setColor(Color.parseColor(color));
         return shapeDrawable;
+    }
+    
+    public static class GoodsItemClickListener implements OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Goods goods = (Goods) parent.getItemAtPosition(position);
+            String goodsId = goods.getId();
+            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId);
+        }
+        
     }
 }
