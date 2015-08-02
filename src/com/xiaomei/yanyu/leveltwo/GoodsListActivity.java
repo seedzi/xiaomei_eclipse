@@ -7,10 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -31,15 +30,12 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
-import com.xiaomei.yanyu.bean.Goods.Mark;
 import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
-import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -173,6 +169,14 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mListView.setEmptyView(findViewById(R.id.empty));
 		mLoadingView = findViewById(R.id.loading_layout);
 		mRefreshLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.pull_to_refresh_footer, null);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Goods goods = (Goods) parent.getItemAtPosition(position);
+                String goodsId = goods.getId();
+                GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId);
+            }
+        });
 	}
 	
 	private void initData(){
@@ -295,68 +299,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	    // TODO Try again or show some warnings
 	}
 	
-	// ============================== Adapter ==========================================
-	private class GoodsAdapter extends ArrayAdapter<Goods> {
-		
-		public GoodsAdapter(Context context){
-		    super(context, 0);
-		}
-		
-		@SuppressLint("NewApi")
-        @Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-		    View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_goods_layout, parent, false);
-		    
-			final Goods goods = getItem(position);
-			
-			ImageView icon = UiUtil.findImageViewById(itemView, R.id.icon);
-            icon.setImageResource(R.drawable.goods_list_default);
-			ImageLoader.getInstance().displayImage(goods.getFileUrl(), icon);
-			UiUtil.findTextViewById(itemView, R.id.title).setText(goods.getTitle());
-			UiUtil.findTextViewById(itemView, R.id.size).setText("销量" + goods.getSales());
-			UiUtil.findTextViewById(itemView, R.id.hospital_name).setText(goods.getHospName());
-			UiUtil.findTextViewById(itemView, R.id.price).setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
-			UiUtil.findTextViewById(itemView, R.id.location).setText(goods.getCityName());
-			UiUtil.findTextViewById(itemView, R.id.origin_price).setText("原价"+goods.getPriceMarket()+"元");
-			
-            TextView mark1 = UiUtil.findTextViewById(itemView, R.id.tag_1);
-            TextView mark2 = UiUtil.findTextViewById(itemView, R.id.tag_2);
-            TextView mark3 = UiUtil.findTextViewById(itemView, R.id.tag_3);
-            TextView[] markViews = new TextView[]{mark1, mark2, mark3};
-            mark1.setVisibility(View.GONE);
-            mark2.setVisibility(View.GONE);
-            mark3.setVisibility(View.GONE);
-            
-			List<Goods.Mark> marks = goods.getMarks();
-            int size = marks != null ? marks.size() : 0;
-            for (int i = 0; i < size && i < 3; i ++) {
-                Mark mark = marks.get(i);
-                TextView markView = markViews[i];
-                markView.setVisibility(View.VISIBLE);
-                markView.setBackground(getBackground(mark.getColor()));
-                markView.setText(mark.getLabel());
-            }
-            
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String id = goods.getId();
-                    GoodsDetailActivity.startActivity(GoodsListActivity.this,HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + id, id);
-                }
-            });
-			return itemView;
-		}
-
-        private Drawable getBackground(String color) {
-            GradientDrawable shapeDrawable;
-            shapeDrawable = new GradientDrawable();
-            shapeDrawable.setCornerRadius(8);
-            shapeDrawable.setColor(Color.parseColor(color));
-            return shapeDrawable;
-        }
-	}
-
-    private class FilterAdapter extends ArrayAdapter<Pair<String, String>> {
+	private class FilterAdapter extends ArrayAdapter<Pair<String, String>> {
 
         public FilterAdapter(Context context) {
             super(context, 0);
