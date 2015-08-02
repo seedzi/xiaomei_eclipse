@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 
@@ -100,7 +102,8 @@ public class MessageActivity extends AbstractActivity<UserCenterControl> impleme
 	
 	// =================================== CallBack ========================================
 	public void getUserMsgCallBack(){
-		mAdapter.setData(mControl.getModel().getUserMessage());
+	    mAdapter.clear();
+		mAdapter.addAll(mControl.getModel().getUserMessage());
 		mAdapter.notifyDataSetChanged();
 	}
 	
@@ -111,7 +114,7 @@ public class MessageActivity extends AbstractActivity<UserCenterControl> impleme
 	public void getUserMsgMoreCallBack(){
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAdapter.getData().addAll(mControl.getModel().getUserMessage());
+		mAdapter.addAll(mControl.getModel().getUserMessage());
 		mAdapter.notifyDataSetChanged();
 	}
 	
@@ -119,60 +122,22 @@ public class MessageActivity extends AbstractActivity<UserCenterControl> impleme
 		Toast.makeText(this, "获取数据异常", 0).show();
 	}
 	// =================================== Adapter ========================================
-	private class MessageAdapter extends BaseAdapter{
+    private class MessageAdapter extends ArrayAdapter<UserMessage> {
 
-		private LayoutInflater mLayoutInflater;
-		
-		private List<UserMessage> data;
-		
-		public List<UserMessage> getData(){
-			return data;
-		}
-		
-		public void setData(List<UserMessage> list){
-			data = list;
-		}
-		
-		public MessageAdapter(Context context) {
-			mLayoutInflater = LayoutInflater.from(context);
-		}
+        public MessageAdapter(Context context) {
+            super(context, 0);
+        }
 
-		@Override
-		public int getCount() {
-			return data == null?0:data.size();
-		}
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View itemView = convertView != null ? convertView
+                    : LayoutInflater.from(getContext()).inflate(R.layout.item_message_layout,
+                            parent, false);
 
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			Holder holder = null;
-			if(convertView == null){
-				convertView = mLayoutInflater.inflate(R.layout.item_message_layout, null);
-				holder = new Holder();
-				holder.titleTv = (TextView) convertView.findViewById(R.id.title);
-				holder.contentTv = (TextView) convertView.findViewById(R.id.content);
-				convertView.setTag(holder);
-			}
-			holder = (Holder) convertView.getTag();
-			UserMessage messgae = data.get(position);
-			holder.titleTv.setText(messgae.getTitle());
-			holder.contentTv.setText(messgae.getContent());
-			return convertView;
-		}
-		
-		private class Holder{
-			private TextView titleTv;
-			private TextView contentTv;
-		}
-	}
-
+            UserMessage messgae = getItem(position);
+            UiUtil.findTextViewById(itemView, R.id.title).setText(messgae.getTitle());
+            UiUtil.findTextViewById(itemView, R.id.content).setText(messgae.getContent());
+            return itemView;
+        }
+    }
 }
