@@ -1,7 +1,9 @@
 package com.xiaomei.yanyu.bean;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
 {
@@ -213,6 +215,16 @@ public class Order implements Serializable{
 
 	/**我的订单列表信息*/
 	public static class DataList implements Serializable{
+	    
+	    private static final Map<String, String> sStatusMap = new HashMap<String, String>() {{
+	        put("1", "未付款");
+	        put("2", "已付款");
+	        put("3", "退款审核中");
+	        put("4", "已消费");
+	        put("5", "交易结束");
+	        put("6", "退款完成");
+	    }};
+	    
 		private String id;
 		private String orderAmount;
 		private String username;
@@ -246,6 +258,11 @@ public class Order implements Serializable{
 		public String getStatus() {
 			return status;
 		}
+		
+		public String getStatusText() {
+		    return sStatusMap.get(getStatus());
+		}
+		
 		public void setStatus(String status) {
 			this.status = status;
 		}
