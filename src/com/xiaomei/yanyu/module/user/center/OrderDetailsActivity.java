@@ -349,7 +349,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	}
 	
 	public void updateUserOrder2ServerAsynCallBack(){
-		dismissDialog();
+		
 		Order order = mControl.getModel().getOrder();
 		if(!isPay4WeiXin){
 			ZhifubaoPayManager.getInstance().setCurrentActivity(this);
@@ -367,9 +367,11 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 						}
 					});
 					STATE_CHANGED = true;
+					dismissDialog();
 				}
 				@Override
 				public void failureCallBack() {
+					dismissDialog();
 				}
 			});
 			ZhifubaoPayManager.getInstance().pay(order.getDataList().getGoodsName(),order.getDataList().getGoodsName(),order.getDataList().getGoodsPay(),order.getDataList().getId());
@@ -403,6 +405,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		if(mProgressDialog!=null && mProgressDialog.isShowing())
 			mProgressDialog.dismiss();
 		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setCancelable(true);
 		mProgressDialog.setTitle("提示");
 		mProgressDialog.setMessage(message);
 		mProgressDialog.setCancelable(false);
@@ -448,7 +451,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		        return;
 		    }
 		    showProgressDialog("订单提交中...");
-		    android.util.Log.d("111", "提交 goodsId =  " + goodsId + ",orderPassport = " + orderPassport.getText().toString() + ",orderMobile = " + orderMobile.getText().toString() );
 		    mControl.updateUserOrder2ServerAsyn(mControl.getModel().getOrder().getDataList().getId(),orderNameEd.getText().toString(),
 		            goodsId, 
 		            orderPassport.getText().toString(),
