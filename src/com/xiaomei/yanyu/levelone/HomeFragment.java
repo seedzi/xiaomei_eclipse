@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 		
-		mAdapter = new HomeAdapter(null, getActivity(), ImageLoader.getInstance());
+		mAdapter = new HomeAdapter(getActivity());
 		mListView.setAdapter(mAdapter);
 	}
 	
@@ -133,7 +133,8 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		dissProgress();
 		if(mPullToRefreshListView.isRefreshing())
 			mPullToRefreshListView.onRefreshComplete();
-		mAdapter.setData(mControl.getSectionList());
+		mAdapter.clear();
+		mAdapter.addAll(mControl.getSectionList());
 		mAdapter.notifyDataSetChanged();
 		
 		Toast.makeText(getActivity(), "加载完成", 0).show();
@@ -156,7 +157,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void getHomeListEntityMoreAsynCallBack(){
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAdapter.getData().addAll(mControl.getSectionList());
+		mAdapter.addAll(mControl.getSectionList());
 		mAdapter.notifyDataSetChanged();
 	}
 	
