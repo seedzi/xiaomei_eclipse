@@ -21,7 +21,7 @@ import com.xiaomei.yanyu.bean.UserShare;
 import com.xiaomei.yanyu.bean.UserShare.Comment;
 import com.xiaomei.yanyu.bean.UserShare.ShareImage;
 import com.xiaomei.yanyu.comment.CommentListActivity;
-import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
+import com.xiaomei.yanyu.leveltwo.ComposeUserShareActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;

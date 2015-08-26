@@ -128,7 +128,7 @@
 		</activity>
 		<activity
 		    android:theme="@style/Theme"
-			android:name="com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.ComposeUserShareActivity">
 		</activity>
 		<!-- 用户消息 -->		
 		<activity

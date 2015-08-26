@@ -19,7 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-public class BeautifulRingPostActivity extends Activity implements OnClickListener {
+public class ComposeUserShareActivity extends Activity implements OnClickListener {
     
     private static final int REQUEST_PICK_IMAGE = 0;
 

@@ -6,7 +6,7 @@ import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.levelone.adapter.RecommendSharesAdapter;
 import com.xiaomei.yanyu.levelone.adapter.UserShareAdapter;
 import com.xiaomei.yanyu.levelone.control.SharesControl;
-import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
+import com.xiaomei.yanyu.leveltwo.ComposeUserShareActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -157,7 +157,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
             if (UserUtil.getUser() == null) {
                 LoginAndRegisterActivity.startActivity(getActivity(), true);
             } else {
-                startActivityForResult(new Intent(getActivity(), BeautifulRingPostActivity.class), REQUEST_NEW_POST);
+                startActivityForResult(new Intent(getActivity(), ComposeUserShareActivity.class), REQUEST_NEW_POST);
             }
             break;
         default:
