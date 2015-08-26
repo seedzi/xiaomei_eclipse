@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/list_item_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/gradient_alpha_bg"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/merchant_info_padding"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/merchant_info_padding">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/merchant_title_text" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/name"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/ic_address"
+            android:drawablePadding="2dp"
+            android:textColor="@color/merchant_title_text" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="5dp">
+
+            <com.xiaomei.yanyu.widget.StarsView
+                android:id="@+id/rate"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/service"
+                style="@style/MerchantRateText"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/effect"
+                android:background="@drawable/rate_service_bg"
+                android:textColor="#b7cbec" />
+
+            <TextView
+                android:id="@+id/effect"
+                style="@style/MerchantRateText"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/environment"
+                android:background="@drawable/rate_effect_bg"
+                android:textColor="#74cf62" />
+
+            <TextView
+                android:id="@+id/environment"
+                style="@style/MerchantRateText"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/rate_environment_bg"
+                android:textColor="#dba6ea" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -56,12 +56,16 @@
     <dimen name="content_padding_horizontal">16dp</dimen>
     
     <dimen name="action_bar_padding_horizontal">15dp</dimen>
-    
+
+    <dimen name="merchant_info_padding">10dp</dimen>
+
     <dimen name="user_shares_padding_left">24dp</dimen>
     <dimen name="user_shares_action_space">5dp</dimen>
     <dimen name="user_shares_action_drawable_padding">2dp</dimen>
     
     <!-- Text size -->
+    <dimen name="merchant_rate_text">10sp</dimen>
+
     <dimen name="user_shares_action_text">11sp</dimen>
     
     <dimen name="title_text">20sp</dimen>

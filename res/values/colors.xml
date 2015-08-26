@@ -38,7 +38,11 @@
       <color name="color_button_checked">#ffffff</color>
       
       <color name="color_transparent">#00000000</color>
-      
+
+    <color name="list_item_background">@color/color_white</color>
+
+    <color name="merchant_title_text">#787878</color>
+
       <color name="drop_item_text_normal">#000000</color>
       <color name="drop_item_text_checked">#d366f3</color>
       

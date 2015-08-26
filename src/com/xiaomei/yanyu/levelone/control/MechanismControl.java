@@ -3,7 +3,7 @@ package com.xiaomei.yanyu.levelone.control;
 import java.util.List;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.bean.Hospital;
+import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.levelone.model.MechanismModel;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
@@ -35,7 +35,7 @@ public class MechanismControl extends BaseControl {
 	public void getMechanismListMoreAsyn(){
 		try {
 			mModel.increaePage();
-			List<Hospital> data = XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet(String.valueOf(mModel.getPage()),PERPAGE);
+			List<Merchant> data = XiaoMeiApplication.getInstance().getApi().getMechanismListFromNet(String.valueOf(mModel.getPage()),PERPAGE);
 			if(data==null || data.size()==0){
 				mModel.reducePage();
 			}

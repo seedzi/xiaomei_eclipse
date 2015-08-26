@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"        
         android:textSize="12sp"
         android:textColor="#787878"
-        android:drawableLeft="@drawable/icon_address"/>
+        android:drawableLeft="@drawable/ic_address"/>
     
     <!--         -->
       <LinearLayout 

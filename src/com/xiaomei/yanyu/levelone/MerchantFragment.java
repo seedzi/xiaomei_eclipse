@@ -2,10 +2,11 @@ package com.xiaomei.yanyu.levelone;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.bean.Hospital;
+import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.levelone.control.MechanismControl;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.MechanismDetailActivity;
@@ -31,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -41,8 +44,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class MechanismFragment extends BaseFragment<MechanismControl>
-	implements OnRefreshListener,OnScrollListener{
+public class MerchantFragment extends BaseFragment<MechanismControl>
+	implements OnRefreshListener,OnScrollListener, OnItemClickListener{
 	
 	private ViewGroup mRootView;
 	
@@ -52,7 +55,7 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	
 	private TitleBar mTitleBar;
 	
-	private MechanismAdapter mAdapter;
+	private MerchantAdapter mAdapter;
 	
 	private boolean mIsRefresh;
 	
@@ -85,8 +88,9 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
 
 		mListView = mPullToRefreshListView.getRefreshableView();
-		mAdapter = new MechanismAdapter(getActivity()); 
+		mAdapter = new MerchantAdapter(getActivity()); 
 		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(this);
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
@@ -136,7 +140,11 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 	}
-	
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.MECHANISM_DETAIL_URL + "?hosp_id=" + id);
+    }
 	
 	// ================================== Progress ==========================================
 	private void showProgress(){
@@ -200,39 +208,43 @@ public class MechanismFragment extends BaseFragment<MechanismControl>
 		mIsRefresh = true;
 	}
 	
-	private static class MechanismAdapter extends ArrayAdapter<Hospital>{
+    private static class MerchantAdapter extends ArrayAdapter<Merchant> {
 
-		public MechanismAdapter(Context context){
-		    super(context, 0);
-			LayoutInflater.from(context);
-		}
+        private DisplayImageOptions mImageOptions;
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-		    View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.item_mechanism_layout, parent, false);
-		    
-            final Hospital hospital = getItem(position);
-            ImageView icon = UiUtil.findImageViewById(itemView, R.id.icon);
-            icon.setImageResource(R.drawable.mechanism_default_img);
-            ImageLoader.getInstance().displayImage(getItem(position).getFile(), icon);
-            RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)(ScreenUtils.getScreenWidth(getContext())*3/5));
-            icon.setLayoutParams(ll);
-            UiUtil.findTextViewById(itemView, R.id.hospital).setText(hospital.getHospName());
-            UiUtil.findTextViewById(itemView, R.id.location).setText(hospital.getAddr());
-            UiUtil.findTextViewById(itemView, R.id.title).setText(hospital.getHospDes());;
-            UiUtil.findTextViewById(itemView, R.id.server).setText("服务" + hospital.getRateService());
-            UiUtil.findTextViewById(itemView, R.id.environmental).setText("环境" + hospital.getRateEnvironment());
-            UiUtil.findTextViewById(itemView, R.id.effect).setText("效果" + hospital.getRateEffect());
-            UiUtil.<GoodsGrade>findById(itemView, R.id.grades).setGrade(Integer.valueOf(hospital.getRateService()));
+        public MerchantAdapter(Context context) {
+            super(context, 0);
+            mImageOptions = new DisplayImageOptions.Builder()
+                    .showImageForEmptyUri(R.drawable.merchant_image_default)
+                    .showImageOnLoading(R.drawable.merchant_image_default)
+                    .showImageOnFail(R.drawable.merchant_image_default).build();
+        }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GoodsDetailActivity.startActivity((Activity)getContext(), HttpUrlManager.MECHANISM_DETAIL_URL + "?hosp_id=" + hospital.getId());
-                }
-            });
-			return itemView;
-		}
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View itemView = convertView != null ? convertView :
+                LayoutInflater.from(getContext()).inflate(R.layout.merchant_list_item, parent, false);
+
+            Merchant merchant = getItem(position);
+            ImageView cover = UiUtil.findImageViewById(itemView, R.id.cover);
+            ImageLoader.getInstance().displayImage(merchant.getImageLarge(), cover, mImageOptions);
+            UiUtil.findTextViewById(itemView, R.id.description).setText(merchant.getDescription());
+
+            UiUtil.findTextViewById(itemView, R.id.name).setText(merchant.getName());
+            UiUtil.findTextViewById(itemView, R.id.address).setText(merchant.getAddr());
+
+            UiUtil.<GoodsGrade>findById(itemView, R.id.rate).setGrade(merchant.getRateService());
+
+            UiUtil.findTextViewById(itemView, R.id.service).setText(getContext().getString(R.string.merchant_rate_service, merchant.getRateService()));
+            UiUtil.findTextViewById(itemView, R.id.effect).setText(getContext().getString(R.string.merchant_rate_effect, merchant.getRateEffect()));
+            UiUtil.findTextViewById(itemView, R.id.environment).setText(getContext().getString(R.string.merchant_rate_environment, merchant.getRateEnvironment()));
+            return itemView;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return getItem(position).getId();
+        }
 	}
 	
 }
