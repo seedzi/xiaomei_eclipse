@@ -4,6 +4,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.levelone.adapter.HomeAdapter;
+import com.xiaomei.yanyu.levelone.adapter.HomeAdapter2;
 import com.xiaomei.yanyu.levelone.control.HomeControl;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -30,7 +31,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private ViewGroup mRootView;
 	private PullToRefreshListView mPullToRefreshListView;
 	private ListView mListView;
-	private HomeAdapter mAdapter;
+	private HomeAdapter2 mAdapter;
 	private View mEmptyView;
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
@@ -68,7 +69,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 		
-		mAdapter = new HomeAdapter(null, getActivity(), ImageLoader.getInstance());
+		mAdapter = new HomeAdapter2(getActivity());
 		mListView.setAdapter(mAdapter);
 	}
 	
@@ -133,7 +134,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		dissProgress();
 		if(mPullToRefreshListView.isRefreshing())
 			mPullToRefreshListView.onRefreshComplete();
-		mAdapter.setData(mControl.getSectionList());
+//		mAdapter.setData(mControl.getSectionList()); //TODO
 		mAdapter.notifyDataSetChanged();
 		
 		Toast.makeText(getActivity(), "加载完成", 0).show();
@@ -156,7 +157,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void getHomeListEntityMoreAsynCallBack(){
 		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAdapter.getData().addAll(mControl.getSectionList());
+//		mAdapter.getData().addAll(mControl.getSectionList()); //TODO
 		mAdapter.notifyDataSetChanged();
 	}
 	
