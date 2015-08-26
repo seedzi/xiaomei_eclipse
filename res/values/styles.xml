@@ -67,6 +67,14 @@
     <style name="Widget">
     </style>
 
+    <style name="ListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#e2e2e2</item>
+        <item name="android:divider">@color/color_background</item>
+        <item name="android:dividerHeight">@dimen/list_divider_height</item>
+    </style>
+
     <style name="MerchantRateText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
