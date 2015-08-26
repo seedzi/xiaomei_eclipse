@@ -2,17 +2,17 @@ package com.xiaomei.yanyu.levelone.model;
 
 import java.util.List;
 
-import com.xiaomei.yanyu.bean.Hospital;
+import com.xiaomei.yanyu.bean.Merchant;
 
 public class MechanismModel {
 
-	private List<Hospital> mData;
+	private List<Merchant> mData;
 	
-	public void setData(List<Hospital> data){
+	public void setData(List<Merchant> data){
 		mData = data;
 	}
 	
-	public List<Hospital> getData(){
+	public List<Merchant> getData(){
 		return mData;
 	}
 	

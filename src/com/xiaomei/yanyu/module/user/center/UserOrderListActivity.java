@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.module.user.control.UserControl;
 import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.util.YanYuUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -123,7 +125,8 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 	
 	// =============================================== CallBack  =================================================
 	public void getUserOrdersAsynCallBack(){
-		mAdapter.setData(mControl.getModel().getOrderList());
+	    mAdapter.clear();
+		mAdapter.addAll(mControl.getModel().getOrderList());
 		mAdapter.notifyDataSetChanged();
 		Toast.makeText(UserOrderListActivity.this, "加载成功", 0).show();
 		dissProgress();
@@ -135,155 +138,55 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 	}
 	
 	
-	private class OrderAdapter extends BaseAdapter implements View.OnClickListener{
-
-		private LayoutInflater mLayoutInflater;
-		
-		private List<Order> data;
+	private class OrderAdapter extends ArrayAdapter<Order> {
 		
 		public OrderAdapter(Context context) {
-			mLayoutInflater = LayoutInflater.from(context);
+		    super(context, 0);
 		}
 		
-		public void setData(List<Order> list){
-			data = list;
-		}
-		
-		public List<Order> getData(List<Order> list){
-			return data;
-		}
-
-		@Override
-		public int getCount() {
-			return data == null ? 0 : data.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Holder holder = null;
-			if(convertView == null){
-				convertView = mLayoutInflater.inflate(R.layout.item_user_order_layout,null);
-				holder = new Holder();
-				holder.orderIdTv = (TextView) convertView.findViewById(R.id.order_id);
-				holder.userNameTv = (TextView) convertView.findViewById(R.id.user_name);
-				holder.createTimeTv = (TextView) convertView.findViewById(R.id.create_time);
-				holder.goodsIconIv = (ImageView) convertView.findViewById(R.id.goods_icon);
-				holder.goodsNameTv = (TextView) convertView.findViewById(R.id.goods_name);
-				holder.statusTv = (TextView) convertView.findViewById(R.id.status);
-				holder.orderAmountTv = (TextView) convertView.findViewById(R.id.order_amount);
-				holder.payButton = (TextView) convertView.findViewById(R.id.pay_button);
-				holder.hospNameTv = (TextView) convertView.findViewById(R.id.hosp_name);
-				holder.cityTv = (TextView) convertView.findViewById(R.id.city);
-				holder.payButton.setOnClickListener(this);
-				convertView.setTag(holder);
-			}
-			holder = (Holder) convertView.getTag();
-			Order order = data.get(position);
+		    View itemView = convertView != null ? convertView
+	                : LayoutInflater.from(getContext()).inflate(R.layout.item_user_order_layout, parent,
+	                        false);
+		    
+			final Order order = getItem(position);
 			Order.DataList dataList = order.getDataList();
 			if(dataList!=null){
-				android.util.Log.d("111", "status = " + dataList.getStatus());
-				holder.orderIdTv.setText(dataList.getId());
-				holder.userNameTv.setText(dataList.getUsername());
-				holder.createTimeTv.setText(DateUtils.formateDate(Long.valueOf(dataList.getCreatedate())*1000));
-				holder.goodsIconIv.setImageResource(R.drawable.order_list_default);
-				ImageLoader.getInstance().displayImage(dataList.getGoodsImg(), holder.goodsIconIv);
-				holder.goodsNameTv.setText(dataList.getGoodsName());
-				holder.statusTv.setText(dataList.getStatus());
-				holder.orderAmountTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + dataList.getGoodsPay());
-				holder.payButton.setTag(Integer.valueOf(position));
-				holder.cityTv.setText(dataList.getCity());
-				holder.hospNameTv.setText(dataList.getHospName());
+				UiUtil.findTextViewById(itemView, R.id.order_id).setText(dataList.getId());
+				UiUtil.findTextViewById(itemView, R.id.user_name).setText(dataList.getUsername());
+				UiUtil.findTextViewById(itemView, R.id.create_time).setText(DateUtils.formateDate(Long.valueOf(dataList.getCreatedate())*1000));
+				
+				ImageView icon = UiUtil.findImageViewById(itemView, R.id.goods_icon);
+				icon.setImageResource(R.drawable.order_list_default);
+				ImageLoader.getInstance().displayImage(dataList.getGoodsImg(), icon);
+				
+				UiUtil.findTextViewById(itemView, R.id.goods_name).setText(dataList.getGoodsName());
+				UiUtil.findTextViewById(itemView, R.id.order_amount).setText(getResources().getString(R.string.ren_ming_bi) + " " + dataList.getGoodsPay());
+				UiUtil.findTextViewById(itemView, R.id.city).setText(dataList.getCity());
+				UiUtil.findTextViewById(itemView, R.id.hosp_name).setText(dataList.getHospName());
+				
 				int status = Integer.valueOf(dataList.getStatus());
-				switch (status) {
-				case 1: //未支付
-					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
-					holder.payButton.setText("立即付款");
-					holder.statusTv.setText("未付款");
-					break;
-				case 2: //已付款
-					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("订单详情");
-					holder.statusTv.setText("已付款");
-					break;
-				case 3: //
-					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("订单详情");
-					holder.statusTv.setText("退款审核中");
-					break;
-				case 4:
-					holder.payButton.setBackgroundResource(R.drawable.payment_selector);
-					holder.payButton.setText("去评论");
-					holder.statusTv.setText("已消费");
-					break;
-				case 5:
-					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("订单详情");
-					holder.statusTv.setText("交易结束");
-					break;
-				case 6:
-					holder.payButton.setBackgroundResource(R.drawable.payment_over);
-					holder.payButton.setText("订单详情");
-					holder.statusTv.setText("退款完成");
-					break;
-				default:
-					break;
-				}
+				UiUtil.findTextViewById(itemView, R.id.status).setText(dataList.getStatusText());
+				String payString = status == 1 ? "立即付款" : status == 4 ? "去评论" : "订单详情";
+				int background = status == 1 || status == 4 ? R.drawable.payment_selector : R.drawable.payment_over;
+				TextView payButton = UiUtil.findTextViewById(itemView, R.id.pay_button);
+                payButton.setText(payString);
+                payButton.setBackgroundResource(background);
+                
+                payButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (order.getDataList().getStatus().equals("4")) {
+                            CommentsActivity.startActivity4Result(UserOrderListActivity.this, order);
+                        } else {
+                            OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+                        }
+                    }
+                });
 			}
-			return convertView;
-		}
-
-		@Override
-		public void onClick(View v) {
-			int position = (Integer) v.getTag();
-			Order order = data.get(position);
-			if(order == null)
-				return;
-			switch (Integer.valueOf(order.getDataList().getStatus())) {
-			case 1:
-				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
-				break;
-			case 2:
-				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
-				break;
-			case 3:
-				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
-				break;
-			case 4:
-				CommentsActivity.startActivity4Result(UserOrderListActivity.this, order);
-				break;
-			case 5:
-				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
-				break;
-			case 6:
-				OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
-				break;
-
-			default:
-				break;
-			}
-		}
-		
-		private class Holder {
-			TextView orderIdTv; //订单号
-			TextView userNameTv; //用户名
-			TextView createTimeTv; //创建时间
-			ImageView goodsIconIv; //商品icon
-			TextView goodsNameTv; //商品名
-			TextView statusTv;//订单状态
-			TextView orderAmountTv; //订单价格
-			TextView payButton; //按钮
-			TextView hospNameTv;
-			TextView cityTv;
+			
+			return itemView;
 		}
 	}
 	

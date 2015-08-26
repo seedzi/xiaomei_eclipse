@@ -3,7 +3,11 @@ package com.xiaomei.yanyu.bean;
 import java.util.List;
 
 public class Section {
-	
+
+    public static final String TYPE_DETAIL = "0";
+
+    public static final String TYPE_DISPLAY = "1";
+
 	private String key;
 	
 	private int ordering;

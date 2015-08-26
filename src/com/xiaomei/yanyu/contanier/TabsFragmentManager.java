@@ -7,7 +7,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.levelone.BeautifulRingFragment;
 import com.xiaomei.yanyu.levelone.HomeFragment;
 import com.xiaomei.yanyu.levelone.MallFragment;
-import com.xiaomei.yanyu.levelone.MechanismFragment;
+import com.xiaomei.yanyu.levelone.MerchantFragment;
 import com.xiaomei.yanyu.levelone.UserFragment;
 
 import android.annotation.SuppressLint;
@@ -38,7 +38,7 @@ public class TabsFragmentManager {
 //			fragments.put("MALLFRAGMENT", fragment);
 			break;
 		case 2:
-			fragment = new MechanismFragment();
+			fragment = new MerchantFragment();
 //			fragments.put("MECHANISMFRAGMENT", fragment);
 			break;
 		case 3:

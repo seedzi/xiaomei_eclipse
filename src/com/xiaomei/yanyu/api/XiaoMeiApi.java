@@ -22,7 +22,7 @@ import com.xiaomei.yanyu.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.yanyu.api.builder.BeautifulRingBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
-import com.xiaomei.yanyu.api.builder.HospitalBuilder;
+import com.xiaomei.yanyu.api.builder.MerchantBuilder;
 import com.xiaomei.yanyu.api.builder.ListCommentBuilder;
 import com.xiaomei.yanyu.api.builder.ListOrderBuilder;
 import com.xiaomei.yanyu.api.builder.LoginOutBuilder;
@@ -49,9 +49,9 @@ import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
-import com.xiaomei.yanyu.bean.Hospital;
 import com.xiaomei.yanyu.bean.LoginResult;
 import com.xiaomei.yanyu.bean.Mall;
+import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order2;
@@ -101,14 +101,6 @@ public class XiaoMeiApi {
 				values[2],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new SectionBuilder());
-	}
-	
-	/**商城*/
-	public List getMallListFromNet()
-			throws XiaoMeiCredentialsException, XiaoMeiIOException,
-			XiaoMeiJSONException, XiaoMeiOtherException {
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMallListUrl(),null);
-		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
 	}
 	
 	/**商城首页*/
@@ -173,7 +165,7 @@ public class XiaoMeiApi {
 	}
 	
 	/**机构*/
-	public List<Hospital> getMechanismListFromNet(String curpage,String perpage)
+	public List<Merchant> getMechanismListFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		BasicNameValuePair[] values = {
@@ -183,7 +175,7 @@ public class XiaoMeiApi {
 		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMechanismListUrl(),
 				values[0],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-		return mHttpApi.doHttpRequestObject(httpGet, new HospitalBuilder());
+		return mHttpApi.doHttpRequestObject(httpGet, new MerchantBuilder());
 	}
 	
 	/**圈子*/

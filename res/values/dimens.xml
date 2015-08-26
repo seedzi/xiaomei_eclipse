@@ -4,7 +4,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="tabs_height_dp">54dp</dimen>
-    
+
+    <dimen name="list_divider_height">10dp</dimen>
+
     <dimen name="txt_max_big_size_sp">28sp</dimen>
     <dimen name="txt_big_size_sp">26sp</dimen>
     <dimen name="txt_normal_size_sp">16sp</dimen>
@@ -56,12 +58,16 @@
     <dimen name="content_padding_horizontal">16dp</dimen>
     
     <dimen name="action_bar_padding_horizontal">15dp</dimen>
-    
+
+    <dimen name="merchant_info_padding">10dp</dimen>
+
     <dimen name="user_shares_padding_left">24dp</dimen>
     <dimen name="user_shares_action_space">5dp</dimen>
     <dimen name="user_shares_action_drawable_padding">2dp</dimen>
     
     <!-- Text size -->
+    <dimen name="merchant_rate_text">10sp</dimen>
+
     <dimen name="user_shares_action_text">11sp</dimen>
     
     <dimen name="title_text">20sp</dimen>
