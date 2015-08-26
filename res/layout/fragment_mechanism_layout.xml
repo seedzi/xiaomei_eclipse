@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei.yanyu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -14,9 +13,7 @@
         
     <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView
         android:id="@+id/list"
-        style="@style/ListView"
-        android:scrollbarStyle="outsideOverlay"
-        ptr:ptrMode="pullDownFromTop" />
+        style="@style/ListView" />
     
 	    <include  android:id="@+id/loading_layout"
         layout="@layout/loading_layout"

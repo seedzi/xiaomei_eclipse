@@ -61,7 +61,7 @@
 	            android:layout_alignParentRight="true"
 	            android:layout_centerVertical="true"
 	            android:layout_marginRight="@dimen/item_margin_normal"
-	            android:src="@drawable/next_icon" />
+	            android:src="@drawable/arrow_right" />
     </RelativeLayout>
     
 	    <LinearLayout 

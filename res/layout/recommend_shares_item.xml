@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:paddingLeft="@dimen/content_padding_horizontal"
+        android:paddingRight="@dimen/content_padding_horizontal">
+
+        <com.xiaomei.yanyu.widget.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/item_icon_size_smaill_most"
+            android:layout_height="@dimen/item_icon_size_smaill_most"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/user_info_small_space"
+            android:layout_toRightOf="@+id/avatar"
+            android:textColor="@color/username"
+            android:textSize="@dimen/user_name_text_small" />
+
+        <TextView
+            android:id="@+id/createdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_clock"
+            android:drawablePadding="6dp"
+            android:textColor="@color/date"
+            android:textSize="@dimen/user_name_text_small" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/share_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/share_mark"
+            android:layout_width="59dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="17dp"
+            android:background="#99c96cf1"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_normal" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingLeft="@dimen/content_padding_horizontal"
+        android:paddingRight="@dimen/content_padding_horizontal">
+
+        <TextView
+            android:id="@+id/share_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:textColor="#373737"
+            android:textSize="@dimen/text_size_normal" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:background="@null"
+            android:src="@drawable/arrow_right" />
+    </FrameLayout>
+
+    <include layout="@layout/list_divider_bar" />
+</LinearLayout>

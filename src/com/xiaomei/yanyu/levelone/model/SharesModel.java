@@ -2,22 +2,22 @@ package com.xiaomei.yanyu.levelone.model;
 
 import java.util.List;
 
-import com.xiaomei.yanyu.bean.BeautifulRing;
+import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.bean.UserShare;
 
-public class BeautifulRingModel {
+public class SharesModel {
     
     // ================================ Jingxuan============================================
 	
-	private List<BeautifulRing> mBeautifulData;
+	private List<RecommendShares> mBeautifulData;
 	
 	private int mBeautifulPage;
 	
-	public List<BeautifulRing> getBeautifulData(){
+	public List<RecommendShares> getBeautifulData(){
 		return mBeautifulData;
 	}
 	
-	public void setBeautifulData(List<BeautifulRing> data){
+	public void setBeautifulData(List<RecommendShares> data){
 	    mBeautifulData = data;
 	}
 	

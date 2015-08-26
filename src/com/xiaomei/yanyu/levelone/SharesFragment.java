@@ -3,9 +3,9 @@ package com.xiaomei.yanyu.levelone;
 
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.comment.CommentListActivity;
-import com.xiaomei.yanyu.levelone.adapter.RingAdapter;
+import com.xiaomei.yanyu.levelone.adapter.RecommendSharesAdapter;
 import com.xiaomei.yanyu.levelone.adapter.UserShareAdapter;
-import com.xiaomei.yanyu.levelone.control.BeautifulRingControl;
+import com.xiaomei.yanyu.levelone.control.SharesControl;
 import com.xiaomei.yanyu.leveltwo.BeautifulRingPostActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UserUtil;
@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl> 
+public class SharesFragment extends BaseFragment<SharesControl> 
 	implements OnRefreshListener,OnScrollListener,OnClickListener{
 	
 	private static final int REQUEST_NEW_POST = 0;
@@ -110,7 +110,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	    viewHolder.mPullToRefreshListView = (PullToRefreshListView) root.findViewById(R.id.list);
 	    viewHolder.mListView = viewHolder.mPullToRefreshListView.getRefreshableView();
 	    if(viewHolder == mJinghuaViewHolder){
-	    	viewHolder.mAdapter = new RingAdapter(getActivity());
+	    	viewHolder.mAdapter = new RecommendSharesAdapter(getActivity());
 	    }else{
 	    	viewHolder.mAdapter = new UserShareAdapter(getActivity());
 	    }
@@ -257,7 +257,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	public void getJinghuaListDataFromNetAysnCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
-		RingAdapter ringAdapter = (RingAdapter)mJinghuaViewHolder.mAdapter;
+		RecommendSharesAdapter ringAdapter = (RecommendSharesAdapter)mJinghuaViewHolder.mAdapter;
 		ringAdapter.clear();
         ringAdapter.addAll(mControl.getModel().getBeautifulData());
 		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
@@ -280,7 +280,7 @@ public class BeautifulRingFragment extends BaseFragment<BeautifulRingControl>
 	public void getJinghuaMoreListDataFromNetAysnCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
-		((RingAdapter)mJinghuaViewHolder.mAdapter).addAll(mControl.getModel().getBeautifulData());
+		((RecommendSharesAdapter)mJinghuaViewHolder.mAdapter).addAll(mControl.getModel().getBeautifulData());
 		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
 		mJinghuaViewHolder.mPullToRefreshListView.removeFooterView(mJinghuaViewHolder.mRefreshLayout);
 	}

@@ -3,22 +3,22 @@ package com.xiaomei.yanyu.levelone.control;
 import java.util.List;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.bean.BeautifulRing;
+import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.bean.UserShare;
-import com.xiaomei.yanyu.levelone.model.BeautifulRingModel;
+import com.xiaomei.yanyu.levelone.model.SharesModel;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
 import com.yuekuapp.proxy.MessageProxy;
 
-public class BeautifulRingControl extends BaseControl {
+public class SharesControl extends BaseControl {
 	
-	private BeautifulRingModel mModel;
+	private SharesModel mModel;
 	
 	private final int PERPAGE = 10;
 
-	public BeautifulRingControl(MessageProxy mMethodCallBack) {
+	public SharesControl(MessageProxy mMethodCallBack) {
 		super(mMethodCallBack);
-		mModel = new BeautifulRingModel();
+		mModel = new SharesModel();
 	}
     // =========================================  jingxuan==================================================
 	@AsynMethod
@@ -39,7 +39,7 @@ public class BeautifulRingControl extends BaseControl {
 	public void getJinghuaMoreListDataFromNetAysn(){
 		try {
 			mModel.increaeBeautifulPage();
-			List<BeautifulRing>  data = XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet(String.valueOf(mModel.getBeautifulPage()),String.valueOf(PERPAGE));
+			List<RecommendShares>  data = XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet(String.valueOf(mModel.getBeautifulPage()),String.valueOf(PERPAGE));
 			mModel.setBeautifulData(data);
 			if(data==null || data.size() == 0){
 				mModel.reduceBeautifulPage();;
@@ -87,7 +87,7 @@ public class BeautifulRingControl extends BaseControl {
         sendMessage("getGuangchangMoreListDataFromNetAysnCallBack");
     }
 	
-	public BeautifulRingModel getModel(){
+	public SharesModel getModel(){
 	    return mModel;
 	}
 	

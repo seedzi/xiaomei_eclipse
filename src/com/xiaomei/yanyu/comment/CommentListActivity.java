@@ -32,7 +32,6 @@ import android.widget.ArrayAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.ShareSubcomment;
 import com.xiaomei.yanyu.comment.control.CommentListControl;

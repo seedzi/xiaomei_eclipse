@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.levelone.BeautifulRingFragment;
+import com.xiaomei.yanyu.levelone.SharesFragment;
 import com.xiaomei.yanyu.levelone.HomeFragment;
 import com.xiaomei.yanyu.levelone.MallFragment;
 import com.xiaomei.yanyu.levelone.MerchantFragment;
@@ -42,7 +42,7 @@ public class TabsFragmentManager {
 //			fragments.put("MECHANISMFRAGMENT", fragment);
 			break;
 		case 3:
-			fragment = new BeautifulRingFragment();
+			fragment = new SharesFragment();
 //			fragments.put("BEAUTIFULRINGFRAGMENT", fragment);
 			break;
 		case 4:

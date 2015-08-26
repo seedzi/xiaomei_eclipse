@@ -61,12 +61,18 @@
 
     <dimen name="merchant_info_padding">10dp</dimen>
 
+    <dimen name="user_info_small_space">6dp</dimen>
+
     <dimen name="user_shares_padding_left">24dp</dimen>
     <dimen name="user_shares_action_space">5dp</dimen>
     <dimen name="user_shares_action_drawable_padding">2dp</dimen>
     
     <!-- Text size -->
+    <dimen name="text_size_normal">16sp</dimen>
+
     <dimen name="merchant_rate_text">10sp</dimen>
+
+    <dimen name="user_name_text_small">13sp</dimen>
 
     <dimen name="user_shares_action_text">11sp</dimen>
     

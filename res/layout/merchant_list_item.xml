@@ -90,4 +90,5 @@
                 android:textColor="#dba6ea" />
         </RelativeLayout>
     </RelativeLayout>
+    <include layout="@layout/list_divider_bar" />
 </LinearLayout>

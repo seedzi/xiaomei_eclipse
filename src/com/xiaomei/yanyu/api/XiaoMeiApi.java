@@ -19,7 +19,7 @@ import android.util.Log;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.builder.AddUserOrderBuilder;
 import com.xiaomei.yanyu.api.builder.BeautifulDetailBuilder;
-import com.xiaomei.yanyu.api.builder.BeautifulRingBuilder;
+import com.xiaomei.yanyu.api.builder.RecommendSharesBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
 import com.xiaomei.yanyu.api.builder.MerchantBuilder;
@@ -44,7 +44,6 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.AbstractHttpApi;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpApiWithSession;
-import com.xiaomei.yanyu.bean.BeautifulRing;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
@@ -55,6 +54,7 @@ import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order2;
+import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.bean.UserShare;
@@ -179,7 +179,7 @@ public class XiaoMeiApi {
 	}
 	
 	/**圈子*/
-	public List<BeautifulRing> getBeatifulRingListFromNet(String curpage,String perpage)
+	public List<RecommendShares> getBeatifulRingListFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		BasicNameValuePair[] values = {
@@ -191,7 +191,7 @@ public class XiaoMeiApi {
 				values[1],
 				values[2],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulRingBuilder());
+		return mHttpApi.doHttpRequestObject(httpGet, new RecommendSharesBuilder());
 	}
 	
 	/**圈子详情*/

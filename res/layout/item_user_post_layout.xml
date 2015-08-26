@@ -107,8 +107,5 @@
          android:textSize="15sp"
          android:textColor="#646464"
          />
-     <View 
-         android:layout_height="20dp"
-         android:layout_width="match_parent"
-         android:background="@color/color_background"/>
+     <include layout="@layout/list_divider_bar" />
 </LinearLayout>

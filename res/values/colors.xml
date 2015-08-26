@@ -39,6 +39,9 @@
       
       <color name="color_transparent">#00000000</color>
 
+    <color name="username">#1e1e1e</color>
+    <color name="date">#c5c5c5</color>
+
     <color name="list_item_background">@color/color_white</color>
 
     <color name="merchant_title_text">#787878</color>
