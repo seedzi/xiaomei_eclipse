@@ -6,6 +6,8 @@ import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +27,12 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.launch.control.LaunchControl;
-import com.xiaomei.yanyu.widget.PagerAdapter;
-import com.xiaomei.yanyu.widget.ViewPager;
 
 public class LaunchActivity extends  AbstractActivity<LaunchControl>{
 
 	private View splash;
 	
-	private com.xiaomei.yanyu.widget.ViewPager pager;
+	private ViewPager pager;
 	
 	private LayoutInflater mInflater;
 	

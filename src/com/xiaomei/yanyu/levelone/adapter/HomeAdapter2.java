@@ -4,11 +4,11 @@ package com.xiaomei.yanyu.levelone.adapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.util.YanYuUtils;
-import com.xiaomei.yanyu.widget.PagerAdapter;
-import com.xiaomei.yanyu.widget.ViewPager;
 
 import android.content.Context;
 import android.os.Parcelable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
