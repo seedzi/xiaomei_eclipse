@@ -35,5 +35,37 @@
             android:maxLines="4"
             android:textSize="14sp"
             android:lineSpacingMultiplier="1.2"/>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+            
+            <TextView 
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBaseline="@+id/sale"
+                android:textSize="@dimen/goods_info_text"/> 
+
+            <TextView 
+                android:id="@+id/sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/price"
+                android:layout_marginRight="8dp"
+                android:textSize="20sp"
+                android:textColor="#d366f3" />
+
+            <com.xiaomei.yanyu.widget.StrikeThroughTextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@+id/sale"
+                android:textSize="@dimen/goods_info_text"
+                android:textColor="#c8c8c8" />
+        </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

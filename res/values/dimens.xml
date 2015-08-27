@@ -70,7 +70,7 @@
     <dimen name="user_shares_action_space">5dp</dimen>
     <dimen name="user_shares_action_drawable_padding">2dp</dimen>
 
-    <dimen name="detail_item_content_width">310dp</dimen>
+    <dimen name="detail_item_content_padding_horizontal">10dp</dimen>
     <dimen name="detail_item_content_padding_vertical">25dp</dimen>
     <dimen name="shares_detail_summary_space_vertical">28dp</dimen>
 
@@ -82,8 +82,10 @@
     <dimen name="user_name_text_small">13sp</dimen>
 
     <dimen name="user_shares_action_text">11sp</dimen>
-    
+
     <dimen name="title_text">20sp</dimen>
+
+    <dimen name="goods_info_text">13sp</dimen>
     
     <!-- 友盟 -->
         <dimen name="body_padding_medium">10dp</dimen>

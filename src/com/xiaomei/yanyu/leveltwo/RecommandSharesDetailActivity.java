@@ -7,6 +7,7 @@ import java.util.List;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.RecommendSharesDetail;
 import com.xiaomei.yanyu.comment.CommentListActivity;
@@ -57,7 +58,7 @@ public class RecommandSharesDetailActivity extends AbstractActivity<LeveltwoCont
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mId = getIntent().getStringExtra("id");
-		setContentView(R.layout.activity_recommend_shares_detail);
+		setContentView(R.layout.activity_sliding_detail);
 		initView();
 		initData();
 	}
@@ -145,42 +146,17 @@ public class RecommandSharesDetailActivity extends AbstractActivity<LeveltwoCont
 		Toast.makeText(this, "获取数据异常", 0).show();
 	}
 	
-    private static class SharesDetailAdapter extends PagerAdapter {
-
-        private List<RecommendSharesDetail.Item> mItems = new ArrayList<RecommendSharesDetail.Item>();
+    private static class SharesDetailAdapter extends ArrayPagerAdapter<RecommendSharesDetail.Item> {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             View itemView = LayoutInflater.from(container.getContext()).inflate(R.layout.shares_detail_item, container, false);
-            RecommendSharesDetail.Item item = mItems.get(position);
+            RecommendSharesDetail.Item item = getItem(position);
             UiUtil.findTextViewById(itemView, R.id.text).setText(item.getTitle());
             ImageView image = UiUtil.findImageViewById(itemView, R.id.image);
             ImageLoader.getInstance().displayImage(item.getImageLarge(), image);
             container.addView(itemView);
             return itemView;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public int getCount() {
-            return mItems.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-        
-        public void addAll(RecommendSharesDetail.Item[] items) {
-            mItems.addAll(Arrays.asList(items));
-        }
-        
-        public void clear() {
-            mItems.clear();
         }
     }
 }

@@ -76,7 +76,7 @@
 		<!-- 进入首页的第二种形式 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.leveltwo.HomeStyle2">
+		    android:name="com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity">
 		</activity>
 		
 		<!-- 浏览记录 -->

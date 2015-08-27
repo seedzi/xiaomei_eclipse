@@ -10,7 +10,7 @@ import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.Section.Entity;
 import com.xiaomei.yanyu.leveltwo.RecommandSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
-import com.xiaomei.yanyu.leveltwo.HomeStyle2;
+import com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity;
 import com.xiaomei.yanyu.leveltwo.WebViewActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.util.UiUtil;
@@ -91,7 +91,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
                 if (Section.TYPE_DETAIL.equals(section.getType())) {
                     GoodsDetailActivity.startActivity(activity, entity.getUrl());
                 } else if (Section.TYPE_DISPLAY.equals(section.getType())) {
-                    HomeStyle2.startActivity(activity, section.getList_String(), section.getTitle() , section.getDes(), entity.getImg(), section.getViewCount());
+                    TopicDetailSlideActivity.startActivity(activity, section.getList_String(), section.getTitle() , section.getDes(), entity.getImg(), section.getViewCount());
                 }
             }
         });
@@ -194,7 +194,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
                 if (Section.TYPE_DETAIL.equals(section.getType())) {
                     GoodsDetailActivity.startActivity(activity, entity.getUrl());
                 } else if (Section.TYPE_DISPLAY.equals(section.getType())) {
-                    HomeStyle2.startActivity(activity, section.getList_String(), section.getTitle() , section.getDes(), entity.getImg(), section.getViewCount());
+                    TopicDetailSlideActivity.startActivity(activity, section.getList_String(), section.getTitle() , section.getDes(), entity.getImg(), section.getViewCount());
                 }
             }
         });
