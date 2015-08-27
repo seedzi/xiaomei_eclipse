@@ -18,8 +18,8 @@ import android.util.Log;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.builder.AddUserOrderBuilder;
-import com.xiaomei.yanyu.api.builder.BeautifulDetailBuilder;
 import com.xiaomei.yanyu.api.builder.RecommendSharesBuilder;
+import com.xiaomei.yanyu.api.builder.RecommendSharesDetailBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
 import com.xiaomei.yanyu.api.builder.MerchantBuilder;
@@ -55,6 +55,7 @@ import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order2;
 import com.xiaomei.yanyu.bean.RecommendShares;
+import com.xiaomei.yanyu.bean.RecommendSharesDetail;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.bean.UserShare;
@@ -195,7 +196,7 @@ public class XiaoMeiApi {
 	}
 	
 	/**圈子详情*/
-	public BeautifulRingDetail getBeatifulRingDetailFromNet(String id)
+	public RecommendSharesDetail getBeatifulRingDetailFromNet(String id)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		android.util.Log.d("111", "id = " + id);
@@ -207,7 +208,7 @@ public class XiaoMeiApi {
 				values[1],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		android.util.Log.d("111", "getBeatifulRingDetailFromNet");
-		return mHttpApi.doHttpRequestObject(httpGet, new BeautifulDetailBuilder());
+		return mHttpApi.doHttpRequestObject(httpGet, new RecommendSharesDetailBuilder());
 	}
 	
 	   /**广场*/

@@ -124,7 +124,7 @@
 		<!-- 圈子详情 -->
 		<activity
 		    android:theme="@style/activityTheme"
-			android:name="com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.RecommandSharesDetailActivity">
 		</activity>
 		<activity
 		    android:theme="@style/Theme"

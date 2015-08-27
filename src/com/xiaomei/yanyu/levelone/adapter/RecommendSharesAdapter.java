@@ -3,7 +3,7 @@ package com.xiaomei.yanyu.levelone.adapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.RecommendShares;
-import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity;
+import com.xiaomei.yanyu.leveltwo.RecommandSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.UiUtil;
 
@@ -42,7 +42,7 @@ public class RecommendSharesAdapter extends ArrayAdapter<RecommendShares> {
                 if (shareType == RecommendShares.TYPE_DETAIL) {
                     GoodsDetailActivity.startActivity(activity, recommendShares.getLink());
                 } else if (shareType == RecommendShares.TYPE_DISPLAY) {
-                    BeautifulRingDetailsActivity.startActivity(activity, recommendShares.getId());
+                    RecommandSharesDetailActivity.startActivity(activity, recommendShares.getId());
                 }
             }
         });

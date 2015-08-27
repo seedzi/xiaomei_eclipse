@@ -8,7 +8,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.Section.Entity;
-import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity;
+import com.xiaomei.yanyu.leveltwo.RecommandSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.HomeStyle2;
 import com.xiaomei.yanyu.leveltwo.WebViewActivity;
@@ -149,7 +149,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
                 if (Section.TYPE_DETAIL.equals(section.getType())) {
                     GoodsDetailActivity.startActivity(activity, entity.getUrl());
                 } else if (Section.TYPE_DISPLAY.equals(section.getType())) {
-                    BeautifulRingDetailsActivity.startActivity(activity, entity.getShareId());
+                    RecommandSharesDetailActivity.startActivity(activity, entity.getShareId());
                 }
             }
         });

@@ -33,7 +33,6 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.ChannelEntity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
-import com.xiaomei.yanyu.leveltwo.BeautifulRingDetailsActivity.MyOnPageChangeListener;
 import com.xiaomei.yanyu.widget.CircleImageView;
 import com.xiaomei.yanyu.widget.MyLayout;
 import com.xiaomei.yanyu.widget.PagerAdapter;

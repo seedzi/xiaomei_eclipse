@@ -59,6 +59,9 @@
     
     <dimen name="action_bar_padding_horizontal">15dp</dimen>
 
+    <dimen name="pager_item_space_horizontal">10dp</dimen>
+    <dimen name="pager_item_space_vertical">22dp</dimen>
+
     <dimen name="merchant_info_padding">10dp</dimen>
 
     <dimen name="user_info_small_space">6dp</dimen>
@@ -66,7 +69,11 @@
     <dimen name="user_shares_padding_left">24dp</dimen>
     <dimen name="user_shares_action_space">5dp</dimen>
     <dimen name="user_shares_action_drawable_padding">2dp</dimen>
-    
+
+    <dimen name="detail_item_content_width">310dp</dimen>
+    <dimen name="detail_item_content_padding_vertical">25dp</dimen>
+    <dimen name="shares_detail_summary_space_vertical">28dp</dimen>
+
     <!-- Text size -->
     <dimen name="text_size_normal">16sp</dimen>
 
