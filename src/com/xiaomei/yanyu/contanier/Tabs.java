@@ -30,13 +30,13 @@ public class Tabs extends LinearLayout implements View.OnClickListener{
     
     int[] tabs_drawable_res = {R.drawable.tabs_home_gary, 
 			R.drawable.tabs_fenlei,
-			R.drawable.tabs_mechanism_gary,
+			R.drawable.tabs_merchant_gary,
 			R.drawable.tabs_circle_gary,
 			R.drawable.tabs_me_gary};
     
     int[] tabs_drawable_res_checked = {R.drawable.tabs_home, 
 			R.drawable.tabs_fenlei_press,
-			R.drawable.tabs_mechanism,
+			R.drawable.tabs_merchant,
 			R.drawable.tabs_circle,
 			R.drawable.tabs_me};
     

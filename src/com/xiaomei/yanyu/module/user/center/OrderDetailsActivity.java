@@ -78,8 +78,8 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private TitleBar mTitlBar;
 	
 	private TextView mobileTv; //电话号码
-	private TextView mechanismNameTv;  //机构名字
-	private TextView mechanismLocationTv; //机构地址
+	private TextView merchantNameTv;  //机构名字
+	private TextView merchantLocationTv; //机构地址
 	private TextView goodsTitleTv; //商品名称
 	private TextView goodsPriceTv; //商品价格
 	private TextView goodsTypeTv; //商品类型
@@ -140,9 +140,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		rootView = findViewById(R.id.root_layout);
 		mLoadingView = findViewById(R.id.loading_layout);
 		
-		mobileTv = (TextView) findViewById(R.id.mechanism_mobile);
-		mechanismNameTv = (TextView) findViewById(R.id.mechanism_name);
-		mechanismLocationTv = (TextView) findViewById(R.id.mechanism_location);
+		mobileTv = (TextView) findViewById(R.id.merchant_mobile);
+		merchantNameTv = (TextView) findViewById(R.id.merchant_name);
+		merchantLocationTv = (TextView) findViewById(R.id.merchant_location);
 		goodsTitleTv = (TextView) findViewById(R.id.goods_title);
 		goodsPriceTv = (TextView) findViewById(R.id.goods_price);
 		goodsTypeTv = (TextView) findViewById(R.id.goods_type);
@@ -191,8 +191,8 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         goodsPriceTv.setText(getResources().getString(R.string.ren_ming_bi) + " " + orderDataList.getGoodsPay());
         ImageLoader.getInstance().displayImage(goodsInfo.getGoodsImg(), goodsIconIv);
         Order.DataDetail.HospInfo hospInfo = orderDataDetail.getHospInfo();
-        mechanismNameTv.setText(hospInfo.getHospName());
-        mechanismLocationTv.setText(hospInfo.getAddr());
+        merchantNameTv.setText(hospInfo.getHospName());
+        merchantLocationTv.setText(hospInfo.getAddr());
         mobileTv.setText(hospInfo.getTel());
         
         List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();

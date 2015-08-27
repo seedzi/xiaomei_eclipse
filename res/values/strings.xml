@@ -15,7 +15,7 @@
     
     <string name="fragment_home">首页</string>
     <string name="fragment_mall">分类</string>
-    <string name="fragment_mechanism">机构</string>
+    <string name="fragment_merchant">机构</string>
     <string name="fragment_shares">圈子</string>
     <string name="fragment_user">我的</string>
     <!-- 用户 -->

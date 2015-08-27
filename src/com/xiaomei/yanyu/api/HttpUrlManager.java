@@ -13,7 +13,7 @@ public class HttpUrlManager {
 	/**产品详情*/
 	public static String GOODS_DETAIL_URL  = "http://z.drxiaomei.com/goods.php";
 	/**机构详情*/
-	public static String MECHANISM_DETAIL_URL = "http://z.drxiaomei.com/hospital.php";//?hosp_id=45
+	public static String MERCHANT_DETAIL_URL = "http://z.drxiaomei.com/hospital.php";//?hosp_id=45
 	
 	public static String COMMENT_DETAIL_URL = HOST +"/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
 	
@@ -40,7 +40,7 @@ public class HttpUrlManager {
 		return HOST + "/server/show/start.php";
 	}
 	/**机构*/
-	String getMechanismListUrl(){
+	String getMerchantListUrl(){
 		return HOST + "/server/show/hospital_list.php";
 	}
 	/**圈子*/

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.xiaomei.yanyu.bean.Merchant;
 
-public class MechanismModel {
+public class MerchantModel {
 
 	private List<Merchant> mData;
 	

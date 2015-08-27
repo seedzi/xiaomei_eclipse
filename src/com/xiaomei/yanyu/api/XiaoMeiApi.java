@@ -165,14 +165,14 @@ public class XiaoMeiApi {
 	}
 	
 	/**机构*/
-	public List<Merchant> getMechanismListFromNet(String curpage,String perpage)
+	public List<Merchant> getMerchantListFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		BasicNameValuePair[] values = {
 				new BasicNameValuePair("curpage", curpage),
 				new BasicNameValuePair("perpage", perpage),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMechanismListUrl(),
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMerchantListUrl(),
 				values[0],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new MerchantBuilder());
