@@ -2,7 +2,6 @@ package com.xiaomei.yanyu.leveltwo.model;
 
 import java.util.List;
 
-import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.bean.RecommendSharesDetail;

@@ -33,7 +33,7 @@ public class LeveltwoControl extends BaseControl {
 	@AsynMethod
 	public void getDataAsyn(String id ){
 		try {
-			mModel.setRecommendSharesDetail(XiaoMeiApplication.getInstance().getApi().getBeatifulRingDetailFromNet(id));
+			mModel.setRecommendSharesDetail(XiaoMeiApplication.getInstance().getApi().getRecommendSharesDetailFromNet(id));
 			if(mModel.getRecommendSharesDetail()!=null)
 				sendMessage("getDataAsynCallBack");
 			else

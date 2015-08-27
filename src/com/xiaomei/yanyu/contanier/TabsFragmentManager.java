@@ -35,19 +35,15 @@ public class TabsFragmentManager {
 			break;
 		case 1:
 			fragment = new MallFragment();
-//			fragments.put("MALLFRAGMENT", fragment);
 			break;
 		case 2:
 			fragment = new MerchantFragment();
-//			fragments.put("MECHANISMFRAGMENT", fragment);
 			break;
 		case 3:
 			fragment = new SharesFragment();
-//			fragments.put("BEAUTIFULRINGFRAGMENT", fragment);
 			break;
 		case 4:
 			fragment = new UserFragment();
-//			fragments.put("USERFRAGMENT", fragment);
 			break;
 		default:
 			break;
@@ -73,52 +69,4 @@ public class TabsFragmentManager {
 //        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-	
-	
-	
-
-	/*
-    private List<Fragment> fragments = new ArrayList<Fragment>();
-
-    public TabsFragmentManager(){};
-
-    public Fragment getFragment(int position){
-        Fragment fragment = null;
-        switch (position) {
-		case 0:
-			fragment = new HomeFragment();
-			break;
-		case 1:
-			fragment = new MallFragment();
-			break;
-		case 2:
-			fragment = new MechanismFragment();
-			break;
-		case 3:
-			fragment = new BeautifulRingFragment();
-			break;
-		case 4:
-			fragment = new UserFragment();
-			break;
-		default:
-			break;
-		}
-        fragments.add(fragment);
-        return fragment;
-    }
-
-    @SuppressLint("NewApi")
-	public void commitFragment(int position,FragmentActivity ac){
-        FragmentManager fragmentManager = ac.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = fragmentManager.findFragmentByTag(String.valueOf(position));
-        if(fragment==null || !fragments.contains(fragment)){
-            fragment = getFragment(position);
-        }
-        fragmentTransaction.replace(R.id.container_body_layout,fragment,String.valueOf(position));
-        fragmentTransaction.show(fragment);
-//        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-*/
 }

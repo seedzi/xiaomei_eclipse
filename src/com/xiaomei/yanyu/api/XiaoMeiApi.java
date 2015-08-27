@@ -44,7 +44,6 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.AbstractHttpApi;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpApiWithSession;
-import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
@@ -180,14 +179,14 @@ public class XiaoMeiApi {
 	}
 	
 	/**圈子*/
-	public List<RecommendShares> getBeatifulRingListFromNet(String curpage,String perpage)
+	public List<RecommendShares> getRecommendSharesFromNet(String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		BasicNameValuePair[] values = {
 				new BasicNameValuePair("curpage", curpage),
 				new BasicNameValuePair("perpage", perpage),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingListUrl(),
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRecommendSharesUrl(),
 				values[0],
 				values[1],
 				values[2],
@@ -196,18 +195,18 @@ public class XiaoMeiApi {
 	}
 	
 	/**圈子详情*/
-	public RecommendSharesDetail getBeatifulRingDetailFromNet(String id)
+	public RecommendSharesDetail getRecommendSharesDetailFromNet(String id)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		android.util.Log.d("111", "id = " + id);
 		BasicNameValuePair[] values = {
 				new BasicNameValuePair("id",id),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRingDetailUrl(),
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getRecommendSharesDetailUrl(),
 				values[0],
 				values[1],
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-		android.util.Log.d("111", "getBeatifulRingDetailFromNet");
+		android.util.Log.d("111", "getRecommendSharesDetailFromNet");
 		return mHttpApi.doHttpRequestObject(httpGet, new RecommendSharesDetailBuilder());
 	}
 	

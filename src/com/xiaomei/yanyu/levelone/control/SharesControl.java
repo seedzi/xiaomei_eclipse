@@ -25,7 +25,7 @@ public class SharesControl extends BaseControl {
 	public void getJinghuaListDataFromNetAysn(){
 		try {
 			mModel.setBeautifulPage(1);
-			mModel.setBeautifulData(XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet(String.valueOf(mModel.getBeautifulPage()),String.valueOf(PERPAGE)));
+			mModel.setBeautifulData(XiaoMeiApplication.getInstance().getApi().getRecommendSharesFromNet(String.valueOf(mModel.getBeautifulPage()),String.valueOf(PERPAGE)));
 			sendMessage("getJinghuaListDataFromNetAysnCallBack");
 		} catch (Exception e) {
 			sendMessage("getJinghuaListDataFromNetAysnExceptionCallBack");
@@ -39,7 +39,7 @@ public class SharesControl extends BaseControl {
 	public void getJinghuaMoreListDataFromNetAysn(){
 		try {
 			mModel.increaeBeautifulPage();
-			List<RecommendShares>  data = XiaoMeiApplication.getInstance().getApi().getBeatifulRingListFromNet(String.valueOf(mModel.getBeautifulPage()),String.valueOf(PERPAGE));
+			List<RecommendShares>  data = XiaoMeiApplication.getInstance().getApi().getRecommendSharesFromNet(String.valueOf(mModel.getBeautifulPage()),String.valueOf(PERPAGE));
 			mModel.setBeautifulData(data);
 			if(data==null || data.size() == 0){
 				mModel.reduceBeautifulPage();;

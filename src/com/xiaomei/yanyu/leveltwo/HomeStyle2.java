@@ -30,7 +30,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.bean.BeautifulRingDetail;
 import com.xiaomei.yanyu.bean.ChannelEntity;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.widget.CircleImageView;

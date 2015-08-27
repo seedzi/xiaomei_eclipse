@@ -36,7 +36,7 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_beautiful_ring_post_layout);
+        setContentView(R.layout.activity_compose_user_share);
         
         ActionBar actionBar = getActionBar();
         int mask = android.app.ActionBar.DISPLAY_SHOW_CUSTOM | android.app.ActionBar.DISPLAY_SHOW_HOME | android.app.ActionBar.DISPLAY_SHOW_TITLE;
@@ -144,7 +144,7 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
 
     private boolean ensureField() {
         if (TextUtils.isEmpty(mMessage.getText())) {
-            UiUtil.showToast(this, getString(R.string.warning_field_empty, getString(R.string.ring_content_label)));
+            UiUtil.showToast(this, getString(R.string.warning_field_empty, getString(R.string.user_share_content_label)));
             return false;
         }
         return true;

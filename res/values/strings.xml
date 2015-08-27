@@ -16,7 +16,7 @@
     <string name="fragment_home">首页</string>
     <string name="fragment_mall">分类</string>
     <string name="fragment_mechanism">机构</string>
-    <string name="fragment_beautiful_ring">圈子</string>
+    <string name="fragment_shares">圈子</string>
     <string name="fragment_user">我的</string>
     <!-- 用户 -->
     <string name="commit">提交</string>
@@ -72,7 +72,7 @@
     <string name="warning_field_empty" tools:ignore="MissingTranslation">%1$s不能为空！</string>
     <string name="warning_network_unavailable" translatable="false">网络不给力呢～</string>
     <string name="error_upload_file" tools:ignore="MissingTranslation">文件上传失败!</string>
-    <string name="ring_content_label" tools:ignore="MissingTranslation">美丽圈内容</string>
+    <string name="user_share_content_label" tools:ignore="MissingTranslation">美丽圈内容</string>
     
     <!-- 商城 -->
 	<string name="mall_item_nam_1">肉毒素除皱</string>    

@@ -44,11 +44,11 @@ public class HttpUrlManager {
 		return HOST + "/server/show/hospital_list.php";
 	}
 	/**圈子*/
-	String getRingListUrl(){
+	String getRecommendSharesUrl(){
 		return HOST + "/server/show/share_list.php";
 	}
 	/**圈子详情*/
-	String getRingDetailUrl(){
+	String getRecommendSharesDetailUrl(){
 		return HOST + "/server/show/share_info.php";
 	}
 	/**商城*/

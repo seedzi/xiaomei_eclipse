@@ -61,7 +61,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		if(mRootView ==null){
-			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_beautifulring_layout, null);
+			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_shares, null);
 			setUpView();
 			mJinghua.performClick();
 		} else {
@@ -76,7 +76,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	
 	private void setUpView(){
 		mTitleBar = mRootView.findViewById(R.id.title_bar);
-		((TextView) mTitleBar.findViewById(android.R.id.title)).setText(getString(R.string.fragment_beautiful_ring));
+		((TextView) mTitleBar.findViewById(android.R.id.title)).setText(getString(R.string.fragment_shares));
 		mTitleBar.findViewById(R.id.new_post).setOnClickListener(this);
 
         mJinghua = (ViewGroup) mRootView.findViewById(R.id.jing_hua);
@@ -257,9 +257,9 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	public void getJinghuaListDataFromNetAysnCallBack(){
 		dissProgress(mJinghuaViewHolder);
 		mJinghuaViewHolder.mIsRefresh = false;
-		RecommendSharesAdapter ringAdapter = (RecommendSharesAdapter)mJinghuaViewHolder.mAdapter;
-		ringAdapter.clear();
-        ringAdapter.addAll(mControl.getModel().getBeautifulData());
+		RecommendSharesAdapter recommendSharesAdapter = (RecommendSharesAdapter)mJinghuaViewHolder.mAdapter;
+		recommendSharesAdapter.clear();
+        recommendSharesAdapter.addAll(mControl.getModel().getBeautifulData());
 		mJinghuaViewHolder.mAdapter.notifyDataSetChanged();
 		mJinghuaViewHolder.mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
@@ -327,5 +327,4 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	    private View mLoadingView; 
 	    private View mEmptyView;
 	}
-	//RingAdapter
 }
