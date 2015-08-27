@@ -10,7 +10,6 @@ import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.levelone.control.MallControl;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsListActivity;
-import com.xiaomei.yanyu.leveltwo.MallSecondActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.yuekuapp.BaseFragment;

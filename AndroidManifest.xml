@@ -115,10 +115,6 @@
 		<!-- 商城 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-			android:name="com.xiaomei.yanyu.leveltwo.MallSecondActivity">
-		</activity>		
-		<activity 
-		    android:theme="@style/activityTheme"
 			android:name="com.xiaomei.yanyu.leveltwo.GoodsListActivity">
         </activity> 
 		<!-- 圈子详情 -->
