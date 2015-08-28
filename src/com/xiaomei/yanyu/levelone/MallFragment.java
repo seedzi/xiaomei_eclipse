@@ -41,8 +41,6 @@ public class MallFragment extends BaseFragment<MallControl> {
 	
 	private MailAdapter mMailAdapter;
 	
-	private TitleBar mTitleBar;
-	
 	private ImageView mTopIcon;
 	
 	private View mLoadingView; 

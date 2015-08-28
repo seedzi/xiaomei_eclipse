@@ -39,8 +39,6 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	
 	private ViewGroup mRootView;
 	
-	private TitleBar mTitleBar;
-	
 	private ViewGroup line1,line2,line3,line4,line5,line6,line7;
 	
 	private ImageView mUserIconIv;

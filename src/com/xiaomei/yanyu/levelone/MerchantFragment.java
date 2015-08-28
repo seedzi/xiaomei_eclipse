@@ -43,8 +43,6 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	
 	private ListView mListView;
 	
-	private TitleBar mTitleBar;
-	
 	private MerchantAdapter mAdapter;
 	
 	private boolean mIsRefresh;
