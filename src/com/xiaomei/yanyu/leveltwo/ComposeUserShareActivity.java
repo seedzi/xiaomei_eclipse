@@ -4,6 +4,7 @@ import com.xiaomei.yanyu.AsyncRequestService;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.AttachmentContainer;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -24,10 +25,9 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
     private static final int REQUEST_PICK_IMAGE = 0;
 
     private static final int MAX_MESSAGE_LENGTH = 300;
-    
-    private TextView mTitle;
-    private View mHome;
-    private View mPost;
+
+    private TitleActionBar mTitleBar;
+
     private TextView mMessage;
     private TextView mMessageLength;
     private AttachmentContainer mImageContainer;
@@ -37,15 +37,10 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_user_share);
-        
-        ActionBar actionBar = getActionBar();
-        int mask = android.app.ActionBar.DISPLAY_SHOW_CUSTOM | android.app.ActionBar.DISPLAY_SHOW_HOME | android.app.ActionBar.DISPLAY_SHOW_TITLE;
-        actionBar.setDisplayOptions(android.app.ActionBar.DISPLAY_SHOW_CUSTOM, mask);
-        actionBar.setCustomView(R.layout.title_bar);
-        View actionbarView = actionBar.getCustomView();
-        mTitle = (TextView) actionbarView.findViewById(android.R.id.title);
-        mHome = actionbarView.findViewById(android.R.id.home);
-        mHome.setOnClickListener(new OnClickListener() {
+
+        mTitleBar = new TitleActionBar(getActionBar());
+        mTitleBar.setTitle(R.string.title_activity_post);
+        mTitleBar.setOnHomeClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity activity = (Activity) v.getContext();
@@ -53,9 +48,17 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
                 activity.onBackPressed();
             }
         });
-        mPost = actionbarView.findViewById(R.id.new_post);
-        mPost.setOnClickListener(this);
-        
+        mTitleBar.setTextAction(R.string.submit);
+        mTitleBar.setOnActionClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ensureField()) {
+                    AsyncRequestService.startNewPost(v.getContext(), mMessage.getText().toString(), mImageContainer.getAttachmentUris());
+                    onBackPressed();
+                }
+            }
+        });
+
         mMessage = (TextView) findViewById(R.id.message);
         mMessage.addTextChangedListener(new TextWatcher() {
             int start;
@@ -95,22 +98,10 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
         mImageContainer = (AttachmentContainer) findViewById(R.id.attachment_container);
         mAttachImage = mImageContainer.findViewById(R.id.attach_image);
         mAttachImage.setOnClickListener(this);
-        
-        setTitle(R.string.title_activity_post);
     }
 
     private void showMessageLength(int length) {
         mMessageLength.setText(String.format("%d/%d", length, MAX_MESSAGE_LENGTH));
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle.setText(title);
-    }
-
-    @Override
-    public void setTitle(int titleId) {
-        mTitle.setText(titleId);
     }
 
     @Override
@@ -128,12 +119,6 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.new_post:
-                if (ensureField()) {
-                    AsyncRequestService.startNewPost(this, mMessage.getText().toString(), mImageContainer.getAttachmentUris());
-                    onBackPressed();
-                }
-                break;
             case R.id.attach_image:
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

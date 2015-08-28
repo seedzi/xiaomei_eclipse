@@ -69,7 +69,7 @@
 		
 		<!-- 进入首页的第二种形式 -->
 		<activity 
-		    android:theme="@style/activityTheme"
+		    android:theme="@style/Theme"
 		    android:name="com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity">
 		</activity>
 		
@@ -113,8 +113,8 @@
         </activity> 
 		<!-- 圈子详情 -->
 		<activity
-		    android:theme="@style/activityTheme"
-			android:name="com.xiaomei.yanyu.leveltwo.RecommandSharesDetailActivity">
+		    android:theme="@style/Theme"
+			android:name="com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity">
 		</activity>
 		<activity
 		    android:theme="@style/Theme"

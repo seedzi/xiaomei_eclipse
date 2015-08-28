@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
+    android:layout_height="match_parent"
+    android:background="@color/color_titlebar_background">
+
     <ImageButton
         android:id="@android:id/home"
         android:layout_width="40dp"
@@ -12,26 +18,24 @@
         android:scaleType="centerInside"
         android:src="@drawable/back"
         android:background="@null" />
-    
+
     <TextView
         android:id="@android:id/title"
         style="@style/ActionBarTitle" />
 
-    <Button
-        android:id="@+id/new_post"
-        android:layout_width="45dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
+    <FrameLayout
+        android:id="@+id/action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/action_bar_padding_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
         android:background="@null"
-        android:textColor="@color/color_main"
-        android:textSize="@dimen/title_text"
-        android:text="@string/submit" />
-    
+        android:visibility="gone" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
         android:layout_alignParentBottom="true"
-        android:background="@android:drawable/divider_horizontal_bright" />
+        android:background="@color/divider" />
 </RelativeLayout>

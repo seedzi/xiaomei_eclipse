@@ -86,7 +86,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	
 	private void initView(){
 		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
-		mTitleBar.setTitle("详情");
+		mTitleBar.setTitle(getString(R.string.detail));
 		mTitleBar.setBackListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

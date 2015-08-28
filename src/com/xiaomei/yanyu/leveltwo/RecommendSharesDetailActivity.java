@@ -11,6 +11,7 @@ import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
@@ -29,10 +30,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecommandSharesDetailActivity extends Activity implements LoaderManager.LoaderCallbacks<Object>, ViewPager.OnPageChangeListener {
+public class RecommendSharesDetailActivity extends Activity implements LoaderManager.LoaderCallbacks<Object>, ViewPager.OnPageChangeListener {
 
 	public static void startActivity(Activity ac,String id){
-		Intent intent = new Intent(ac,RecommandSharesDetailActivity.class);
+		Intent intent = new Intent(ac,RecommendSharesDetailActivity.class);
 		intent.putExtra("id", id);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
@@ -42,7 +43,7 @@ public class RecommandSharesDetailActivity extends Activity implements LoaderMan
 	
 	private String mId;
 
-	private TitleBar mTitleBar;
+	private TitleActionBar mTitleBar;
     private ImageView mBackground;
     private SlidingMenu mSlidingMenu;
     private TextView mTitle;
@@ -65,25 +66,17 @@ public class RecommandSharesDetailActivity extends Activity implements LoaderMan
 	}
 	
 	private void initView(){
-		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
-		mTitleBar.setTitle("详情");
-		mTitleBar.setBackListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
-		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
-		mTitleBar.findViewById(R.id.comment).setVisibility(View.VISIBLE);
-		mTitleBar.findViewById(R.id.comment).setOnClickListener(new View.OnClickListener() {
+	    mTitleBar = new TitleActionBar(getActionBar());
+		mTitleBar.setTitle(R.string.detail);
+		mTitleBar.setImageAction(R.drawable.bubble_selector);
+		mTitleBar.setOnActionClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(!TextUtils.isEmpty(mId))
 					if(UserUtil.getUser()==null)
-						LoginAndRegisterActivity.startActivity(RecommandSharesDetailActivity.this, true);
+						LoginAndRegisterActivity.startActivity(RecommendSharesDetailActivity.this, true);
 					else
-						CommentListActivity.startActivity(RecommandSharesDetailActivity.this, "share", mId,true,false);
+						CommentListActivity.startActivity(RecommendSharesDetailActivity.this, "share", mId,true,false);
 			}
 		});
 		

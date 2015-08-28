@@ -9,11 +9,10 @@ import org.json.JSONObject;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TopicDetailSlideActivity extends AbstractActivity implements ViewPager.OnPageChangeListener {
+public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPageChangeListener {
 
 	public static void startActivity(Activity ac,String data,String tilte,String des,String img_url,String viewcount){
 		android.util.Log.d("111", "info = " + Info.toBean(data));
@@ -43,7 +42,7 @@ public class TopicDetailSlideActivity extends AbstractActivity implements ViewPa
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
-	private TitleBar mTitleBar;	
+	private TitleActionBar mTitleBar;	
 
     private ImageView mBackground;
     private SlidingMenu mSlidingMenu;
@@ -63,16 +62,9 @@ public class TopicDetailSlideActivity extends AbstractActivity implements ViewPa
 		initData();
 	}
 	
-	private void initView(){
-		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
-		mTitleBar.setTitle("详情");
-		mTitleBar.setBackListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-		mTitleBar.findViewById(R.id.right_root).setVisibility(View.GONE);
+    private void initView() {
+        mTitleBar = new TitleActionBar(getActionBar());
+        mTitleBar.setTitle(R.string.detail);
 
         mBackground = (ImageView)findViewById(android.R.id.background);
         mSlidingMenu = (SlidingMenu)findViewById(R.id.sliding_menu);
