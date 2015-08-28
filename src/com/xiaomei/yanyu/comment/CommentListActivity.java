@@ -47,27 +47,6 @@ import com.yuekuapp.BaseActivity;
 public class CommentListActivity extends BaseActivity<CommentListControl> 
     implements OnRefreshListener,OnScrollListener{
     
-    @Deprecated
-    public static void startActivity(Context context){
-        Intent intent = new Intent(context,CommentListActivity.class);
-        context.startActivity(intent);
-    }
-    @Deprecated
-    public static void startActivity(Context context,String type,String typeid){
-        Intent intent = new Intent(context,CommentListActivity.class);
-        intent.putExtra("type", type);
-        intent.putExtra("typeid", typeid);
-        context.startActivity(intent);
-    }
-    @Deprecated
-    public static void startActivity(Context context,String type,String typeid,boolean showComment){
-        Intent intent = new Intent(context,CommentListActivity.class);
-        intent.putExtra("type", type);
-        intent.putExtra("typeid", typeid);
-        intent.putExtra("showComment", showComment);
-        context.startActivity(intent);
-    }
-    
     public static void startActivity(Context context,String type,String typeid,boolean showComment,boolean isOnFouce){
         Intent intent = new Intent(context,CommentListActivity.class);
         intent.putExtra("type", type);
@@ -131,7 +110,7 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 			@Override
 			public void onClick(View v) {
 			   Activity activity = (Activity)v.getContext();
-			   UiUtil.closeBoard(commentEdit);
+			   UiUtil.hideSoftInput(commentEdit);
 			   activity.finish();
 			}
 		});

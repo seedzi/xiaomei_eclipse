@@ -5,6 +5,7 @@
 package com.xiaomei.yanyu.widget;
 
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.util.UiUtil;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -35,6 +36,7 @@ public class TitleActionBar {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UiUtil.hideSoftInput(v);
                 ((Activity) v.getContext()).onBackPressed();
             }
         });

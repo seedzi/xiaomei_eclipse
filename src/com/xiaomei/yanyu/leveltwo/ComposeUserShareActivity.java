@@ -40,14 +40,6 @@ public class ComposeUserShareActivity extends Activity implements OnClickListene
 
         mTitleBar = new TitleActionBar(getActionBar());
         mTitleBar.setTitle(R.string.title_activity_post);
-        mTitleBar.setOnHomeClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Activity activity = (Activity) v.getContext();
-                UiUtil.hideSoftInputFromActivity(activity);
-                activity.onBackPressed();
-            }
-        });
         mTitleBar.setTextAction(R.string.submit);
         mTitleBar.setOnActionClickListener(new OnClickListener() {
             @Override
