@@ -5,10 +5,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Merchant;
+import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MerchantControl;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.GoodsGrade;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
@@ -69,10 +71,8 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 		}
 		return mRootView;
 	}
-	
+
 	private void setUpView(){
-		mTitleBar = (TitleBar) mRootView.findViewById(R.id.title_bar);
-		mTitleBar.setTitle(getResources().getString(R.string.fragment_merchant));
 		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
 
 		mListView = mPullToRefreshListView.getRefreshableView();
@@ -100,6 +100,14 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 //		mPullToRefreshListView.setOnScrollListener(this);
 	}
 	
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        TitleActionBar titleBar = ((TabsActivity) getActivity()).getTitleBar();
+        titleBar.setTitle(R.string.fragment_merchant);
+        titleBar.setActionVisibility(View.GONE);
+    }
+
 	private void initData(){
 		showProgress();
 		mIsRefresh = true;

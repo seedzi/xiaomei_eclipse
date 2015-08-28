@@ -3,12 +3,14 @@ package com.xiaomei.yanyu.levelone;
 
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.comment.CommentListActivity;
+import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.adapter.RecommendSharesAdapter;
 import com.xiaomei.yanyu.levelone.adapter.UserShareAdapter;
 import com.xiaomei.yanyu.levelone.control.SharesControl;
 import com.xiaomei.yanyu.leveltwo.ComposeUserShareActivity;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -42,7 +44,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 
     private ViewGroup mRootView;
 	
-	private View mTitleBar;
+	private TitleActionBar mTitleBar;
 	
 	private ViewHolder mJinghuaViewHolder;
 	private ViewHolder mGuangchangViewHolder;
@@ -75,9 +77,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	}
 	
 	private void setUpView(){
-		mTitleBar = mRootView.findViewById(R.id.title_bar);
-		((TextView) mTitleBar.findViewById(android.R.id.title)).setText(getString(R.string.fragment_shares));
-		mTitleBar.findViewById(R.id.new_post).setOnClickListener(this);
+	    mTitleBar = ((TabsActivity) getActivity()).getTitleBar();
 
         mJinghua = (ViewGroup) mRootView.findViewById(R.id.jing_hua);
         mJinghua.setOnClickListener(this);
@@ -132,6 +132,24 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	}
 	
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mTitleBar.setTitle(R.string.fragment_shares);
+        mTitleBar.setImageAction(R.drawable.btn_new_post);
+        mTitleBar.setActionVisibility(mCurrentState == STATE_GUANGCHANG ? View.VISIBLE : View.INVISIBLE);
+        mTitleBar.setOnActionClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserUtil.getUser() == null) {
+                    LoginAndRegisterActivity.startActivity(getActivity(), true);
+                } else {
+                    startActivityForResult(new Intent(getActivity(), ComposeUserShareActivity.class), REQUEST_NEW_POST);
+                }
+            }
+        });
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -141,7 +159,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
             mJinghuaLayout.setVisibility(View.VISIBLE);
             mGuangchangLayout.setVisibility(View.GONE);
             mCurrentState = STATE_JINGHUA;
-            mTitleBar.findViewById(R.id.new_post).setVisibility(View.INVISIBLE);
+            mTitleBar.setActionVisibility(View.INVISIBLE);
             initdata();
             break;
         case R.id.guang_chang:
@@ -150,17 +168,8 @@ public class SharesFragment extends BaseFragment<SharesControl>
             mJinghuaLayout.setVisibility(View.GONE);
             mGuangchangLayout.setVisibility(View.VISIBLE);
             mCurrentState = STATE_GUANGCHANG;
-            mTitleBar.findViewById(R.id.new_post).setVisibility(View.VISIBLE);
+            mTitleBar.setActionVisibility(View.VISIBLE);
             initdata();
-            break;
-        case R.id.new_post:
-            if (UserUtil.getUser() == null) {
-                LoginAndRegisterActivity.startActivity(getActivity(), true);
-            } else {
-                startActivityForResult(new Intent(getActivity(), ComposeUserShareActivity.class), REQUEST_NEW_POST);
-            }
-            break;
-        default:
             break;
         }
     }

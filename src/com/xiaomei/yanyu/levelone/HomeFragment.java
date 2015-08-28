@@ -3,9 +3,11 @@ package com.xiaomei.yanyu.levelone;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.adapter.HomeAdapter;
 import com.xiaomei.yanyu.levelone.adapter.HomeAdapter2;
 import com.xiaomei.yanyu.levelone.control.HomeControl;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
@@ -36,12 +38,9 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
 	
-	private AbstractActivity mAc;
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mAc = (AbstractActivity) getActivity();
 		if(mRootView == null){
 			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_home_layout, null);
 			initView();
@@ -58,9 +57,6 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	}
 
 	private void initView(){
-		TitleBar mTitleBar = (TitleBar) mRootView.findViewById(R.id.title_bar);
-		mTitleBar.setTitle("首页");
-		
 		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mEmptyView= mRootView.findViewById(R.id.empty_view);
@@ -85,6 +81,14 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		});
 	}
 	
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        TitleActionBar titleBar = ((TabsActivity) getActivity()).getTitleBar();
+        titleBar.setTitle(R.string.fragment_home);
+        titleBar.setActionVisibility(View.GONE);
+    }
+
 	private void initData(){
 		mIsRefresh = true;
 		mControl.getHomeListEntityAsyn();
@@ -181,4 +185,5 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 	}
+
 }

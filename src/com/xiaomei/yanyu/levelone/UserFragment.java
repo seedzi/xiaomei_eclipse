@@ -3,6 +3,7 @@ package com.xiaomei.yanyu.levelone;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.User;
+import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.UserControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.module.user.center.AboutActivity;
@@ -14,6 +15,7 @@ import com.xiaomei.yanyu.module.user.center.UserInfoActivity;
 import com.xiaomei.yanyu.module.user.center.UserMessageActivity;
 import com.xiaomei.yanyu.module.user.center.UserOrderListActivity;
 import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
@@ -65,16 +67,21 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	}
 
 	@Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        TitleActionBar titleBar = ((TabsActivity) getActivity()).getTitleBar();
+        titleBar.setTitle(R.string.fragment_user);
+        titleBar.setActionVisibility(View.GONE);
+    }
+
+	@Override
 	public void onResume() {
 	    super.onResume();
 	    initData();
 	}
 	
 	private void setUpView(){
-		mRootView.findViewById(R.id.back).setVisibility(View.GONE);
 		mRootView.findViewById(R.id.user_icon);
-		mTitleBar = (TitleBar) mRootView.findViewById(R.id.titlebar);
-		mTitleBar.setTitle(getResources().getString(R.string.user_center));
 		
 		line1 = (ViewGroup) mRootView.findViewById(R.id.line1);
 		setUpUserItem(line1, getResources().getString(R.string.user_order), this,R.drawable.order);

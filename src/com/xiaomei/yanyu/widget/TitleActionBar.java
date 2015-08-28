@@ -49,8 +49,16 @@ public class TitleActionBar {
         title.setText(text);
     }
 
+    public void setHomeVisibility(int visibility) {
+        home.setVisibility(visibility);
+    }
+
     public void setOnHomeClickListener(View.OnClickListener listener) {
         home.setOnClickListener(listener);
+    }
+
+    public void setActionVisibility(int visibility) {
+        action.setVisibility(visibility);
     }
 
     public void setImageAction(int imageRes) {
