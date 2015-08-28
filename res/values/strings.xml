@@ -53,6 +53,8 @@
        
     <string name="submit">提交</string>        
 
+    <string name="num_views">%1$d次浏览</string>
+
     <string name="merchant_rate_service">服务%1$d</string>
     <string name="merchant_rate_effect">效果%1$d</string>
     <string name="merchant_rate_environment">环境%1$d</string>

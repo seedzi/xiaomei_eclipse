@@ -1,26 +1,25 @@
 package com.xiaomei.yanyu.leveltwo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.api.XiaoMeiApi;
 import com.xiaomei.yanyu.bean.RecommendSharesDetail;
 import com.xiaomei.yanyu.comment.CommentListActivity;
-import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecommandSharesDetailActivity extends AbstractActivity<LeveltwoControl> implements ViewPager.OnPageChangeListener {
+public class RecommandSharesDetailActivity extends Activity implements LoaderManager.LoaderCallbacks<Object>, ViewPager.OnPageChangeListener {
 
 	public static void startActivity(Activity ac,String id){
 		Intent intent = new Intent(ac,RecommandSharesDetailActivity.class);
@@ -38,6 +37,8 @@ public class RecommandSharesDetailActivity extends AbstractActivity<LeveltwoCont
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
+	
+	private static final int SHARES_DETAIL_LOADER = 0;
 	
 	private String mId;
 
@@ -107,7 +108,50 @@ public class RecommandSharesDetailActivity extends AbstractActivity<LeveltwoCont
 	}
 	
     private void initData() {
-        mControl.getDataAsyn(mId);
+        getLoaderManager().initLoader(SHARES_DETAIL_LOADER, null, this);
+    }
+
+    private void updateView(RecommendSharesDetail detail) {
+        mTitle.setText(detail.getShareTitle());
+        mUserName.setText(detail.getUsername());
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(detail.getAvatar(), mAvatar);
+        mDescription.setText(detail.getShareDes());
+        mNumViews.setText(getString(R.string.num_views, detail.getNumViews()));
+        imageLoader.displayImage(detail.getImageLarge(), mBackground);
+
+        mPagerAdapter.addAll(detail.getItems());
+        mPagerAdapter.notifyDataSetChanged();
+        if (mPagerAdapter.getCount() > 0) {
+            onPageSelected(0);
+        }
+    }
+
+    @Override
+    public Loader<Object> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case SHARES_DETAIL_LOADER:
+                return new SharesDetailLoader(this, mId);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Object> loader, Object data) {
+        switch (loader.getId()) {
+            case SHARES_DETAIL_LOADER:
+                if (data != null) {
+                    updateView((RecommendSharesDetail) data);
+                } else {
+                    Toast.makeText(this, "获取数据异常", 0).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Object> loader) {
+
     }
 
     @Override
@@ -127,25 +171,32 @@ public class RecommandSharesDetailActivity extends AbstractActivity<LeveltwoCont
         }
     }
 
-	// ============================   callBack  ==================================
-	public void getDataAsynCallBack(){
-		RecommendSharesDetail data = mControl.getModel().getRecommendSharesDetail();
-		ImageLoader imageLoader = ImageLoader.getInstance();
-		imageLoader.displayImage(data.getImageLarge(), mBackground);
-		mTitle.setText(data.getShareTitle());
-		mUserName.setText(data.getUsername());
-		imageLoader.displayImage(data.getAvatar(), mAvatar);
-		mDescription.setText(data.getShareDes());
-		mNumViews.setText(data.getNumViews() + "次浏览");
-		
-		mPagerAdapter.addAll(data.getItems());
-		mPagerAdapter.notifyDataSetChanged();
-	}
-	
-	public void getDataAsynExceptionCallBack(){
-		Toast.makeText(this, "获取数据异常", 0).show();
-	}
-	
+    private static class SharesDetailLoader extends AsyncTaskLoader<Object> {
+
+        private final String mId;
+
+        public SharesDetailLoader(Context context, String id) {
+            super(context);
+            mId = id;
+        }
+
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+        }
+
+        @Override
+        public Object loadInBackground() {
+            XiaoMeiApi httpApi = XiaoMeiApplication.getInstance().getApi();
+            try {
+                return httpApi.getRecommendSharesDetailFromNet(mId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
     private static class SharesDetailAdapter extends ArrayPagerAdapter<RecommendSharesDetail.Item> {
 
         @Override

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
-import com.xiaomei.yanyu.bean.RecommendSharesDetail;
 
 public class LevelTwoModel {
 	
@@ -13,8 +12,6 @@ public class LevelTwoModel {
 	
 	private List<GoodsOption> mGoodsOptions;
 
-	private RecommendSharesDetail mRecommendSharesDetailData;
-	
 	private boolean mIsFav;
 	
 	public void setGoodsListList(List<Goods> list){
@@ -33,14 +30,6 @@ public class LevelTwoModel {
         this.mGoodsOptions = options;
     }
     
-	public void setRecommendSharesDetail(RecommendSharesDetail data){
-		mRecommendSharesDetailData = data;
-	}
-	
-	public RecommendSharesDetail getRecommendSharesDetail(){
-		return mRecommendSharesDetailData;
-	} 
-	
 	private int mPage;
 	
 	public int getPage(){

@@ -29,23 +29,6 @@ public class LeveltwoControl extends BaseControl {
 		return mModel;
 	}
 	
-	// ============================== 圈子 ====================================
-	@AsynMethod
-	public void getDataAsyn(String id ){
-		try {
-			mModel.setRecommendSharesDetail(XiaoMeiApplication.getInstance().getApi().getRecommendSharesDetailFromNet(id));
-			if(mModel.getRecommendSharesDetail()!=null)
-				sendMessage("getDataAsynCallBack");
-			else
-				sendMessage("getDataAsynExceptionCallBack");
-		} catch (Exception e) {
-			android.util.Log.d("111", "e = " + e.getMessage() + ",e = " + e);
-			e.printStackTrace();
-			sendMessage("getDataAsynExceptionCallBack");
-			return;
-		}
-	}
-	
 	// ============================== 商品 ====================================
 	@AsynMethod
 	public void getGoodsDataAsyn(String catId, String subCat, String originPlace, String priceOrder){
