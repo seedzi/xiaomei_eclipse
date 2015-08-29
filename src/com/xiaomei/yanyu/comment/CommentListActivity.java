@@ -1,50 +1,47 @@
 package com.xiaomei.yanyu.comment;
 
-import java.util.Date;
 import java.util.List;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.api.XiaoMeiApi;
+import com.xiaomei.yanyu.bean.CommentItem;
+import com.xiaomei.yanyu.bean.NetResult;
+import com.xiaomei.yanyu.bean.ShareSubcomment;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
+import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleActionBar;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.BaseAdapter;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.imageaware.ImageAware;
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.bean.CommentItem;
-import com.xiaomei.yanyu.bean.ShareSubcomment;
-import com.xiaomei.yanyu.comment.control.CommentListControl;
-import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
-import com.xiaomei.yanyu.util.DateUtils;
-import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.util.UserUtil;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
-import com.yuekuapp.BaseActivity;
-
-public class CommentListActivity extends BaseActivity<CommentListControl> 
+public class CommentListActivity extends Activity 
     implements OnRefreshListener,OnScrollListener{
     
     public static void startActivity(Context context,String type,String typeid,boolean showComment,boolean isOnFouce){
@@ -61,7 +58,6 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     private View mLoadingView;
     private ViewGroup mRefreshLayout;
     private MyAdapter mAdapter;
-    private boolean mIsRefresh;
     
     private View sendButton;
     private EditText commentEdit;
@@ -72,15 +68,16 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     private String mFocusUserId;
     private View headView;
     
-    private final int LOAD_MORE_COUNT = 10;
-    
-	private View mEmptyView;
+    private View mEmptyView;
 	
+    private RequestCommentListTask mRequestTask;
+
 	private boolean showComment;
 	
 	private boolean isOnFouce = true;
     
 	private boolean isInit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,33 +91,17 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
         }
         setUpViews();
         initData();
-        
-//        new Handler().postDelayed(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				
-//			}
-//		}, 1000);
     }
 
     private void setUpViews(){
-        TitleBar mTitleBar = (TitleBar) findViewById(R.id.title_bar);
-		mTitleBar.setBackListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-			   Activity activity = (Activity)v.getContext();
-			   UiUtil.hideSoftInput(commentEdit);
-			   activity.finish();
-			}
-		});
-        mTitleBar.setTitle("评论");
+        TitleActionBar titleBar = new TitleActionBar(getActionBar());
+        titleBar.setTitle(R.string.activity_comment_list);
         
         mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
         mListView = mPullToRefreshListView.getRefreshableView();
         headView = getLayoutInflater().inflate(R.layout.header_comment_list, null);
         mListView.addHeaderView(headView);
-        commentSize = (TextView) findViewById(R.id.comment_size);
+        commentSize = (TextView) headView.findViewById(R.id.comment_size);
         mLoadingView = findViewById(R.id.loading_layout);
         
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -159,13 +140,9 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
             	if(UserUtil.getUser()==null){
             		LoginAndRegisterActivity.startActivity(CommentListActivity.this, true);
             		finish();
-            	}else{
-            	    if (mFocusCommentId != null) {
-            	        mControl.actionShareSubcomment(typeid, mFocusCommentId, mFocusUserId, commentEdit.getText().toString());
-            	    } else {
-            	        mControl.actionShareComment(typeid, type, commentEdit.getText().toString());
-                    }
-            	}
+            	} else if (!TextUtils.isEmpty(commentEdit.getText())) {
+                    new PostCommentTask().execute();
+                }
             }
         });
 		sendButton.getBackground().setAlpha(255/2);
@@ -189,9 +166,8 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         int position = mListView.getLastVisiblePosition();
-        android.util.Log.d("111", "position = " + position + ",mAdapter.getCount() = " + mAdapter.getCount() + ",mIsRefresh = " + mIsRefresh);
-        if(!mIsRefresh && position == mAdapter.getCount()/* && mAdapter.getCount()>=LOAD_MORE_COUNT*/){
-            getMoreData();
+        if(!isRequesting() && position == mAdapter.getCount() && !mRefreshLayout.isShown()){
+            requestCommentList(true);
         }
     }
 
@@ -203,115 +179,29 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 
     @Override
     public void onRefresh() {
-        mIsRefresh = true;
-//        mControl.getCommentListData("1010", "goods");
-        mControl.getCommentListData(typeid, type);
+        requestCommentList();
     }
-    
+
     private void initData(){
-        mIsRefresh = true;
-//        mControl.getCommentListData("1010", "goods");
         showProgress();
-        mControl.getCommentListData(typeid, type);
+        requestCommentList();
     }
     
-    private void getMoreData(){
-        if(!mRefreshLayout.isShown())
-//            mRefreshLayout.setVisibility(View.VISIBLE);
-//        mPullToRefreshListView.addFooterView(mRefreshLayout);
-        mControl.getCommentListDataMore(typeid, type);
-        mIsRefresh = true;
+    public void requestCommentList() {
+        requestCommentList(false);
     }
-    
-    // ====================================== CallBack ============================================
-    
-    public void getCommentListDataCallBack(){
-        if(headView.getVisibility() != View.VISIBLE){
-            headView.setVisibility(View.VISIBLE);
-            mPullToRefreshListView.getRefreshableView().addHeaderView(headView);
-        }
-        mAdapter.clear();
-        mAdapter.addAll(mControl.getModel().getCommentList());
-        mAdapter.notifyDataSetChanged();
-        dissProgress();
-        mPullToRefreshListView.onRefreshComplete();
-        Toast.makeText(this, "加载完成", 0).show();
-        mIsRefresh = false;
-        try {
-            ((View)commentSize.getParent()).setVisibility(View.VISIBLE);
-            commentSize.setText("(" + mControl.getModel().getCommentList().get(0).getTotal()+ ")");
-        } catch (Exception e) {
-        }
-        if(!isInit){
-            if(isOnFouce){
-                commentEdit.setFocusable(true);
-                commentEdit.setFocusableInTouchMode(true);
-                commentEdit.requestFocus();
-                InputMethodManager inputManager =
-                            (InputMethodManager)commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                inputManager.showSoftInput(commentEdit, InputMethodManager.SHOW_IMPLICIT);
-            }   
-            isInit = true;
+
+    private void requestCommentList(boolean append) {
+        if (!isRequesting()) {
+            mRequestTask = new RequestCommentListTask();
+            mRequestTask.execute(append);
         }
     }
-    
-    public void getCommentListDataCallBackNull(){
-    	Toast.makeText(this, "暂无评论", 0).show();
-        dissProgress();
-        mPullToRefreshListView.onRefreshComplete();
-        headView.setVisibility(View.INVISIBLE);
-        mPullToRefreshListView.getRefreshableView().removeHeaderView(headView);
-//        showNull();
-        ((View)commentSize.getParent()).setVisibility(View.GONE);
-        mIsRefresh = false;
+
+    private boolean isRequesting() {
+        return mRequestTask != null && mRequestTask.getStatus() != AsyncTask.Status.FINISHED;
     }
-    
-    public void getCommentListDataExceptionCallBack(){
-        Toast.makeText(this, "网络异常", 0).show();
-        dissProgress();
-        showEmpty();
-        mPullToRefreshListView.onRefreshComplete();
-        ((View)commentSize.getParent()).setVisibility(View.VISIBLE);
-        mIsRefresh = false;
-    }
-    
-    public void getCommentListDataMoreCallBack(){
-        mAdapter.addAll(mControl.getModel().getCommentList());
-        mAdapter.notifyDataSetChanged();
-        mIsRefresh = false;
-//        mPullToRefreshListView.removeFooterView(mRefreshLayout);
-//        Toast.makeText(this, "加载完成", 0).show();
-    }
-    
-    public void getCommentListDataMoreExceptionCallBack(){
-//        Toast.makeText(this, "网络异常", 0).show();
-      	mIsRefresh = false;
-//  		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-    }
-    
-    public void actionShareCommentCallBack(){
-    	Toast.makeText(this, "评论成功", 0).show();
-    	initData();
-    	clearInput();  
-    }
-    
-    public void actionShareCommentExceptionCallBack(){
-    	Toast.makeText(this, "评论失败", 0).show();
-    	clearInput();  
-    }
-    
-    public void actionShareSubcommentCallBack() {
-        Toast.makeText(this, "子评论成功", 0).show();
-        initData();
-        clearInput();
-    }
-    
-    public void actionShareSubcommentExceptionCallBack() {
-        Toast.makeText(this, "子评论失败", 0).show();
-        clearInput();
-    }
-    
+
     private void clearInput() {
         commentEdit.setText("");
         commentEdit.setHint(R.string.share_comment_hint);
@@ -341,13 +231,115 @@ public class CommentListActivity extends BaseActivity<CommentListControl>
 		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
-	private void showNull(){
-		mLoadingView.setVisibility(View.GONE);
-		mPullToRefreshListView.setVisibility(View.GONE);
-		mEmptyView.setVisibility(View.GONE);
-	}
-    
-    // ====================================== Adapter ============================================
+    private class RequestCommentListTask extends AsyncTask<Object, Void, Object> {
+
+        private final int PER_PAGE = 10;
+
+        private boolean append;
+
+        private int currentCount;
+
+        @Override
+        protected Object doInBackground(Object... params) {
+            append = (Boolean) params[0];
+            currentCount = mAdapter.getCount();
+            int nextPage = currentCount % PER_PAGE == 0 ? currentCount / PER_PAGE + 1 : currentCount / PER_PAGE + 2;
+            String requestPage = String.valueOf(append ? nextPage : 1);
+            try {
+                return XiaoMeiApplication.getInstance().getApi().showCommentList(typeid, type, requestPage, String.valueOf(PER_PAGE));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            if (result instanceof Exception) {
+                Toast.makeText(CommentListActivity.this, "网络异常", 0).show();
+                if (!append) {
+                    dissProgress();
+                    showEmpty();
+                    mPullToRefreshListView.onRefreshComplete();
+                }
+                return;
+            }
+
+            List<CommentItem> list = (List<CommentItem>) result;
+            int size = list != null ? list.size() : 0;
+            if (!append) {
+                mAdapter.clear();
+            }
+            if (size > 0) {
+                mAdapter.addAll(list);
+            }
+
+            commentSize.setText("(" + mAdapter.getCount() + ")");
+            if (!append) {
+                dissProgress();
+                mPullToRefreshListView.onRefreshComplete();
+                Toast.makeText(CommentListActivity.this, size > 0 ? "加载完成" : "暂无评论", 0).show();
+                if (!isInit) {
+                    if (isOnFouce) {
+                        commentEdit.setFocusable(true);
+                        commentEdit.setFocusableInTouchMode(true);
+                        commentEdit.requestFocus();
+                        InputMethodManager inputManager = (InputMethodManager)commentEdit
+                                .getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        inputManager.showSoftInput(commentEdit,
+                                InputMethodManager.SHOW_IMPLICIT);
+                    }
+                    isInit = true;
+                }
+            }
+        }
+    }
+
+    public class PostCommentTask extends AsyncTask<Object, Void, Object> {
+
+        private boolean subComment;
+
+        @Override
+        protected void onPreExecute() {
+            clearInput();
+        }
+
+        @Override
+        protected Object doInBackground(Object... params) {
+            XiaoMeiApi httpApi = XiaoMeiApplication.getInstance().getApi();
+            String comment = commentEdit.getText().toString();
+            String token = UserUtil.getUser().getToken();
+            subComment = mFocusCommentId != null;
+            try {
+                if (subComment) {
+                    return httpApi.actionShareSubcomment(token, typeid, mFocusCommentId, mFocusUserId, comment);
+                } else {
+                    return httpApi.actionGoodsComment(token, typeid, type, comment);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            if (result instanceof NetResult) {
+                NetResult netResult = (NetResult) result;
+                if (netResult != null && "0".equals(netResult.getCode())) {
+                    Toast.makeText(CommentListActivity.this, subComment ? "子评论成功" : "评论成功", 0).show();
+                    initData();
+                    return;
+                }
+            }
+            
+            Toast.makeText(CommentListActivity.this, subComment ? "子评论失败" : "评论失败", 0).show();
+        }
+
+    }
+
+	// ====================================== Adapter ============================================
     private class MyAdapter extends ArrayAdapter<CommentItem> {
         
         public MyAdapter(Context context) {

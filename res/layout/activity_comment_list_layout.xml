@@ -36,8 +36,6 @@
             android:layout_width="match_parent"
             android:background="@drawable/comment_fabukaung_wenbanduo"/>
     </RelativeLayout>
-    <!--   -->
-    <include   layout="@layout/title_bar_layout"    android:id="@+id/title_bar"/>
     
     <RelativeLayout 
         android:layout_below="@+id/title_bar"

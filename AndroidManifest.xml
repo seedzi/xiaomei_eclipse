@@ -145,7 +145,7 @@
         </activity>
 		<!-- 评论列表页面 -->
 		<activity
-		    android:theme="@style/activityTheme"
+		    android:theme="@style/Theme"
             android:name="com.xiaomei.yanyu.comment.CommentListActivity">
         </activity>
         <!-- 删除收藏确定页面 -->
