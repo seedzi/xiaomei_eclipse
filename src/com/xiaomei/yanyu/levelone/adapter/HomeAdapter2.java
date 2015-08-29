@@ -134,6 +134,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.setLayoutParams(flp);
 				holder.mViewPager.setAdapter(mTopicPageAdapter);
 				mTopicPageChangeListener.mDotLayout = holder.dotLayout;
+				mTopicPageChangeListener.mDotLayout .setSize(mData.get(0).getmList().size());
 				holder.mViewPager.addOnPageChangeListener(mTopicPageChangeListener);
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
@@ -197,6 +198,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.setLayoutParams(fl);
 				holder.mViewPager.setAdapter(mConsultationPageAdapter);
 				mConsultationOnPageChangeListener.mDotLayout = holder.dotLayout;
+                mConsultationOnPageChangeListener.mDotLayout.setSize(mData.get(3).getmList().size());
 				holder.mViewPager.addOnPageChangeListener(mConsultationOnPageChangeListener);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
@@ -288,23 +290,30 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		holder.item6 = (ViewGroup) convertView.findViewById(R.id.item6);
 		holder.item7 = (ViewGroup) convertView.findViewById(R.id.item7);
 		holder.item8 = (ViewGroup) convertView.findViewById(R.id.item8);
-		int width = (ScreenUtils.getScreenWidth(getContext())-60)/2;
 		
-		RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(width, width*370/330);
+	    int img_width = (ScreenUtils.getScreenWidth(getContext())-60)/2;
+		
+		RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(
+		        img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		rl.bottomMargin = 20;
 		holder.item1.setLayoutParams(rl);
 		
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item1);
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		rl.bottomMargin = 20;
 		holder.item2.setLayoutParams(rl);
 		
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item1);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		rl.leftMargin = 20;
@@ -312,7 +321,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		rl.bottomMargin = 20;
 		holder.item3.setLayoutParams(rl);
 		
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item1);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item3);
 		rl.leftMargin = 10;
@@ -320,7 +331,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		rl.bottomMargin = 20;
 		holder.item4.setLayoutParams(rl);
 		
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item3);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		rl.leftMargin = 20;
@@ -328,7 +341,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		rl.bottomMargin = 20;
 		holder.item5.setLayoutParams(rl);
 	
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item5);
 		rl.addRule(RelativeLayout.BELOW,R.id.item3);
 		rl.leftMargin = 10;
@@ -336,14 +351,18 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		rl.bottomMargin = 20;
 		holder.item6.setLayoutParams(rl);
 		
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item6);
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		holder.item7.setLayoutParams(rl);
 		
-		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+        rl = new RelativeLayout.LayoutParams(
+                img_width,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item7);
 		rl.addRule(RelativeLayout.BELOW,R.id.item6);
 		rl.leftMargin = 10;
@@ -361,7 +380,12 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	}
 	
 	private void setupItem(ViewGroup viewGroup , List<HomeItem.Item> list,int position){
+	    int img_width = (ScreenUtils.getScreenWidth(getContext())-60)/2;
+	    int img_height = img_width*370/330;
+	    LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(img_width, img_height);
 		ImageView img =  (ImageView) viewGroup.findViewById(R.id.img);
+		img.setLayoutParams(ll);
+		
 		TextView description = (TextView) viewGroup.findViewById(R.id.description);
 		ImageView icon = (ImageView) viewGroup.findViewById(R.id.icon);
 		TextView username = (TextView) viewGroup.findViewById(R.id.user_name);
