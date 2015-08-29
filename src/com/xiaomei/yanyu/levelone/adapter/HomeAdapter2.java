@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.HomeItem;
+import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.util.ScreenUtils;
-import com.xiaomei.yanyu.util.YanYuUtils;
+import com.xiaomei.yanyu.widget.DotLayout;
 
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -23,9 +26,11 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 public class HomeAdapter2 extends ArrayAdapter<Object> {
@@ -38,11 +43,13 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	
 	private final int LAYOUT_TYPE_CONSULTATION = 3;//咨询
 	
-	private final int LAYOUT_TYPE_INTRODUCTION = 4;//产品 机构介绍
-
-	private final int LAYOUT_TYPE_SHARE = 5; //圈子精华分享
+	private final int LAYOUT_TYPE_PRODUCT_INTRODUCTION = 4;//产品 介绍
 	
-	private final int LAYOUT_TYPE_COUNT = 6;
+	private final int LAYOUT_TYPE_MECHANISM_INTRODUCTION = 5;//机构 介绍
+
+	private final int LAYOUT_TYPE_SHARE = 6; //圈子精华分享
+	
+	private final int LAYOUT_TYPE_COUNT = 7;
 	
 	private List<HomeItem> mData = new ArrayList<HomeItem>();  //数据
 	
@@ -53,25 +60,23 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	private LayoutInflater mInflater;
 	
 	/**
-	 * 热点的view list
-	 */
-	private List<View> mTopicView = new ArrayList<View>(); 
-	   /**
-     * 咨询的view list
-     */
-    private List<View> mConsultationView = new ArrayList<View>();  
-	/**
 	 * 热点adapter
 	 */
 	private TopicPageAdapter mTopicPageAdapter;
-	   /**
-     * 热门项目adapter
-     */
-    private GalleryAdapter mGalleryAdapter;
+	/**
+	 * 热点adapter page changelistener
+	 */
+	private TopicOnPageChangeListener mTopicPageChangeListener;
+	
+	
 	/**
 	 * 咨询adapter
 	 */
 	private ConsultationPageAdapter mConsultationPageAdapter;
+	/**
+	 * 咨询adapter page changelistener
+	 */
+	private ConsultationOnPageChangeListener mConsultationOnPageChangeListener;
 
 	
     public List<HomeItem> getData() {
@@ -80,6 +85,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 
     public void setData(List<HomeItem> mData) {
         this.mData = mData;
+        mTopicPageAdapter.clear();
+        mTopicPageAdapter.addAll(mData.get(0).getmList()); 
+        
+        mConsultationPageAdapter.clear();
+        mConsultationPageAdapter.addAll(mData.get(3).getmList());
     }
 
     public HomeAdapter2(Context context) {
@@ -87,15 +97,17 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
         mScreenWidth = ScreenUtils.getScreenWidth(context);
         mInflater = LayoutInflater.from(getContext());
 
-        
-
         mTopicPageAdapter = new TopicPageAdapter();
+        mTopicPageChangeListener = new TopicOnPageChangeListener();
+        
         mConsultationPageAdapter = new ConsultationPageAdapter();
+        mConsultationOnPageChangeListener = new ConsultationOnPageChangeListener();
     }
 	
 	@Override
 	public int getCount() {
-		return mData==null?0:mData.size();
+//		return mData==null?0:mData.size();
+		return 7;
 	}
 
 	@Override
@@ -116,12 +128,15 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 			switch (getItemViewType(position)) {
 			case LAYOUT_TYPE_TOPIC: // 首页热点图
 				convertView = mInflater.inflate(R.layout.home_topic_layout, null);
+				holder.dotLayout = (DotLayout) convertView.findViewById(R.id.instructions);
 				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
 				FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
 				holder.mViewPager.setLayoutParams(flp);
 				holder.mViewPager.setAdapter(mTopicPageAdapter);
+				mTopicPageChangeListener.mDotLayout = holder.dotLayout;
+				holder.mViewPager.addOnPageChangeListener(mTopicPageChangeListener);
 				break;
-			case LAYOUT_TYPE_RECOMMENDED_AREA: //热门项目
+			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
 				convertView = mInflater.inflate(R.layout.home_recommended_area_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img1);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.img2);
@@ -132,38 +147,81 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 rl.addRule(RelativeLayout.BELOW, R.id.top); 
 				holder.img1.setLayoutParams(rl);
+				List<Item>  areaList = mData.get(position).getmList();
+				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1);
 				
 				rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
 	            rl.addRule(RelativeLayout.RIGHT_OF, R.id.img1); 
+	            rl.addRule(RelativeLayout.BELOW, R.id.top); 
+	            rl.leftMargin =10;
 	            holder.img2.setLayoutParams(rl);
+	    		ImageLoader.getInstance().displayImage(areaList.get(1).img, holder.img2);
 	            
 	            rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
                 rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 rl.addRule(RelativeLayout.BELOW, R.id.img1); 
                 rl.topMargin =10;
                 holder.img3.setLayoutParams(rl);
+	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3);
 	            
                 rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
-                rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 rl.addRule(RelativeLayout.RIGHT_OF, R.id.img3); 
+                rl.addRule(RelativeLayout.BELOW, R.id.img1); 
+                rl.leftMargin =10;
+                rl.topMargin =10;
                 holder.img4.setLayoutParams(rl);
+	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4);
 				break;
-			case LAYOUT_TYPE_HOT_ITEMS:
+			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
 				convertView = mInflater.inflate(R.layout.home_hot_items_layout, null);
-				
-				
-                
+				holder.scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scroll);
+				holder.horizontalLayout = (LinearLayout) convertView.findViewById(R.id.horizontal_layout);
+				FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams(mScreenWidth,mScreenWidth*260/720);
+				holder.horizontalLayout.setLayoutParams(ll);
+				for(HomeItem.Item item:mData.get(position).getmList()){
+					 ImageView img = new ImageView(getContext());
+					 LinearLayout.LayoutParams vl = new LinearLayout.LayoutParams((mScreenWidth*260/720)*208/260,
+							 LinearLayout.LayoutParams.MATCH_PARENT);
+					 vl.rightMargin = 16;
+					img.setLayoutParams(vl);
+					img.setScaleType(ScaleType.FIT_XY);
+					holder.horizontalLayout .addView(img);   
+					ImageLoader.getInstance().displayImage(item.img,img);
+				}
 				break;
-			case LAYOUT_TYPE_CONSULTATION:
+			case LAYOUT_TYPE_CONSULTATION://一对一咨询
 				convertView = mInflater.inflate(R.layout.home_consultation_layout, null);
+				holder.dotLayout = (DotLayout) convertView.findViewById(R.id.instructions);
+				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
+				FrameLayout.LayoutParams fl = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
+				holder.mViewPager.setLayoutParams(fl);
+				holder.mViewPager.setAdapter(mConsultationPageAdapter);
+				mConsultationOnPageChangeListener.mDotLayout = holder.dotLayout;
+				holder.mViewPager.addOnPageChangeListener(mConsultationOnPageChangeListener);
 				break;
-			case LAYOUT_TYPE_INTRODUCTION:
+			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
 				convertView = mInflater.inflate(R.layout.home_introduction_layout, null);
+				TextView tv = (TextView) convertView.findViewById(R.id.txt);
+				tv.setText("产品介绍");
+				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
+				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
+				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
+				holder.img1.setLayoutParams(ll1);
+				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1);
 				break;
-			case LAYOUT_TYPE_SHARE:
+			case LAYOUT_TYPE_MECHANISM_INTRODUCTION: //产品介绍
+				convertView = mInflater.inflate(R.layout.home_introduction_layout, null);
+				TextView tv1 = (TextView) convertView.findViewById(R.id.txt);
+				tv1.setText("产品介绍");
+				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
+				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
+				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
+				holder.img1.setLayoutParams(ll2);
+				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1);
+				break;
+			case LAYOUT_TYPE_SHARE: //圈子精华分享
 				convertView = mInflater.inflate(R.layout.home_share_layout, null);
-				holder.gallery = (RecyclerView) convertView.findViewById(R.id.recycler);
-				
+				setupHomeShare(holder, (ViewGroup)convertView);
 				break;
 			default:
 				break;
@@ -184,9 +242,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	    }else if(type.equals("consult")){
 	        return LAYOUT_TYPE_CONSULTATION;
 	    }else if(type.equals("proj")){
-	        return LAYOUT_TYPE_INTRODUCTION;
+	        return LAYOUT_TYPE_PRODUCT_INTRODUCTION;
 	    }else if(type.equals("hosp")){
-	        return LAYOUT_TYPE_INTRODUCTION;
+	        return LAYOUT_TYPE_PRODUCT_INTRODUCTION;
 	    }else if(type.equals("share")){
 	        return LAYOUT_TYPE_SHARE;
 	    }
@@ -207,157 +265,182 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		private  ImageView img2;
 		private  ImageView img3;
 		private  ImageView img4;
-		private android.support.v7.widget.RecyclerView  gallery;
+		private DotLayout dotLayout;
+		private LinearLayout horizontalLayout;
+		private HorizontalScrollView scrollView;
+		
+		private ViewGroup item1;
+		private ViewGroup item2;
+		private ViewGroup item3;
+		private ViewGroup item4;
+		private ViewGroup item5;
+		private ViewGroup item6;
+		private ViewGroup item7;
+		private ViewGroup item8;
+	}
+
+	private void setupHomeShare(Holder holder,ViewGroup convertView){
+		holder.item1 = (ViewGroup) convertView.findViewById(R.id.item1);
+		holder.item2 = (ViewGroup) convertView.findViewById(R.id.item2);
+		holder.item3 = (ViewGroup) convertView.findViewById(R.id.item3);
+		holder.item4 = (ViewGroup) convertView.findViewById(R.id.item4);
+		holder.item5 = (ViewGroup) convertView.findViewById(R.id.item5);
+		holder.item6 = (ViewGroup) convertView.findViewById(R.id.item6);
+		holder.item7 = (ViewGroup) convertView.findViewById(R.id.item7);
+		holder.item8 = (ViewGroup) convertView.findViewById(R.id.item8);
+		int width = (ScreenUtils.getScreenWidth(getContext())-60)/2;
+		
+		RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rl.leftMargin = 20;
+		rl.rightMargin = 10;
+		rl.bottomMargin = 20;
+		holder.item1.setLayoutParams(rl);
+		
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item1);
+		rl.leftMargin = 10;
+		rl.rightMargin = 20;
+		rl.bottomMargin = 20;
+		holder.item2.setLayoutParams(rl);
+		
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.BELOW,R.id.item1);
+		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rl.leftMargin = 20;
+		rl.rightMargin = 10;
+		rl.bottomMargin = 20;
+		holder.item3.setLayoutParams(rl);
+		
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.BELOW,R.id.item1);
+		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item3);
+		rl.leftMargin = 10;
+		rl.rightMargin = 20;
+		rl.bottomMargin = 20;
+		holder.item4.setLayoutParams(rl);
+		
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.BELOW,R.id.item3);
+		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rl.leftMargin = 20;
+		rl.rightMargin = 10;
+		rl.bottomMargin = 20;
+		holder.item5.setLayoutParams(rl);
+	
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item5);
+		rl.addRule(RelativeLayout.BELOW,R.id.item3);
+		rl.leftMargin = 10;
+		rl.rightMargin = 20;
+		rl.bottomMargin = 20;
+		holder.item6.setLayoutParams(rl);
+		
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rl.addRule(RelativeLayout.BELOW,R.id.item6);
+		rl.leftMargin = 20;
+		rl.rightMargin = 10;
+		holder.item7.setLayoutParams(rl);
+		
+		rl = new RelativeLayout.LayoutParams(width, width*370/330);
+		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item7);
+		rl.addRule(RelativeLayout.BELOW,R.id.item6);
+		rl.leftMargin = 10;
+		rl.rightMargin = 20;
+		holder.item8.setLayoutParams(rl);
+		
+		setupItem(holder.item1, mData.get(6).getmList(), 0);
+		setupItem(holder.item2, mData.get(6).getmList(), 1);
+		setupItem(holder.item3, mData.get(6).getmList(), 2);
+		setupItem(holder.item4, mData.get(6).getmList(), 3);
+		setupItem(holder.item5, mData.get(6).getmList(), 4);
+		setupItem(holder.item6, mData.get(6).getmList(), 5);
+		setupItem(holder.item7, mData.get(6).getmList(), 6);
+		setupItem(holder.item8, mData.get(6).getmList(), 7);
 	}
 	
-	
+	private void setupItem(ViewGroup viewGroup , List<HomeItem.Item> list,int position){
+		ImageView img =  (ImageView) viewGroup.findViewById(R.id.img);
+		TextView description = (TextView) viewGroup.findViewById(R.id.description);
+		ImageView icon = (ImageView) viewGroup.findViewById(R.id.icon);
+		TextView username = (TextView) viewGroup.findViewById(R.id.user_name);
+		TextView commentSize = (TextView) viewGroup.findViewById(R.id.size);
+		ImageLoader.getInstance().displayImage(list.get(position).img,img);
+		description.setText(list.get(position).title);
+		username.setText(list.get(position).name);
+		commentSize.setText(list.get(position).comments);
+	}
 	
 	/**
 	 * 热点PageAdapter
 	 */
-	private static class TopicPageAdapter extends PagerAdapter{
-	    
-	    protected SparseArray<View> mViews; 
-	    
+	private class TopicPageAdapter extends ArrayPagerAdapter<HomeItem.Item>{
 	    public TopicPageAdapter(){
-	        mViews = new SparseArray<View>();
 	    }
-	    
-	    private List<HomeItem.Item> data;
-	    
-		public List<HomeItem.Item> getData() {
-            return data;
-        }
-        public void setData(List<HomeItem.Item> data) {
-            this.data = data;
-        }
-
-        @Override
-		public int getCount() {
-			return data==null?0:data.size();
-		}
-
 		@Override
-		public void startUpdate(View paramView) {
-		}
-
-		@Override
-		public Object instantiateItem(View paramView, int paramInt) {
-		    View view = mViews.get(paramInt);  
-	        if (view == null) {  
-	            view = newView(paramInt);  
-	            mViews.put(paramInt, view);  
-	        }  
-	        ((ViewGroup)paramView).addView(view);  
-	        return view; 
-		}
-		
-		 public  View newView(int position){
-            return null;
-		 }
-
-		@Override
-		public void destroyItem(View paramView, int paramInt, Object paramObject) {
-		}
-
-		@Override
-		public void finishUpdate(View paramView) {
-		}
-
-		@Override
-		public boolean isViewFromObject(View paramView, Object paramObject) {
-		    return paramView == paramObject;
-		}
-
-		@Override
-		public Parcelable saveState() {
-			return null;
-		}
-		@Override
-		public void restoreState(Parcelable paramParcelable,
-				ClassLoader paramClassLoader) {
+		public Object instantiateItem(ViewGroup paramView, int paramInt) {
+			 ImageView img = new ImageView(getContext());
+			 ViewGroup.LayoutParams vl = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+					 ViewGroup.LayoutParams.MATCH_PARENT);
+			img.setLayoutParams(vl);
+			img.setScaleType(ScaleType.FIT_XY);
+	        paramView.addView(img);  
+			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img);
+	        return img; 
 		}
 	}
 	/**
-	 * 热门项目adapter
+	 * 热点PageAdapter PageChang
 	 */
-    public static class GalleryAdapter extends
-            RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
+	private class TopicOnPageChangeListener implements OnPageChangeListener{
+		private DotLayout mDotLayout;
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+		}
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+		@Override
+		public void onPageSelected(int arg0) {
+			mDotLayout.setSelect(arg0);
+		}
+	}
 
-        private LayoutInflater mInflater;
-        private List<String> mDatas;
-
-        public GalleryAdapter(Context context, List<String> datats) {
-            mInflater = LayoutInflater.from(context);
-            mDatas = datats;
-        }
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            public ViewHolder(View arg0) {
-                super(arg0);
-            }
-            ImageView mImg;
-            TextView mTxt;
-        }
-        @Override
-        public int getItemCount() {
-            return mDatas.size();
-        }
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = mInflater.inflate(R.layout.gallery_item_layout,
-                    viewGroup, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-
-            viewHolder.mImg = (ImageView) view
-                    .findViewById(R.id.img);
-            return viewHolder;
-        }
-        @Override
-        public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
-//            viewHolder.mImg.setImageResource(mDatas.get(i));
-            ImageLoader.getInstance().displayImage(mDatas.get(i), viewHolder.mImg);
-        }
-
-    }
-
+	/**
+     * 咨询PageAdapter PageChang
+     */
+	private class ConsultationOnPageChangeListener implements OnPageChangeListener{
+		private ConsultationPageAdapter mConsultationPageAdapter;
+		private DotLayout mDotLayout;
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+		}
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+		@Override
+		public void onPageSelected(int arg0) {
+			mDotLayout.setSelect(arg0);
+		}
+	}
+	
 	/**
      * 咨询PageAdapter
      */
-    private class ConsultationPageAdapter  extends PagerAdapter{
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public void startUpdate(View paramView) {
-        }
-
-        @Override
-        public Object instantiateItem(View paramView, int paramInt) {
-            return null;
-        }
-
-        @Override
-        public void destroyItem(View paramView, int paramInt, Object paramObject) {
-        }
-
-        @Override
-        public void finishUpdate(View paramView) {
-        }
-
-        @Override
-        public boolean isViewFromObject(View paramView, Object paramObject) {
-            return false;
-        }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
-        @Override
-        public void restoreState(Parcelable paramParcelable,
-                ClassLoader paramClassLoader) {
-        }
-    }
+	private class ConsultationPageAdapter extends ArrayPagerAdapter<HomeItem.Item>{
+	    public ConsultationPageAdapter(){
+	    }
+		@Override
+		public Object instantiateItem(ViewGroup paramView, int paramInt) {
+			 ImageView img = new ImageView(getContext());
+			 ViewGroup.LayoutParams vl = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+					 ViewGroup.LayoutParams.MATCH_PARENT);
+			img.setLayoutParams(vl);
+			img.setScaleType(ScaleType.FIT_XY);
+	        paramView.addView(img);  
+			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img);
+	        return img; 
+		}
+	}
 }

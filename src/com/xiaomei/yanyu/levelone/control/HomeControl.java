@@ -33,6 +33,7 @@ public class HomeControl extends BaseControl {
             } else {
                 sendMessage("getHomeListEntityAsynCallBackNull");
             }
+            android.util.Log.d("111", "data = " + data.size());
         } catch (Exception e) {
             sendMessage("getHomeListEntityAsynCallBackException");
             e.printStackTrace();

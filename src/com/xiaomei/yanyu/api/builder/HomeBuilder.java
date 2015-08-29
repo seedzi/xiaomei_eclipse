@@ -13,6 +13,7 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
 
     @Override
     protected List<HomeItem> builder(JSONObject jsonObject) throws JSONException {
+    	android.util.Log.d("111", jsonObject.toString());
         List<HomeItem> list = new ArrayList<HomeItem>();
         if(jsonObject.has("msg")){
             JSONArray jsonArray = jsonObject.getJSONArray("msg");
@@ -29,10 +30,12 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                        HomeItem.Item itme = new HomeItem.Item();
                        JSONObject childJsObj = childJsArray.getJSONObject(j);
                        itme.title = childJsObj.optString("title");
+                       itme.img = childJsObj.optString("img_plus");
                        childList.add(itme);
                    }
                    homeItem.setmList(childList);
                }
+               list.add(homeItem);
             }
         }
         return list;

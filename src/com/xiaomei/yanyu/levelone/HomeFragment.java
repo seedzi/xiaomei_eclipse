@@ -127,8 +127,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		dissProgress();
 		if(mPullToRefreshListView.isRefreshing())
 			mPullToRefreshListView.onRefreshComplete();
-		mAdapter.getData().clear();
-		mAdapter.getData().addAll(mControl.getModel().getList());
+		mAdapter.setData(mControl.getModel().getList());
 		mAdapter.notifyDataSetChanged();
 		
 		Toast.makeText(getActivity(), "加载完成", 0).show();
@@ -148,6 +147,5 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		Toast.makeText(getActivity(), "网络异常", 0).show();
 	}
 	
-	// ===========================  Scroll ====================================
 	private boolean mIsRefresh = false;
 }

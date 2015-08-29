@@ -2,7 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-
-</LinearLayout>
+    android:orientation="vertical" 
+    android:paddingBottom="10dp">
+     <RelativeLayout 
+        android:id="@+id/top"
+        android:layout_alignParentTop="true"
+        android:layout_height="45dp"
+        android:layout_width="match_parent">
+        <TextView 
+            android:id="@+id/txt"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:textColor="#1e1e1e"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="产品介绍"/>
+        <TextView 
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#666666"
+            android:textSize="13sp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/arrow_right"
+            android:layout_marginRight="12dp"
+            android:text="更多"/>
+    </RelativeLayout>
+    <ImageView 
+        android:id="@+id/img"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:scaleType="fitXY"
+        />
+    <ImageView 
+        android:id="@+id/recite"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/product_recite"
+        android:scaleType="fitXY"/>
+ </LinearLayout>
