@@ -39,6 +39,10 @@ public class HttpUrlManager {
 	String getHomeListUrl(){
 		return HOST + "/server/show/start.php";
 	}
+	   /**首页新版*/
+    String getHomeListUrl2(){
+        return HOST + "/server/bee/home.php";
+    }
 	/**机构*/
 	String getMerchantListUrl(){
 		return HOST + "/server/show/hospital_list.php";

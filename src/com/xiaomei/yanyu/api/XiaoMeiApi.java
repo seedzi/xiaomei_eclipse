@@ -18,6 +18,7 @@ import android.util.Log;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.builder.AddUserOrderBuilder;
+import com.xiaomei.yanyu.api.builder.HomeBuilder;
 import com.xiaomei.yanyu.api.builder.RecommendSharesBuilder;
 import com.xiaomei.yanyu.api.builder.RecommendSharesDetailBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
@@ -47,6 +48,7 @@ import com.xiaomei.yanyu.api.http.HttpApiWithSession;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
+import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.LoginResult;
 import com.xiaomei.yanyu.bean.Mall;
 import com.xiaomei.yanyu.bean.Merchant;
@@ -102,6 +104,18 @@ public class XiaoMeiApi {
 				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 		return mHttpApi.doHttpRequestObject(httpGet, new SectionBuilder());
 	}
+	
+	  /**首页新版本*/
+    public List<HomeItem> getHomeListFromNet2()
+            throws XiaoMeiCredentialsException, XiaoMeiIOException,
+            XiaoMeiJSONException, XiaoMeiOtherException {
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
+        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getHomeListUrl2(),
+                values[0],
+                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        return mHttpApi.doHttpRequestObject(httpGet, new HomeBuilder());
+    }
 	
 	/**商城首页*/
 	public List<Mall> getMallHomeListFromNet()

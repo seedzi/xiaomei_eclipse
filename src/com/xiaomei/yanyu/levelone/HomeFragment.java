@@ -28,12 +28,12 @@ import android.widget.AbsListView.OnScrollListener;
 
 @SuppressLint("NewApi")
 public class HomeFragment extends BaseFragment<HomeControl> implements
-		OnRefreshListener, OnScrollListener {
+		OnRefreshListener {
 	
 	private ViewGroup mRootView;
 	private PullToRefreshListView mPullToRefreshListView;
 	private ListView mListView;
-	private HomeAdapter mAdapter;
+	private HomeAdapter2 mAdapter;
 	private View mEmptyView;
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
@@ -65,13 +65,12 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 		
-		mAdapter = new HomeAdapter(getActivity());
+		mAdapter = new HomeAdapter2(getActivity());
 		mListView.setAdapter(mAdapter);
 	}
 	
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
-		mPullToRefreshListView.setOnScrollListener(this);
 		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -121,16 +120,6 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		mControl.getHomeListEntityAsyn();
 	}
 	
-	private void getMoreData(){
-		if(mIsRefresh)
-			return;
-		if(!mRefreshLayout.isShown())
-			mRefreshLayout.setVisibility(View.VISIBLE);
-		mPullToRefreshListView.addFooterView(mRefreshLayout);
-		mControl.getMoreListDataFromNetAysn();
-		mIsRefresh = true;
-	}
-	
 	// ===========================  CallBackl ====================================
 	
 	public void getHomeListEntityAsynCallBack(){
@@ -138,8 +127,8 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		dissProgress();
 		if(mPullToRefreshListView.isRefreshing())
 			mPullToRefreshListView.onRefreshComplete();
-		mAdapter.clear();
-		mAdapter.addAll(mControl.getSectionList());
+		mAdapter.getData().clear();
+		mAdapter.getData().addAll(mControl.getModel().getList());
 		mAdapter.notifyDataSetChanged();
 		
 		Toast.makeText(getActivity(), "加载完成", 0).show();
@@ -158,32 +147,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		showEmpty();
 		Toast.makeText(getActivity(), "网络异常", 0).show();
 	}
-
-	public void getHomeListEntityMoreAsynCallBack(){
-		mIsRefresh = false;
-		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-		mAdapter.addAll(mControl.getSectionList());
-		mAdapter.notifyDataSetChanged();
-	}
-	
-	public void getHomeListEntityMoreAsynCallBackException(){
-		mIsRefresh = false;
-		mPullToRefreshListView.removeFooterView(mRefreshLayout);
-//		mAc.showToast("没有更多数据啦");
-	}
 	
 	// ===========================  Scroll ====================================
 	private boolean mIsRefresh = false;
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		int position = mListView.getLastVisiblePosition();
-		if(!mIsRefresh && position == mAdapter.getCount() ){
-			getMoreData();
-		}
-	}
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-	}
-
 }

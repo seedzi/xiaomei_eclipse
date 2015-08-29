@@ -3,7 +3,7 @@ package com.xiaomei.yanyu.levelone.control;
 import java.util.List;
 
 import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.bean.Section;
+import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.levelone.model.HomeListModel;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
@@ -20,48 +20,27 @@ public class HomeControl extends BaseControl {
 		super(mMethodCallBack);
 		mModel = new HomeListModel();
 	}
-	
-	@AsynMethod
-	public void getHomeListEntityAsyn(){
-		try {
-			mModel.setPageNum(1);
-			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet(String.valueOf(mModel.getPageNum()),PERPAGE);
-			if(listNet!=null && listNet.size()>0){
-				mModel.setList(listNet);
-				mModel.setPageNum(1); //设置当前页面为1
-				sendMessage("getHomeListEntityAsynCallBack");
-			}else{
-				sendMessage("getHomeListEntityAsynCallBackNull");
-			}
-		} catch (Exception e) {
-			sendMessage("getHomeListEntityAsynCallBackException");
-			e.printStackTrace();
-		} finally {
-		}
-	}
-	
-	@AsynMethod
-	public void getMoreListDataFromNetAysn(){
-		try {
-			mModel.increasePageNum();//将当前页面++
-			List<Section> listNet = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet(String.valueOf(mModel.getPageNum()),PERPAGE);
-			if(listNet!=null && listNet.size()>0){
-				mModel.setList(listNet);
-				sendMessage("getHomeListEntityMoreAsynCallBack");
-			}else{
-				mModel.reducePageNum();
-				sendMessage("getHomeListEntityMoreAsynCallBackException");
-			}
-		} catch (Exception e) {
-			mModel.reducePageNum();
-			sendMessage("getHomeListEntityMoreAsynCallBackException");
-			e.printStackTrace();
-		} finally {
-		}
-	}
-	
-	public List<Section> getSectionList(){
-		return mModel.getList();
-	}
-
+	/**
+	 * 新版获取首页列表
+	 */
+    @AsynMethod
+    public void getHomeListEntityAsyn() {
+        try {
+            List<HomeItem> data = XiaoMeiApplication.getInstance().getApi().getHomeListFromNet2();
+            if (data != null && data.size() > 0) {
+                mModel.setList(data);
+                sendMessage("getHomeListEntityAsynCallBack");
+            } else {
+                sendMessage("getHomeListEntityAsynCallBackNull");
+            }
+        } catch (Exception e) {
+            sendMessage("getHomeListEntityAsynCallBackException");
+            e.printStackTrace();
+        } finally {
+        }
+    }
+    
+    public HomeListModel getModel(){
+        return mModel;
+    }
 }
