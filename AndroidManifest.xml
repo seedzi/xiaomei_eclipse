@@ -34,18 +34,6 @@
         </activity>
         <activity
             android:theme="@style/activityTheme"
-    		android:name="com.xiaomei.yanyu.leveltwo.WebViewActivity"
-            android:configChanges="orientation|keyboardHidden"
-            >
-        </activity>
-        <activity
-            android:theme="@style/activityTheme"
-            android:name="com.xiaomei.yanyu.leveltwo.WebViewActivity1"
-            android:configChanges="orientation|keyboardHidden"
-            >
-        </activity>
-        <activity
-            android:theme="@style/activityTheme"
    			android:name="com.xiaomei.yanyu.leveltwo.GoodsDetailActivity"
             android:configChanges="orientation|keyboardHidden">
         </activity>

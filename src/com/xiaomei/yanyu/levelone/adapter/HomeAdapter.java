@@ -2,34 +2,26 @@ package com.xiaomei.yanyu.levelone.adapter;
 
 import java.util.List;
 
-import org.xmlpull.v1.XmlPullParser;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.Section.Entity;
-import com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity;
-import com.xiaomei.yanyu.leveltwo.WebViewActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class HomeAdapter extends ArrayAdapter<Section> {
