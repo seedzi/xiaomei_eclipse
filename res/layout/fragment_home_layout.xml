@@ -12,14 +12,7 @@
 	 android:gravity="center">
 	<com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
 	    android:id="@+id/list"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:background="#ffffff"
-	    android:divider="#00000000" 
-	    android:scrollbarStyle="outsideOverlay"
-	    ptr:ptrMode="pullDownFromTop"
-	   
-	    android:visibility="visible"/> <!-- 	 android:background="#ffe2e2e2"   android:dividerHeight="10dp"  	  android:layout_below="@id/title_bar"   android:divider="@color/color_background"-->
+        style="@style/ListView"/> <!-- 	 android:background="#ffe2e2e2"   android:dividerHeight="10dp"  	  android:layout_below="@id/title_bar"   android:divider="@color/color_background"-->
 	
 	<include  android:id="@+id/empty_view"
 	    layout="@layout/empty_layout"

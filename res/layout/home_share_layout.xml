@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:paddingBottom="10dp">
+ <RelativeLayout 
+        android:id="@+id/top"
+        android:layout_alignParentTop="true"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:background="#ffffff">
+        <TextView 
+            android:id="@+id/txt"
+            android:textSize="17sp"
+            android:textColor="#1e1e1e"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圈子精华分享"/>
+    </RelativeLayout>
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <include android:id="@+id/item1"  layout="@layout/home_share_item"/>
@@ -11,3 +35,4 @@
 <include android:id="@+id/item7" layout="@layout/home_share_item"/>
 <include android:id="@+id/item8" layout="@layout/home_share_item"/>
 </RelativeLayout>
+</LinearLayout>

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 一对一咨询 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#000000">
+    android:orientation="vertical">
+<FrameLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_height="match_parent"
@@ -17,3 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"/>
 </FrameLayout>
+    <ImageView 
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/consultation_recite"/>
+<include  layout="@layout/list_divider_bar" />
+</LinearLayout>

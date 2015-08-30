@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#f2f2f2">
     <ImageView 
         android:id="@+id/img"
         android:layout_height="wrap_content"
@@ -14,6 +15,7 @@
 	    android:textSize="15sp"
 	    android:textColor="#373737"
 	    android:lines="2"
+	    android:text="xx"
 	    android:layout_height="wrap_content"
 	    android:layout_width="wrap_content"
 	    />
@@ -31,6 +33,7 @@
 	    <TextView 
 	        android:id="@+id/user_name"
 	        android:text="蔷薇"
+	        android:textColor="#8f8f8f"
 	        android:layout_centerVertical="true"
 	        android:layout_marginLeft="5dp"
 	        android:layout_height="wrap_content"
@@ -40,6 +43,7 @@
 	        android:id="@+id/size"
 	        android:layout_centerVertical="true"
 	        android:layout_marginLeft="5dp"
+	        android:textColor="#8f8f8f"
 	        android:layout_marginRight="10dp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"

@@ -4,6 +4,7 @@ package com.xiaomei.yanyu.levelone.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
@@ -138,6 +139,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.addOnPageChangeListener(mTopicPageChangeListener);
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
+			     DisplayImageOptions options = new DisplayImageOptions.Builder()
+			        .showImageForEmptyUri(R.drawable.home_area_default)
+			        .showImageOnLoading(R.drawable.home_area_default)
+			        .showImageOnFail(R.drawable.home_area_default).build();
+			    
 				convertView = mInflater.inflate(R.layout.home_recommended_area_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img1);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.img2);
@@ -149,21 +155,21 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 rl.addRule(RelativeLayout.BELOW, R.id.top); 
 				holder.img1.setLayoutParams(rl);
 				List<Item>  areaList = mData.get(position).getmList();
-				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1);
+				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1,options);
 				
 				rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
 	            rl.addRule(RelativeLayout.RIGHT_OF, R.id.img1); 
 	            rl.addRule(RelativeLayout.BELOW, R.id.top); 
 	            rl.leftMargin =10;
 	            holder.img2.setLayoutParams(rl);
-	    		ImageLoader.getInstance().displayImage(areaList.get(1).img, holder.img2);
+	    		ImageLoader.getInstance().displayImage(areaList.get(1).img, holder.img2,options);
 	            
 	            rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
                 rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 rl.addRule(RelativeLayout.BELOW, R.id.img1); 
                 rl.topMargin =10;
                 holder.img3.setLayoutParams(rl);
-	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3);
+	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3,options);
 	            
                 rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
                 rl.addRule(RelativeLayout.RIGHT_OF, R.id.img3); 
@@ -171,9 +177,13 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 rl.leftMargin =10;
                 rl.topMargin =10;
                 holder.img4.setLayoutParams(rl);
-	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4);
+	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4,options);
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
+		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
+                  .showImageForEmptyUri(R.drawable.home_hot_default)
+                  .showImageOnLoading(R.drawable.home_hot_default)
+                  .showImageOnFail(R.drawable.home_hot_default).build();
 				convertView = mInflater.inflate(R.layout.home_hot_items_layout, null);
 				holder.scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scroll);
 				holder.horizontalLayout = (LinearLayout) convertView.findViewById(R.id.horizontal_layout);
@@ -187,7 +197,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 					img.setLayoutParams(vl);
 					img.setScaleType(ScaleType.FIT_XY);
 					holder.horizontalLayout .addView(img);   
-					ImageLoader.getInstance().displayImage(item.img,img);
+					ImageLoader.getInstance().displayImage(item.img,img,options1);
 				}
 				break;
 			case LAYOUT_TYPE_CONSULTATION://一对一咨询
@@ -202,24 +212,22 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.addOnPageChangeListener(mConsultationOnPageChangeListener);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
-				convertView = mInflater.inflate(R.layout.home_introduction_layout, null);
-				TextView tv = (TextView) convertView.findViewById(R.id.txt);
-				tv.setText("产品介绍");
+				convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll1);
 				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1);
+				holder.img2.setBackgroundResource(R.drawable.product_recite);
 				break;
-			case LAYOUT_TYPE_MECHANISM_INTRODUCTION: //产品介绍
-				convertView = mInflater.inflate(R.layout.home_introduction_layout, null);
-				TextView tv1 = (TextView) convertView.findViewById(R.id.txt);
-				tv1.setText("产品介绍");
+			case LAYOUT_TYPE_MECHANISM_INTRODUCTION: //机构介绍
+				convertView = mInflater.inflate(R.layout.home_hospital_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll2);
 				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1);
+				holder.img2.setBackgroundResource(R.drawable.hospital_recite);
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享
 				convertView = mInflater.inflate(R.layout.home_share_layout, null);
@@ -316,6 +324,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item1);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rl.topMargin = 20;
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		rl.bottomMargin = 20;
@@ -326,6 +335,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item1);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item3);
+		rl.topMargin = 20;
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		rl.bottomMargin = 20;
@@ -336,6 +346,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item3);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rl.topMargin = 20;
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		rl.bottomMargin = 20;
@@ -346,6 +357,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item5);
 		rl.addRule(RelativeLayout.BELOW,R.id.item3);
+		rl.topMargin = 20;
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		rl.bottomMargin = 20;
@@ -356,6 +368,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item6);
+		rl.topMargin = 20;
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		holder.item7.setLayoutParams(rl);
@@ -365,6 +378,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item7);
 		rl.addRule(RelativeLayout.BELOW,R.id.item6);
+		rl.topMargin = 20;
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		holder.item8.setLayoutParams(rl);
@@ -380,6 +394,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	}
 	
 	private void setupItem(ViewGroup viewGroup , List<HomeItem.Item> list,int position){
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+        .showImageForEmptyUri(R.drawable.home_share_default)
+        .showImageOnLoading(R.drawable.home_share_default)
+        .showImageOnFail(R.drawable.home_share_default).build();
 	    int img_width = (ScreenUtils.getScreenWidth(getContext())-60)/2;
 	    int img_height = img_width*370/330;
 	    LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(img_width, img_height);
@@ -390,7 +408,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		ImageView icon = (ImageView) viewGroup.findViewById(R.id.icon);
 		TextView username = (TextView) viewGroup.findViewById(R.id.user_name);
 		TextView commentSize = (TextView) viewGroup.findViewById(R.id.size);
-		ImageLoader.getInstance().displayImage(list.get(position).img,img);
+		ImageLoader.getInstance().displayImage(list.get(position).img,img,options);
 		description.setText(list.get(position).title);
 		username.setText(list.get(position).name);
 		commentSize.setText(list.get(position).comments);
@@ -400,6 +418,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	 * 热点PageAdapter
 	 */
 	private class TopicPageAdapter extends ArrayPagerAdapter<HomeItem.Item>{
+	    DisplayImageOptions options = new DisplayImageOptions.Builder()
+        .showImageForEmptyUri(R.drawable.home_topic_item_default)
+        .showImageOnLoading(R.drawable.home_topic_item_default)
+        .showImageOnFail(R.drawable.home_topic_item_default).build();
 	    public TopicPageAdapter(){
 	    }
 		@Override
@@ -410,7 +432,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 			img.setLayoutParams(vl);
 			img.setScaleType(ScaleType.FIT_XY);
 	        paramView.addView(img);  
-			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img);
+			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options);
 	        return img; 
 		}
 	}
@@ -453,6 +475,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
      * 咨询PageAdapter
      */
 	private class ConsultationPageAdapter extends ArrayPagerAdapter<HomeItem.Item>{
+        DisplayImageOptions options2 = new DisplayImageOptions.Builder()
+        .showImageForEmptyUri(R.drawable.home_consultation_default)
+        .showImageOnLoading(R.drawable.home_consultation_default)
+        .showImageOnFail(R.drawable.home_consultation_default).build();
 	    public ConsultationPageAdapter(){
 	    }
 		@Override
@@ -463,7 +489,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 			img.setLayoutParams(vl);
 			img.setScaleType(ScaleType.FIT_XY);
 	        paramView.addView(img);  
-			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img);
+			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options2);
 	        return img; 
 		}
 	}

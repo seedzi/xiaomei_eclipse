@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#ffffff">
+    android:paddingBottom="10dp">
      <RelativeLayout 
-        android:background="#ffffff"
         android:id="@+id/top"
         android:layout_alignParentTop="true"
         android:layout_height="45dp"
+        android:background="#ffffff"
         android:layout_width="match_parent">
         <TextView 
             android:id="@+id/txt"
@@ -20,7 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="热门项目"/>
+            android:text="机构介绍"/>
         <TextView 
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -33,19 +33,17 @@
             android:layout_marginRight="12dp"
             android:text="更多"/>
     </RelativeLayout>
-    
-     <HorizontalScrollView 
-         android:id="@+id/scroll"
-         android:layout_height="wrap_content"
-         android:layout_width="match_parent"
-         android:layout_marginBottom="15dp"
-         android:scrollbars="none">
-        <LinearLayout
-            android:paddingLeft="16px"
-            android:id="@+id/horizontal_layout"
-            android:orientation="horizontal"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
-     </HorizontalScrollView>
-     <include  layout="@layout/list_divider_bar" />
-</LinearLayout>
+    <ImageView 
+        android:id="@+id/img"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:scaleType="fitXY"
+        />
+    <ImageView 
+        android:id="@+id/recite"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/product_recite"
+        android:scaleType="fitXY"/>
+    <include  layout="@layout/list_divider_bar" />
+ </LinearLayout>
