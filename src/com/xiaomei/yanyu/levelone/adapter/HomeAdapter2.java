@@ -212,21 +212,29 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.addOnPageChangeListener(mConsultationOnPageChangeListener);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
+               DisplayImageOptions options2 = new DisplayImageOptions.Builder()
+                  .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
+                  .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
+                  .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll1);
-				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1);
+				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1,options2);
 				holder.img2.setBackgroundResource(R.drawable.product_recite);
 				break;
 			case LAYOUT_TYPE_MECHANISM_INTRODUCTION: //机构介绍
+               DisplayImageOptions options3 = new DisplayImageOptions.Builder()
+                  .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
+                  .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
+                  .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_hospital_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll2);
-				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1);
+				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1,options3);
 				holder.img2.setBackgroundResource(R.drawable.hospital_recite);
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享

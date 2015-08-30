@@ -72,7 +72,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
 	    
         final Entity entity = section.getList().get(DEFAULT_INDEX);
         ImageView icon = UiUtil.findImageViewById(itemView, R.id.icon);
-        icon.setImageResource(R.drawable.home_default_img);
+        icon.setImageResource(R.drawable.home_pro_hos_intr_default);
         ImageLoader.getInstance().displayImage(entity.getImg(), icon);
         icon.getLayoutParams().height = (int) (ScreenUtils.getScreenWidth(getContext())*730/720);
         
