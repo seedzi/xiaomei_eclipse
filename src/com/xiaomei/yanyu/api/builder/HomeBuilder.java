@@ -22,6 +22,13 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                if(jsObj.has("type")){
                    homeItem.setType(jsObj.optString("type"));
                }
+               if(jsObj.has("recite")){
+            	   HomeItem.Recite recite = new HomeItem.Recite();
+            	   JSONObject jsreciteObj = jsObj.getJSONObject("recite");
+            	   recite.jump = jsreciteObj.optString("jump");
+            	   recite.url = jsreciteObj.optString("img_plus");
+            	   homeItem.setRecite(recite);
+               }
                if(jsObj.has("value")){
                    JSONArray childJsArray = jsObj.getJSONArray("value");
                    List<HomeItem.Item> childList = new ArrayList<HomeItem.Item>();
@@ -33,11 +40,12 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                        itme.name = childJsObj.optString("user");
                        itme.comments = childJsObj.optString("comments");
                        childList.add(itme);
-                       if(i==6 ){
-                           android.util.Log.d("222", childJsObj.toString());
-                       }
+                      
                    }
                    homeItem.setmList(childList);
+               }
+               if(i==5 ){
+                   android.util.Log.d("222", jsObj.toString());
                }
                list.add(homeItem);
             }

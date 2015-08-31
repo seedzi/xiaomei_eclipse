@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"/>
     <ImageView 
-        android:id="@+id/line"
+        android:id="@+id/recite"
         android:layout_marginTop="10px"
         android:layout_marginBottom="10dp"
         android:layout_below="@id/img4"
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/recommended_area_recite"/>
 <View
-    android:layout_below="@id/line"
+    android:layout_below="@id/recite"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_divider_height"
     android:background="@color/color_background" />

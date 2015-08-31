@@ -11,6 +11,8 @@ public class HomeItem {
 	/**布局类型*/
 	private String type;
 	
+	private Recite recite;
+	
 	private List<Item> mList;
 
 
@@ -29,8 +31,18 @@ public class HomeItem {
     public void setmList(List<Item> mList) {
         this.mList = mList;
     }
+    
+    public Recite getRecite() {
+		return recite;
+	}
 
-    /**子bean*/
+	public void setRecite(Recite recite) {
+		this.recite = recite;
+	}
+
+
+
+	/**子bean*/
 	public static class Item{
 		public String img;
 		public String name;
@@ -38,5 +50,11 @@ public class HomeItem {
 		public String title;
 		public String comments;
 	}
-	
+	/**
+	 * 背书
+	 */
+	public static class Recite{
+		public String jump;
+		public String url;
+	}
 }

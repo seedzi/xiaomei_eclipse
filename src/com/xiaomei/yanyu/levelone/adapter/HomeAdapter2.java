@@ -46,7 +46,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	
 	private final int LAYOUT_TYPE_PRODUCT_INTRODUCTION = 4;//产品 介绍
 	
-	private final int LAYOUT_TYPE_MECHANISM_INTRODUCTION = 5;//机构 介绍
+	private final int LAYOUT_TYPE_HOSP_INTRODUCTION = 5;//机构 介绍
 
 	private final int LAYOUT_TYPE_SHARE = 6; //圈子精华分享
 	
@@ -135,7 +135,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.setLayoutParams(flp);
 				holder.mViewPager.setAdapter(mTopicPageAdapter);
 				mTopicPageChangeListener.mDotLayout = holder.dotLayout;
-				mTopicPageChangeListener.mDotLayout .setSize(mData.get(0).getmList().size());
+				mTopicPageChangeListener.mDotLayout.setSize(mData.get(0).getmList().size());
+				mTopicPageChangeListener.mDotLayout.setSelect(0);
 				holder.mViewPager.addOnPageChangeListener(mTopicPageChangeListener);
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
@@ -178,6 +179,19 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 rl.topMargin =10;
                 holder.img4.setLayoutParams(rl);
 	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4,options);
+	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
+	    		
+	    		DisplayImageOptions reciteOptions = new DisplayImageOptions.Builder()
+			        .showImageForEmptyUri(R.drawable.recommended_area_recite)
+			        .showImageOnLoading(R.drawable.recommended_area_recite)
+			        .showImageOnFail(R.drawable.recommended_area_recite).build();
+	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions);
+	    		holder.recite.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						//TODO
+					}
+				});
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
 		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
@@ -209,7 +223,22 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.setAdapter(mConsultationPageAdapter);
 				mConsultationOnPageChangeListener.mDotLayout = holder.dotLayout;
                 mConsultationOnPageChangeListener.mDotLayout.setSize(mData.get(3).getmList().size());
+                mConsultationOnPageChangeListener.mDotLayout.setSelect(0);
 				holder.mViewPager.addOnPageChangeListener(mConsultationOnPageChangeListener);
+				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
+				
+				DisplayImageOptions reciteOptions1 = new DisplayImageOptions.Builder()
+		        .showImageForEmptyUri(R.drawable.consultation_recite)
+		        .showImageOnLoading(R.drawable.consultation_recite)
+		        .showImageOnFail(R.drawable.consultation_recite).build();
+	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions1);
+	    		holder.recite.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						//TODO
+					}
+				});
+				
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
                DisplayImageOptions options2 = new DisplayImageOptions.Builder()
@@ -218,24 +247,46 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                   .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
-				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
+				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll1);
 				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1,options2);
-				holder.img2.setBackgroundResource(R.drawable.product_recite);
+				
+				DisplayImageOptions reciteOptions2 = new DisplayImageOptions.Builder()
+		        .showImageForEmptyUri(R.drawable.product_recite)
+		        .showImageOnLoading(R.drawable.product_recite)
+		        .showImageOnFail(R.drawable.product_recite).build();
+				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions2);
+	    		holder.recite.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						//TODO
+					}
+				});
 				break;
-			case LAYOUT_TYPE_MECHANISM_INTRODUCTION: //机构介绍
+			case LAYOUT_TYPE_HOSP_INTRODUCTION: //机构介绍
                DisplayImageOptions options3 = new DisplayImageOptions.Builder()
                   .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
                   .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
                   .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_hospital_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
-				holder.img2 = (ImageView) convertView.findViewById(R.id.recite);
+				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll2);
 				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1,options3);
-				holder.img2.setBackgroundResource(R.drawable.hospital_recite);
+				
+				DisplayImageOptions reciteOptions3 = new DisplayImageOptions.Builder()
+		        .showImageForEmptyUri(R.drawable.hospital_recite)
+		        .showImageOnLoading(R.drawable.hospital_recite)
+		        .showImageOnFail(R.drawable.hospital_recite).build();
+				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions3);
+	    		holder.recite.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						//TODO
+					}
+				});
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享
 				convertView = mInflater.inflate(R.layout.home_share_layout, null);
@@ -262,7 +313,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 	    }else if(type.equals("proj")){
 	        return LAYOUT_TYPE_PRODUCT_INTRODUCTION;
 	    }else if(type.equals("hosp")){
-	        return LAYOUT_TYPE_PRODUCT_INTRODUCTION;
+	        return LAYOUT_TYPE_HOSP_INTRODUCTION;
 	    }else if(type.equals("share")){
 	        return LAYOUT_TYPE_SHARE;
 	    }
@@ -295,6 +346,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		private ViewGroup item6;
 		private ViewGroup item7;
 		private ViewGroup item8;
+		private ImageView recite;
 	}
 
 	private void setupHomeShare(Holder holder,ViewGroup convertView){
@@ -420,6 +472,12 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		description.setText(list.get(position).title);
 		username.setText(list.get(position).name);
 		commentSize.setText(list.get(position).comments);
+		
+		DisplayImageOptions options1 = new DisplayImageOptions.Builder()
+        .showImageForEmptyUri(R.drawable.user_head_default)
+        .showImageOnLoading(R.drawable.user_head_default)
+        .showImageOnFail(R.drawable.user_head_default).build();
+		ImageLoader.getInstance().displayImage("",icon,options1);
 	}
 	
 	/**
