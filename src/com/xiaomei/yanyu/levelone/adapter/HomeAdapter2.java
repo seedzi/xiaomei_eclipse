@@ -151,33 +151,13 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.img3 = (ImageView) convertView.findViewById(R.id.img3);
 				holder.img4 = (ImageView) convertView.findViewById(R.id.img4);
 				
-				RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
-                rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                rl.addRule(RelativeLayout.BELOW, R.id.top); 
-				holder.img1.setLayoutParams(rl);
 				List<Item>  areaList = mData.get(position).getmList();
 				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1,options);
 				
-				rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
-	            rl.addRule(RelativeLayout.RIGHT_OF, R.id.img1); 
-	            rl.addRule(RelativeLayout.BELOW, R.id.top); 
-	            rl.leftMargin =10;
-	            holder.img2.setLayoutParams(rl);
 	    		ImageLoader.getInstance().displayImage(areaList.get(1).img, holder.img2,options);
 	            
-	            rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
-                rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                rl.addRule(RelativeLayout.BELOW, R.id.img1); 
-                rl.topMargin =10;
-                holder.img3.setLayoutParams(rl);
 	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3,options);
 	            
-                rl = new RelativeLayout.LayoutParams((mScreenWidth-10)/2, (mScreenWidth-10)*270/(2*355));
-                rl.addRule(RelativeLayout.RIGHT_OF, R.id.img3); 
-                rl.addRule(RelativeLayout.BELOW, R.id.img1); 
-                rl.leftMargin =10;
-                rl.topMargin =10;
-                holder.img4.setLayoutParams(rl);
 	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4,options);
 	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 	    		
@@ -203,11 +183,12 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.horizontalLayout = (LinearLayout) convertView.findViewById(R.id.horizontal_layout);
 				FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams(mScreenWidth,mScreenWidth*260/720);
 				holder.horizontalLayout.setLayoutParams(ll);
+                    int spaceHorizontal = (int) convertView.getResources().getDimension(R.dimen.home_item_space_horizontal);
 				for(HomeItem.Item item:mData.get(position).getmList()){
 					 ImageView img = new ImageView(getContext());
 					 LinearLayout.LayoutParams vl = new LinearLayout.LayoutParams((mScreenWidth*260/720)*208/260,
 							 LinearLayout.LayoutParams.MATCH_PARENT);
-					 vl.rightMargin = 16;
+					 vl.rightMargin = spaceHorizontal;
 					img.setLayoutParams(vl);
 					img.setScaleType(ScaleType.FIT_XY);
 					holder.horizontalLayout .addView(img);   
@@ -250,7 +231,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll1);
-				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1,options2);
+				ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, holder.img1,options2);
 				
 				DisplayImageOptions reciteOptions2 = new DisplayImageOptions.Builder()
 		        .showImageForEmptyUri(R.drawable.product_recite)
@@ -274,7 +255,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll2);
-				ImageLoader.getInstance().displayImage(mData.get(4).getmList().get(0).img, holder.img1,options3);
+				ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, holder.img1,options3);
 				
 				DisplayImageOptions reciteOptions3 = new DisplayImageOptions.Builder()
 		        .showImageForEmptyUri(R.drawable.hospital_recite)
@@ -384,7 +365,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item1);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		rl.topMargin = 20;
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		rl.bottomMargin = 20;
@@ -395,7 +375,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item1);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item3);
-		rl.topMargin = 20;
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		rl.bottomMargin = 20;
@@ -406,7 +385,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item3);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		rl.topMargin = 20;
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		rl.bottomMargin = 20;
@@ -417,7 +395,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item5);
 		rl.addRule(RelativeLayout.BELOW,R.id.item3);
-		rl.topMargin = 20;
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		rl.bottomMargin = 20;
@@ -428,7 +405,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		rl.addRule(RelativeLayout.BELOW,R.id.item6);
-		rl.topMargin = 20;
 		rl.leftMargin = 20;
 		rl.rightMargin = 10;
 		holder.item7.setLayoutParams(rl);
@@ -438,7 +414,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 		rl.addRule(RelativeLayout.RIGHT_OF,R.id.item7);
 		rl.addRule(RelativeLayout.BELOW,R.id.item6);
-		rl.topMargin = 20;
 		rl.leftMargin = 10;
 		rl.rightMargin = 20;
 		holder.item8.setLayoutParams(rl);

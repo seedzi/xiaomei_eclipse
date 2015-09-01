@@ -38,10 +38,10 @@
          android:id="@+id/scroll"
          android:layout_height="wrap_content"
          android:layout_width="match_parent"
-         android:layout_marginBottom="15dp"
+         android:layout_marginBottom="10dp"
          android:scrollbars="none">
         <LinearLayout
-            android:paddingLeft="16px"
+            android:paddingLeft="@dimen/home_item_space_horizontal"
             android:id="@+id/horizontal_layout"
             android:orientation="horizontal"
             android:layout_height="match_parent"

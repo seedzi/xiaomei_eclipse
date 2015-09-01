@@ -28,7 +28,7 @@
       <color name="color_payment_cancel_press">#333333</color>
       
       <!-- 全局背景 -->
-      <color name="color_background">#f2f2f2</color>
+      <color name="color_background">#f6f6f6</color>
      
       <color name="color_user_info_line_gray">#b4b4b4</color>
       <color name="color_user_info_line">#c96cf1</color>
