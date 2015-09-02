@@ -31,7 +31,8 @@
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/arrow_right"
             android:layout_marginRight="12dp"
-            android:text="更多"/>
+            android:text="更多"
+            android:visibility="invisible"/>
     </RelativeLayout>
     
      <HorizontalScrollView 

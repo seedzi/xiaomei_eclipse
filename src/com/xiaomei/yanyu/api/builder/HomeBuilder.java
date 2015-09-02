@@ -26,7 +26,7 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
             	   HomeItem.Recite recite = new HomeItem.Recite();
             	   JSONObject jsreciteObj = jsObj.getJSONObject("recite");
             	   recite.jump = jsreciteObj.optString("jump");
-            	   recite.url = jsreciteObj.optString("img_plus");
+            	   recite.img = jsreciteObj.optString("img_plus");
             	   homeItem.setRecite(recite);
                }
                if(jsObj.has("value")){
@@ -37,14 +37,21 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                        JSONObject childJsObj = childJsArray.getJSONObject(j);
                        itme.title = childJsObj.optString("titile");
                        itme.img = childJsObj.optString("img_plus");
-                       itme.name = childJsObj.optString("user");
+                       itme.name = childJsObj.optString("name");
                        itme.comments = childJsObj.optString("comments");
+                       itme.cityId = childJsObj.optString("city_id");
+                       itme.count = childJsObj.optString("count");
+                       itme.jump = childJsObj.optString("jump");
+                       itme.goodsId = childJsObj.optString("goods_id");
+                       itme.shareId = childJsObj.optString("share_id");
+                       itme.user = childJsObj.optString("user");
+                       itme.id = childJsObj.optString("id");
                        childList.add(itme);
                       
                    }
                    homeItem.setmList(childList);
                }
-               if(i==5 ){
+               if(i==3 ){
                    android.util.Log.d("222", jsObj.toString());
                }
                list.add(homeItem);

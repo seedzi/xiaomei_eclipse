@@ -34,7 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class HomeAdapter2 extends ArrayAdapter<Object> {
+public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickListener{
 	
 	private final int LAYOUT_TYPE_TOPIC = 0; //热点轮播
 	
@@ -140,7 +140,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.mViewPager.addOnPageChangeListener(mTopicPageChangeListener);
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
-			     DisplayImageOptions options = new DisplayImageOptions.Builder()
+				List<Item>  areaList = mData.get(position).getmList();
+				
+			    DisplayImageOptions options = new DisplayImageOptions.Builder()
 			        .showImageForEmptyUri(R.drawable.home_area_default)
 			        .showImageOnLoading(R.drawable.home_area_default)
 			        .showImageOnFail(R.drawable.home_area_default).build();
@@ -151,27 +153,56 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 				holder.img3 = (ImageView) convertView.findViewById(R.id.img3);
 				holder.img4 = (ImageView) convertView.findViewById(R.id.img4);
 				
-				List<Item>  areaList = mData.get(position).getmList();
-				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1,options);
+				holder.img1.setTag(areaList.get(0).cityId);
+				holder.img2.setTag(areaList.get(1).cityId);
+				holder.img3.setTag(areaList.get(2).cityId);
+				holder.img4.setTag(areaList.get(3).cityId);
 				
+				holder.img1.setOnClickListener(mHotCityItemClickListener);
+				holder.img2.setOnClickListener(mHotCityItemClickListener);
+				holder.img3.setOnClickListener(mHotCityItemClickListener);
+				holder.img4.setOnClickListener(mHotCityItemClickListener);
+				
+				holder.cityCount1 = (TextView) convertView.findViewById(R.id.count1);
+				holder.cityCount2 = (TextView) convertView.findViewById(R.id.count2);
+				holder.cityCount3 = (TextView) convertView.findViewById(R.id.count3);
+				holder.cityCount4 = (TextView) convertView.findViewById(R.id.count4);
+				
+				holder.cityName1 = (TextView) convertView.findViewById(R.id.city_name1);
+				holder.cityName2 = (TextView) convertView.findViewById(R.id.city_name2);
+				holder.cityName3 = (TextView) convertView.findViewById(R.id.city_name3);
+				holder.cityName4 = (TextView) convertView.findViewById(R.id.city_name4);
+				
+				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1,options);
 	    		ImageLoader.getInstance().displayImage(areaList.get(1).img, holder.img2,options);
-	            
 	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3,options);
-	            
 	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4,options);
+	    		
+	    		
+	    		holder.cityCount1.setText(areaList.get(0).count);
+	    		holder.cityCount2.setText(areaList.get(1).count);
+	    		holder.cityCount3.setText(areaList.get(2).count);
+	    		holder.cityCount4.setText(areaList.get(3).count);
+	    		
+	    		holder.cityName1.setText(areaList.get(0).name);
+	    		holder.cityName2.setText(areaList.get(1).name);
+	    		holder.cityName3.setText(areaList.get(2).name);
+	    		holder.cityName4.setText(areaList.get(3).name);
+	    		
 	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
+	    		holder.recite.setTag(mData.get(position).getRecite().jump);
+	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		
+	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
+	    		holder.moreClickView.setOnClickListener(mHotCityMoreClickListener);
 	    		
 	    		DisplayImageOptions reciteOptions = new DisplayImageOptions.Builder()
 			        .showImageForEmptyUri(R.drawable.recommended_area_recite)
 			        .showImageOnLoading(R.drawable.recommended_area_recite)
 			        .showImageOnFail(R.drawable.recommended_area_recite).build();
-	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions);
-	    		holder.recite.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						//TODO
-					}
-				});
+	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().img, holder.recite,reciteOptions);
+	    		holder.recite.setTag(mData.get(position).getRecite().jump);
+	    		holder.recite.setOnClickListener(mReciteClickListener);
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
 		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
@@ -191,6 +222,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 					 vl.rightMargin = spaceHorizontal;
 					img.setLayoutParams(vl);
 					img.setScaleType(ScaleType.FIT_XY);
+					img.setTag(item.goodsId);
+					img.setOnClickListener(mHotitemsClickListener);
 					holder.horizontalLayout .addView(img);   
 					ImageLoader.getInstance().displayImage(item.img,img,options1);
 				}
@@ -213,13 +246,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		        .showImageOnLoading(R.drawable.consultation_recite)
 		        .showImageOnFail(R.drawable.consultation_recite).build();
 	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions1);
-	    		holder.recite.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						//TODO
-					}
-				});
-				
+	    		holder.recite.setTag(mData.get(position).getRecite().jump);
+	    		holder.recite.setOnClickListener(mReciteClickListener);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
                DisplayImageOptions options2 = new DisplayImageOptions.Builder()
@@ -228,6 +256,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
                   .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
+				holder.img1.setTag(mData.get(position).getmList().get(0).goodsId);
 				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll1);
@@ -238,12 +267,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		        .showImageOnLoading(R.drawable.product_recite)
 		        .showImageOnFail(R.drawable.product_recite).build();
 				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions2);
-	    		holder.recite.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						//TODO
-					}
-				});
+				holder.recite.setTag(mData.get(position).getRecite().jump);
+	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		
+	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
+	    		holder.moreClickView.setOnClickListener(mProductMoreClickListener);
 				break;
 			case LAYOUT_TYPE_HOSP_INTRODUCTION: //机构介绍
                DisplayImageOptions options3 = new DisplayImageOptions.Builder()
@@ -262,12 +290,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		        .showImageOnLoading(R.drawable.hospital_recite)
 		        .showImageOnFail(R.drawable.hospital_recite).build();
 				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions3);
-	    		holder.recite.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						//TODO
-					}
-				});
+				holder.recite.setTag(mData.get(position).getRecite().jump);
+	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		
+	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
+	    		holder.moreClickView.setOnClickListener(mProductMoreClickListener);
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享
 				convertView = mInflater.inflate(R.layout.home_share_layout, null);
@@ -328,6 +355,19 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		private ViewGroup item7;
 		private ViewGroup item8;
 		private ImageView recite;
+		
+		
+		private TextView cityName1;
+		private TextView cityName2;
+		private TextView cityName3;
+		private TextView cityName4;
+		
+		private TextView cityCount1;
+		private TextView cityCount2;
+		private TextView cityCount3;
+		private TextView cityCount4;
+		
+		private View moreClickView;
 	}
 
 	private void setupHomeShare(Holder holder,ViewGroup convertView){
@@ -445,8 +485,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 		TextView commentSize = (TextView) viewGroup.findViewById(R.id.size);
 		ImageLoader.getInstance().displayImage(list.get(position).img,img,options);
 		description.setText(list.get(position).title);
-		username.setText(list.get(position).name);
+		username.setText(list.get(position).user);
 		commentSize.setText(list.get(position).comments);
+		img.setTag(list.get(position).shareId);
+		img.setOnClickListener(mShareItemsClickListener);
 		
 		DisplayImageOptions options1 = new DisplayImageOptions.Builder()
         .showImageForEmptyUri(R.drawable.user_head_default)
@@ -474,6 +516,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 			img.setScaleType(ScaleType.FIT_XY);
 	        paramView.addView(img);  
 			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options);
+			img.setTag(getItem(paramInt).jump);
+			img.setOnClickListener(mmTopicClickListener);
 	        return img; 
 		}
 	}
@@ -531,7 +575,111 @@ public class HomeAdapter2 extends ArrayAdapter<Object> {
 			img.setScaleType(ScaleType.FIT_XY);
 	        paramView.addView(img);  
 			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options2);
+			img.setTag(getItem(paramInt).jump);
+			img.setOnClickListener(mConsultationClickListener);
 	        return img; 
 		}
+	}
+	
+	/**
+	 * 热点轮播item点击事件
+	 */
+	private View.OnClickListener mmTopicClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			String jump = (String) arg0.getTag();
+			android.util.Log.d("333", "jump = " + jump);
+		}
+	};
+
+	/**
+	 * 热门地区 城市的点击事件，传过来的参数city_id
+	 */
+	private View.OnClickListener mHotCityItemClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+		}
+	};
+	
+	/**
+	 * 热门地区的更多点击事件
+	 */
+	private View.OnClickListener mHotCityMoreClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			String s = (String) arg0.getTag();
+		}
+	};
+
+	/**
+	 * 每个item的背书项的点击事件
+	 */
+	private View.OnClickListener mReciteClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			String url = (String) arg0.getTag();
+			android.util.Log.d("333", "url = " + url);
+		}
+	};
+	
+	/**
+	 * 热门项目的item的点击事件
+	 */
+	private View.OnClickListener mHotitemsClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			String goodsId = (String) arg0.getTag();
+			android.util.Log.d("333", "goodsId = " + goodsId);
+		}
+	};
+	
+	/**
+	 * 一对一咨询的item点击事件
+	 */
+	private View.OnClickListener mConsultationClickListener = new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View arg0) {
+			String jump = (String) arg0.getTag();
+			android.util.Log.d("333", "jump = " + jump);
+		}
+	};
+	
+	/**
+	 * 产品介绍 更多 的点击事件
+	 */
+	private View.OnClickListener mProductMoreClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			
+		}
+	};
+	
+	/**
+	 * 机构介绍 更多 的点击事件
+	 */
+	private View.OnClickListener mHOSPMoreClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			
+		}
+	};
+	
+	/**
+	 * 圈子精华分享的item的点击事件
+	 */
+	private View.OnClickListener mShareItemsClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View arg0) {
+			String shareId = (String) arg0.getTag();
+			android.util.Log.d("333", "shareid = " + shareId);
+		}
+	};
+	
+	
+	
+	@Override
+	public void onClick(View arg0) {
+		
 	}
 }

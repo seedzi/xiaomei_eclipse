@@ -44,17 +44,27 @@ public class HomeItem {
 
 	/**子bean*/
 	public static class Item{
-		public String img;
-		public String name;
+		public String img;   //图片
+		public String name;  //名字
 		public String count;
-		public String title;
+		public String title; 
 		public String comments;
+		
+		public String user;
+		
+		public String cityId; //城市id号
+		public String jump; //每个背书的junp
+		public String goodsId; //热门项目的 goods_id
+		public String shareId; // share id
+		
+		public String id;
 	}
+	
 	/**
 	 * 背书
 	 */
 	public static class Recite{
 		public String jump;
-		public String url;
+		public String img;
 	}
 }
