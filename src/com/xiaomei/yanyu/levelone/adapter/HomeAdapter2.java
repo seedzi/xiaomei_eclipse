@@ -8,12 +8,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.activity.AreaListActivity;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.DotLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
@@ -148,6 +151,13 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 			        .showImageOnFail(R.drawable.home_area_default).build();
 			    
 				convertView = mInflater.inflate(R.layout.home_recommended_area_layout, null);
+				convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        context.startActivity(new Intent(context, AreaListActivity.class));
+                    }
+                });
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img1);
 				holder.img2 = (ImageView) convertView.findViewById(R.id.img2);
 				holder.img3 = (ImageView) convertView.findViewById(R.id.img3);

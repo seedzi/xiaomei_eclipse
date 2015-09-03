@@ -1,7 +1,10 @@
 
 package com.xiaomei.yanyu.api.http;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.xiaomei.yanyu.DebugRelease;
+import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.builder.JSONBuilder;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
@@ -79,6 +82,13 @@ public class HttpApiWithSession extends AbstractHttpApi {
                 }
             }
         }
+    }
+
+    @Override
+    public BizResult doHttpRequestResult(HttpRequestBase httpRequest)
+            throws XiaoMeiCredentialsException, XiaoMeiOtherException,
+            XiaoMeiIOException {
+        return new Gson().fromJson(doHttpRequestString(httpRequest), BizResult.class);
     }
 
     @Override

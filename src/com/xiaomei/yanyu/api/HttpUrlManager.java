@@ -22,8 +22,12 @@ public class HttpUrlManager {
 	public static String ADD_LIKE = ACTION +  "/addlike.php";
 	
 	public static String DEL_LIKE = ACTION +  "/dellike.php";
- 	
-	static{
+
+    private static final String BEE = SERVER + "/bee";
+    public static final String AREA_LIST = BEE + "/citys.php";
+    public static final String AREA_FILTER_LIST = BEE + "/city_filter.php";
+
+    static{
 		if(DebugRelease.isDebug){
 			HOST = "http://180.76.146.212";
 		}else{

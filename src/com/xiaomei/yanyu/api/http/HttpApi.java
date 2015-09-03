@@ -1,5 +1,7 @@
 package com.xiaomei.yanyu.api.http;
 
+import com.google.gson.JsonObject;
+import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.builder.JSONBuilder;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
@@ -29,6 +31,9 @@ public interface HttpApi {
     abstract public <T> T doHttpRequestObject(HttpRequestBase httpRequest,
                                               JSONBuilder<T> builder) throws XiaoMeiCredentialsException,
             XiaoMeiIOException, XiaoMeiJSONException, XiaoMeiOtherException;
+
+    abstract public BizResult doHttpRequestResult(HttpRequestBase httpRequest)
+            throws XiaoMeiCredentialsException, XiaoMeiIOException, XiaoMeiOtherException;
 
     abstract public String doHttpRequestString(HttpRequestBase httpRequest)
             throws XiaoMeiCredentialsException, XiaoMeiIOException, XiaoMeiOtherException;
