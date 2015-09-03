@@ -16,6 +16,11 @@
     <string name="fragment_shares">圈子</string>
     <string name="fragment_user">个人中心</string>
 
+    <string name="indicator_recommend_shares">精华</string>
+    <string name="indicator_user_shares">广场</string>
+    <string name="indicator_area_goods">热门产品</string>
+    <string name="indicator_area_merchant">热门机构</string>
+
     <string name="activity_area_list">城市</string>
 
     <!-- 用户 -->

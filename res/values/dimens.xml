@@ -59,6 +59,8 @@
     
     <dimen name="action_bar_padding_horizontal">15dp</dimen>
 
+    <dimen name="text_pager_indicator_height">48dp</dimen>
+
     <dimen name="pager_item_space_horizontal">10dp</dimen>
     <dimen name="pager_item_space_vertical">22dp</dimen>
 

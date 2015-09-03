@@ -103,6 +103,10 @@
             android:theme="@style/Theme"
             android:name="com.xiaomei.yanyu.activity.AreaListActivity">
         </activity>
+        <activity
+            android:theme="@style/Theme"
+            android:name="com.xiaomei.yanyu.activity.AreaDetailActivity">
+        </activity>
 		<!-- 圈子详情 -->
 		<activity
 		    android:theme="@style/Theme"

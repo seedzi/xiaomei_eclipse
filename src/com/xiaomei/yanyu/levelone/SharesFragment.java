@@ -38,7 +38,7 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class SharesFragment extends BaseFragment<SharesControl> 
-	implements OnRefreshListener,OnScrollListener,OnClickListener{
+	implements OnRefreshListener,OnScrollListener {
 	
 	private static final int REQUEST_NEW_POST = 0;
 
@@ -79,10 +79,35 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	private void setUpView(){
 	    mTitleBar = ((TabsActivity) getActivity()).getTitleBar();
 
-        mJinghua = (ViewGroup) mRootView.findViewById(R.id.jing_hua);
-        mJinghua.setOnClickListener(this);
-        mGuangchang = (ViewGroup) mRootView.findViewById(R.id.guang_chang);
-        mGuangchang.setOnClickListener(this);
+	    ViewGroup indicator = (ViewGroup) mRootView.findViewById(R.id.text_pager_indicator);
+        mJinghua = (ViewGroup) indicator.getChildAt(0);
+        ((TextView) mJinghua.findViewById(android.R.id.title)).setText(R.string.indicator_recommend_shares);
+        mJinghua.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mJinghua.getChildAt(1).setVisibility(View.VISIBLE);
+                mGuangchang.getChildAt(1).setVisibility(View.GONE);
+                mJinghuaLayout.setVisibility(View.VISIBLE);
+                mGuangchangLayout.setVisibility(View.GONE);
+                mCurrentState = STATE_JINGHUA;
+                mTitleBar.setActionVisibility(View.INVISIBLE);
+                initdata();
+            }
+        });
+        mGuangchang = (ViewGroup) indicator.getChildAt(1);
+        ((TextView) mGuangchang.findViewById(android.R.id.title)).setText(R.string.indicator_user_shares);
+        mGuangchang.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mJinghua.getChildAt(1).setVisibility(View.GONE);
+                mGuangchang.getChildAt(1).setVisibility(View.VISIBLE);
+                mJinghuaLayout.setVisibility(View.GONE);
+                mGuangchangLayout.setVisibility(View.VISIBLE);
+                mCurrentState = STATE_GUANGCHANG;
+                mTitleBar.setActionVisibility(View.VISIBLE);
+                initdata();
+            }
+        });
 		
         mJinghuaLayout = (ViewGroup) mRootView.findViewById(R.id.jing_hua_layout);
         mGuangchangLayout = (ViewGroup) mRootView.findViewById(R.id.guang_chang_layout);
@@ -149,31 +174,6 @@ public class SharesFragment extends BaseFragment<SharesControl>
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-        case R.id.jing_hua:
-            mJinghua.getChildAt(1).setVisibility(View.VISIBLE);
-            mGuangchang.getChildAt(1).setVisibility(View.GONE);
-            mJinghuaLayout.setVisibility(View.VISIBLE);
-            mGuangchangLayout.setVisibility(View.GONE);
-            mCurrentState = STATE_JINGHUA;
-            mTitleBar.setActionVisibility(View.INVISIBLE);
-            initdata();
-            break;
-        case R.id.guang_chang:
-            mJinghua.getChildAt(1).setVisibility(View.GONE);
-            mGuangchang.getChildAt(1).setVisibility(View.VISIBLE);
-            mJinghuaLayout.setVisibility(View.GONE);
-            mGuangchangLayout.setVisibility(View.VISIBLE);
-            mCurrentState = STATE_GUANGCHANG;
-            mTitleBar.setActionVisibility(View.VISIBLE);
-            initdata();
-            break;
-        }
-    }
-	
 	private void initdata(){
 	    if(mCurrentState == STATE_JINGHUA){
 	    	if(mControl.getModel().getBeautifulData()==null || mControl.getModel().getBeautifulData().size()==0){

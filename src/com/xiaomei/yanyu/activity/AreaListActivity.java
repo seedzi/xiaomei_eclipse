@@ -21,6 +21,7 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.bean.Area;
 import com.xiaomei.yanyu.bean.AreaFilter;
+import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleActionBar;
@@ -29,11 +30,14 @@ import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -75,6 +79,13 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
         mFilterCountry.setAdapter(mCountryAdapter);
         mFilterGoodsType.setAdapter(mGoodsTypeAdapter);
         mListView.setAdapter(mAreaAdapter);
+        mListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Context context = parent.getContext();
+                context.startActivity(new Intent(context, AreaDetailActivity.class).putExtra(IntentUtil.EXTRA_AREA_ID, id));
+            }
+        });
 
         getLoaderManager().initLoader(AREA_LOADER, null, this);
         getLoaderManager().initLoader(AREA_FILTER_LOADER, null, this);
@@ -202,6 +213,11 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
             UiUtil.findTextViewById(itemView, R.id.description).setText(area.getDescription());
             UiUtil.findTextViewById(itemView, R.id.special).setText(area.getSpecial());
             return itemView;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return getItem(position).getId();
         }
     }
 

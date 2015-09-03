@@ -1,56 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei.yanyu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <LinearLayout 
+    <LinearLayout
+        android:id="@+id/text_pager_indicator"
         android:layout_height="48dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:weightSum="2">
-        <FrameLayout 
-            android:id="@+id/jing_hua"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            >
-        <TextView 
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:gravity="center"
-           android:text="精华"/>    
-           <View
-               android:layout_gravity="center|bottom"
-               android:layout_width="84dp"
-               android:layout_height="2dp"
-               android:background="@color/color_main"/>
-        </FrameLayout>
-    
-      <FrameLayout 
-            android:id="@+id/guang_chang"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            >
-        <TextView 
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-           android:text="广场"/>    
-           <View
-               android:layout_gravity="center|bottom"
-               android:layout_width="84dp"
-               android:layout_height="2dp"
-               android:background="@color/color_main"/>
-        </FrameLayout>
+
+        <include layout="@layout/text_pager_indicator_item" />
+
+        <include layout="@layout/text_pager_indicator_item" />
     </LinearLayout>
     
         

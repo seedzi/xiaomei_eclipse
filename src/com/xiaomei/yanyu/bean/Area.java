@@ -8,12 +8,16 @@ package com.xiaomei.yanyu.bean;
  * Created by sunbreak on 9/2/15.
  */
 public class Area {
-    private String cityid;
+    private long cityid;
     private String city;
     private String img_6;
     private String desc;
     private String special;
     private int count;
+
+    public long getId() {
+        return cityid;
+    }
 
     public String getImageLarge() {
         return img_6;
