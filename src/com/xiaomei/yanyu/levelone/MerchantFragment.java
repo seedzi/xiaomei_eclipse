@@ -36,7 +36,7 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class MerchantFragment extends BaseFragment<MerchantControl>
-	implements OnRefreshListener,OnScrollListener, OnItemClickListener{
+	implements OnRefreshListener,OnScrollListener{
 	
 	private ViewGroup mRootView;
 	
@@ -77,7 +77,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mAdapter = new MerchantAdapter(getActivity()); 
 		mListView.setAdapter(mAdapter);
-		mListView.setOnItemClickListener(this);
+		mListView.setOnItemClickListener(new MerchantAdapter.MerchantItemClickListener());
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
@@ -136,11 +136,6 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 			int visibleItemCount, int totalItemCount) {
 	}
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + id);
-    }
-	
 	// ================================== Progress ==========================================
 	private void showProgress(){
 		mLoadingView.setVisibility(View.VISIBLE);

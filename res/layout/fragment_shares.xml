@@ -3,20 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <LinearLayout
-        android:id="@+id/text_pager_indicator"
-        android:layout_height="48dp"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="2">
 
-        <include layout="@layout/text_pager_indicator_item" />
+    <include layout="@layout/text_pager_indicator" />
 
-        <include layout="@layout/text_pager_indicator_item" />
-    </LinearLayout>
-    
-        
     <View 
         android:background="@color/divider"
         android:layout_height="1px"

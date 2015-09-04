@@ -8,9 +8,11 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.activity.AreaDetailActivity;
 import com.xiaomei.yanyu.activity.AreaListActivity;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
+import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.DotLayout;
 
@@ -188,6 +190,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3,options);
 	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4,options);
 	    		
+                setOnAreaClickListener(holder.img1, areaList.get(0).cityId);
+                setOnAreaClickListener(holder.img2, areaList.get(1).cityId);
+                setOnAreaClickListener(holder.img3, areaList.get(3).cityId);
+                setOnAreaClickListener(holder.img4, areaList.get(2).cityId);
 	    		
 	    		holder.cityCount1.setText(areaList.get(0).count);
 	    		holder.cityCount2.setText(areaList.get(1).count);
@@ -316,6 +322,16 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		}
 		return convertView;
 	}
+
+    public void setOnAreaClickListener(View itemView, final String cityId) {
+        itemView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                context.startActivity(new Intent(context, AreaDetailActivity.class).putExtra(IntentUtil.EXTRA_AREA_ID, Long.valueOf(cityId)));
+            }
+        });
+    }
 
 	@Override
 	public int getItemViewType(int position) {

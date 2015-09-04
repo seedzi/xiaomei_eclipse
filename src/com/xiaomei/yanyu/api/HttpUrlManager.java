@@ -27,6 +27,7 @@ public class HttpUrlManager {
     public static final String AREA_LIST = BEE + "/citys.php";
     public static final String AREA_FILTER_LIST = BEE + "/city_filter.php";
     public static final String AREA_GOODS_LIST = BEE + "/city_prod.php";;
+    public static final String AREA_MERCHANT_LIST = BEE + "/city_hosp.php";;
 
     static{
 		if(DebugRelease.isDebug){
