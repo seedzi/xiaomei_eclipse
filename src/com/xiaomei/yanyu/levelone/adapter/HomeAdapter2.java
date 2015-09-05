@@ -200,10 +200,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		holder.cityCount3.setText(areaList.get(2).count);
 	    		holder.cityCount4.setText(areaList.get(3).count);
 	    		
-	    		holder.cityName1.setText(areaList.get(0).name);
-	    		holder.cityName2.setText(areaList.get(1).name);
-	    		holder.cityName3.setText(areaList.get(2).name);
-	    		holder.cityName4.setText(areaList.get(3).name);
+	    		holder.cityName1.setText(areaList.get(0).city);
+	    		holder.cityName2.setText(areaList.get(1).city);
+	    		holder.cityName3.setText(areaList.get(2).city);
+	    		holder.cityName4.setText(areaList.get(3).city);
 	    		
 	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 	    		holder.recite.setTag(mData.get(position).getRecite().jump);

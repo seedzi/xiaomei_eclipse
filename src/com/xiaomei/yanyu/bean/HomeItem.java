@@ -52,6 +52,7 @@ public class HomeItem {
 		
 		public String user;
 		
+		public String city; //城市名字
 		public String cityId; //城市id号
 		public String jump; //每个背书的junp
 		public String goodsId; //热门项目的 goods_id

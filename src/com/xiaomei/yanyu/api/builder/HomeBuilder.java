@@ -35,8 +35,9 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                    for(int j = 0;j<childJsArray.length();j++){
                        HomeItem.Item itme = new HomeItem.Item();
                        JSONObject childJsObj = childJsArray.getJSONObject(j);
-                       itme.title = childJsObj.optString("titile");
+                       itme.title = childJsObj.optString("title");
                        itme.img = childJsObj.optString("img_plus");
+                       itme.city = childJsObj.optString("city");
                        itme.name = childJsObj.optString("name");
                        itme.comments = childJsObj.optString("comments");
                        itme.cityId = childJsObj.optString("cityid");
