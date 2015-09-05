@@ -1,42 +1,27 @@
 package com.xiaomei.yanyu.levelone;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.adapter.MerchantAdapter;
-import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MerchantControl;
-import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
-import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.widget.GoodsGrade;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class MerchantFragment extends BaseFragment<MerchantControl>
-	implements OnRefreshListener,OnScrollListener{
+	implements OnRefreshListener2 {
 	
 	private ViewGroup mRootView;
 	
@@ -45,8 +30,6 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	private ListView mListView;
 	
 	private MerchantAdapter mAdapter;
-	
-	private boolean mIsRefresh;
 	
 	private ViewGroup mRefreshLayout;
 	
@@ -109,33 +92,16 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 
 	private void initData(){
 		showProgress();
-		mIsRefresh = true;
 		mControl.getMerchantListAsyn();
 	}
 	
 	private void getMoreData(){
-		if(mIsRefresh)
-			return;
 		if(!mRefreshLayout.isShown())
 			mRefreshLayout.setVisibility(View.VISIBLE);
 		mPullToRefreshListView.addFooterView(mRefreshLayout);
 		mControl.getMerchantListMoreAsyn();
-		mIsRefresh = true;
 	}
 	
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		int position = mListView.getLastVisiblePosition();
-		if(!mIsRefresh && position == mAdapter.getCount()){
-			getMoreData();
-		}
-	}
-
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-	}
-
 	// ================================== Progress ==========================================
 	private void showProgress(){
 		mLoadingView.setVisibility(View.VISIBLE);
@@ -162,10 +128,8 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	// ================================== Call back ==========================================
 	public void getMerchantLismListCallBack(){
 		dissProgress();
-		mIsRefresh = false;
 		mAdapter.clear();
 		mAdapter.addAll(mControl.getModel().getData());
-		mAdapter.notifyDataSetChanged();
 		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
 	}
@@ -173,28 +137,31 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	public void getMerchantListExceptionCallBack(){
 		dissProgress();
 		showEmpty();
-		mIsRefresh = false;
+		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), "加载数据异常", 0).show();
 	}
 
 	public void getMerchantLismListMoreCallBack(){
 		dissProgress();
-		mIsRefresh = false;
 		mPullToRefreshListView.removeFooterView(mRefreshLayout);
 		mAdapter.addAll(mControl.getModel().getData());
-		mAdapter.notifyDataSetChanged();
+		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
 	public void getMerchantListMoreExceptionCallBack(){
 		dissProgress();
-		mIsRefresh = false;
+		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), "加载数据异常", 0).show();
 	}
 	// ================================== Call back ==========================================
 	@Override
-	public void onRefresh() {
+	public void onPullDownToRefresh() {
 		mControl.getMerchantListAsyn();
-		mIsRefresh = true;
+	}
+	
+	@Override
+    public void onPullUpToRefresh() {
+	    getMoreData();
 	}
 }
