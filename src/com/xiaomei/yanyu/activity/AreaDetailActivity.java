@@ -7,6 +7,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.adapter.MerchantAdapter;
@@ -54,10 +55,6 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
     private long mAreaId;
 
-    private View mGoodsIndicator;
-    private View mMerchantIndicator;
-    private ViewPager mViewPager;
-
     private AreaPagerAdapter mPagerAdaper;
     private GoodsAdapter mGoodsAdapter;
     private MerchantAdapter mMerchantAdapter;
@@ -80,15 +77,11 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                 .build();
         ImageLoader.getInstance().displayImage("", image, options);
 
-        ViewGroup indicator = (ViewGroup) findViewById(R.id.text_pager_indicator);
-        mGoodsIndicator = indicator.getChildAt(0);
-        ((TextView) mGoodsIndicator.findViewById(android.R.id.title)).setText(R.string.indicator_area_goods);
-        mMerchantIndicator = indicator.getChildAt(1);
-        ((TextView) mMerchantIndicator.findViewById(android.R.id.title)).setText(R.string.indicator_area_merchant);
-
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
         mPagerAdaper = new AreaPagerAdapter();
-        mViewPager.setAdapter(mPagerAdaper);
+        viewpager.setAdapter(mPagerAdaper);
+        PageIndicator indicator = (PageIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(viewpager);
 
         mGoodsAdapter = new GoodsAdapter(this);
         mMerchantAdapter = new MerchantAdapter(this);
@@ -223,6 +216,11 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                     new MerchantAdapter.MerchantItemClickListener());
             container.addView(itemView);
             return itemView;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return getString(position == 0 ? R.string.indicator_area_goods : R.string.indicator_area_merchant);
         }
     }
 }

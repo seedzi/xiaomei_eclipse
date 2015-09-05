@@ -17,6 +17,7 @@
     <style name="Theme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TitleTabPageIndicator</item>
     </style>
     
     <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -79,6 +80,12 @@
         <item name="ptrMode">pullDownFromTop</item>
     </style>
 
+    <style name="Widget.TitleTabPageIndicator">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/title_tab_indicator</item>
+        <item name="android:textAppearance">@style/TextAppearance.TitleTab</item>
+    </style>
+
     <style name="MerchantRateText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -112,6 +119,10 @@
     
     <style name="TextAppearance.Filter.Title">
         <item name="android:textColor">@color/filter_title_text</item>
+    </style>
+
+    <style name="TextAppearance.TitleTab">
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="ActionBarTitle">

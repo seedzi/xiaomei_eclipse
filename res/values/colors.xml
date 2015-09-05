@@ -42,6 +42,8 @@
     <color name="username">#1e1e1e</color>
     <color name="date">#c5c5c5</color>
 
+    <color name="title_tab_indicator_selected">#c96cf1</color>
+
     <color name="list_item_background">@color/color_white</color>
 
     <color name="merchant_title_text">#787878</color>
