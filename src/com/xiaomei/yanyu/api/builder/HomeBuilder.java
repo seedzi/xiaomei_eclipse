@@ -52,7 +52,7 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                    }
                    homeItem.setmList(childList);
                }
-               if(i==1 ){
+               if(i==0){
                    android.util.Log.d("222", jsObj.toString());
                }
                list.add(homeItem);

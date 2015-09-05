@@ -180,6 +180,7 @@ public class ImageUtils {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            
             try {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (v instanceof ImageView) {
@@ -190,7 +191,7 @@ public class ImageUtils {
                                 new ColorMatrixColorFilter(BT_SELECTED));
                         v.setBackgroundDrawable(v.getBackground());
                     }
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL ) {
                     if (v instanceof ImageView) {
                         ImageView iv = (ImageView) v;
                         iv.setColorFilter(new ColorMatrixColorFilter(
@@ -200,7 +201,9 @@ public class ImageUtils {
                                 new ColorMatrixColorFilter(BT_NOT_SELECTED));
                         v.setBackgroundDrawable(v.getBackground());
                     }
+                    
                 } 
+                android.util.Log.d("aaa", event.getAction()  + "=" );
             } catch (Exception e) {
             }
             return false;
