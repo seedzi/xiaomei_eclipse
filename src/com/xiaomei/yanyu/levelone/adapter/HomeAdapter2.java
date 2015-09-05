@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.activity.AreaDetailActivity;
@@ -70,21 +71,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	 * 热点adapter
 	 */
 	private TopicPageAdapter mTopicPageAdapter;
-	/**
-	 * 热点adapter page changelistener
-	 */
-	private TopicOnPageChangeListener mTopicPageChangeListener;
-	
 	
 	/**
 	 * 咨询adapter
 	 */
 	private ConsultationPageAdapter mConsultationPageAdapter;
-	/**
-	 * 咨询adapter page changelistener
-	 */
-	private ConsultationOnPageChangeListener mConsultationOnPageChangeListener;
-
 	
     public List<HomeItem> getData() {
         return mData;
@@ -105,10 +96,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
         mInflater = LayoutInflater.from(getContext());
 
         mTopicPageAdapter = new TopicPageAdapter();
-        mTopicPageChangeListener = new TopicOnPageChangeListener();
         
         mConsultationPageAdapter = new ConsultationPageAdapter();
-        mConsultationOnPageChangeListener = new ConsultationOnPageChangeListener();
     }
 	
 	@Override
@@ -135,15 +124,12 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 			switch (getItemViewType(position)) {
 			case LAYOUT_TYPE_TOPIC: // 首页热点图
 				convertView = mInflater.inflate(R.layout.home_topic_layout, null);
-				holder.dotLayout = (DotLayout) convertView.findViewById(R.id.instructions);
 				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
 				FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
 				holder.mViewPager.setLayoutParams(flp);
 				holder.mViewPager.setAdapter(mTopicPageAdapter);
-				mTopicPageChangeListener.mDotLayout = holder.dotLayout;
-				mTopicPageChangeListener.mDotLayout.setSize(mData.get(0).getmList().size());
-				mTopicPageChangeListener.mDotLayout.setSelect(0);
-				holder.mViewPager.addOnPageChangeListener(mTopicPageChangeListener);
+				PageIndicator topicIndicator = (PageIndicator) convertView.findViewById(R.id.indicator);
+				topicIndicator.setViewPager(holder.mViewPager);
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
 				List<Item>  areaList = mData.get(position).getmList();
@@ -248,15 +234,12 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				break;
 			case LAYOUT_TYPE_CONSULTATION://一对一咨询
 				convertView = mInflater.inflate(R.layout.home_consultation_layout, null);
-				holder.dotLayout = (DotLayout) convertView.findViewById(R.id.instructions);
 				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
 				FrameLayout.LayoutParams fl = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
 				holder.mViewPager.setLayoutParams(fl);
 				holder.mViewPager.setAdapter(mConsultationPageAdapter);
-				mConsultationOnPageChangeListener.mDotLayout = holder.dotLayout;
-                mConsultationOnPageChangeListener.mDotLayout.setSize(mData.get(3).getmList().size());
-                mConsultationOnPageChangeListener.mDotLayout.setSelect(0);
-				holder.mViewPager.addOnPageChangeListener(mConsultationOnPageChangeListener);
+				PageIndicator consultationIndicator = (PageIndicator) convertView.findViewById(R.id.indicator);
+				consultationIndicator.setViewPager(holder.mViewPager);
 				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				
 				DisplayImageOptions reciteOptions1 = new DisplayImageOptions.Builder()
@@ -376,7 +359,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		private  ImageView img2;
 		private  ImageView img3;
 		private  ImageView img4;
-		private DotLayout dotLayout;
 		private LinearLayout horizontalLayout;
 		private HorizontalScrollView scrollView;
 		
@@ -556,41 +538,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	        return img; 
 		}
 	}
-	/**
-	 * 热点PageAdapter PageChang
-	 */
-	private class TopicOnPageChangeListener implements OnPageChangeListener{
-		private DotLayout mDotLayout;
-		@Override
-		public void onPageScrollStateChanged(int arg0) {
-		}
-		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {
-		}
-		@Override
-		public void onPageSelected(int arg0) {
-			mDotLayout.setSelect(arg0);
-		}
-	}
 
-	/**
-     * 咨询PageAdapter PageChang
-     */
-	private class ConsultationOnPageChangeListener implements OnPageChangeListener{
-		private ConsultationPageAdapter mConsultationPageAdapter;
-		private DotLayout mDotLayout;
-		@Override
-		public void onPageScrollStateChanged(int arg0) {
-		}
-		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {
-		}
-		@Override
-		public void onPageSelected(int arg0) {
-			mDotLayout.setSelect(arg0);
-		}
-	}
-	
 	/**
      * 咨询PageAdapter
      */
