@@ -41,7 +41,7 @@
         />
     <ImageView 
         android:id="@+id/recite"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:scaleType="fitXY"/>
     <include  layout="@layout/list_divider_bar" />

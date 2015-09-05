@@ -12,6 +12,7 @@ import com.xiaomei.yanyu.activity.AreaDetailActivity;
 import com.xiaomei.yanyu.activity.AreaListActivity;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
+import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.DotLayout;
@@ -206,11 +207,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		holder.cityName4.setText(areaList.get(3).city);
 	    		
 	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
-	    		holder.recite.setTag(mData.get(position).getRecite().jump);
-	    		holder.recite.setOnClickListener(mReciteClickListener);
 	    		
 	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
 	    		holder.moreClickView.setOnClickListener(mHotCityMoreClickListener);
+	    		ImageUtils.setViewPressState(holder.moreClickView);
 	    		
 	    		DisplayImageOptions reciteOptions = new DisplayImageOptions.Builder()
 			        .showImageForEmptyUri(R.drawable.recommended_area_recite)
@@ -219,6 +219,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().img, holder.recite,reciteOptions);
 	    		holder.recite.setTag(mData.get(position).getRecite().jump);
 	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		ImageUtils.setViewPressState(holder.recite);
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
 		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
@@ -240,6 +241,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 					img.setScaleType(ScaleType.FIT_XY);
 					img.setTag(item.goodsId);
 					img.setOnClickListener(mHotitemsClickListener);
+					ImageUtils.setViewPressState(img);
 					holder.horizontalLayout .addView(img);   
 					ImageLoader.getInstance().displayImage(item.img,img,options1);
 				}
@@ -264,6 +266,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions1);
 	    		holder.recite.setTag(mData.get(position).getRecite().jump);
 	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		ImageUtils.setViewPressState(holder.recite);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
                DisplayImageOptions options2 = new DisplayImageOptions.Builder()
@@ -285,9 +288,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions2);
 				holder.recite.setTag(mData.get(position).getRecite().jump);
 	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		ImageUtils.setViewPressState(holder.recite);
 	    		
 	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
 	    		holder.moreClickView.setOnClickListener(mProductMoreClickListener);
+	    		ImageUtils.setViewPressState(holder.moreClickView);
 				break;
 			case LAYOUT_TYPE_HOSP_INTRODUCTION: //机构介绍
                DisplayImageOptions options3 = new DisplayImageOptions.Builder()
@@ -308,9 +313,11 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions3);
 				holder.recite.setTag(mData.get(position).getRecite().jump);
 	    		holder.recite.setOnClickListener(mReciteClickListener);
+	    		ImageUtils.setViewPressState(holder.recite);
 	    		
 	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
 	    		holder.moreClickView.setOnClickListener(mProductMoreClickListener);
+	    		ImageUtils.setViewPressState(holder.moreClickView);
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享
 				convertView = mInflater.inflate(R.layout.home_share_layout, null);
@@ -324,6 +331,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	}
 
     public void setOnAreaClickListener(View itemView, final String cityId) {
+        ImageUtils.setViewPressState(itemView);
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -515,6 +523,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		commentSize.setText(list.get(position).comments);
 		img.setTag(list.get(position).shareId);
 		img.setOnClickListener(mShareItemsClickListener);
+		ImageUtils.setViewPressState(img);
 		
 		DisplayImageOptions options1 = new DisplayImageOptions.Builder()
         .showImageForEmptyUri(R.drawable.user_head_default)

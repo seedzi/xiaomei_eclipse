@@ -25,6 +25,6 @@
         android:id="@+id/recite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/consultation_recite"/>
+        android:scaleType="fitXY"/>
 <include  layout="@layout/list_divider_bar" />
 </LinearLayout>

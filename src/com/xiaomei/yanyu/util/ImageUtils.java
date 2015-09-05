@@ -2,8 +2,13 @@ package com.xiaomei.yanyu.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 
 public class ImageUtils {
 	
@@ -158,4 +163,47 @@ public class ImageUtils {
 	  return (x < a) ? a : (x > b) ? b : x;
 	 }
 
+	 /**給view加上點擊效果*/
+	 public static void setViewPressState(View v){
+	     v.setOnTouchListener(VIEW_TOUCH_DARK);
+	 }
+	 
+    /**
+     * 让控件点击时，颜色变深
+     * */
+    public static final OnTouchListener VIEW_TOUCH_DARK = new OnTouchListener() {
+
+        public final float[] BT_SELECTED = new float[] { 1, 0, 0, 0, -50, 0, 1,
+                0, 0, -50, 0, 0, 1, 0, -50, 0, 0, 0, 1, 0 };
+        public final float[] BT_NOT_SELECTED = new float[] { 1, 0, 0, 0, 0, 0,
+                1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0 };
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            try {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (v instanceof ImageView) {
+                        ImageView iv = (ImageView) v;
+                        iv.setColorFilter(new ColorMatrixColorFilter(BT_SELECTED));
+                    } else {
+                        v.getBackground().setColorFilter(
+                                new ColorMatrixColorFilter(BT_SELECTED));
+                        v.setBackgroundDrawable(v.getBackground());
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (v instanceof ImageView) {
+                        ImageView iv = (ImageView) v;
+                        iv.setColorFilter(new ColorMatrixColorFilter(
+                                BT_NOT_SELECTED));
+                    } else {
+                        v.getBackground().setColorFilter(
+                                new ColorMatrixColorFilter(BT_NOT_SELECTED));
+                        v.setBackgroundDrawable(v.getBackground());
+                    }
+                } 
+            } catch (Exception e) {
+            }
+            return false;
+        }
+    };
 }
