@@ -39,7 +39,7 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                        itme.img = childJsObj.optString("img_plus");
                        itme.name = childJsObj.optString("name");
                        itme.comments = childJsObj.optString("comments");
-                       itme.cityId = childJsObj.optString("city_id");
+                       itme.cityId = childJsObj.optString("cityid");
                        itme.count = childJsObj.optString("count");
                        itme.jump = childJsObj.optString("jump");
                        itme.goodsId = childJsObj.optString("goods_id");
@@ -51,7 +51,7 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                    }
                    homeItem.setmList(childList);
                }
-               if(i==3 ){
+               if(i==1 ){
                    android.util.Log.d("222", jsObj.toString());
                }
                list.add(homeItem);
