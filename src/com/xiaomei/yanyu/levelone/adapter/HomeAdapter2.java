@@ -187,10 +187,10 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                 setOnAreaClickListener(holder.img3, areaList.get(3).cityId);
                 setOnAreaClickListener(holder.img4, areaList.get(2).cityId);
 	    		
-	    		holder.cityCount1.setText(areaList.get(0).count);
-	    		holder.cityCount2.setText(areaList.get(1).count);
-	    		holder.cityCount3.setText(areaList.get(2).count);
-	    		holder.cityCount4.setText(areaList.get(3).count);
+	    		holder.cityCount1.setText(areaList.get(0).count + "个项目");
+	    		holder.cityCount2.setText(areaList.get(1).count + "个项目");
+	    		holder.cityCount3.setText(areaList.get(2).count + "个项目");
+	    		holder.cityCount4.setText(areaList.get(3).count + "个项目");
 	    		
 	    		holder.cityName1.setText(areaList.get(0).city);
 	    		holder.cityName2.setText(areaList.get(1).city);

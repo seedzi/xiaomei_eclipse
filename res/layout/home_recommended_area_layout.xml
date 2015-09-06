@@ -22,6 +22,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="推荐地区"/>
+         <View 
+            android:layout_gravity="center"
+            android:layout_height="15dp"
+            android:layout_width="1px"
+            android:background="#e0ffffff"/>
         <TextView 
             android:id="@+id/more_buton"
             android:layout_centerVertical="true"
@@ -66,6 +71,11 @@
                     android:textSize="17sp"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"/>
+                <View 
+                    android:layout_gravity="center"
+                    android:layout_height="15dp"
+                    android:layout_width="1px"
+                    android:background="#e0ffffff"/>
                 <TextView 
                     android:id="@+id/count1"
                     android:layout_width="0dp"
@@ -107,6 +117,11 @@
                     android:textSize="17sp"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"/>
+                <View 
+                    android:layout_gravity="center"
+                    android:layout_height="15dp"
+                    android:layout_width="1px"
+                    android:background="#e0ffffff"/>
                 <TextView 
                     android:id="@+id/count2"
                     android:layout_width="0dp"
@@ -151,6 +166,11 @@
                     android:textSize="17sp"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"/>
+                <View 
+                    android:layout_gravity="center"
+                    android:layout_height="15dp"
+                    android:layout_width="1px"
+                    android:background="#e0ffffff"/>
                 <TextView 
                     android:id="@+id/count3"
                     android:layout_width="0dp"
@@ -191,6 +211,11 @@
                     android:textSize="17sp"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"/>
+                <View 
+                    android:layout_gravity="center"
+                    android:layout_height="15dp"
+                    android:layout_width="1px"
+                    android:background="#e0ffffff"/>
                 <TextView 
                     android:id="@+id/count4"
                     android:layout_width="0dp"
