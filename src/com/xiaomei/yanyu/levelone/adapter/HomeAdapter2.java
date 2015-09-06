@@ -19,6 +19,7 @@ import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity;
 import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
@@ -33,6 +34,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -233,7 +235,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 					 vl.rightMargin = spaceHorizontal;
 					img.setLayoutParams(vl);
 					img.setScaleType(ScaleType.FIT_XY);
-					img.setTag(item.url);
+					img.setTag(item);
 					img.setOnClickListener(mHotitemsClickListener);
 					ImageUtils.setViewPressState(img);
 					holder.horizontalLayout .addView(img);   
@@ -605,17 +607,19 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
     		    Integer type = Integer.valueOf(itme.type);
     		    switch (type) {
                 case 0://H5形式
-                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+                	if(TextUtils.isEmpty(itme.goodsId)){
+                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+                	}else{
+                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId);
+                	}
                     break;
                 case 1: //卡片形式
-                   
-                        JSONObject jsonObject = new JSONObject(itme.list);
-                        String viewcount = itme.viewcount;
-                        String title =itme.title;
-                        String des = jsonObject.optString("des");
-                        String img = itme.img;
-                        TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
-    
+            		JSONObject jsonObject = new JSONObject(itme.list);
+	                String viewcount = itme.viewcount;
+	                String title =itme.title;
+	                String des = jsonObject.optString("des");
+	                String img = itme.img;
+	                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
                     break;
                 default:
                     break;
@@ -661,8 +665,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	private View.OnClickListener mHotitemsClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			String url = (String) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), url);
+			HomeItem.Item item = (Item) arg0.getTag();
+			GoodsDetailActivity.startActivity((Activity)getContext(), item.url,item.goodsId);
 		}
 	};
 	
@@ -683,14 +687,24 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	private View.OnClickListener mProductItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            try {
+        	try {
                 HomeItem.Item itme = (HomeItem.Item) v.getTag();
-                JSONObject jsonObject = new JSONObject(itme.list);
-                String viewcount = itme.viewcount;
-                String title =itme.title;
-                String des = jsonObject.optString("des");
-                String img = itme.img;
-                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+                Integer type = Integer.valueOf(itme.type);
+                switch (type) {
+				case 0: //h5
+					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId);
+					break;
+				case 1:
+					JSONObject jsonObject = new JSONObject(itme.list);
+	                String viewcount = itme.viewcount;
+	                String title =itme.title;
+	                String des = jsonObject.optString("des");
+	                String img = itme.img;
+	                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+					break;
+				default:
+					break;
+				}
             } catch (Exception e) {
             }
         }
@@ -707,32 +721,33 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	};
 	
 	   /**
-     * 产品item 的点击事件
+     * 机构item 的点击事件
      */
     private View.OnClickListener mHOSPItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
                 HomeItem.Item itme = (HomeItem.Item) v.getTag();
-                JSONObject jsonObject = new JSONObject(itme.list);
-                String viewcount = itme.viewcount;
-                String title =itme.title;
-                String des = jsonObject.optString("des");
-                String img = itme.img;
-                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+                Integer type = Integer.valueOf(itme.type);
+                switch (type) {
+				case 0: //h5
+					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+					break;
+				case 1:
+					JSONObject jsonObject = new JSONObject(itme.list);
+	                String viewcount = itme.viewcount;
+	                String title =itme.title;
+	                String des = jsonObject.optString("des");
+	                String img = itme.img;
+	                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+					break;
+				default:
+					break;
+				}
             } catch (Exception e) {
             }
         }
     };
-	
-	/**
-	 * 机构介绍 更多 的点击事件
-	 */
-	private View.OnClickListener mHOSPMoreClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View arg0) {
-		}
-	};
 	
 	/**
 	 * 圈子精华分享的item的点击事件
@@ -748,12 +763,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
 	                    break;
 	                case 1: //卡片形式
-	                        JSONObject jsonObject = new JSONObject(itme.list);
-	                        String viewcount = itme.viewcount;
-	                        String title =itme.title;
-	                        String des = jsonObject.optString("des");
-	                        String img = itme.img;
-	                        TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+	                        RecommendSharesDetailActivity.startActivity((Activity)getContext(), itme.shareId);
 	                    break;
 	                default:
 	                    break;
