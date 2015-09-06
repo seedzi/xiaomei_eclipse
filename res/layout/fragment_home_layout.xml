@@ -12,7 +12,8 @@
 	 android:gravity="center">
 	<com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
 	    android:id="@+id/list"
-        style="@style/ListView"/> <!-- 	 android:background="#ffe2e2e2"   android:dividerHeight="10dp"  	  android:layout_below="@id/title_bar"   android:divider="@color/color_background"-->
+        style="@style/ListView"
+        ptr:ptrMode="pullDownFromTop"/>
 	
 	<include  android:id="@+id/empty_view"
 	    layout="@layout/empty_layout"
