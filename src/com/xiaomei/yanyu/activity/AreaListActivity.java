@@ -7,6 +7,7 @@ package com.xiaomei.yanyu.activity;
 import java.io.IOException;
 
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,6 +20,7 @@ import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.HttpApi;
+import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Area;
 import com.xiaomei.yanyu.bean.AreaFilter;
 import com.xiaomei.yanyu.util.IntentUtil;
@@ -138,10 +140,14 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
         @Override
         public Object loadInBackground() {
             HttpApi httpApi = XiaoMeiApplication.getInstance().getApi().getHttpApi();
-            HttpGet httpGet = httpApi.createHttpGet(HttpUrlManager.AREA_LIST);
+            HttpGet httpGet = httpApi.createHttpGet(HttpUrlManager.AREA_LIST,
+                    new BasicNameValuePair(HttpUtil.QUERY_COUNTRY, "0"),
+                    new BasicNameValuePair(HttpUtil.QUERY_SPECIAL, "0"));
             try {
                 BizResult result = httpApi.doHttpRequestResult(httpGet);
-                return new Gson().fromJson(result.getMessage(), Area[].class);
+                if (result.isSuccess()) {
+                    return new Gson().fromJson(result.getMessage(), Area[].class);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (XiaoMeiOtherException e) {
