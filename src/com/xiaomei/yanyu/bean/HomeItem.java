@@ -51,6 +51,7 @@ public class HomeItem {
 		public String comments;
 		
 		public String user;
+		public String url;
 		
 		public String list;
 		public String city; //城市名字

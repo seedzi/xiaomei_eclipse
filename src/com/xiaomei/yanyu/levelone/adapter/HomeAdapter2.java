@@ -16,6 +16,7 @@ import com.xiaomei.yanyu.activity.AreaDetailActivity;
 import com.xiaomei.yanyu.activity.AreaListActivity;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
+import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity;
 import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
@@ -581,7 +582,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
     		    Integer type = Integer.valueOf(itme.type);
     		    switch (type) {
                 case 0://H5形式
-                    
+                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
                     break;
                 case 1: //卡片形式
                    

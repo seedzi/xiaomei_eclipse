@@ -41,6 +41,7 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                        itme.name = childJsObj.optString("name");
                        itme.comments = childJsObj.optString("comments");
                        itme.cityId = childJsObj.optString("cityid");
+                       itme.url = childJsObj.optString("url");
                        itme.count = childJsObj.optString("count");
                        itme.jump = childJsObj.optString("jump");
                        itme.goodsId = childJsObj.optString("goods_id");
