@@ -236,16 +236,17 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            Context context = getContext();
             View itemView = convertView != null ? convertView :
-                    LayoutInflater.from(getContext()).inflate(R.layout.area_list_item, parent, false);
+                    LayoutInflater.from(context).inflate(R.layout.area_list_item, parent, false);
 
             Area area = getItem(position);
             ImageView image = UiUtil.findImageViewById(itemView, R.id.image);
             ImageLoader.getInstance().displayImage(area.getImageLarge(), image, options);
             UiUtil.findTextViewById(itemView, R.id.name).setText(area.getName());
-            UiUtil.findTextViewById(itemView, R.id.goods_count).setText(getContext().getString(R.string.area_goods_count, String.valueOf(area.getCount())));
+            UiUtil.findTextViewById(itemView, R.id.goods_count).setText(context.getString(R.string.area_goods_count, String.valueOf(area.getCount())));
             UiUtil.findTextViewById(itemView, R.id.description).setText(area.getDescription());
-            UiUtil.findTextViewById(itemView, R.id.special).setText(area.getSpecial());
+            UiUtil.findTextViewById(itemView, R.id.special).setText(context.getString(R.string.area_special) + area.getSpecial());
             return itemView;
         }
 
