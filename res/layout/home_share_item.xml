@@ -6,6 +6,7 @@
     android:background="#f8f8f8">
     <ImageView 
         android:id="@+id/img"
+        android:scaleType="fitXY"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         />

@@ -231,7 +231,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 					 vl.rightMargin = spaceHorizontal;
 					img.setLayoutParams(vl);
 					img.setScaleType(ScaleType.FIT_XY);
-					img.setTag(item.goodsId);
+					img.setTag(item.url);
 					img.setOnClickListener(mHotitemsClickListener);
 					ImageUtils.setViewPressState(img);
 					holder.horizontalLayout .addView(img);   
@@ -269,6 +269,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll1);
 				ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, holder.img1,options2);
+                ImageUtils.setViewPressState(holder.img1);
+                holder.img1.setOnClickListener(mProductItemClickListener);
+                holder.img1.setTag(mData.get(position).getmList().get(0));
 				
 				DisplayImageOptions reciteOptions2 = new DisplayImageOptions.Builder()
 		        .showImageForEmptyUri(R.drawable.product_recite)
@@ -294,6 +297,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
 				holder.img1.setLayoutParams(ll2);
 				ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, holder.img1,options3);
+				ImageUtils.setViewPressState(holder.img1);
+				holder.img1.setOnClickListener(mHOSPItemClickListener);
+				holder.img1.setTag(mData.get(position).getmList().get(0));
 				
 				DisplayImageOptions reciteOptions3 = new DisplayImageOptions.Builder()
 		        .showImageForEmptyUri(R.drawable.hospital_recite)
@@ -509,7 +515,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		description.setText(list.get(position).title);
 		username.setText(list.get(position).user);
 		commentSize.setText(list.get(position).comments);
-		img.setTag(list.get(position).shareId);
+		img.setTag(list.get(position));
 		img.setOnClickListener(mShareItemsClickListener);
 		ImageUtils.setViewPressState(img);
 		
@@ -628,7 +634,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			String url = (String) arg0.getTag();
-			android.util.Log.d("333", "url = " + url);
+			GoodsDetailActivity.startActivity((Activity)getContext(), url);
 		}
 	};
 	
@@ -638,8 +644,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	private View.OnClickListener mHotitemsClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			String goodsId = (String) arg0.getTag();
-			android.util.Log.d("333", "goodsId = " + goodsId);
+			String url = (String) arg0.getTag();
+			GoodsDetailActivity.startActivity((Activity)getContext(), url);
 		}
 	};
 	
@@ -654,6 +660,24 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 			android.util.Log.d("333", "jump = " + jump);
 		}
 	};
+	/**
+     * 产品item 的点击事件
+     */
+	private View.OnClickListener mProductItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try {
+                HomeItem.Item itme = (HomeItem.Item) v.getTag();
+                JSONObject jsonObject = new JSONObject(itme.list);
+                String viewcount = itme.viewcount;
+                String title =itme.title;
+                String des = jsonObject.optString("des");
+                String img = itme.img;
+                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+            } catch (Exception e) {
+            }
+        }
+    };
 	
 	/**
 	 * 产品介绍 更多 的点击事件
@@ -665,13 +689,31 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		}
 	};
 	
+	   /**
+     * 产品item 的点击事件
+     */
+    private View.OnClickListener mHOSPItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try {
+                HomeItem.Item itme = (HomeItem.Item) v.getTag();
+                JSONObject jsonObject = new JSONObject(itme.list);
+                String viewcount = itme.viewcount;
+                String title =itme.title;
+                String des = jsonObject.optString("des");
+                String img = itme.img;
+                TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+            } catch (Exception e) {
+            }
+        }
+    };
+	
 	/**
 	 * 机构介绍 更多 的点击事件
 	 */
 	private View.OnClickListener mHOSPMoreClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			
 		}
 	};
 	
@@ -681,8 +723,26 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	private View.OnClickListener mShareItemsClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			String shareId = (String) arg0.getTag();
-			android.util.Log.d("333", "shareid = " + shareId);
+	          try {
+	                HomeItem.Item itme = (HomeItem.Item) arg0.getTag();
+	                Integer type = Integer.valueOf(itme.type);
+	                switch (type) {
+	                case 0://H5形式
+	                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+	                    break;
+	                case 1: //卡片形式
+	                        JSONObject jsonObject = new JSONObject(itme.list);
+	                        String viewcount = itme.viewcount;
+	                        String title =itme.title;
+	                        String des = jsonObject.optString("des");
+	                        String img = itme.img;
+	                        TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+	                    break;
+	                default:
+	                    break;
+	                }
+	            } catch (Exception e) {
+	            }
 		}
 	};
 	
