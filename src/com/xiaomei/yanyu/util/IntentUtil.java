@@ -6,5 +6,9 @@ public class IntentUtil {
 
     public static final String EXTRA_AREA_ID = "area_id";
 
+    public static final String EXTRA_TITLE = "title";
+
+    public static final String EXTRA_URL = "url";
+
     private IntentUtil() {}
 }

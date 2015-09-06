@@ -21,6 +21,8 @@
     <string name="indicator_area_goods">热门产品</string>
     <string name="indicator_area_merchant">热门机构</string>
 
+    <string name="title_goods_topic">产品专题</string>
+    <string name="title_merchant_topic">机构专题</string>
     <string name="activity_area_list">城市</string>
 
     <!-- 用户 -->

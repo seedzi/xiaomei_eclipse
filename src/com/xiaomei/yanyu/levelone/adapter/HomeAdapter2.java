@@ -14,6 +14,8 @@ import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.activity.AreaDetailActivity;
 import com.xiaomei.yanyu.activity.AreaListActivity;
+import com.xiaomei.yanyu.activity.TopicListActivity;
+import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -263,6 +265,13 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                   .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
                   .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
+				convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_merchant_topic), HttpUrlManager.GOODS_TOPIC_LIST);
+                    }
+                });
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
 				holder.img1.setTag(mData.get(position).getmList().get(0).goodsId);
 				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
@@ -292,6 +301,13 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                   .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
                   .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
 				convertView = mInflater.inflate(R.layout.home_hospital_intr_layout, null);
+				convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_goods_topic), HttpUrlManager.MERCHANT_TOPIC_LIST);
+                    }
+                });
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
 				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);

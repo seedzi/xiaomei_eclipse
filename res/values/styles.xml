@@ -80,6 +80,12 @@
         <item name="ptrMode">both</item>
     </style>
 
+    <style name="ListView.Divider">
+        <item name="android:showDividers">middle|end</item>
+        <item name="android:divider">@color/divider</item>
+        <item name="android:dividerHeight">@dimen/divider</item>
+    </style>
+
     <style name="Widget.TitleTabPageIndicator">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/title_tab_indicator</item>
