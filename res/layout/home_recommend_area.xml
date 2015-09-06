@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_home">
+
+    <include layout="@layout/home_item_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/home_item_space_horizontal"
+        android:paddingRight="@dimen/home_item_space_horizontal"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/thumb1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/home_area_item_height"
+            android:layout_weight="1"
+            layout="@layout/area_item_thumb" />
+
+        <Space
+            android:layout_width="@dimen/home_item_space_horizontal"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/thumb2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/home_area_item_height"
+            android:layout_weight="1"
+            layout="@layout/area_item_thumb" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_item_space_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/home_item_space_horizontal"
+        android:paddingRight="@dimen/home_item_space_horizontal"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/thumb3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/home_area_item_height"
+            android:layout_weight="1"
+            layout="@layout/area_item_thumb" />
+
+        <Space
+            android:layout_width="@dimen/home_item_space_horizontal"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/thumb4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/home_area_item_height"
+            android:layout_weight="1"
+            layout="@layout/area_item_thumb" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_item_space_horizontal" />
+
+    <ImageView
+        android:id="@+id/recite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
+
+    <include layout="@layout/list_divider_bar" />
+</LinearLayout>

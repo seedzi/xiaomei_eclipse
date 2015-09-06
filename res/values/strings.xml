@@ -6,6 +6,7 @@
     <string name="activity_comment_list">评论</string>
 
     <string name="detail">详情</string>
+    <string name="more">更多</string>
 
     <string name="ren_ming_bi">¥</string>
     <string name="han_yuan">￦</string>
@@ -15,6 +16,8 @@
     <string name="fragment_merchant">机构</string>
     <string name="fragment_shares">圈子</string>
     <string name="fragment_user">个人中心</string>
+
+    <string name="home_item_recommend_area">推荐地区</string>
 
     <string name="indicator_recommend_shares">精华</string>
     <string name="indicator_user_shares">广场</string>
@@ -71,6 +74,8 @@
     <string name="merchant_rate_service">服务%1$d</string>
     <string name="merchant_rate_effect">效果%1$d</string>
     <string name="merchant_rate_environment">环境%1$d</string>
+
+    <string name="area_goods_count">%1$s个项目</string>
 
     <string name="share_comment_hint" tools:ignore="MissingTranslation">请输入</string>
     <string name="share_subcomment_hint" tools:ignore="MissingTranslation">"回复 %1$s"</string>

@@ -243,7 +243,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             ImageView image = UiUtil.findImageViewById(itemView, R.id.image);
             ImageLoader.getInstance().displayImage(area.getImageLarge(), image, options);
             UiUtil.findTextViewById(itemView, R.id.name).setText(area.getName());
-            UiUtil.findTextViewById(itemView, R.id.goods_count).setText(String.valueOf(area.getCount()));
+            UiUtil.findTextViewById(itemView, R.id.goods_count).setText(getContext().getString(R.string.area_goods_count, String.valueOf(area.getCount())));
             UiUtil.findTextViewById(itemView, R.id.description).setText(area.getDescription());
             UiUtil.findTextViewById(itemView, R.id.special).setText(area.getSpecial());
             return itemView;

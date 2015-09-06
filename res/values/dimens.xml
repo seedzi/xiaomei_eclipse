@@ -56,6 +56,9 @@
     <dimen name="title_tab_indicator_padding_horizontal">48dp</dimen>
     <dimen name="title_tab_indicator_padding_top">45dp</dimen>
 
+    <dimen name="home_item_padding_horizontal">12dp</dimen>
+    <dimen name="home_item_title_height">45dp</dimen>
+
     <dimen name="tag_padding_horizontal">4dp</dimen>
     <dimen name="tag_space_horizontal">6dp</dimen>
 
@@ -71,6 +74,7 @@
     <dimen name="home_item_space_horizontal">10dp</dimen>
     <dimen name="home_item_space_vertical">10dp</dimen>
 
+    <dimen name="area_item_thumb_width">164dp</dimen>
     <dimen name="home_area_item_height">123.3dp</dimen>
 
     <dimen name="merchant_info_padding">10dp</dimen>

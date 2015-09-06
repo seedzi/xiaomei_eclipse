@@ -21,6 +21,7 @@ import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity;
+import com.xiaomei.yanyu.util.ImageLoaderUtil;
 import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.ScreenUtils;
@@ -40,10 +41,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -69,7 +72,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	
 	private final int LAYOUT_TYPE_COUNT = 7;
 	
-	private List<HomeItem> mData = new ArrayList<HomeItem>();  //数据
+    private static final int AREA_COUNT = 4;
+
+    private List<HomeItem> mData = new ArrayList<HomeItem>();  //数据
 	
 	private AbsListView.LayoutParams mAbsLParams;
 	
@@ -144,72 +149,38 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
 				List<Item>  areaList = mData.get(position).getmList();
 				
-			    DisplayImageOptions options = new DisplayImageOptions.Builder()
-			        .showImageForEmptyUri(R.drawable.home_area_default)
-			        .showImageOnLoading(R.drawable.home_area_default)
-			        .showImageOnFail(R.drawable.home_area_default).build();
-			    
-				convertView = mInflater.inflate(R.layout.home_recommended_area_layout, null);
-				convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
+				convertView = mInflater.inflate(R.layout.home_recommend_area, parent, false);
+                View itemTitle = convertView.findViewById(R.id.home_item_title);
+                itemTitle.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Context context = v.getContext();
                         context.startActivity(new Intent(context, AreaListActivity.class));
                     }
                 });
-				holder.img1 = (ImageView) convertView.findViewById(R.id.img1);
-				holder.img2 = (ImageView) convertView.findViewById(R.id.img2);
-				holder.img3 = (ImageView) convertView.findViewById(R.id.img3);
-				holder.img4 = (ImageView) convertView.findViewById(R.id.img4);
+				((TextView) itemTitle.findViewById(android.R.id.title)).setText(R.string.home_item_recommend_area);
 				
-				holder.img1.setTag(areaList.get(0).cityId);
-				holder.img2.setTag(areaList.get(1).cityId);
-				holder.img3.setTag(areaList.get(2).cityId);
-				holder.img4.setTag(areaList.get(3).cityId);
+		        ImageLoader imageLoader = ImageLoader.getInstance();
+		        DisplayImageOptions options = ImageLoaderUtil.getDisplayOptions(R.drawable.home_area_default);
+		        View[] thumbs = new View[]{convertView.findViewById(R.id.thumb1), convertView.findViewById(R.id.thumb2),
+		                convertView.findViewById(R.id.thumb3), convertView.findViewById(R.id.thumb4)};
+		        Context context = convertView.getContext();
+		        for (int i = 0; i < AREA_COUNT; i++) {
+		            Item item = areaList.get(i);
+		            View areaItemThumb = thumbs[i];
+		            ImageView image = (ImageView) areaItemThumb.findViewById(R.id.image);
+		            imageLoader.displayImage(item.img, image, options);
+		            setOnAreaClickListener(image, item.cityId);
+		            ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
+		            ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(context.getString(R.string.area_goods_count, item.count));
+		        }
 				
-				holder.cityCount1 = (TextView) convertView.findViewById(R.id.count1);
-				holder.cityCount2 = (TextView) convertView.findViewById(R.id.count2);
-				holder.cityCount3 = (TextView) convertView.findViewById(R.id.count3);
-				holder.cityCount4 = (TextView) convertView.findViewById(R.id.count4);
-				
-				holder.cityName1 = (TextView) convertView.findViewById(R.id.city_name1);
-				holder.cityName2 = (TextView) convertView.findViewById(R.id.city_name2);
-				holder.cityName3 = (TextView) convertView.findViewById(R.id.city_name3);
-				holder.cityName4 = (TextView) convertView.findViewById(R.id.city_name4);
-				
-				ImageLoader.getInstance().displayImage(areaList.get(0).img, holder.img1,options);
-	    		ImageLoader.getInstance().displayImage(areaList.get(1).img, holder.img2,options);
-	    		ImageLoader.getInstance().displayImage(areaList.get(2).img, holder.img3,options);
-	    		ImageLoader.getInstance().displayImage(areaList.get(3).img, holder.img4,options);
-	    		
-                setOnAreaClickListener(holder.img1, areaList.get(0).cityId);
-                setOnAreaClickListener(holder.img2, areaList.get(1).cityId);
-                setOnAreaClickListener(holder.img3, areaList.get(3).cityId);
-                setOnAreaClickListener(holder.img4, areaList.get(2).cityId);
-	    		
-	    		holder.cityCount1.setText(areaList.get(0).count + "个项目");
-	    		holder.cityCount2.setText(areaList.get(1).count + "个项目");
-	    		holder.cityCount3.setText(areaList.get(2).count + "个项目");
-	    		holder.cityCount4.setText(areaList.get(3).count + "个项目");
-	    		
-	    		holder.cityName1.setText(areaList.get(0).city);
-	    		holder.cityName2.setText(areaList.get(1).city);
-	    		holder.cityName3.setText(areaList.get(2).city);
-	    		holder.cityName4.setText(areaList.get(3).city);
-	    		
-	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
-	    		
-	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
-	    		ImageUtils.setViewPressState(holder.moreClickView);
-	    		
-	    		DisplayImageOptions reciteOptions = new DisplayImageOptions.Builder()
-			        .showImageForEmptyUri(R.drawable.recommended_area_recite)
-			        .showImageOnLoading(R.drawable.recommended_area_recite)
-			        .showImageOnFail(R.drawable.recommended_area_recite).build();
-	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().img, holder.recite,reciteOptions);
-	    		holder.recite.setTag(mData.get(position).getRecite().jump);
-	    		holder.recite.setOnClickListener(mReciteClickListener);
-	    		ImageUtils.setViewPressState(holder.recite);
+    		    ImageView recite = (ImageView) convertView.findViewById(R.id.recite);
+	    		imageLoader.displayImage(mData.get(position).getRecite().img, recite,
+	    		        ImageLoaderUtil.getDisplayOptions(R.drawable.recommended_area_recite));
+	    		recite.setTag(mData.get(position).getRecite().jump);
+	    		recite.setOnClickListener(mReciteClickListener);
+	    		ImageUtils.setViewPressState(recite);
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
 		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
