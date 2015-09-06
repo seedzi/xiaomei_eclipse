@@ -167,11 +167,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				holder.img3.setTag(areaList.get(2).cityId);
 				holder.img4.setTag(areaList.get(3).cityId);
 				
-				holder.img1.setOnClickListener(mHotCityItemClickListener);
-				holder.img2.setOnClickListener(mHotCityItemClickListener);
-				holder.img3.setOnClickListener(mHotCityItemClickListener);
-				holder.img4.setOnClickListener(mHotCityItemClickListener);
-				
 				holder.cityCount1 = (TextView) convertView.findViewById(R.id.count1);
 				holder.cityCount2 = (TextView) convertView.findViewById(R.id.count2);
 				holder.cityCount3 = (TextView) convertView.findViewById(R.id.count3);
@@ -205,7 +200,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		holder.recite = (ImageView) convertView.findViewById(R.id.recite);
 	    		
 	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
-	    		holder.moreClickView.setOnClickListener(mHotCityMoreClickListener);
 	    		ImageUtils.setViewPressState(holder.moreClickView);
 	    		
 	    		DisplayImageOptions reciteOptions = new DisplayImageOptions.Builder()
@@ -294,7 +288,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		ImageUtils.setViewPressState(holder.recite);
 	    		
 	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
-	    		holder.moreClickView.setOnClickListener(mProductMoreClickListener);
 	    		ImageUtils.setViewPressState(holder.moreClickView);
 				break;
 			case LAYOUT_TYPE_HOSP_INTRODUCTION: //机构介绍
@@ -329,7 +322,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	    		ImageUtils.setViewPressState(holder.recite);
 	    		
 	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
-	    		holder.moreClickView.setOnClickListener(mProductMoreClickListener);
 	    		ImageUtils.setViewPressState(holder.moreClickView);
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享
@@ -343,6 +335,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		return convertView;
 	}
 
+	/**
+	 * 热门城市item点击
+	 */
     public void setOnAreaClickListener(View itemView, final String cityId) {
         ImageUtils.setViewPressState(itemView);
         itemView.setOnClickListener(new OnClickListener() {
@@ -630,25 +625,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	};
 
 	/**
-	 * 热门地区 城市的点击事件，传过来的参数city_id
-	 */
-	private View.OnClickListener mHotCityItemClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View arg0) {
-		}
-	};
-	
-	/**
-	 * 热门地区的更多点击事件
-	 */
-	private View.OnClickListener mHotCityMoreClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View arg0) {
-			String s = (String) arg0.getTag();
-		}
-	};
-
-	/**
 	 * 每个item的背书项的点击事件
 	 */
 	private View.OnClickListener mReciteClickListener = new View.OnClickListener() {
@@ -709,16 +685,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
             }
         }
     };
-	
-	/**
-	 * 产品介绍 更多 的点击事件
-	 */
-	private View.OnClickListener mProductMoreClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View arg0) {
-			
-		}
-	};
 	
 	   /**
      * 机构item 的点击事件
