@@ -572,6 +572,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	        paramView.addView(img);  
 			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options2);
 			img.setTag(getItem(paramInt).jump);
+			ImageUtils.setViewPressState(img);
 			img.setOnClickListener(mConsultationClickListener);
 	        return img; 
 		}
@@ -657,7 +658,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			String jump = (String) arg0.getTag();
-			android.util.Log.d("333", "jump = " + jump);
+			GoodsDetailActivity.startActivity((Activity)getContext(), jump);
 		}
 	};
 	/**
