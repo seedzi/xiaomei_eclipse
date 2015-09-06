@@ -47,12 +47,15 @@ public class HomeBuilder extends AbstractJSONBuilder<List<HomeItem>>{
                        itme.shareId = childJsObj.optString("share_id");
                        itme.user = childJsObj.optString("user");
                        itme.id = childJsObj.optString("id");
+                       itme.list = childJsObj.optString("list");
+                       itme.type =  childJsObj.optString("type");
+                       itme.viewcount =  childJsObj.optString("viewcount");
                        childList.add(itme);
                       
                    }
                    homeItem.setmList(childList);
                }
-               if(i==0){
+               if(i==2){
                    android.util.Log.d("222", jsObj.toString());
                }
                list.add(homeItem);

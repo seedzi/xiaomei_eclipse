@@ -4,6 +4,9 @@ package com.xiaomei.yanyu.levelone.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.PageIndicator;
@@ -13,11 +16,13 @@ import com.xiaomei.yanyu.activity.AreaDetailActivity;
 import com.xiaomei.yanyu.activity.AreaListActivity;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
+import com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity;
 import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.DotLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
@@ -533,8 +538,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 			img.setScaleType(ScaleType.FIT_XY);
 	        paramView.addView(img);  
 			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options);
-			img.setTag(getItem(paramInt).jump);
+			img.setTag(getItem(paramInt));
 			img.setOnClickListener(mmTopicClickListener);
+			ImageUtils.setViewPressState(img);
 	        return img; 
 		}
 	}
@@ -570,8 +576,28 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	private View.OnClickListener mmTopicClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			String jump = (String) arg0.getTag();
-			android.util.Log.d("333", "jump = " + jump);
+		    try {
+    		    HomeItem.Item itme = (HomeItem.Item) arg0.getTag();
+    		    Integer type = Integer.valueOf(itme.type);
+    		    switch (type) {
+                case 0://H5形式
+                    
+                    break;
+                case 1: //卡片形式
+                   
+                        JSONObject jsonObject = new JSONObject(itme.list);
+                        String viewcount = itme.viewcount;
+                        String title =itme.title;
+                        String des = jsonObject.optString("des");
+                        String img = itme.img;
+                        TopicDetailSlideActivity.startActivity((Activity)getContext(),itme.list, title ,des, img, viewcount);
+    
+                    break;
+                default:
+                    break;
+                }
+            } catch (Exception e) {
+            }
 		}
 	};
 

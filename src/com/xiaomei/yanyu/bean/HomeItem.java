@@ -52,13 +52,15 @@ public class HomeItem {
 		
 		public String user;
 		
+		public String list;
 		public String city; //城市名字
 		public String cityId; //城市id号
 		public String jump; //每个背书的junp
 		public String goodsId; //热门项目的 goods_id
 		public String shareId; // share id
-		
+		public String viewcount;
 		public String id;
+		public String type;
 	}
 	
 	/**
