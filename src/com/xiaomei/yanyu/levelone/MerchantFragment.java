@@ -5,6 +5,8 @@ import com.xiaomei.yanyu.adapter.MerchantAdapter;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MerchantControl;
 import com.xiaomei.yanyu.widget.TitleActionBar;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
@@ -21,7 +23,7 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class MerchantFragment extends BaseFragment<MerchantControl>
-	implements OnRefreshListener2 {
+	implements OnRefreshListener, OnLastItemVisibleListener {
 	
 	private ViewGroup mRootView;
 	
@@ -79,6 +81,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	
 	private void setListener(){
 		mPullToRefreshListView.setOnRefreshListener(this);
+		mPullToRefreshListView.setOnLastItemVisibleListener(this);
 //		mPullToRefreshListView.setOnScrollListener(this);
 	}
 	
@@ -156,12 +159,12 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	}
 	// ================================== Call back ==========================================
 	@Override
-	public void onPullDownToRefresh() {
+	public void onRefresh() {
 		mControl.getMerchantListAsyn();
 	}
 	
-	@Override
-    public void onPullUpToRefresh() {
-	    getMoreData();
-	}
+    @Override
+    public void onLastItemVisible() {
+        getMoreData();
+    }
 }

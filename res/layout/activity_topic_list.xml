@@ -3,19 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    
-    <FrameLayout 
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
 
-        <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
-            android:id="@+id/list"
-            style="@style/ListView.Divider"/>
-
-        <include
-            android:id="@+id/empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/goods_list_empty_view" />
-     </FrameLayout>
+    <include layout="@layout/pull_list_view" />
 </LinearLayout>

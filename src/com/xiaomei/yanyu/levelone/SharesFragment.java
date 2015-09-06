@@ -12,6 +12,8 @@ import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.view.LayoutPagerAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
@@ -31,7 +33,7 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class SharesFragment extends BaseFragment<SharesControl> 
-	implements OnRefreshListener2 {
+	implements OnRefreshListener, OnLastItemVisibleListener {
 
     private static final int REQUEST_NEW_POST = 0;
 
@@ -97,7 +99,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
     }
 
 	@Override
-	public void onPullDownToRefresh() {
+	public void onRefresh() {
 	    int position = mViewPager.getCurrentItem();
 	    ViewHolder holder = mPagerAdapter.getHolder(position);
 	    if(position == SharesPagerAdapter.POSITION_RECOMMEND_SHARES){
@@ -108,7 +110,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	}
 
 	@Override
-	public void onPullUpToRefresh() {
+	public void onLastItemVisible() {
 	    int position = mViewPager.getCurrentItem();
 	    ViewHolder holder = mPagerAdapter.getHolder(position);
 	    if (position == SharesPagerAdapter.POSITION_RECOMMEND_SHARES) {
@@ -223,6 +225,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
             mHolders[position] = new ViewHolder(itemView);
             PullToRefreshListView pullView = mHolders[position].mPullToRefreshListView;
             pullView.setOnRefreshListener(SharesFragment.this);
+            pullView.setOnLastItemVisibleListener(SharesFragment.this);
             pullView.getRefreshableView().setAdapter(position == POSITION_RECOMMEND_SHARES ? mRecommendSharesAdapter : mUserSharesAdapter);
 
             View emptyView = mHolders[position].mEmptyView;

@@ -77,7 +77,7 @@
         <item name="android:background">#e2e2e2</item>
         <item name="android:divider">@null</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
-        <item name="ptrMode">both</item>
+        <item name="ptrMode">pullDownFromTop</item>
     </style>
 
     <style name="ListView.Divider">

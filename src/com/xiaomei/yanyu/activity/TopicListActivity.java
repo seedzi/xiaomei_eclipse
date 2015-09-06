@@ -19,6 +19,8 @@ import com.xiaomei.yanyu.bean.Topic;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.view.TopicAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
 import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
 
@@ -33,7 +35,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
-public class TopicListActivity extends Activity implements OnRefreshListener2, LoaderCallbacks<Object> {
+public class TopicListActivity extends Activity implements OnRefreshListener, OnLastItemVisibleListener, LoaderCallbacks<Object> {
 
     public static void startActivity(Activity ac, String title, String url) {
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
@@ -82,13 +84,13 @@ public class TopicListActivity extends Activity implements OnRefreshListener2, L
     }
 
     @Override
-    public void onPullDownToRefresh() {
-        mPullView.onRefreshComplete();
+    public void onRefresh() {
+        mTopicLoader.forceLoad();
     }
 
     @Override
-    public void onPullUpToRefresh() {
-        mPullView.onRefreshComplete();
+    public void onLastItemVisible() {
+        // TODO Load more
     }
 
     @Override
@@ -102,6 +104,7 @@ public class TopicListActivity extends Activity implements OnRefreshListener2, L
             mListAdapter.clear();
             mListAdapter.addAll((Topic[]) data);
         }
+        mPullView.onRefreshComplete();
     }
 
     @Override

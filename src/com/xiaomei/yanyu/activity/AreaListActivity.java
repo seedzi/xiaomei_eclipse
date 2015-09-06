@@ -27,6 +27,9 @@ import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleActionBar;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
+import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -37,6 +40,7 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -47,7 +51,7 @@ import android.widget.ListView;
 /**
  * Created by sunbreak on 9/2/15.
  */
-public class AreaListActivity extends Activity implements LoaderManager.LoaderCallbacks<Object> {
+public class AreaListActivity extends Activity implements OnRefreshListener, OnLastItemVisibleListener, LoaderManager.LoaderCallbacks<Object> {
 
     private static final int AREA_LOADER = 0;
     private static final int AREA_FILTER_LOADER = 1;
@@ -55,11 +59,13 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
     private View mTopFilter;
     private DropMenu mFilterCountry;
     private DropMenu mFilterGoodsType;
+    private PullToRefreshListView mPullView;
     private ListView mListView;
 
     private AreaAdapter mAreaAdapter;
     private FilterAdapter mCountryAdapter;
     private FilterAdapter mGoodsTypeAdapter;
+    private AreaLoader mAreaLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,18 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
         mTopFilter = findViewById(R.id.filter);
         mFilterCountry = (DropMenu) findViewById(R.id.country);
         mFilterGoodsType = (DropMenu) findViewById(R.id.goods_type);
-        mListView = (ListView) findViewById(android.R.id.list);
+        mPullView = (PullToRefreshListView) findViewById(R.id.list);
+        mPullView.setOnRefreshListener(this);
+        mPullView.setOnLastItemVisibleListener(this);
+        mListView = mPullView.getRefreshableView();
+        View emptyView = findViewById(R.id.empty);
+        mPullView.setEmptyView(emptyView);
+        emptyView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAreaLoader.forceLoad();
+            }
+        });
 
         mFilterCountry.setAdapter(mCountryAdapter);
         mFilterGoodsType.setAdapter(mGoodsTypeAdapter);
@@ -89,8 +106,18 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
             }
         });
 
-        getLoaderManager().initLoader(AREA_LOADER, null, this);
+        mAreaLoader = (AreaLoader) getLoaderManager().initLoader(AREA_LOADER, null, this);
         getLoaderManager().initLoader(AREA_FILTER_LOADER, null, this);
+    }
+
+    @Override
+    public void onRefresh() {
+        mAreaLoader.forceLoad();
+    }
+
+    @Override
+    public void onLastItemVisible() {
+        // TODO Load more
     }
 
     @Override
@@ -112,6 +139,7 @@ public class AreaListActivity extends Activity implements LoaderManager.LoaderCa
                     mAreaAdapter.clear();
                     mAreaAdapter.addAll((Area[]) data);
                 }
+                mPullView.onRefreshComplete();
                 break;
             case AREA_FILTER_LOADER:
                 if (data != null) {

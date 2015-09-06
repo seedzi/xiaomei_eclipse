@@ -13,8 +13,5 @@
         android:id="@+id/filter"
         layout="@layout/area_top_filter" />
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/pull_list_view" />
 </LinearLayout>
