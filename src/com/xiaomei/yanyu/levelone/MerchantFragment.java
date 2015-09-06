@@ -60,7 +60,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mAdapter = new MerchantAdapter(getActivity()); 
 		mListView.setAdapter(mAdapter);
-		mListView.setOnItemClickListener(new MerchantAdapter.MerchantItemClickListener());
+//		mListView.setOnItemClickListener(new MerchantAdapter.MerchantItemClickListener());
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);

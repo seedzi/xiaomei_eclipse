@@ -6,6 +6,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.GoodsGrade;
 
@@ -36,8 +37,15 @@ public class MerchantAdapter extends ArrayAdapter<Merchant> {
         View itemView = convertView != null ? convertView :
             LayoutInflater.from(getContext()).inflate(R.layout.merchant_list_item, parent, false);
 
-        Merchant merchant = getItem(position);
+        final Merchant merchant = getItem(position);
         ImageView cover = UiUtil.findImageViewById(itemView, R.id.cover);
+        ImageUtils.setViewPressState(cover);
+        cover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsDetailActivity.startActivity((Activity) v.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + merchant.getId());
+            }
+        });
         ImageLoader.getInstance().displayImage(merchant.getImageLarge(), cover, mImageOptions);
         UiUtil.findTextViewById(itemView, R.id.description).setText(merchant.getDescription());
 

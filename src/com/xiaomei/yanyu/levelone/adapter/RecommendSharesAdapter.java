@@ -5,6 +5,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
+import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 
 import android.app.Activity;
@@ -34,7 +35,8 @@ public class RecommendSharesAdapter extends ArrayAdapter<RecommendShares> {
         UiUtil.findTextViewById(itemView, R.id.share_mark).setText(recommendShares.getShareMark());
         UiUtil.findTextViewById(itemView, R.id.share_title).setText(recommendShares.getShareTitle());
         
-        itemView.setOnClickListener(new OnClickListener() {
+        ImageUtils.setViewPressState(UiUtil.findImageViewById(itemView, R.id.share_img));
+        UiUtil.findImageViewById(itemView, R.id.share_img).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int shareType = recommendShares.getShareType();

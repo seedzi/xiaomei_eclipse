@@ -11,6 +11,7 @@ import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MallControl;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsListActivity;
+import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.ScreenUtils;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -79,6 +80,7 @@ public class MallFragment extends BaseFragment<MallControl> {
             	GoodsDetailActivity.startActivity(getActivity(), (String)v.getTag());
             }
         });
+		ImageUtils.setViewPressState(mTopIcon);
 		mTopIcon.getLayoutParams().height = ScreenUtils.getScreenWidth(getActivity())*346/720;
 		
 		mScrollview = mRootView.findViewById(R.id.scrollview);
