@@ -38,4 +38,31 @@ public class Area {
     public String getSpecial() {
         return special;
     }
+    
+    public static class Filter {
+
+        public static final String COUNTRY = "country";
+        public static final String SPECIAL = "proj";
+
+        private String label;
+        private FilterItem[] key;
+
+        public FilterItem[] getItems() {
+            return key;
+        }
+
+    }
+
+    public static class FilterItem {
+        private String label;
+        private String key;
+        
+        public String getLabel() {
+            return label;
+        }
+
+        public String getKey() {
+            return key;
+        }
+    }
 }

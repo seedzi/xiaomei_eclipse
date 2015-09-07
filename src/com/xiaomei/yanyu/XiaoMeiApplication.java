@@ -1,5 +1,7 @@
 package com.xiaomei.yanyu;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,6 +27,7 @@ public class XiaoMeiApplication extends Application{
     }
 
     private XiaoMeiApi api;
+    private RequestQueue mQueue;
     
     @Override
     public void onCreate() {
@@ -33,6 +36,8 @@ public class XiaoMeiApplication extends Application{
         api = new XiaoMeiApi("XiaoMei1.0", this);
         ControlFactory.init(this);
         initImageLoader(this);
+        
+        mQueue = Volley.newRequestQueue(this.getApplicationContext());
     }
 
     
@@ -58,7 +63,11 @@ public class XiaoMeiApplication extends Application{
     public XiaoMeiApi getApi(){
     	return api;
     }
-    
+
+    public RequestQueue getQueue() {
+        return mQueue;
+    }
+
     private  Activity mCurrentActivity;
     
     public void setCurrentActivity(Activity ac){
@@ -67,5 +76,5 @@ public class XiaoMeiApplication extends Application{
     
     public Activity getCurrentActivity(){
         return mCurrentActivity;
-    } 
+    }
 }

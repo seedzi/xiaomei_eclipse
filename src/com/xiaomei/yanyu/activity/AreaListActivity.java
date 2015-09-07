@@ -5,10 +5,16 @@
 package com.xiaomei.yanyu.activity;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,7 +28,8 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Area;
-import com.xiaomei.yanyu.bean.AreaFilter;
+import com.xiaomei.yanyu.bean.Area.Filter;
+import com.xiaomei.yanyu.bean.Area.FilterItem;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.DropMenu;
@@ -37,6 +44,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +52,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -53,19 +62,20 @@ import android.widget.ListView;
  */
 public class AreaListActivity extends Activity implements OnRefreshListener, OnLastItemVisibleListener, LoaderManager.LoaderCallbacks<Object> {
 
-    private static final int AREA_LOADER = 0;
     private static final int AREA_FILTER_LOADER = 1;
 
     private View mTopFilter;
     private DropMenu mFilterCountry;
-    private DropMenu mFilterGoodsType;
+    private DropMenu mFilterSpecial;
     private PullToRefreshListView mPullView;
     private ListView mListView;
 
+    private RequestQueue mQueue;
     private AreaAdapter mAreaAdapter;
     private FilterAdapter mCountryAdapter;
     private FilterAdapter mGoodsTypeAdapter;
-    private AreaLoader mAreaLoader;
+    private String mAreaCountry = "";
+    private String mAreaSpecial = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +85,15 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         TitleActionBar titleBar = new TitleActionBar(getActionBar());
         titleBar.setTitle(R.string.activity_area_list);
 
+        mQueue = XiaoMeiApplication.getInstance().getQueue();
         mCountryAdapter = new FilterAdapter(this);
         mGoodsTypeAdapter = new FilterAdapter(this);
         mAreaAdapter = new AreaAdapter(this);
 
         mTopFilter = findViewById(R.id.filter);
         mFilterCountry = (DropMenu) findViewById(R.id.country);
-        mFilterGoodsType = (DropMenu) findViewById(R.id.goods_type);
+        mFilterSpecial = (DropMenu) findViewById(R.id.goods_type);
+
         mPullView = (PullToRefreshListView) findViewById(R.id.list);
         mPullView.setOnRefreshListener(this);
         mPullView.setOnLastItemVisibleListener(this);
@@ -91,12 +103,36 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         emptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAreaLoader.forceLoad();
+                onRefresh();
             }
         });
 
         mFilterCountry.setAdapter(mCountryAdapter);
-        mFilterGoodsType.setAdapter(mGoodsTypeAdapter);
+        mFilterCountry.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                FilterItem item = (FilterItem) parent.getItemAtPosition(position);
+                mAreaCountry = item.getKey();
+                onRefresh();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        mFilterSpecial.setAdapter(mGoodsTypeAdapter);
+        mFilterSpecial.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                FilterItem item = (FilterItem) parent.getItemAtPosition(position);
+                mAreaSpecial = item.getKey();
+                onRefresh();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         mListView.setAdapter(mAreaAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -106,13 +142,13 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             }
         });
 
-        mAreaLoader = (AreaLoader) getLoaderManager().initLoader(AREA_LOADER, null, this);
         getLoaderManager().initLoader(AREA_FILTER_LOADER, null, this);
+        onRefresh();
     }
 
     @Override
     public void onRefresh() {
-        mAreaLoader.forceLoad();
+        mQueue.add(new StringRequest(getAreaListUrl(), mRefreshListener, mRefreshErroListener));
     }
 
     @Override
@@ -120,11 +156,36 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         // TODO Load more
     }
 
+    private String getAreaListUrl() {
+        return Uri.parse(HttpUrlManager.AREA_LIST).buildUpon()
+                .appendQueryParameter(HttpUtil.QUERY_COUNTRY, mAreaCountry)
+                .appendQueryParameter(HttpUtil.QUERY_SPECIAL, mAreaSpecial)
+                .build().toString();
+    }
+
+    private Listener<String> mRefreshListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Gson gson = new Gson();
+            BizResult res = gson.fromJson(response, BizResult.class);
+            if (res.isSuccess()) {
+                mAreaAdapter.clear();
+                mAreaAdapter.addAll(gson.fromJson(res.getMessage(), Area[].class));
+            }
+            mPullView.onRefreshComplete();
+        }
+    };
+
+    private ErrorListener mRefreshErroListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError arg0) {
+            mPullView.onRefreshComplete();
+        }
+    };
+
     @Override
     public Loader<Object> onCreateLoader(int id, Bundle args) {
         switch (id) {
-            case AREA_LOADER:
-                return new AreaLoader(this);
             case AREA_FILTER_LOADER:
                 return new AreaFilterLoader(this);
         }
@@ -134,16 +195,9 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
     @Override
     public void onLoadFinished(Loader<Object> loader, Object data) {
         switch (loader.getId()) {
-            case AREA_LOADER:
-                if (data != null) {
-                    mAreaAdapter.clear();
-                    mAreaAdapter.addAll((Area[]) data);
-                }
-                mPullView.onRefreshComplete();
-                break;
             case AREA_FILTER_LOADER:
                 if (data != null) {
-                    AreaFilter[] areaFilters = (AreaFilter[]) data;
+                    Filter[] areaFilters = (Filter[]) data;
                     mCountryAdapter.clear();
                     mCountryAdapter.addAll(areaFilters[0].getItems());
                     mGoodsTypeAdapter.clear();
@@ -157,37 +211,6 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
     @Override
     public void onLoaderReset(Loader<Object> loader) {
 
-    }
-
-    private static class AreaLoader extends AsyncTaskLoader<Object> {
-
-        public AreaLoader(Context context) {
-            super(context);
-        }
-
-        @Override
-        public Object loadInBackground() {
-            HttpApi httpApi = XiaoMeiApplication.getInstance().getApi().getHttpApi();
-            HttpGet httpGet = httpApi.createHttpGet(HttpUrlManager.AREA_LIST,
-                    new BasicNameValuePair(HttpUtil.QUERY_COUNTRY, "0"),
-                    new BasicNameValuePair(HttpUtil.QUERY_SPECIAL, "0"));
-            try {
-                BizResult result = httpApi.doHttpRequestResult(httpGet);
-                if (result.isSuccess()) {
-                    return new Gson().fromJson(result.getMessage(), Area[].class);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XiaoMeiOtherException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onStartLoading() {
-            forceLoad();
-        }
     }
 
     private static class AreaFilterLoader extends AsyncTaskLoader<Object> {
@@ -204,9 +227,9 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
                 BizResult result = httpApi.doHttpRequestResult(httpGet);
                 JsonObject jsonObject = result.getMessage().getAsJsonObject();
                 Gson gson = new Gson();
-                AreaFilter countryFilter = gson.fromJson(jsonObject.get(AreaFilter.COUNTRY), AreaFilter.class);
-                AreaFilter goodstypeFilter = gson.fromJson(jsonObject.get(AreaFilter.GOODS_TYPE), AreaFilter.class);
-                return new AreaFilter[]{countryFilter, goodstypeFilter};
+                Filter countryFilter = gson.fromJson(jsonObject.get(Filter.COUNTRY), Filter.class);
+                Filter goodstypeFilter = gson.fromJson(jsonObject.get(Filter.SPECIAL), Filter.class);
+                return new Filter[]{countryFilter, goodstypeFilter};
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (XiaoMeiOtherException e) {
@@ -256,7 +279,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         }
     }
 
-    private class FilterAdapter extends ArrayAdapter<AreaFilter.Item> {
+    private class FilterAdapter extends ArrayAdapter<Area.FilterItem> {
 
         public FilterAdapter(Context context) {
             super(context, 0);
