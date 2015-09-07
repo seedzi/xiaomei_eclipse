@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.widget;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.util.ImageUtils;
 
 import android.content.Context;
