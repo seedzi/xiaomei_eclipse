@@ -25,7 +25,6 @@ import com.xiaomei.yanyu.util.ImageLoaderUtil;
 import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.ScreenUtils;
-import com.xiaomei.yanyu.widget.DotLayout;
 
 import android.app.Activity;
 import android.content.Context;
