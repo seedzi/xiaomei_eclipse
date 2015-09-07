@@ -507,7 +507,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
         .showImageForEmptyUri(R.drawable.user_head_default)
         .showImageOnLoading(R.drawable.user_head_default)
         .showImageOnFail(R.drawable.user_head_default).build();
-		ImageLoader.getInstance().displayImage("",icon,options1);
+		ImageLoader.getInstance().displayImage(list.get(position).avatar,icon,options1);
 	}
 	
 	/**

@@ -62,6 +62,7 @@ public class HomeItem {
 		public String viewcount;
 		public String id;
 		public String type;
+		public String avatar;
 	}
 	
 	/**
