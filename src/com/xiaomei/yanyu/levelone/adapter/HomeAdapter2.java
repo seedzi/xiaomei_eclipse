@@ -379,14 +379,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	 * Holder
 	 */
 	private class Holder{
-		private ViewPager mViewPager;
-		private ImageView img1;
-		private  ImageView img2;
-		private  ImageView img3;
-		private  ImageView img4;
-		private LinearLayout horizontalLayout;
-		private HorizontalScrollView scrollView;
-		
 		private ViewGroup item1;
 		private ViewGroup item2;
 		private ViewGroup item3;
@@ -395,20 +387,6 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		private ViewGroup item6;
 		private ViewGroup item7;
 		private ViewGroup item8;
-		private ImageView recite;
-		
-		
-		private TextView cityName1;
-		private TextView cityName2;
-		private TextView cityName3;
-		private TextView cityName4;
-		
-		private TextView cityCount1;
-		private TextView cityCount2;
-		private TextView cityCount3;
-		private TextView cityCount4;
-		
-		private View moreClickView;
 	}
 
 	private void setupHomeShare(Holder holder,ViewGroup convertView){
