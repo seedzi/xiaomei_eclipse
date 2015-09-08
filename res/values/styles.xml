@@ -74,10 +74,9 @@
     <style name="ListView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#e2e2e2</item>
+        <item name="android:background">@color/background_dark_gray</item>
         <item name="android:divider">@null</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
-        <item name="ptrMode">pullDownFromTop</item>
     </style>
 
     <style name="ListView.Divider">

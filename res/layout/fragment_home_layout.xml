@@ -14,17 +14,18 @@
 	<com.handmark.pulltorefresh.library.PullToRefreshListView 
 	    android:id="@+id/list"
         style="@style/ListView" /> -->
-	<ScrollView 
-	    android:id="@+id/scrollview"
+	<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+	    android:id="@+id/pull_view"
 	    android:layout_height="match_parent"
-	    android:layout_width="match_parent">
+	    android:layout_width="match_parent"
+        android:background="@color/background_dark_gray">
 	    <LinearLayout
 	        android:id="@+id/root"
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent" 
 	        android:orientation="vertical">
 	    </LinearLayout>
-	</ScrollView>
+	</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 	
 	<include  android:id="@+id/empty_view"
 	    layout="@layout/empty_layout"

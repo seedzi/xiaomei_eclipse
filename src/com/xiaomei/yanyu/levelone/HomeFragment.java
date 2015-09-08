@@ -11,6 +11,7 @@ import com.xiaomei.yanyu.levelone.control.HomeControl;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.yuekuapp.BaseFragment;
@@ -40,7 +41,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
 	
-	private ViewGroup mScrollView;
+	private PullToRefreshScrollView mScrollView;
 	private ViewGroup mContainerView;
 	private HomeListManager mHomeListManager;
 	
@@ -75,7 +76,8 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 //		mListView.setAdapter(mAdapter);
 		
 		mContainerView = (ViewGroup) mRootView.findViewById(R.id.root);
-		mScrollView =  (ViewGroup) mRootView.findViewById(R.id.scrollview);
+		mScrollView =  (PullToRefreshScrollView) mRootView.findViewById(R.id.pull_view);
+		mScrollView.setOnRefreshListener(this);
 		
 		mHomeListManager = new HomeListManager();
 		mHomeListManager.setupView(mContainerView, getActivity());
@@ -145,6 +147,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 //		mAdapter.setData(mControl.getModel().getList());
 //		mAdapter.notifyDataSetChanged();
 		mHomeListManager.setData(mControl.getModel().getList());
+		mScrollView.onRefreshComplete();
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
@@ -152,6 +155,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		mIsRefresh = false;
 		dissProgress();
 		showEmpty();
+		mScrollView.onRefreshComplete();
 		Toast.makeText(getActivity(), "网络异常l", 0).show();
 	}
 	
@@ -159,6 +163,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		mIsRefresh = false;
 		dissProgress();
 		showEmpty();
+		mScrollView.onRefreshComplete();
 		Toast.makeText(getActivity(), "网络异常", 0).show();
 	}
 	
