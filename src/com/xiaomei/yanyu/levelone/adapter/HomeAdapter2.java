@@ -146,40 +146,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 				topicIndicator.setViewPager(holder.mViewPager);
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
-				List<Item>  areaList = mData.get(position).getmList();
-				
-				convertView = mInflater.inflate(R.layout.home_recommend_area, parent, false);
-                View itemTitle = convertView.findViewById(R.id.home_item_title);
-                itemTitle.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        context.startActivity(new Intent(context, AreaListActivity.class));
-                    }
-                });
-				((TextView) itemTitle.findViewById(android.R.id.title)).setText(R.string.home_item_recommend_area);
-				
-		        ImageLoader imageLoader = ImageLoader.getInstance();
-		        DisplayImageOptions options = ImageLoaderUtil.getDisplayOptions(R.drawable.home_area_default);
-		        View[] thumbs = new View[]{convertView.findViewById(R.id.thumb1), convertView.findViewById(R.id.thumb2),
-		                convertView.findViewById(R.id.thumb3), convertView.findViewById(R.id.thumb4)};
-		        Context context = convertView.getContext();
-		        for (int i = 0; i < AREA_COUNT; i++) {
-		            Item item = areaList.get(i);
-		            View areaItemThumb = thumbs[i];
-		            ImageView image = (ImageView) areaItemThumb.findViewById(R.id.image);
-		            imageLoader.displayImage(item.img, image, options);
-		            setOnAreaClickListener(image, item.cityId);
-		            ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
-		            ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(context.getString(R.string.area_goods_count, item.count));
-		        }
-				
-    		    ImageView recite = (ImageView) convertView.findViewById(R.id.recite);
-	    		imageLoader.displayImage(mData.get(position).getRecite().img, recite,
-	    		        ImageLoaderUtil.getDisplayOptions(R.drawable.recommended_area_recite));
-	    		recite.setTag(mData.get(position).getRecite().jump);
-	    		recite.setOnClickListener(mReciteClickListener);
-	    		ImageUtils.setViewPressState(recite);
+                    convertView = getRecommendArea(position, parent);
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
 		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
@@ -304,6 +271,46 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		}
 		return convertView;
 	}
+
+    private View getRecommendArea(int position, ViewGroup parent) {
+        View convertView;
+        HomeItem homeItem = mData.get(position);
+        List<Item>  areaList = homeItem.getmList();
+        
+        convertView = mInflater.inflate(R.layout.home_recommend_area, parent, false);
+        View itemTitle = convertView.findViewById(R.id.home_item_title);
+        itemTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                context.startActivity(new Intent(context, AreaListActivity.class));
+            }
+        });
+        ((TextView) itemTitle.findViewById(android.R.id.title)).setText(R.string.home_item_recommend_area);
+        
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = ImageLoaderUtil.getDisplayOptions(R.drawable.home_area_default);
+        View[] thumbs = new View[]{convertView.findViewById(R.id.thumb1), convertView.findViewById(R.id.thumb2),
+                convertView.findViewById(R.id.thumb3), convertView.findViewById(R.id.thumb4)};
+        Context context = convertView.getContext();
+        for (int i = 0; i < AREA_COUNT; i++) {
+            Item item = areaList.get(i);
+            View areaItemThumb = thumbs[i];
+            ImageView image = (ImageView) areaItemThumb.findViewById(R.id.image);
+            imageLoader.displayImage(item.img, image, options);
+            setOnAreaClickListener(image, item.cityId);
+            ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
+            ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(context.getString(R.string.area_goods_count, item.count));
+        }
+        
+        ImageView recite = (ImageView) convertView.findViewById(R.id.recite);
+        imageLoader.displayImage(homeItem.getRecite().img, recite,
+                ImageLoaderUtil.getDisplayOptions(R.drawable.recommended_area_recite));
+        recite.setTag(homeItem.getRecite().jump);
+        recite.setOnClickListener(mReciteClickListener);
+        ImageUtils.setViewPressState(recite);
+        return convertView;
+    }
 
 	/**
 	 * 热门城市item点击
