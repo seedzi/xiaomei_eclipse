@@ -146,23 +146,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                     convertView = getHotGoods(position);
 				break;
 			case LAYOUT_TYPE_CONSULTATION://一对一咨询
-				convertView = mInflater.inflate(R.layout.home_consultation_layout, null);
-				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
-				FrameLayout.LayoutParams fl = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
-				holder.mViewPager.setLayoutParams(fl);
-				holder.mViewPager.setAdapter(mConsultationPageAdapter);
-				PageIndicator consultationIndicator = (PageIndicator) convertView.findViewById(R.id.indicator);
-				consultationIndicator.setViewPager(holder.mViewPager);
-				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
-				
-				DisplayImageOptions reciteOptions1 = new DisplayImageOptions.Builder()
-		        .showImageForEmptyUri(R.drawable.consultation_recite)
-		        .showImageOnLoading(R.drawable.consultation_recite)
-		        .showImageOnFail(R.drawable.consultation_recite).build();
-	    		ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions1);
-	    		holder.recite.setTag(mData.get(position).getRecite().jump);
-	    		holder.recite.setOnClickListener(mReciteClickListener);
-	    		ImageUtils.setViewPressState(holder.recite);
+                    convertView = getConsultationViewPager(position);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
                DisplayImageOptions options2 = new DisplayImageOptions.Builder()
@@ -243,6 +227,28 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		}
 		return convertView;
 	}
+
+    private View getConsultationViewPager(int position) {
+        View convertView;
+        convertView = mInflater.inflate(R.layout.home_consultation_layout, null);
+        ViewPager mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
+        FrameLayout.LayoutParams fl = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
+        mViewPager.setLayoutParams(fl);
+        mViewPager.setAdapter(mConsultationPageAdapter);
+        PageIndicator consultationIndicator = (PageIndicator) convertView.findViewById(R.id.indicator);
+        consultationIndicator.setViewPager(mViewPager);
+        ImageView recite = (ImageView) convertView.findViewById(R.id.recite);
+        
+        DisplayImageOptions reciteOptions1 = new DisplayImageOptions.Builder()
+        .showImageForEmptyUri(R.drawable.consultation_recite)
+        .showImageOnLoading(R.drawable.consultation_recite)
+        .showImageOnFail(R.drawable.consultation_recite).build();
+        ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, recite,reciteOptions1);
+        recite.setTag(mData.get(position).getRecite().jump);
+        recite.setOnClickListener(mReciteClickListener);
+        ImageUtils.setViewPressState(recite);
+        return convertView;
+    }
 
     private View getTopicViewPager() {
         View convertView;
