@@ -235,7 +235,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                     @Override
                     public void onClick(View v) {
                         Context context = v.getContext();
-                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_merchant_topic), HttpUrlManager.GOODS_TOPIC_LIST);
+                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_goods_topic), HttpUrlManager.GOODS_TOPIC_LIST);
                     }
                 });
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
@@ -270,7 +270,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                     @Override
                     public void onClick(View v) {
                         Context context = v.getContext();
-                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_goods_topic), HttpUrlManager.MERCHANT_TOPIC_LIST);
+                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_merchant_topic), HttpUrlManager.MERCHANT_TOPIC_LIST);
                     }
                 });
 				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
