@@ -137,13 +137,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 			holder = new Holder();
 			switch (getItemViewType(position)) {
 			case LAYOUT_TYPE_TOPIC: // 首页热点图
-				convertView = mInflater.inflate(R.layout.home_topic_layout, null);
-				holder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
-				FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
-				holder.mViewPager.setLayoutParams(flp);
-				holder.mViewPager.setAdapter(mTopicPageAdapter);
-				PageIndicator topicIndicator = (PageIndicator) convertView.findViewById(R.id.indicator);
-				topicIndicator.setViewPager(holder.mViewPager);
+                    convertView = getTopicViewPager();
 				break;
 			case LAYOUT_TYPE_RECOMMENDED_AREA: //推荐地区
                     convertView = getRecommendArea(position, parent);
@@ -271,6 +265,18 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		}
 		return convertView;
 	}
+
+    private View getTopicViewPager() {
+        View convertView;
+        convertView = mInflater.inflate(R.layout.home_topic_layout, null);
+        ViewPager mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
+        FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, mScreenWidth*335/720);
+        mViewPager.setLayoutParams(flp);
+        mViewPager.setAdapter(mTopicPageAdapter);
+        PageIndicator topicIndicator = (PageIndicator) convertView.findViewById(R.id.indicator);
+        topicIndicator.setViewPager(mViewPager);
+        return convertView;
+    }
 
     private View getRecommendArea(int position, ViewGroup parent) {
         View convertView;
