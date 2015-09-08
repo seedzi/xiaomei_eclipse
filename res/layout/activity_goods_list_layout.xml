@@ -18,7 +18,7 @@
             android:id="@+id/filter"
             layout="@layout/top_filter" />
         
- <com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
+ <com.handmark.pulltorefresh.library.PullToRefreshListView 
      android:divider="@color/divider"
      android:dividerHeight="@dimen/divider"
     android:id="@+id/list"

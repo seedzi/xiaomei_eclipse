@@ -14,8 +14,9 @@ import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -178,7 +179,7 @@ public class CommentListActivity extends Activity
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(PullToRefreshBase refreshView) {
         requestCommentList();
     }
 

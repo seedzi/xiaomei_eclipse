@@ -16,8 +16,9 @@ import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -147,7 +148,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	            return;
 	        if(!mRefreshLayout.isShown())
 	            mRefreshLayout.setVisibility(View.VISIBLE);
-	        mPullToRefreshListView.addFooterView(mRefreshLayout);
+	        mPullToRefreshListView.getRefreshableView().addFooterView(mRefreshLayout);
 	        mControl.getUserFavMore();
 	        mIsRefresh = true;
 	}
@@ -192,7 +193,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	        mIsRefresh = false;
 	        mAdapter.addAll(mControl.getModel().getGoodsList());
 	        mAdapter.notifyDataSetChanged();
-	        mPullToRefreshListView.removeFooterView(mRefreshLayout);
+	        mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 	        Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
 	        dismissDialog();
 	        mEdit.setEnabled(true);
@@ -201,7 +202,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	public void getUserFavMoreExceptionCallBack(){
 	       dissProgress();
 	        mIsRefresh = false;
-	        mPullToRefreshListView.removeFooterView(mRefreshLayout);
+	        mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 	        dismissDialog();
 	        mEdit.setEnabled(true);
 	}
@@ -261,7 +262,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(PullToRefreshBase refreshView) {
     	mEdit.setEnabled(false);
         mIsRefresh = true;
         mControl.getUserFav();

@@ -38,8 +38,9 @@ import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 @SuppressLint("NewApi")
 public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener{
@@ -117,7 +118,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		        Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
 		        if (!item.second.equals(mSubCat)) {
 		            mSubCat = item.second;
-		            onRefresh();
+		            onRefresh(mPullToRefreshListView);
 		        }
 		    }
 		    @Override
@@ -131,7 +132,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
                 Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
                 if (!item.second.equals(mOriginPlace)) {
                     mOriginPlace = item.second;
-                    onRefresh();
+                    onRefresh(mPullToRefreshListView);
                 }
             }
             @Override
@@ -145,7 +146,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
                 Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
                 if (!item.second.equals(mPriceOrder)) {
                     mPriceOrder = item.second;
-                    onRefresh();
+                    onRefresh(mPullToRefreshListView);
                 }
             }
             @Override
@@ -186,7 +187,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	}
 	
 	@Override
-	public void onRefresh() {
+	public void onRefresh(PullToRefreshBase refreshView) {
 		mIsRefresh = true;
 		mControl.getGoodsDataAsyn(catId, mSubCat, mOriginPlace, mPriceOrder);
 	}
@@ -196,7 +197,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 			return;
 		if(!mRefreshLayout.isShown())
 			mRefreshLayout.setVisibility(View.VISIBLE);
-		mPullToRefreshListView.addFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().addFooterView(mRefreshLayout);
 		mControl.getGoodsDataMoreAsyn(catId, mSubCat, mOriginPlace, mPriceOrder);
 		mIsRefresh = true;
 	}
@@ -252,14 +253,14 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mIsRefresh = false;
 		mAdapter.addAll(mControl.getModel().getGoodsList());
 		mAdapter.notifyDataSetChanged();
-		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 		Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
 	}
 	
 	public void getGoodsDataMoreAsynExceptionCallBack(){
 		dissProgress();
 		mIsRefresh = false;
-		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 	}
 	
 	public void getGoodsOptionAsynCallBack() {

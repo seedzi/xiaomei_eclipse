@@ -12,10 +12,11 @@ import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.view.LayoutPagerAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
@@ -99,7 +100,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
     }
 
 	@Override
-	public void onRefresh() {
+	public void onRefresh(PullToRefreshBase refreshView) {
 	    int position = mViewPager.getCurrentItem();
 	    ViewHolder holder = mPagerAdapter.getHolder(position);
 	    if(position == SharesPagerAdapter.POSITION_RECOMMEND_SHARES){

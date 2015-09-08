@@ -5,10 +5,11 @@ import com.xiaomei.yanyu.adapter.MerchantAdapter;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MerchantControl;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
@@ -101,7 +102,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	private void getMoreData(){
 		if(!mRefreshLayout.isShown())
 			mRefreshLayout.setVisibility(View.VISIBLE);
-		mPullToRefreshListView.addFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().addFooterView(mRefreshLayout);
 		mControl.getMerchantListMoreAsyn();
 	}
 	
@@ -146,7 +147,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 
 	public void getMerchantLismListMoreCallBack(){
 		dissProgress();
-		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 		mAdapter.addAll(mControl.getModel().getData());
 		mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), "加载完成", 0).show();
@@ -159,7 +160,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	}
 	// ================================== Call back ==========================================
 	@Override
-	public void onRefresh() {
+	public void onRefresh(PullToRefreshBase refreshView) {
 		mControl.getMerchantListAsyn();
 	}
 	

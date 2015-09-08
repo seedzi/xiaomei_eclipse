@@ -33,8 +33,9 @@ import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsListActivity;
 import com.xiaomei.yanyu.module.user.center.control.SalesControl;
 import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 public class SalesMessageActivity extends AbstractActivity<SalesControl> implements OnScrollListener,OnRefreshListener{
     
@@ -100,7 +101,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     }
     
     @Override
-    public void onRefresh() {
+    public void onRefresh(PullToRefreshBase refreshView) {
         mIsRefresh = true;
         mControl.getGoodsDataAsyn();
     }
@@ -110,7 +111,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
             return;
         if(!mRefreshLayout.isShown())
             mRefreshLayout.setVisibility(View.VISIBLE);
-        mPullToRefreshListView.addFooterView(mRefreshLayout);
+        mPullToRefreshListView.getRefreshableView().addFooterView(mRefreshLayout);
         mControl.getGoodsDataMoreAsyn();
         mIsRefresh = true;
     }
@@ -166,13 +167,13 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         mIsRefresh = false;
         mAdapter.addAll(mControl.getModel().getGoodsList());
         mAdapter.notifyDataSetChanged();
-        mPullToRefreshListView.removeFooterView(mRefreshLayout);
+        mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
         Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
     }
     
     public void getGoodsDataMoreAsynExceptionCallBack(){
         dissProgress();
         mIsRefresh = false;
-        mPullToRefreshListView.removeFooterView(mRefreshLayout);
+        mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
     }
 }

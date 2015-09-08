@@ -11,7 +11,7 @@
     android:layout_height="match_parent" 
 	 android:gravity="center">
 	 <!-- 
-	<com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
+	<com.handmark.pulltorefresh.library.PullToRefreshListView 
 	    android:id="@+id/list"
         style="@style/ListView" /> -->
 	<ScrollView 

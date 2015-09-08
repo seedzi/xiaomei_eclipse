@@ -34,7 +34,7 @@ import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.util.YanYuUtils;
 import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuekuapp.BaseActivity;
 
 public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {

@@ -10,8 +10,9 @@ import com.xiaomei.yanyu.levelone.adapter.HomeListManager;
 import com.xiaomei.yanyu.levelone.control.HomeControl;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
@@ -129,7 +130,7 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	}
 	
 	@Override
-	public void onRefresh() {
+	public void onRefresh(PullToRefreshBase refreshView) {
 		mIsRefresh = true;
 		mControl.getHomeListEntityAsyn();
 	}

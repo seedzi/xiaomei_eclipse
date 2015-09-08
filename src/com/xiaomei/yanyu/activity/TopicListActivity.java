@@ -19,10 +19,11 @@ import com.xiaomei.yanyu.bean.Topic;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.view.TopicAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener2;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -84,7 +85,7 @@ public class TopicListActivity extends Activity implements OnRefreshListener, On
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(PullToRefreshBase refreshView) {
         mTopicLoader.forceLoad();
     }
 

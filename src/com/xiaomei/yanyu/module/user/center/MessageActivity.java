@@ -23,7 +23,7 @@ import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class MessageActivity extends AbstractActivity<UserCenterControl> implements OnScrollListener{
 	
@@ -95,7 +95,7 @@ public class MessageActivity extends AbstractActivity<UserCenterControl> impleme
 	private void getMoreData(){
 		if(!mRefreshLayout.isShown())
 			mRefreshLayout.setVisibility(View.VISIBLE);
-		mPullToRefreshListView.addFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().addFooterView(mRefreshLayout);
 		mControl.getUserMsgMore();
 		mIsRefresh = true;
 	}
@@ -113,7 +113,7 @@ public class MessageActivity extends AbstractActivity<UserCenterControl> impleme
 	
 	public void getUserMsgMoreCallBack(){
 		mIsRefresh = false;
-		mPullToRefreshListView.removeFooterView(mRefreshLayout);
+		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 		mAdapter.addAll(mControl.getModel().getUserMessage());
 		mAdapter.notifyDataSetChanged();
 	}

@@ -34,9 +34,10 @@ import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnLastItemVisibleListener;
-import com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -103,7 +104,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         emptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRefresh();
+                onRefresh(mPullView);
             }
         });
 
@@ -113,7 +114,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FilterItem item = (FilterItem) parent.getItemAtPosition(position);
                 mAreaCountry = item.getKey();
-                onRefresh();
+                onRefresh(mPullView);
             }
 
             @Override
@@ -126,7 +127,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FilterItem item = (FilterItem) parent.getItemAtPosition(position);
                 mAreaSpecial = item.getKey();
-                onRefresh();
+                onRefresh(mPullView);
             }
 
             @Override
@@ -143,11 +144,11 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         });
 
         getLoaderManager().initLoader(AREA_FILTER_LOADER, null, this);
-        onRefresh();
+        onRefresh(mPullView);
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(PullToRefreshBase refreshView) {
         mQueue.add(new StringRequest(getAreaListUrl(), mRefreshListener, mRefreshErroListener));
     }
 
