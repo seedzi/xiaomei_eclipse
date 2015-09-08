@@ -143,29 +143,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                     convertView = getRecommendArea(position, parent);
 				break;
 			case LAYOUT_TYPE_HOT_ITEMS: //热门项目
-		          DisplayImageOptions options1 = new DisplayImageOptions.Builder()
-                  .showImageForEmptyUri(R.drawable.home_hot_default)
-                  .showImageOnLoading(R.drawable.home_hot_default)
-                  .showImageOnFail(R.drawable.home_hot_default).build();
-				convertView = mInflater.inflate(R.layout.home_hot_items_layout, null);
-				holder.scrollView = (HorizontalScrollView) convertView.findViewById(R.id.scroll);
-				holder.horizontalLayout = (LinearLayout) convertView.findViewById(R.id.horizontal_layout);
-				FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams(mScreenWidth,mScreenWidth*260/720);
-				holder.horizontalLayout.setLayoutParams(ll);
-                    int spaceHorizontal = (int) convertView.getResources().getDimension(R.dimen.home_item_space_horizontal);
-				for(HomeItem.Item item:mData.get(position).getmList()){
-					 ImageView img = new ImageView(getContext());
-					 LinearLayout.LayoutParams vl = new LinearLayout.LayoutParams((mScreenWidth*260/720)*208/260,
-							 LinearLayout.LayoutParams.MATCH_PARENT);
-					 vl.rightMargin = spaceHorizontal;
-					img.setLayoutParams(vl);
-					img.setScaleType(ScaleType.FIT_XY);
-					img.setTag(item);
-					img.setOnClickListener(mHotitemsClickListener);
-					ImageUtils.setViewPressState(img);
-					holder.horizontalLayout .addView(img);   
-					ImageLoader.getInstance().displayImage(item.img,img,options1);
-				}
+                    convertView = getHotGoods(position);
 				break;
 			case LAYOUT_TYPE_CONSULTATION://一对一咨询
 				convertView = mInflater.inflate(R.layout.home_consultation_layout, null);
@@ -315,6 +293,33 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
         recite.setTag(homeItem.getRecite().jump);
         recite.setOnClickListener(mReciteClickListener);
         ImageUtils.setViewPressState(recite);
+        return convertView;
+    }
+
+    private View getHotGoods(int position) {
+        View convertView;
+        DisplayImageOptions options1 = new DisplayImageOptions.Builder()
+          .showImageForEmptyUri(R.drawable.home_hot_default)
+          .showImageOnLoading(R.drawable.home_hot_default)
+          .showImageOnFail(R.drawable.home_hot_default).build();
+        convertView = mInflater.inflate(R.layout.home_hot_items_layout, null);
+        LinearLayout horizontalLayout = (LinearLayout) convertView.findViewById(R.id.horizontal_layout);
+        FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams(mScreenWidth,mScreenWidth*260/720);
+        horizontalLayout.setLayoutParams(ll);
+            int spaceHorizontal = (int) convertView.getResources().getDimension(R.dimen.home_item_space_horizontal);
+        for(HomeItem.Item item:mData.get(position).getmList()){
+             ImageView img = new ImageView(getContext());
+             LinearLayout.LayoutParams vl = new LinearLayout.LayoutParams((mScreenWidth*260/720)*208/260,
+                     LinearLayout.LayoutParams.MATCH_PARENT);
+             vl.rightMargin = spaceHorizontal;
+            img.setLayoutParams(vl);
+            img.setScaleType(ScaleType.FIT_XY);
+            img.setTag(item);
+            img.setOnClickListener(mHotitemsClickListener);
+            ImageUtils.setViewPressState(img);
+            horizontalLayout .addView(img);   
+            ImageLoader.getInstance().displayImage(item.img,img,options1);
+        }
         return convertView;
     }
 
