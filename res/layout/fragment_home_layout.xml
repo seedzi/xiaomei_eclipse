@@ -10,9 +10,21 @@
 	android:layout_width="match_parent"
     android:layout_height="match_parent" 
 	 android:gravity="center">
+	 <!-- 
 	<com.xiaomei.yanyu.widget.pullrefreshview.PullToRefreshListView 
 	    android:id="@+id/list"
-        style="@style/ListView" />
+        style="@style/ListView" /> -->
+	<ScrollView 
+	    android:id="@+id/scrollview"
+	    android:layout_height="match_parent"
+	    android:layout_width="match_parent">
+	    <LinearLayout
+	        android:id="@+id/root"
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent" 
+	        android:orientation="vertical">
+	    </LinearLayout>
+	</ScrollView>
 	
 	<include  android:id="@+id/empty_view"
 	    layout="@layout/empty_layout"

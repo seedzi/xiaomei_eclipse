@@ -6,6 +6,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.adapter.HomeAdapter;
 import com.xiaomei.yanyu.levelone.adapter.HomeAdapter2;
+import com.xiaomei.yanyu.levelone.adapter.HomeListManager;
 import com.xiaomei.yanyu.levelone.control.HomeControl;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -31,12 +32,16 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		OnRefreshListener {
 	
 	private ViewGroup mRootView;
-	private PullToRefreshListView mPullToRefreshListView;
-	private ListView mListView;
-	private HomeAdapter2 mAdapter;
+//	private PullToRefreshListView mPullToRefreshListView;
+//	private ListView mListView;
+//	private HomeAdapter2 mAdapter;
 	private View mEmptyView;
 	private View mLoadingView; 
 	private ViewGroup mRefreshLayout;
+	
+	private ViewGroup mScrollView;
+	private ViewGroup mContainerView;
+	private HomeListManager mHomeListManager;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,20 +62,26 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	}
 
 	private void initView(){
-		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
-		mListView = mPullToRefreshListView.getRefreshableView();
+//		mPullToRefreshListView = (PullToRefreshListView) mRootView.findViewById(R.id.list);
+//		mListView = mPullToRefreshListView.getRefreshableView();
 		mEmptyView= mRootView.findViewById(R.id.empty_view);
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
 		
-		mAdapter = new HomeAdapter2(getActivity());
-		mListView.setAdapter(mAdapter);
+//		mAdapter = new HomeAdapter2(getActivity());
+//		mListView.setAdapter(mAdapter);
+		
+		mContainerView = (ViewGroup) mRootView.findViewById(R.id.root);
+		mScrollView =  (ViewGroup) mRootView.findViewById(R.id.scrollview);
+		
+		mHomeListManager = new HomeListManager();
+		mHomeListManager.setupView(mContainerView, getActivity());
 	}
 	
 	private void setListener(){
-		mPullToRefreshListView.setOnRefreshListener(this);
+//		mPullToRefreshListView.setOnRefreshListener(this);
 		mEmptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -98,19 +109,22 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
 		if(!animationDrawable.isRunning())
 			animationDrawable.start();
-		mPullToRefreshListView.setVisibility(View.GONE);
+//		mPullToRefreshListView.setVisibility(View.GONE);
+		mScrollView.setVisibility(View.GONE);
 		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void dissProgress(){
 		mLoadingView.setVisibility(View.GONE);
-		mPullToRefreshListView.setVisibility(View.VISIBLE);
+//		mPullToRefreshListView.setVisibility(View.VISIBLE);
+		mScrollView.setVisibility(View.VISIBLE);
 		mEmptyView.setVisibility(View.GONE);
 	}
 	
 	private void showEmpty(){
 		mLoadingView.setVisibility(View.GONE);
-		mPullToRefreshListView.setVisibility(View.GONE);
+//		mPullToRefreshListView.setVisibility(View.GONE);
+		mScrollView.setVisibility(View.GONE);
 		mEmptyView.setVisibility(View.VISIBLE);
 	}
 	
@@ -125,11 +139,11 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 	public void getHomeListEntityAsynCallBack(){
 		mIsRefresh = false;
 		dissProgress();
-		if(mPullToRefreshListView.isRefreshing())
-			mPullToRefreshListView.onRefreshComplete();
-		mAdapter.setData(mControl.getModel().getList());
-		mAdapter.notifyDataSetChanged();
-		
+//		if(mPullToRefreshListView.isRefreshing())
+//			mPullToRefreshListView.onRefreshComplete();
+//		mAdapter.setData(mControl.getModel().getList());
+//		mAdapter.notifyDataSetChanged();
+		mHomeListManager.setData(mControl.getModel().getList());
 		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
