@@ -152,38 +152,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                     convertView = getGoodsTopic(position);
 				break;
 			case LAYOUT_TYPE_HOSP_INTRODUCTION: //机构介绍
-               DisplayImageOptions options3 = new DisplayImageOptions.Builder()
-                  .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
-                  .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
-                  .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
-				convertView = mInflater.inflate(R.layout.home_hospital_intr_layout, null);
-				convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_merchant_topic), HttpUrlManager.MERCHANT_TOPIC_LIST);
-                    }
-                });
-				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
-				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
-				LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
-				holder.img1.setLayoutParams(ll2);
-				ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, holder.img1,options3);
-				ImageUtils.setViewPressState(holder.img1);
-				holder.img1.setOnClickListener(mHOSPItemClickListener);
-				holder.img1.setTag(mData.get(position).getmList().get(0));
-				
-				DisplayImageOptions reciteOptions3 = new DisplayImageOptions.Builder()
-		        .showImageForEmptyUri(R.drawable.hospital_recite)
-		        .showImageOnLoading(R.drawable.hospital_recite)
-		        .showImageOnFail(R.drawable.hospital_recite).build();
-				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions3);
-				holder.recite.setTag(mData.get(position).getRecite().jump);
-	    		holder.recite.setOnClickListener(mReciteClickListener);
-	    		ImageUtils.setViewPressState(holder.recite);
-	    		
-	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
-	    		ImageUtils.setViewPressState(holder.moreClickView);
+                    convertView = getMerchantTopic(position);
 				break;
 			case LAYOUT_TYPE_SHARE: //圈子精华分享
 				convertView = mInflater.inflate(R.layout.home_share_layout, null);
@@ -228,6 +197,40 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
         	recite.setTag(mData.get(position).getRecite().jump);
         	recite.setOnClickListener(mReciteClickListener);
         	ImageUtils.setViewPressState(recite);
+        return convertView;
+    }
+
+    private View getMerchantTopic(int position) {
+        View convertView;
+        DisplayImageOptions options3 = new DisplayImageOptions.Builder()
+              .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
+              .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
+              .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
+            convertView = mInflater.inflate(R.layout.home_hospital_intr_layout, null);
+            convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_merchant_topic), HttpUrlManager.MERCHANT_TOPIC_LIST);
+                }
+            });
+            ImageView img1 = (ImageView) convertView.findViewById(R.id.img);
+            ImageView recite = (ImageView) convertView.findViewById(R.id.recite);
+            LinearLayout.LayoutParams ll2 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
+            img1.setLayoutParams(ll2);
+            ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, img1,options3);
+            ImageUtils.setViewPressState(img1);
+            img1.setOnClickListener(mHOSPItemClickListener);
+            img1.setTag(mData.get(position).getmList().get(0));
+            
+            DisplayImageOptions reciteOptions3 = new DisplayImageOptions.Builder()
+            .showImageForEmptyUri(R.drawable.hospital_recite)
+            .showImageOnLoading(R.drawable.hospital_recite)
+            .showImageOnFail(R.drawable.hospital_recite).build();
+            ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, recite,reciteOptions3);
+            recite.setTag(mData.get(position).getRecite().jump);
+            recite.setOnClickListener(mReciteClickListener);
+            ImageUtils.setViewPressState(recite);
         return convertView;
     }
 
