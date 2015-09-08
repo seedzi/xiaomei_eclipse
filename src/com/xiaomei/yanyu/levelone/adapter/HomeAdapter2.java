@@ -149,39 +149,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                     convertView = getConsultationViewPager(position);
 				break;
 			case LAYOUT_TYPE_PRODUCT_INTRODUCTION: //产品介绍
-               DisplayImageOptions options2 = new DisplayImageOptions.Builder()
-                  .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
-                  .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
-                  .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
-				convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
-				convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_goods_topic), HttpUrlManager.GOODS_TOPIC_LIST);
-                    }
-                });
-				holder.img1 = (ImageView) convertView.findViewById(R.id.img);
-				holder.img1.setTag(mData.get(position).getmList().get(0).goodsId);
-				holder.recite = (ImageView) convertView.findViewById(R.id.recite);
-				LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
-				holder.img1.setLayoutParams(ll1);
-				ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, holder.img1,options2);
-                ImageUtils.setViewPressState(holder.img1);
-                holder.img1.setOnClickListener(mProductItemClickListener);
-                holder.img1.setTag(mData.get(position).getmList().get(0));
-				
-				DisplayImageOptions reciteOptions2 = new DisplayImageOptions.Builder()
-		        .showImageForEmptyUri(R.drawable.product_recite)
-		        .showImageOnLoading(R.drawable.product_recite)
-		        .showImageOnFail(R.drawable.product_recite).build();
-				ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, holder.recite,reciteOptions2);
-				holder.recite.setTag(mData.get(position).getRecite().jump);
-	    		holder.recite.setOnClickListener(mReciteClickListener);
-	    		ImageUtils.setViewPressState(holder.recite);
-	    		
-	    		holder.moreClickView = convertView.findViewById(R.id.more_buton);
-	    		ImageUtils.setViewPressState(holder.moreClickView);
+                    convertView = getGoodsTopic(position);
 				break;
 			case LAYOUT_TYPE_HOSP_INTRODUCTION: //机构介绍
                DisplayImageOptions options3 = new DisplayImageOptions.Builder()
@@ -227,6 +195,41 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		}
 		return convertView;
 	}
+
+    private View getGoodsTopic(int position) {
+        View convertView;
+        DisplayImageOptions options2 = new DisplayImageOptions.Builder()
+              .showImageForEmptyUri(R.drawable.home_pro_hos_intr_default)
+              .showImageOnLoading(R.drawable.home_pro_hos_intr_default)
+              .showImageOnFail(R.drawable.home_pro_hos_intr_default).build();
+        	convertView = mInflater.inflate(R.layout.home_product_intr_layout, null);
+        	convertView.findViewById(R.id.top).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    TopicListActivity.startActivity((Activity) context, context.getString(R.string.title_goods_topic), HttpUrlManager.GOODS_TOPIC_LIST);
+                }
+            });
+        	ImageView img1 = (ImageView) convertView.findViewById(R.id.img);
+        	img1.setTag(mData.get(position).getmList().get(0).goodsId);
+        	ImageView recite = (ImageView) convertView.findViewById(R.id.recite);
+        	LinearLayout.LayoutParams ll1 = new LinearLayout.LayoutParams(ScreenUtils.getScreenWidth(getContext()), ScreenUtils.getScreenWidth(getContext())*730/720);
+        	img1.setLayoutParams(ll1);
+        	ImageLoader.getInstance().displayImage(mData.get(position).getmList().get(0).img, img1,options2);
+            ImageUtils.setViewPressState(img1);
+            img1.setOnClickListener(mProductItemClickListener);
+            img1.setTag(mData.get(position).getmList().get(0));
+        	
+        	DisplayImageOptions reciteOptions2 = new DisplayImageOptions.Builder()
+            .showImageForEmptyUri(R.drawable.product_recite)
+            .showImageOnLoading(R.drawable.product_recite)
+            .showImageOnFail(R.drawable.product_recite).build();
+        	ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, recite,reciteOptions2);
+        	recite.setTag(mData.get(position).getRecite().jump);
+        	recite.setOnClickListener(mReciteClickListener);
+        	ImageUtils.setViewPressState(recite);
+        return convertView;
+    }
 
     private View getConsultationViewPager(int position) {
         View convertView;
