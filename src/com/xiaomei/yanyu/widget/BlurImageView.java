@@ -1,6 +1,7 @@
 package com.xiaomei.yanyu.widget;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.paveldudka.util.FastBlur;
 import com.xiaomei.yanyu.util.ImageUtils;
 
 import android.content.Context;
@@ -24,7 +25,8 @@ public class BlurImageView extends ImageView {
 
 	@Override
 	public void setImageBitmap(Bitmap bm) {
-		bm = ImageUtils.blurImages(bm, getContext());
+	    bm = FastBlur.blur(bm, this, getContext());
+//		bm = ImageUtils.blurImages(bm, getContext());
 		super.setImageBitmap(bm);
 	}
 	

@@ -64,7 +64,7 @@ public class TopicView extends BaseView{
             img.setScaleType(ScaleType.FIT_XY);
             paramView.addView(img);  
             ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options);
-            img.setTag(getItemPosition(paramInt));
+            img.setTag(getItem(paramInt));
             img.setOnClickListener(mmTopicClickListener);
             ImageUtils.setViewPressState(img);
             return img; 
