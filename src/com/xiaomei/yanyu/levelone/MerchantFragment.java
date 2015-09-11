@@ -41,7 +41,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 
     private ViewGroup mRootView;
 	
-    private View mFilterLayout;
+    private TopFilter mTopFilter;
     private PullToRefreshListView mPullToRefreshListView;;
 	
 	private ListView mListView;
@@ -78,10 +78,9 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	private void setUpView(){
 	    mCountryAdapter = new FilterAdapter(getActivity());
         mSpecialAdapter = new FilterAdapter(getActivity());
-        mFilterLayout = mRootView.findViewById(R.id.filter_layout);
-        TopFilter topFilter = (TopFilter) mFilterLayout.findViewById(R.id.filter);
-	    topFilter.addAll(new ListAdapter[]{mCountryAdapter, mSpecialAdapter});
-	    topFilter.getFilter(0).setOnItemSelectedListener(new OnItemSelectedListener() {
+        mTopFilter = (TopFilter) mRootView.findViewById(R.id.filter);
+        mTopFilter.addAll(new ListAdapter[]{mCountryAdapter, mSpecialAdapter});
+        mTopFilter.getFilter(0).setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FilterItem item = (FilterItem) parent.getItemAtPosition(position);
@@ -92,7 +91,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-	    topFilter.getFilter(1).setOnItemSelectedListener(new OnItemSelectedListener() {
+        mTopFilter.getFilter(1).setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FilterItem item = (FilterItem) parent.getItemAtPosition(position);
@@ -237,7 +236,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
                     mSpecialAdapter.clear();
                     mSpecialAdapter.addAll(areaFilters[1].getItems());
                 }
-                mFilterLayout.setVisibility(data != null ? View.VISIBLE : View.GONE);
+                mTopFilter.setVisibility(data != null ? View.VISIBLE : View.GONE);
                 break;
         }
     }

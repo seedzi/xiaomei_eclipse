@@ -5,13 +5,11 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    style="@style/FilterLinearLayout">
 
-    <include
+    <com.xiaomei.yanyu.widget.TopFilter
         android:id="@+id/filter"
-        layout="@layout/area_top_filter" />
+        style="@style/TopFilter" />
 
     <include layout="@layout/pull_list_view" />
 </LinearLayout>

@@ -36,6 +36,7 @@ import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.view.FilterAdapter;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleActionBar;
+import com.xiaomei.yanyu.widget.TopFilter;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -58,6 +59,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 /**
@@ -67,16 +69,14 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
 
     private static final int AREA_FILTER_LOADER = 1;
 
-    private View mTopFilter;
-    private DropMenu mFilterCountry;
-    private DropMenu mFilterSpecial;
+    private TopFilter mTopFilter;
     private PullToRefreshListView mPullView;
     private ListView mListView;
 
     private RequestQueue mQueue;
     private AreaAdapter mAreaAdapter;
     private FilterAdapter mCountryAdapter;
-    private FilterAdapter mGoodsTypeAdapter;
+    private FilterAdapter mSpecialAdapter;
     private String mAreaCountry = "";
     private String mAreaSpecial = "";
 
@@ -90,12 +90,11 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
 
         mQueue = XiaoMeiApplication.getInstance().getQueue();
         mCountryAdapter = new FilterAdapter(this);
-        mGoodsTypeAdapter = new FilterAdapter(this);
+        mSpecialAdapter = new FilterAdapter(this);
         mAreaAdapter = new AreaAdapter(this);
 
-        mTopFilter = findViewById(R.id.filter);
-        mFilterCountry = (DropMenu) findViewById(R.id.country);
-        mFilterSpecial = (DropMenu) findViewById(R.id.goods_type);
+        mTopFilter = (TopFilter) findViewById(R.id.filter);
+        mTopFilter.addAll(new ListAdapter[]{mCountryAdapter, mSpecialAdapter});
 
         mPullView = (PullToRefreshListView) findViewById(R.id.list);
         mPullView.setOnRefreshListener(this);
@@ -110,8 +109,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             }
         });
 
-        mFilterCountry.setAdapter(mCountryAdapter);
-        mFilterCountry.setOnItemSelectedListener(new OnItemSelectedListener() {
+        mTopFilter.getFilter(0).setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FilterItem item = (FilterItem) parent.getItemAtPosition(position);
@@ -123,8 +121,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        mFilterSpecial.setAdapter(mGoodsTypeAdapter);
-        mFilterSpecial.setOnItemSelectedListener(new OnItemSelectedListener() {
+        mTopFilter.getFilter(1).setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FilterItem item = (FilterItem) parent.getItemAtPosition(position);
@@ -203,8 +200,8 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
                     Filter[] areaFilters = (Filter[]) data;
                     mCountryAdapter.clear();
                     mCountryAdapter.addAll(areaFilters[0].getItems());
-                    mGoodsTypeAdapter.clear();
-                    mGoodsTypeAdapter.addAll(areaFilters[1].getItems());
+                    mSpecialAdapter.clear();
+                    mSpecialAdapter.addAll(areaFilters[1].getItems());
                 }
                 mTopFilter.setVisibility(data != null ? View.VISIBLE : View.GONE);
                 break;

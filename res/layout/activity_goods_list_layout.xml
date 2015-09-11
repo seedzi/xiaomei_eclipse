@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:ptr="http://schemas.android.com/apk/res/com.xiaomei.yanyu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@color/color_background">
-    
+    style="@style/FilterLinearLayout">
+
     <include  layout="@layout/title_bar_layout"   />
-    
+
+    <com.xiaomei.yanyu.widget.TopFilter
+        android:id="@+id/filter"
+        style="@style/TopFilter" />
+
     <RelativeLayout 
         android:id="@+id/container"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
             
-        <include
-            android:id="@+id/filter"
-            layout="@layout/goods_top_filter" />
-        
  <com.handmark.pulltorefresh.library.PullToRefreshListView 
-     android:divider="@color/divider"
-     android:dividerHeight="@dimen/divider"
     android:id="@+id/list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/filter"
-    android:background="@color/color_white"
-    android:scrollbarStyle="outsideOverlay"
-    android:showDividers="middle|end"
-    ptr:ptrMode="pullDownFromTop"
-    android:visibility="visible"/>     
+    style="@style/ListView.Divider"/>
     
     <include
         android:id="@+id/empty"

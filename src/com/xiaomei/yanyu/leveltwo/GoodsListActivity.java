@@ -1,7 +1,16 @@
 package com.xiaomei.yanyu.leveltwo;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.bean.GoodsOption;
+import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.widget.TopFilter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,7 +19,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,29 +26,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.bean.Goods;
-import com.xiaomei.yanyu.bean.GoodsOption;
-import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
-import com.xiaomei.yanyu.widget.DropMenu;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 @SuppressLint("NewApi")
 public class GoodsListActivity extends AbstractActivity<LeveltwoControl> implements OnScrollListener,OnRefreshListener{
@@ -60,9 +52,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	}
 
 	private TitleBar mTitleBar;
-	
-	private DropMenu[] mFilters = new DropMenu[3];
-	
+    private TopFilter mTopFilter;
 	private PullToRefreshListView mPullToRefreshListView;
 	
 	private GoodsAdapter mAdapter;
@@ -83,7 +73,11 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	private String title;
 
     private List<GoodsOption> mGoodsOptions;
-	
+
+    private FilterAdapter mSubCatAdapter;
+    private FilterAdapter mOriginPlaceAdapter;
+    private FilterAdapter mPriceOrderAdapter;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_list_layout);
@@ -107,12 +101,13 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
 		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		
-		findViewById(R.id.filter).setVisibility(View.VISIBLE);
-		mFilters[SUB_CAT] = (DropMenu) findViewById(R.id.sub_cat);
-		mFilters[ORIGIN_PLACE] = (DropMenu) findViewById(R.id.origin_place);
-		mFilters[PRICE_ORDER] = (DropMenu) findViewById(R.id.price_order);
-		
-		mFilters[SUB_CAT].setOnItemSelectedListener(new OnItemSelectedListener() {
+		mTopFilter = (TopFilter) findViewById(R.id.filter);
+		mSubCatAdapter = new FilterAdapter(this);
+        mOriginPlaceAdapter = new FilterAdapter(this);
+        mPriceOrderAdapter = new FilterAdapter(this);
+        mTopFilter.addAll(new ListAdapter[]{mSubCatAdapter, mOriginPlaceAdapter, mPriceOrderAdapter});
+
+		mTopFilter.getFilter(SUB_CAT).setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override
 		    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		        Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
@@ -126,7 +121,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		    }
 		    
 		});
-		mFilters[ORIGIN_PLACE].setOnItemSelectedListener(new OnItemSelectedListener() {
+		mTopFilter.getFilter(ORIGIN_PLACE).setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
@@ -140,7 +135,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
             }
             
         });
-		mFilters[PRICE_ORDER].setOnItemSelectedListener(new OnItemSelectedListener() {
+		mTopFilter.getFilter(PRICE_ORDER).setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Pair<String, String> item = (Pair<String, String>) parent.getAdapter().getItem(position);
@@ -178,12 +173,6 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mIsRefresh = true;
 		mControl.getGoodsDataAsyn(catId, mSubCat, mOriginPlace, mPriceOrder);
 		mControl.getGoodsOptionAsyn(catId);
-	    
-	    String[] default_selection = new String[]{"全部"};
-        for(int i = 0; i < mFilters.length; i++) {
-            mFilters[i].setAdapter(new FilterAdapter(this));
-        }
-        
 	}
 	
 	@Override
@@ -265,16 +254,10 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 	
 	public void getGoodsOptionAsynCallBack() {
 	    mGoodsOptions = mControl.getModel().getGoodsOptions();
-	    
-	    ArrayAdapter<Pair<String, String>> adapter;
-	    adapter = (ArrayAdapter<Pair<String, String>>) mFilters[SUB_CAT].getAdapter();
-	    adapter.addAll(findByOptionType(mGoodsOptions, "sub_cat").getItems());
-	    
-	    adapter = (ArrayAdapter<Pair<String, String>>) mFilters[ORIGIN_PLACE].getAdapter();
-	    adapter.addAll(findByOptionType(mGoodsOptions, "origin_place").getItems());
-	    
-	    adapter = (ArrayAdapter<Pair<String, String>>) mFilters[PRICE_ORDER].getAdapter();
-	    adapter.addAll(findByOptionType(mGoodsOptions, "price_order").getItems());
+	    mSubCatAdapter.addAll(findByOptionType(mGoodsOptions, "sub_cat").getItems());
+	    mOriginPlaceAdapter.addAll(findByOptionType(mGoodsOptions, "origin_place").getItems());
+	    mPriceOrderAdapter.addAll(findByOptionType(mGoodsOptions, "price_order").getItems());
+	    mTopFilter.setVisibility(View.VISIBLE);
 	}
 	
 	private GoodsOption findByOptionType(List<GoodsOption> options, String type) {
