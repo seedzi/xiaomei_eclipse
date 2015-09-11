@@ -28,10 +28,12 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Area;
+import com.xiaomei.yanyu.bean.AreaFilterLoader;
 import com.xiaomei.yanyu.bean.Area.Filter;
 import com.xiaomei.yanyu.bean.Area.FilterItem;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.view.FilterAdapter;
 import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -214,37 +216,6 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
 
     }
 
-    private static class AreaFilterLoader extends AsyncTaskLoader<Object> {
-
-        public AreaFilterLoader(Context context) {
-            super(context);
-        }
-
-        @Override
-        public Object loadInBackground() {
-            HttpApi httpApi = XiaoMeiApplication.getInstance().getApi().getHttpApi();
-            HttpGet httpGet = httpApi.createHttpGet(HttpUrlManager.AREA_FILTER_LIST);
-            try {
-                BizResult result = httpApi.doHttpRequestResult(httpGet);
-                JsonObject jsonObject = result.getMessage().getAsJsonObject();
-                Gson gson = new Gson();
-                Filter countryFilter = gson.fromJson(jsonObject.get(Filter.COUNTRY), Filter.class);
-                Filter goodstypeFilter = gson.fromJson(jsonObject.get(Filter.SPECIAL), Filter.class);
-                return new Filter[]{countryFilter, goodstypeFilter};
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XiaoMeiOtherException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onStartLoading() {
-            forceLoad();
-        }
-    }
-
     private static class AreaAdapter extends ArrayAdapter<Area> {
 
         private DisplayImageOptions options;
@@ -277,25 +248,6 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         @Override
         public long getItemId(int position) {
             return getItem(position).getId();
-        }
-    }
-
-    private class FilterAdapter extends ArrayAdapter<Area.FilterItem> {
-
-        public FilterAdapter(Context context) {
-            super(context, 0);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return getDropDownView(position, convertView, parent);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            View itemView = convertView != null ? convertView : LayoutInflater.from(getContext()).inflate(R.layout.top_filter_drop_item, parent, false);
-            UiUtil.findTextViewById(itemView, android.R.id.text1).setText(getItem(position).getLabel());
-            return itemView;
         }
     }
 }

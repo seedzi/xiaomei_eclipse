@@ -21,9 +21,9 @@ public class MerchantControl extends BaseControl {
 	}
 	
 	@AsynMethod
-	public void getMerchantListAsyn(){
+	public void getMerchantListAsyn(String country, String special){
 		try {
-			mModel.setData(XiaoMeiApplication.getInstance().getApi().getMerchantListFromNet("1",PERPAGE));
+			mModel.setData(XiaoMeiApplication.getInstance().getApi().getMerchantListFromNet(country, special, "1",PERPAGE));
 			sendMessage("getMerchantLismListCallBack");
 		} catch (Exception e) {
 			sendMessage("getMerchantListExceptionCallBack");
@@ -32,10 +32,10 @@ public class MerchantControl extends BaseControl {
 	}
 	
 	@AsynMethod
-	public void getMerchantListMoreAsyn(){
+	public void getMerchantListMoreAsyn(String country, String special){
 		try {
 			mModel.increaePage();
-			List<Merchant> data = XiaoMeiApplication.getInstance().getApi().getMerchantListFromNet(String.valueOf(mModel.getPage()),PERPAGE);
+			List<Merchant> data = XiaoMeiApplication.getInstance().getApi().getMerchantListFromNet(country, special, String.valueOf(mModel.getPage()),PERPAGE);
 			if(data==null || data.size()==0){
 				mModel.reducePage();
 			}

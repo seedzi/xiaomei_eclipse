@@ -45,6 +45,7 @@ import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.api.http.AbstractHttpApi;
 import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpApiWithSession;
+import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
@@ -178,17 +179,18 @@ public class XiaoMeiApi {
 	    return mHttpApi.doHttpRequestObject(httpGet, new GoodsOptionBuilder());
 	}
 	
-	/**机构*/
-	public List<Merchant> getMerchantListFromNet(String curpage,String perpage)
+	/**机构
+	 * @param pERPAGE2 */
+	public List<Merchant> getMerchantListFromNet(String country, String special, String curpage,String perpage)
 			throws XiaoMeiCredentialsException, XiaoMeiIOException,
 			XiaoMeiJSONException, XiaoMeiOtherException {
 		BasicNameValuePair[] values = {
+		        new BasicNameValuePair(HttpUtil.QUERY_COUNTRY, country),
+		        new BasicNameValuePair(HttpUtil.QUERY_SPECIAL, special),
 				new BasicNameValuePair("curpage", curpage),
 				new BasicNameValuePair("perpage", perpage),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMerchantListUrl(),
-				values[0],
-				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+		HttpGet httpGet = mHttpApi.createHttpGet(urlManager.getMerchantListUrl(), AbstractHttpApi.signValuePairs(values));
 		return mHttpApi.doHttpRequestObject(httpGet, new MerchantBuilder());
 	}
 	

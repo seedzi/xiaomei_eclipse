@@ -16,7 +16,7 @@
             
         <include
             android:id="@+id/filter"
-            layout="@layout/top_filter" />
+            layout="@layout/goods_top_filter" />
         
  <com.handmark.pulltorefresh.library.PullToRefreshListView 
      android:divider="@color/divider"
