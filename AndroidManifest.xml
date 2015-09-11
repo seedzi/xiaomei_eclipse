@@ -18,7 +18,8 @@
 	    		android:theme="@style/activityTheme"
 	    		android:name="com.xiaomei.yanyu.launch.LaunchActivity"
 	            android:label="@string/app_name" 
-	            android:icon="@drawable/xiaomei_log">
+	            android:icon="@drawable/xiaomei_log"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,62 +30,73 @@
          <activity
              android:theme="@style/Theme"
 	            android:name="com.xiaomei.yanyu.contanier.TabsActivity"
-	            android:label="@string/app_name" ><!-- 
+	            android:label="@string/app_name"
+                android:screenOrientation="portrait" ><!-- 
 	            android:launchMode="singleInstance" -->
         </activity>
         <activity
             android:theme="@style/activityTheme"
    			android:name="com.xiaomei.yanyu.leveltwo.GoodsDetailActivity"
-            android:configChanges="orientation|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
         </activity>
 
             	<!-- 登陆注册 -->    
      		<activity 
      		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.LoginAndRegisterActivity">
+		    android:name="com.xiaomei.yanyu.module.user.LoginAndRegisterActivity"
+            android:screenOrientation="portrait">
 		</activity>           
 	<!-- 找回密碼 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.FindPasswordActivity">
+		    android:name="com.xiaomei.yanyu.module.user.FindPasswordActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		
 		
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.HistoryActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.HistoryActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		
 		<!-- 进入首页的第二种形式 -->
 		<activity 
 		    android:theme="@style/Theme"
-		    android:name="com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity">
+		    android:name="com.xiaomei.yanyu.leveltwo.TopicDetailSlideActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		
 		<!-- 浏览记录 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.UserOrderListActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.UserOrderListActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<!-- 我的订单 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.AboutActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.AboutActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<!-- 关于 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.CollectionActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.CollectionActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<!-- 我的收藏 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.MessageActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.MessageActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<!-- 我的消息 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.FeedbackActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.FeedbackActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<!-- 我的反馈 -->
 
@@ -92,81 +104,97 @@
 				<activity 
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.module.user.center.OrderDetailsActivity">
+            android:screenOrientation="portrait"
             		    <data android:scheme="wx67f54f6d2c0d66c8"/>
 		</activity>
 		<!-- 商城 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-			android:name="com.xiaomei.yanyu.leveltwo.GoodsListActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.GoodsListActivity"
+            android:screenOrientation="portrait">
         </activity> 
         <activity 
             android:theme="@style/Theme"
-            android:name="com.xiaomei.yanyu.activity.TopicListActivity">
+            android:name="com.xiaomei.yanyu.activity.TopicListActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:theme="@style/Theme"
-            android:name="com.xiaomei.yanyu.activity.AreaListActivity">
+            android:name="com.xiaomei.yanyu.activity.AreaListActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:theme="@style/Theme"
-            android:name="com.xiaomei.yanyu.activity.AreaDetailActivity">
+            android:name="com.xiaomei.yanyu.activity.AreaDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
 		<!-- 圈子详情 -->
 		<activity
 		    android:theme="@style/Theme"
-			android:name="com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<activity
 		    android:theme="@style/Theme"
-			android:name="com.xiaomei.yanyu.leveltwo.ComposeUserShareActivity">
+			android:name="com.xiaomei.yanyu.leveltwo.ComposeUserShareActivity"
+            android:screenOrientation="portrait">
 		</activity>
 		<!-- 用户消息 -->		
 		<activity
             android:theme="@style/activityTheme"
-            android:name="com.xiaomei.yanyu.module.user.center.UserMessageActivity">
+            android:name="com.xiaomei.yanyu.module.user.center.UserMessageActivity"
+            android:screenOrientation="portrait">
         </activity> 
 		<!-- 用户详情页 -->
 		<activity 
 		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.UserInfoActivity">
+		    android:name="com.xiaomei.yanyu.module.user.center.UserInfoActivity"
+            android:screenOrientation="portrait">
               <data android:scheme="wx67f54f6d2c0d66c8"/>
 		</activity>
 		<!-- 评论页面 -->
 		<activity
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.comment.CommentsActivity"
-		     android:windowSoftInputMode="stateHidden|adjustPan" >
+		     android:windowSoftInputMode="stateHidden|adjustPan"
+             android:screenOrientation="portrait" >
 		</activity>
 		<!--  促销消息-->
 	    <activity
 	        android:theme="@style/activityTheme"
             android:name="com.xiaomei.yanyu.module.user.center.SalesMessageActivity"
-             android:windowSoftInputMode="stateHidden|adjustPan" >
+             android:windowSoftInputMode="stateHidden|adjustPan"
+             android:screenOrientation="portrait" >
         </activity>
 		<!-- 评论列表页面 -->
 		<activity
 		    android:theme="@style/Theme"
-            android:name="com.xiaomei.yanyu.comment.CommentListActivity">
+            android:name="com.xiaomei.yanyu.comment.CommentListActivity"
+            android:screenOrientation="portrait">
         </activity>
         <!-- 删除收藏确定页面 -->
         <activity 
             android:theme="@android:style/Theme.Translucent"
             android:name="com.xiaomei.yanyu.module.user.center.DeleteCollectionDailogActivity">
+              android:screenOrientation="portrait"
         </activity>
 		<!-- 微信支付结果页面 -->
 		 <activity
 		     android:theme="@style/activityTheme"
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <!-- 生成订单 -->
         <activity 
             android:theme="@style/activityTheme"
-            android:name=".leveltwo.BuildOrderActivity"/>
+            android:name=".leveltwo.BuildOrderActivity"
+            android:screenOrientation="portrait"/>
         <!-- 测试的test Activity -->
 		<activity
 		    android:name="com.xiaomei.yanyu.levelone.TestActivity" 
-		    android:theme="@style/activityTheme">
+		    android:theme="@style/activityTheme"
+            android:screenOrientation="portrait">
               <!-- 
            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -178,13 +206,15 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
+            android:screenOrientation="behind"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
+            android:screenOrientation="behind"
+            android:screenOrientation="portrait" >
         </activity>
 		
 	   <!-- ###################注册SDK使用的Activity###################### -->
@@ -195,13 +225,15 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" >
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:screenOrientation="portrait" >
         </activity>
 		<!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -237,7 +269,7 @@
         <activity 
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent"  
-		  	><!-- android:theme="@android:style/Theme.Translucent.NoTitleBar"  -->
+		  	android:screenOrientation="portrait"><!-- android:theme="@android:style/Theme.Translucent.NoTitleBar"  -->
         </activity>
          <service
             android:name="com.umeng.update.net.DownloadingService"
