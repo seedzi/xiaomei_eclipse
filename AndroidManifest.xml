@@ -206,15 +206,13 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="behind" >
         </activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="behind" >
         </activity>
 		
 	   <!-- ###################注册SDK使用的Activity###################### -->
