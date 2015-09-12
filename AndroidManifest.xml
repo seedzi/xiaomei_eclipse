@@ -15,7 +15,7 @@
         android:label="@string/app_name">
         
 	<activity
-	    		android:theme="@style/activityTheme"
+	    		android:theme="@style/activityTheme.Fullscreen"
 	    		android:name="com.xiaomei.yanyu.launch.LaunchActivity"
 	            android:label="@string/app_name" 
 	            android:icon="@drawable/xiaomei_log"
