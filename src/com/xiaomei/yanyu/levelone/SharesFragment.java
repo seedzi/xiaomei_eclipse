@@ -61,6 +61,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 		if(mRootView ==null){
 			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_shares, null);
 			setUpView();
+			initData();
 		} else {
 			try {
 				((ViewGroup)mRootView.getParent()).removeView(mRootView);
@@ -79,8 +80,13 @@ public class SharesFragment extends BaseFragment<SharesControl>
         PageIndicator indicator = (PageIndicator) mRootView.findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
 	}
-	
-    @Override
+
+	private void initData() {
+	    mControl.getJinghuaListDataFromNetAysn();
+	    mControl.getGuangchangListDataFromNetAysn();
+	}
+
+	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mTitleBar.setTitle(R.string.fragment_shares);
@@ -99,10 +105,23 @@ public class SharesFragment extends BaseFragment<SharesControl>
         });
     }
 
+    public void initData(final int position) {
+        showProgress(getHolder(position));
+        if (position == SharesPagerAdapter.POSITION_RECOMMEND_SHARES) {
+            mControl.getJinghuaListDataFromNetAysn();
+        } else {
+            mControl.getGuangchangListDataFromNetAysn();
+        }
+    }
+
+    private ViewHolder getHolder(int position) {
+        return (ViewHolder) mViewPager.getChildAt(position).getTag();
+    }
+
 	@Override
 	public void onRefresh(PullToRefreshBase refreshView) {
 	    int position = mViewPager.getCurrentItem();
-	    ViewHolder holder = mPagerAdapter.getHolder(position);
+	    ViewHolder holder = getHolder(position);
 	    if(position == SharesPagerAdapter.POSITION_RECOMMEND_SHARES){
 	        mControl.getJinghuaListDataFromNetAysn();
 	    }else{
@@ -110,10 +129,10 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	    }
 	}
 
-	@Override
+    @Override
 	public void onLastItemVisible() {
 	    int position = mViewPager.getCurrentItem();
-	    ViewHolder holder = mPagerAdapter.getHolder(position);
+	    ViewHolder holder = getHolder(position);
 	    if (position == SharesPagerAdapter.POSITION_RECOMMEND_SHARES) {
 	        mControl.getJinghuaMoreListDataFromNetAysn();
 	    } else {
@@ -146,28 +165,28 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	public void getJinghuaListDataFromNetAysnCallBack(){
 	    mRecommendSharesAdapter.clear();
 	    mRecommendSharesAdapter.addAll(mControl.getModel().getBeautifulData());
-	    ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
+	    ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
         dissProgress(holder);
 		holder.mPullToRefreshListView.onRefreshComplete();
 		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
 	}
 	
 	public void getJinghuaListDataFromNetAysnExceptionCallBack(){
-	    ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
+	    ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
 		dissProgress(holder);
 		showEmpty(holder);
 		holder.mPullToRefreshListView.onRefreshComplete();
 	}
 	
 	public void getJinghuaMoreListDataFromNetAysnExceptionCallBack(){
-        ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
+        ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
 		dissProgress(holder);
 		holder.mPullToRefreshListView.onRefreshComplete();
 	}
 	
 	public void getJinghuaMoreListDataFromNetAysnCallBack(){
 	    mRecommendSharesAdapter.addAll(mControl.getModel().getBeautifulData());
-	    ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
+	    ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
 		dissProgress(holder);
 		holder.mPullToRefreshListView.onRefreshComplete();
 	}
@@ -176,14 +195,14 @@ public class SharesFragment extends BaseFragment<SharesControl>
     public void getGuangchangListDataFromNetAysnCallBack(){
         mUserSharesAdapter.clear();
         mUserSharesAdapter.addAll(mControl.getModel().getUserShareData());
-        ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
+        ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
         dissProgress(holder);
         holder.mPullToRefreshListView.onRefreshComplete();
         Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
     }
     
     public void getGuangchangListDataFromNetAysnExceptionCallBack(){
-        ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
+        ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
         dissProgress(holder);
         showEmpty(holder);
         holder.mPullToRefreshListView.onRefreshComplete();
@@ -191,13 +210,13 @@ public class SharesFragment extends BaseFragment<SharesControl>
     
     public void getGuangchangMoreListDataFromNetAysnCallBack(){
         mUserSharesAdapter.addAll(mControl.getModel().getUserShareData());
-        ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
+        ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
         dissProgress(holder);
         holder.mPullToRefreshListView.onRefreshComplete();
     }
     
     public void getGuangchangMoreListDataFromNetAysnExceptionCallBack(){
-        ViewHolder holder = mPagerAdapter.getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
+        ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
         dissProgress(holder);
         holder.mPullToRefreshListView.onRefreshComplete();
     }
@@ -208,14 +227,8 @@ public class SharesFragment extends BaseFragment<SharesControl>
         public static final int POSITION_RECOMMEND_SHARES = 0;
         public static final int POSITION_USER_SHARES = 1;
 
-        private ViewHolder[] mHolders = new ViewHolder[PAGE_COUNT];
-
         public SharesPagerAdapter() {
             super(PAGE_COUNT);
-        }
-
-        public ViewHolder getHolder(int position) {
-            return mHolders[position];
         }
 
         @Override
@@ -223,13 +236,14 @@ public class SharesFragment extends BaseFragment<SharesControl>
             Context context = container.getContext();
             View itemView = LayoutInflater.from(context).inflate(R.layout.list_layout, container, false);
 
-            mHolders[position] = new ViewHolder(itemView);
-            PullToRefreshListView pullView = mHolders[position].mPullToRefreshListView;
+            ViewHolder holder = new ViewHolder(itemView);
+            itemView.setTag(holder);
+            PullToRefreshListView pullView = holder.mPullToRefreshListView;
             pullView.setOnRefreshListener(SharesFragment.this);
             pullView.setOnLastItemVisibleListener(SharesFragment.this);
             pullView.getRefreshableView().setAdapter(position == POSITION_RECOMMEND_SHARES ? mRecommendSharesAdapter : mUserSharesAdapter);
 
-            View emptyView = mHolders[position].mEmptyView;
+            View emptyView = holder.mEmptyView;
             pullView.setEmptyView(emptyView);
             emptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -238,19 +252,8 @@ public class SharesFragment extends BaseFragment<SharesControl>
                 }
             });
 
-            initData(position);
-
             container.addView(itemView);
             return itemView;
-        }
-
-        public void initData(final int position) {
-            showProgress(mHolders[position]);
-            if (position == POSITION_RECOMMEND_SHARES) {
-                mControl.getJinghuaListDataFromNetAysn();
-            } else {
-                mControl.getGuangchangListDataFromNetAysn();
-            }
         }
 
         @Override
