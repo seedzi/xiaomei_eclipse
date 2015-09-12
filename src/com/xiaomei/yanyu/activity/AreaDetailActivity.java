@@ -59,10 +59,11 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
     private GoodsAdapter mGoodsAdapter;
     private MerchantAdapter mMerchantAdapter;
 
-    public static void startActivity(Activity activity, long id, String image, String description) {
+    public static void startActivity(Activity activity, long id, String name, String image, String description) {
         activity.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
         activity.startActivity(new Intent(activity, AreaDetailActivity.class)
                 .putExtra(IntentUtil.EXTRA_AREA_ID, id)
+                .putExtra(IntentUtil.EXTRA_AREA_NAME, name)
                 .putExtra(IntentUtil.EXTRA_AREA_IMAGE, image)
                 .putExtra(IntentUtil.EXTRA_AREA_DESCRIPTION, description));
     }
@@ -74,11 +75,12 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
         Intent intent = getIntent();
         mAreaId = intent.getLongExtra(IntentUtil.EXTRA_AREA_ID, IntentUtil.INVALID_LONG);
+        String name = intent.getStringExtra(IntentUtil.EXTRA_AREA_NAME);
         String imageUrl = intent.getStringExtra(IntentUtil.EXTRA_AREA_IMAGE);
         String description = intent.getStringExtra(IntentUtil.EXTRA_AREA_DESCRIPTION);
 
         TitleActionBar titleBar = new TitleActionBar(getActionBar());
-        titleBar.setTitle(R.string.activity_area_list);
+        titleBar.setTitle(name);
 
         ImageView image = (ImageView) findViewById(R.id.image);
         DisplayImageOptions options = new DisplayImageOptions.Builder()

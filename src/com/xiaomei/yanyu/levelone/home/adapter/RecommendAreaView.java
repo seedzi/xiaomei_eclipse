@@ -61,19 +61,19 @@ public class RecommendAreaView extends BaseView {
             View areaItemThumb = thumbs[i];
             ImageView image = (ImageView) areaItemThumb.findViewById(R.id.image);
             imageLoader.displayImage(item.img, image, options);
-            setOnAreaClickListener(image, item.cityId, item.top_img, item.desc);
+            setOnAreaClickListener(image, item.cityId, item.city, item.top_img, item.desc);
             ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
             ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(mAc.getResources().getString(R.string.area_goods_count, item.count));
         }
     }
 
-    public void setOnAreaClickListener(View itemView, final String cityId, final String image, final String description) {
+    public void setOnAreaClickListener(View itemView, final String cityId, final String city, final String image, final String description) {
         ImageUtils.setViewPressState(itemView);
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity activity = (Activity) v.getContext();
-                AreaDetailActivity.startActivity(activity, Long.valueOf(cityId), image, description);
+                AreaDetailActivity.startActivity(activity, Long.valueOf(cityId), city, image, description);
             }
         });
         

@@ -139,7 +139,7 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Activity activity = (Activity) parent.getContext();
                 Area area = (Area) parent.getItemAtPosition(position);
-                AreaDetailActivity.startActivity(activity, id, area.getDetailImageLarge(), area.getDescription());
+                AreaDetailActivity.startActivity(activity, id, area.getName(), area.getDetailImageLarge(), area.getDescription());
             }
         });
 
