@@ -203,7 +203,6 @@ public class ImageUtils {
                     }
                     
                 } 
-                android.util.Log.d("aaa", event.getAction()  + "=" );
             } catch (Exception e) {
             }
             return false;

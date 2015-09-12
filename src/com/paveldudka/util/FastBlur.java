@@ -36,7 +36,6 @@ public class FastBlur {
         overlay = FastBlur.doBlur(overlay, (int)radius, true);
 //        view.setImageDrawable(new BitmapDrawable(context.getResources(), overlay));
 //        view.setBackground(new BitmapDrawable(context.getResources(), overlay));
-        android.util.Log.d("aaa", "consume time = " + (System.currentTimeMillis() - startMs));
         return overlay;
     }
 

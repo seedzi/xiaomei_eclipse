@@ -65,6 +65,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 			mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_merchant_layout, null);
 			setUpView();
 			setListener();
+			getLoaderManager().initLoader(MERCHANT_FILTER_LOADER, null, this);
 			initData();
 		}else{
 			try {
@@ -137,8 +138,6 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
         TitleActionBar titleBar = ((TabsActivity) getActivity()).getTitleBar();
         titleBar.setTitle(R.string.fragment_merchant);
         titleBar.setActionVisibility(View.GONE);
-    
-        getLoaderManager().initLoader(MERCHANT_FILTER_LOADER, null, this);
     }
 
 	private void initData(){
