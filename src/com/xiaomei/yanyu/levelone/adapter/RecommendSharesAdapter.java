@@ -41,11 +41,11 @@ public class RecommendSharesAdapter extends ArrayAdapter<RecommendShares> {
             public void onClick(View v) {
                 int shareType = recommendShares.getShareType();
                 Activity activity = (Activity) v.getContext();
-//                if (shareType == RecommendShares.TYPE_DETAIL) {
-//                    GoodsDetailActivity.startActivity(activity, recommendShares.getLink());
-//                } else if (shareType == RecommendShares.TYPE_DISPLAY) {
+                if (shareType == RecommendShares.TYPE_DETAIL) {
+                    GoodsDetailActivity.startActivity(activity, recommendShares.getLink());
+                } else if (shareType == RecommendShares.TYPE_DISPLAY) {
                     RecommendSharesDetailActivity.startActivity(activity, recommendShares.getId());
-//                }
+                }
             }
         });
         return itemView;
