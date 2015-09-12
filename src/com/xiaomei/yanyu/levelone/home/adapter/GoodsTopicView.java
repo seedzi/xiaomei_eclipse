@@ -65,7 +65,7 @@ public class GoodsTopicView extends BaseView implements View.OnClickListener{
         
         mImg.setTag(mData.getmList().get(0).goodsId);
         ImageLoader.getInstance().displayImage(
-                mData.getmList().get(0).img, mImg, options);
+                mData.getmList().get(0).image, mImg, options);
         ImageUtils.setViewPressState(mImg);
         mImg.setTag(mData.getmList().get(0));
         

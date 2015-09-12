@@ -58,7 +58,7 @@ public class MerchantTopicVView extends BaseView {
     @Override
     public void refreshUi() {
         DisplayImageOptions options = ImageLoaderUtil.getDisplayOptions(R.drawable.home_pro_hos_intr_default);
-        ImageLoader.getInstance().displayImage(mData.getmList().get(0).img, img,options);
+        ImageLoader.getInstance().displayImage(mData.getmList().get(0).image, img,options);
         ImageUtils.setViewPressState(img);
         img.setTag(mData.getmList().get(0));
         
