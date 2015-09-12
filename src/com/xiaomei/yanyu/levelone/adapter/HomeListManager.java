@@ -27,8 +27,8 @@ public class HomeListManager {
         mViews.add(new RecommendAreaView());
         mViews.add(new HotGoodsView());
         mViews.add(new ConsultationView());
-        mViews.add(new MerchantTopicVView());
         mViews.add(new GoodsTopicView());
+        mViews.add(new MerchantTopicVView());
         mViews.add(new HomeShareView());
         
         for(BaseView baseView :mViews){
