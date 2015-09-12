@@ -98,6 +98,9 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
 			
 			mTitle.setText(tilte);
 			mDescription.setText(des);
+			if(TextUtils.isEmpty(viewcount)){
+				viewcount = "0";
+			}
 			mNumViews.setText(viewcount + "次浏览");
 			ImageLoader.getInstance().displayImage(img_url, mBackground);
 			mPagerAdapter.addAll(data.list);
@@ -134,7 +137,7 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
             ImageView image = UiUtil.findImageViewById(itemView, R.id.image);
             ImageLoader.getInstance().displayImage(item.image, image);
             UiUtil.findTextViewById(itemView, R.id.text).setText(item.des);
-
+            UiUtil.findTextViewById(itemView, R.id.hosp_name).setText(item.hosp_name);
             UiUtil.findTextViewById(itemView, R.id.title).setText(item.title);
             Context context = itemView.getContext();
             String sale = !TextUtils.isEmpty(item.price_xm) ? context.getString(R.string.ren_ming_bi) + " " + item.price_xm : null;
@@ -172,6 +175,7 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
     		private String image;
     		private String title;
     		private String link;
+    		private String hosp_name;
     		private String des;
     		private String price_xm;
     		private String price_market;
@@ -199,6 +203,7 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
         			bean.title = js.getString("title");
         			bean.link = js.getString("link");
         			bean.des = js.getString("des");
+        			bean.hosp_name = js.optString("hosp_name");
         			bean.price_xm = js.getString("price_xm");
         			bean.price_market = js.getString("price_market");
         			beans.add(bean);
