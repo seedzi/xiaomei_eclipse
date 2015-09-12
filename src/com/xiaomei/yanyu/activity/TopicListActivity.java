@@ -125,15 +125,13 @@ public class TopicListActivity extends Activity implements OnRefreshListener, On
         @Override
         public Object loadInBackground() {
             HttpApi httpApi = XiaoMeiApplication.getInstance().getApi().getHttpApi();
-            HttpGet httpGet = httpApi.createHttpGet(HttpUrlManager.GOODS_TOPIC_LIST,
+            HttpGet httpGet = httpApi.createHttpGet(url,
                     new BasicNameValuePair(HttpUtil.QUERY_CURPAGE, "1"),
                     new BasicNameValuePair(HttpUtil.QUERY_PERPAGE, "10"));
             try {
                 BizResult result = httpApi.doHttpRequestResult(httpGet);
                 if (result.isSuccess()) {
-                    Gson gson = new Gson();
-                    BizResult msg = gson.fromJson(result.getMessage(), BizResult.class);
-                    return gson.fromJson(msg.getMessage(), Topic[].class);
+                    return Topic.newGson().fromJson(result.getMessage(), Topic[].class);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
