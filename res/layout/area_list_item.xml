@@ -27,8 +27,10 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/special"
             android:layout_marginBottom="15dp"
+            android:maxLines="4"
             android:textSize="15sp"
-            android:textColor="#505050"/>
+            android:textColor="#505050"
+            android:ellipsize="end" />
 
         <TextView
             android:id="@+id/special"

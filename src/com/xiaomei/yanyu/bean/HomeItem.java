@@ -45,10 +45,12 @@ public class HomeItem {
 	/**子bean*/
 	public static class Item{
 		public String img;   //图片
+		public String top_img;
 		public String name;  //名字
 		public String count;
 		public String title; 
 		public String comments;
+		public String desc;
 		
 		public String user;
 		public String url;

@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.alipay.sdk.app.ac;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.PageIndicator;
@@ -31,6 +32,7 @@ import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -47,8 +49,6 @@ import u.aly.co;
  */
 public class AreaDetailActivity extends Activity implements LoaderCallbacks<Object> {
 
-    private static final int AREA_LOADER = 0;
-
     private static final int AREA_GOODS_LOADER = 1;
 
     private static final int AREA_MERCHANT_LOADER = 2;
@@ -59,12 +59,23 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
     private GoodsAdapter mGoodsAdapter;
     private MerchantAdapter mMerchantAdapter;
 
+    public static void startActivity(Activity activity, long id, String image, String description) {
+        activity.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        activity.startActivity(new Intent(activity, AreaDetailActivity.class)
+                .putExtra(IntentUtil.EXTRA_AREA_ID, id)
+                .putExtra(IntentUtil.EXTRA_AREA_IMAGE, image)
+                .putExtra(IntentUtil.EXTRA_AREA_DESCRIPTION, description));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_detail);
 
-        mAreaId = getIntent().getLongExtra(IntentUtil.EXTRA_AREA_ID, IntentUtil.INVALID_LONG);
+        Intent intent = getIntent();
+        mAreaId = intent.getLongExtra(IntentUtil.EXTRA_AREA_ID, IntentUtil.INVALID_LONG);
+        String imageUrl = intent.getStringExtra(IntentUtil.EXTRA_AREA_IMAGE);
+        String description = intent.getStringExtra(IntentUtil.EXTRA_AREA_DESCRIPTION);
 
         TitleActionBar titleBar = new TitleActionBar(getActionBar());
         titleBar.setTitle(R.string.activity_area_list);
@@ -75,7 +86,8 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                 .showImageForEmptyUri(R.drawable.area_detail_image_default)
                 .showImageOnFail(R.drawable.area_detail_image_default)
                 .build();
-        ImageLoader.getInstance().displayImage("", image, options);
+        ImageLoader.getInstance().displayImage(imageUrl, image, options);
+        ((TextView) findViewById(R.id.description)).setText(description);
 
         ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
         mPagerAdaper = new AreaPagerAdapter();
@@ -86,7 +98,6 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
         mGoodsAdapter = new GoodsAdapter(this);
         mMerchantAdapter = new MerchantAdapter(this);
 
-        getLoaderManager().initLoader(AREA_LOADER, null, this);
         getLoaderManager().initLoader(AREA_GOODS_LOADER, null, this);
         getLoaderManager().initLoader(AREA_MERCHANT_LOADER, null, this);
     }

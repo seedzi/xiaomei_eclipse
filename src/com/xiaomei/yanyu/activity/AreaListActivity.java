@@ -137,8 +137,9 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
         mListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Context context = parent.getContext();
-                context.startActivity(new Intent(context, AreaDetailActivity.class).putExtra(IntentUtil.EXTRA_AREA_ID, id));
+                Activity activity = (Activity) parent.getContext();
+                Area area = (Area) parent.getItemAtPosition(position);
+                AreaDetailActivity.startActivity(activity, id, area.getDetailImageLarge(), area.getDescription());
             }
         });
 

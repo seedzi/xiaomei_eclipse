@@ -11,6 +11,7 @@ public class Area {
     private long cityid;
     private String city;
     private String img_6;
+    private String top_img_6;
     private String desc;
     private String special;
     private int count;
@@ -21,6 +22,10 @@ public class Area {
 
     public String getImageLarge() {
         return img_6;
+    }
+
+    public String getDetailImageLarge() {
+        return top_img_6;
     }
 
     public String getName() {

@@ -13,6 +13,7 @@ import com.xiaomei.yanyu.util.ImageLoaderUtil;
 import com.xiaomei.yanyu.util.ImageUtils;
 import com.xiaomei.yanyu.util.IntentUtil;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -60,19 +61,19 @@ public class RecommendAreaView extends BaseView {
             View areaItemThumb = thumbs[i];
             ImageView image = (ImageView) areaItemThumb.findViewById(R.id.image);
             imageLoader.displayImage(item.img, image, options);
-            setOnAreaClickListener(image, item.cityId);
+            setOnAreaClickListener(image, item.cityId, item.top_img, item.desc);
             ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
             ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(mAc.getResources().getString(R.string.area_goods_count, item.count));
         }
     }
 
-    public void setOnAreaClickListener(View itemView, final String cityId) {
+    public void setOnAreaClickListener(View itemView, final String cityId, final String image, final String description) {
         ImageUtils.setViewPressState(itemView);
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                context.startActivity(new Intent(context, AreaDetailActivity.class).putExtra(IntentUtil.EXTRA_AREA_ID, Long.valueOf(cityId)));
+                Activity activity = (Activity) v.getContext();
+                AreaDetailActivity.startActivity(activity, Long.valueOf(cityId), image, description);
             }
         });
         

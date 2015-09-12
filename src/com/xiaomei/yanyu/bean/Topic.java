@@ -7,7 +7,7 @@ public class Topic {
     public static final String TYPE_DISPLAY = "1";
 
     private String title;
-    private String image_6;
+    private String img_6;
     private int viewcount;
     private String type;
     private String url;
@@ -18,7 +18,7 @@ public class Topic {
     }
 
     public String getImageLarge() {
-        return image_6;
+        return img_6;
     }
 
     public int getViewCount() {

@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@color/color_white"
     android:descendantFocusability="blocksDescendants"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:paddingLeft="@dimen/content_padding_horizontal"
+    android:paddingRight="@dimen/content_padding_horizontal"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
     
