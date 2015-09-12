@@ -1,46 +1,29 @@
 package com.xiaomei.yanyu.activity;
 
-import java.io.IOException;
-
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.message.BasicNameValuePair;
-
-import com.android.dx.io.instructions.OneRegisterDecodedInstruction;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
-import com.umeng.socialize.net.l;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.BizResult;
-import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
-import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.api.util.Constant;
-import com.xiaomei.yanyu.bean.Area;
 import com.xiaomei.yanyu.bean.Topic;
 import com.xiaomei.yanyu.util.IntentUtil;
 import com.xiaomei.yanyu.view.TopicAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.AsyncTaskLoader;
-import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
@@ -53,8 +36,6 @@ public class TopicListActivity extends Activity implements OnRefreshListener, On
                 .putExtra(IntentUtil.EXTRA_TITLE, title)
                 .putExtra(IntentUtil.EXTRA_URL, url));
     }
-
-    private static final int TOPIC_LOADER = 0;
 
     private String mUrl;
 
@@ -137,7 +118,6 @@ public class TopicListActivity extends Activity implements OnRefreshListener, On
                 Topic[] topics = Topic.newGson().fromJson(res.getMessage(), Topic[].class);
                 mListAdapter.addAll(topics);
             }
-            Log.d("sunbreak", "mRefreshMoreListener");
             mPullView.onRefreshComplete();
         }
     };
@@ -145,7 +125,6 @@ public class TopicListActivity extends Activity implements OnRefreshListener, On
     private ErrorListener mRefreshErroListener = new ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.d("sunbreak", "mRefreshErroListener");
             mPullView.onRefreshComplete();
         }
     };
