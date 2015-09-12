@@ -76,12 +76,12 @@ public class DropMenu extends FrameLayout implements View.OnClickListener {
         mDataSetObserver = new DataSetObserver() {
             @Override
             public void onChanged() {
-                if (mListView.getCount() == 0) {
+                ListAdapter adapter = mListView.getAdapter();
+                if (adapter.getCount() == 0) {
                     return;
                 }
 
                 mSelectedPosition = 0;
-                ListAdapter adapter = mListView.getAdapter();
                 View selectedView = adapter.getView(mSelectedPosition, null, mListView);
                 if (mItemClickListener != null) {
                     long itemId = adapter.getItemId(mSelectedPosition);
