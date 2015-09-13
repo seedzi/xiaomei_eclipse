@@ -148,8 +148,11 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
         Config.init(this);
         Config.addWhiteListEntry(HttpUrlManager.GOODS_DETAIL_URL, true);
         Config.addWhiteListEntry(HttpUrlManager.MERCHANT_DETAIL_URL, true);
-        mCordovaWebView.setWebChromeClient(new MyWebChromeClient());  
-		mCordovaWebView.loadUrl(url);
+        mCordovaWebView.setWebChromeClient(new MyWebChromeClient());
+        try {
+            mCordovaWebView.loadUrl(url);
+        } catch (Exception e) {
+        }
 	}
 	
 

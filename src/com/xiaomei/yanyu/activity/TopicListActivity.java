@@ -83,9 +83,11 @@ public class TopicListActivity extends Activity implements OnRefreshListener, On
     }
 
     @Override
-    public void onLastItemVisible() {
+    public void onLastItemVisible() { // TODO 暂时加载更多
+        /*
         int page = mListAdapter.getCount() / Constant.PERPAGE + 1;
         mQueue.add(new StringRequest(getTopicListUrl(page), mRefreshMoreListener, mRefreshErroListener));
+        */
     }
 
     private String getTopicListUrl(int page) {
