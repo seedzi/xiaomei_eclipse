@@ -2,6 +2,9 @@ package com.xiaomei.yanyu.comment;
 
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
@@ -14,9 +17,6 @@ import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -302,11 +302,6 @@ public class CommentListActivity extends Activity
         private boolean subComment;
 
         @Override
-        protected void onPreExecute() {
-            clearInput();
-        }
-
-        @Override
         protected Object doInBackground(Object... params) {
             XiaoMeiApi httpApi = XiaoMeiApplication.getInstance().getApi();
             String comment = commentEdit.getText().toString();
@@ -326,6 +321,7 @@ public class CommentListActivity extends Activity
 
         @Override
         protected void onPostExecute(Object result) {
+            clearInput();
             if (result instanceof NetResult) {
                 NetResult netResult = (NetResult) result;
                 if (netResult != null && "0".equals(netResult.getCode())) {
