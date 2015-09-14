@@ -18,6 +18,8 @@ import android.content.Context;
 
 public class AreaFilterLoader extends AsyncTaskLoader<Object> {
 
+    private Filter[] filters;
+
     public AreaFilterLoader(Context context) {
         super(context);
     }
@@ -32,7 +34,10 @@ public class AreaFilterLoader extends AsyncTaskLoader<Object> {
             Gson gson = new Gson();
             Filter countryFilter = gson.fromJson(jsonObject.get(Filter.COUNTRY), Filter.class);
             Filter goodstypeFilter = gson.fromJson(jsonObject.get(Filter.SPECIAL), Filter.class);
-            return new Filter[]{countryFilter, goodstypeFilter};
+            filters = new Filter[] {
+                    countryFilter, goodstypeFilter
+            };
+            return filters;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (XiaoMeiOtherException e) {
@@ -43,6 +48,11 @@ public class AreaFilterLoader extends AsyncTaskLoader<Object> {
 
     @Override
     protected void onStartLoading() {
+        if (filters != null) {
+            deliverResult(filters);
+            return;
+        }
+
         forceLoad();
     }
 }
