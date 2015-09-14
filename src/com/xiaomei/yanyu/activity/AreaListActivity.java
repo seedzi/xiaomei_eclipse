@@ -167,11 +167,15 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
     private Listener<String> mRefreshListener = new Listener<String>() {
         @Override
         public void onResponse(String response) {
-            Gson gson = new Gson();
-            BizResult res = gson.fromJson(response, BizResult.class);
-            if (res.isSuccess()) {
-                mAreaAdapter.clear();
-                mAreaAdapter.addAll(gson.fromJson(res.getMessage(), Area[].class));
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    mAreaAdapter.clear();
+                    mAreaAdapter.addAll(gson.fromJson(res.getMessage(), Area[].class));
+                } 
+            } catch (Exception e) {
+                // TODO: handle exception
             }
             mPullView.onRefreshComplete();
         }
