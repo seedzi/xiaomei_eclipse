@@ -1,6 +1,10 @@
 package com.xiaomei.yanyu.levelone;
 
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.contanier.TabsActivity;
@@ -12,11 +16,6 @@ import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.view.LayoutPagerAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
@@ -25,6 +24,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class SharesFragment extends BaseFragment<SharesControl> 
-	implements OnRefreshListener, OnLastItemVisibleListener {
+        implements OnRefreshListener, OnLastItemVisibleListener, OnPageChangeListener {
 
     private static final int REQUEST_NEW_POST = 0;
 
@@ -79,6 +79,7 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	    mViewPager.setAdapter(mPagerAdapter);
         PageIndicator indicator = (PageIndicator) mRootView.findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
+        indicator.setOnPageChangeListener(this);
 	}
 
 	private void initData() {
@@ -140,7 +141,24 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	    }
 	}
 
-	private void showProgress(ViewHolder viewHolder){
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+    }
+
+    @Override
+    public void onPageSelected(int arg0) {
+        mTitleBar.setActionVisibility(
+                mViewPager.getCurrentItem() == SharesPagerAdapter.POSITION_USER_SHARES
+                        ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void showProgress(ViewHolder viewHolder) {
         viewHolder.mLoadingView.setVisibility(View.VISIBLE);
 		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)viewHolder.mLoadingView.findViewById(R.id.iv)).getDrawable();
 		if(!animationDrawable.isRunning())
