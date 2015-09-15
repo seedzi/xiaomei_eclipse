@@ -262,7 +262,6 @@ public class SharesFragment extends BaseFragment<SharesControl>
             pullView.getRefreshableView().setAdapter(position == POSITION_RECOMMEND_SHARES ? mRecommendSharesAdapter : mUserSharesAdapter);
 
             View emptyView = holder.mEmptyView;
-            pullView.setEmptyView(emptyView);
             emptyView.findViewById(R.id.reload_button).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
