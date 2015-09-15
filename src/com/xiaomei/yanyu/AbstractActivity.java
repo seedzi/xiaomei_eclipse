@@ -25,7 +25,7 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
     private static List<Activity>  activities;
     
     protected boolean useAnimation = true;
-    
+    /*
     public static synchronized void  clearActivity(){
         if(activities!=null){
             for(Activity ac:activities){
@@ -33,17 +33,17 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
             }
             activities.clear();
         }
-    }
+    }*/
     
     private Context mContext;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(activities  == null)
+		/*if(activities  == null)
 		    activities = new ArrayList<Activity>();
 		
-		activities.add(this);
+		activities.add(this);*/
         XiaoMeiApplication.getInstance().setCurrentActivity(this);
 //		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //				WindowManager.LayoutParams.FLAG_FULLSCREEN);
