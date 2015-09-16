@@ -74,6 +74,8 @@ public class GoodsTopicView extends BaseView implements View.OnClickListener{
         .showImageOnLoading(R.drawable.product_recite)
         .showImageOnFail(R.drawable.product_recite).build();
         
+    	LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth*150/1242);
+    	mRecite.setLayoutParams(ll);
         ImageLoader.getInstance().displayImage(
                 mData.getRecite().img, mRecite, reciteOptions2);
         ImageUtils.setViewPressState(mRecite);

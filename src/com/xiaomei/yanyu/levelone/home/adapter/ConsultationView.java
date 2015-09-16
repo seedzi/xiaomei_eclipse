@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 public class ConsultationView extends BaseView {
     private ConsultationPageAdapter mConsultationPageAdapter = new ConsultationPageAdapter();
@@ -43,6 +44,9 @@ public class ConsultationView extends BaseView {
     @Override
     public void refreshUi() {
 
+    	LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth*150/1242);
+    	mRecite.setLayoutParams(ll);
+    	
         DisplayImageOptions reciteOptions = ImageLoaderUtil.getDisplayOptions(R.drawable.consultation_recite);
         ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,reciteOptions);
         mRecite.setTag(mData.getRecite().jump);

@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RecommendAreaView extends BaseView {
@@ -65,6 +66,9 @@ public class RecommendAreaView extends BaseView {
             ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
             ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(mAc.getResources().getString(R.string.area_goods_count, item.count));
         }
+        
+    	LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth*150/1242);
+    	mRecite.setLayoutParams(ll);
         ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,
                 ImageLoaderUtil.getDisplayOptions(R.drawable.recommended_area_recite));
         mRecite.setOnClickListener(this);

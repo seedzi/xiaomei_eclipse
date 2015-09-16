@@ -62,6 +62,8 @@ public class MerchantTopicVView extends BaseView {
         ImageUtils.setViewPressState(img);
         img.setTag(mData.getmList().get(0));
         
+    	LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth*150/1242);
+    	mRecite.setLayoutParams(ll);
         DisplayImageOptions reciteOptions = ImageLoaderUtil.getDisplayOptions(R.drawable.hospital_recite);
         ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,reciteOptions);
         mRecite.setTag(mData.getRecite().jump);
