@@ -44,7 +44,7 @@ public class ConsultationView extends BaseView {
     public void refreshUi() {
 
         DisplayImageOptions reciteOptions = ImageLoaderUtil.getDisplayOptions(R.drawable.consultation_recite);
-        ImageLoader.getInstance().displayImage(mData.getRecite().jump, mRecite,reciteOptions);
+        ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,reciteOptions);
         mRecite.setTag(mData.getRecite().jump);
         ImageUtils.setViewPressState(mRecite);
         mConsultationPageAdapter.clear();

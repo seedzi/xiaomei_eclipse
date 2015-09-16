@@ -63,7 +63,7 @@ public class MerchantTopicVView extends BaseView {
         img.setTag(mData.getmList().get(0));
         
         DisplayImageOptions reciteOptions = ImageLoaderUtil.getDisplayOptions(R.drawable.hospital_recite);
-        ImageLoader.getInstance().displayImage(mData.getRecite().jump, mRecite,reciteOptions);
+        ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,reciteOptions);
         mRecite.setTag(mData.getRecite().jump);
         ImageUtils.setViewPressState(mRecite);
     }

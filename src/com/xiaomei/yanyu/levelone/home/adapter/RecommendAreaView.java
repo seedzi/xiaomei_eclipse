@@ -65,6 +65,11 @@ public class RecommendAreaView extends BaseView {
             ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
             ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(mAc.getResources().getString(R.string.area_goods_count, item.count));
         }
+        ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,
+                ImageLoaderUtil.getDisplayOptions(R.drawable.recommended_area_recite));
+        mRecite.setOnClickListener(this);
+        ImageUtils.setViewPressState(mRecite);
+        mRecite.setTag(mData.getRecite().jump);
     }
 
     public void setOnAreaClickListener(View itemView, final String cityId, final String city, final String image, final String description) {
@@ -76,12 +81,5 @@ public class RecommendAreaView extends BaseView {
                 AreaDetailActivity.startActivity(activity, Long.valueOf(cityId), city, image, description);
             }
         });
-        
-        ImageLoader.getInstance().displayImage(mData.getRecite().img, mRecite,
-                ImageLoaderUtil.getDisplayOptions(R.drawable.recommended_area_recite));
-
-        mRecite.setOnClickListener(this);
-        ImageUtils.setViewPressState(mRecite);
-        mRecite.setTag(mData.getRecite().jump);
     }
 }
