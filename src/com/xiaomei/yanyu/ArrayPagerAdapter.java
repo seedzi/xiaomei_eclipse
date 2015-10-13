@@ -34,10 +34,12 @@ public class ArrayPagerAdapter<T> extends PagerAdapter {
 
     public void addAll(T[] items) {
         mItems.addAll(Arrays.asList(items));
+        notifyDataSetChanged();
     }
 
     public void addAll(Collection<T> items) {
         mItems.addAll(items);
+        notifyDataSetChanged();
     }
 
     public void clear() {
