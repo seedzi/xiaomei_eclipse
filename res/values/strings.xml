@@ -7,6 +7,7 @@
 
     <string name="detail">详情</string>
     <string name="more">更多</string>
+    <string name="share">分享</string>
 
     <string name="ren_ming_bi">¥</string>
     <string name="han_yuan">￦</string>
@@ -87,7 +88,13 @@
     <string name="warning_network_unavailable" translatable="false">网络不给力呢～</string>
     <string name="error_upload_file" tools:ignore="MissingTranslation">文件上传失败!</string>
     <string name="user_share_content_label" tools:ignore="MissingTranslation">美丽圈内容</string>
-    
+
+    <string name="title_wechat_share">微信好友</string>
+    <string name="title_wechat_moment">朋友圈</string>
+    <string name="title_qq_share">QQ好友</string>
+    <string name="title_qzone_share">QQ好友</string>
+    <string name="title_sina_weibo">新浪微博</string>
+
     <!-- 商城 -->
 	<string name="mall_item_nam_1">肉毒素除皱</string>    
 	<string name="mall_item_nam_2">填充朔形</string>   
