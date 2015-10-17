@@ -77,7 +77,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mTopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            	GoodsDetailActivity.startActivity(getActivity(), (String)v.getTag(),(String)v.getTag(101));
+            	GoodsDetailActivity.startActivity(getActivity(), (String)v.getTag(),(String)v.getTag(101),(String)v.getTag(102));
             }
         });
 		ImageUtils.setViewPressState(mTopIcon);
@@ -118,6 +118,7 @@ public class MallFragment extends BaseFragment<MallControl> {
 		ImageLoader.getInstance().displayImage(mControl.getModel().getHead().getImage(), mTopIcon);
 		mTopIcon.setTag(mControl.getModel().getHead().getLink());
 		mTopIcon.setTag(101, mControl.getModel().getHead().getTitle());
+		mTopIcon.setTag(102, mControl.getModel().getHead().getImage());
 	}
 	
 	public void getMallListFromNetAsynExceptionCallBack(){

@@ -57,7 +57,7 @@ public class HotGoodsView extends BaseView {
         @Override
         public void onClick(View arg0) {
             HomeItem.Item item = (Item) arg0.getTag();
-            GoodsDetailActivity.startActivity(mAc, item.url,item.goodsId,item.title);
+            GoodsDetailActivity.startActivity(mAc, item.url,item.goodsId,item.title,item.img);
         }
     };
 }

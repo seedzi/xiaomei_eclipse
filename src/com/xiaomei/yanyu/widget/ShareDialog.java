@@ -111,9 +111,8 @@ public class ShareDialog extends PopupDialog implements OnItemClickListener{
 			ShareManager.getInstance().performShare(SHARE_MEDIA.QZONE);
 			break;
 		case 4://新浪微博
-			
+			ShareManager.getInstance().performShare(SHARE_MEDIA.SINA);
 			break;
-
 		default:
 			break;
 		}

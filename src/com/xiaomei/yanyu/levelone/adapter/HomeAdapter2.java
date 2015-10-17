@@ -195,6 +195,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
             .showImageOnFail(R.drawable.product_recite).build();
         	ImageLoader.getInstance().displayImage(mData.get(position).getRecite().jump, recite,reciteOptions2);
         	recite.setTag(mData.get(position).getRecite().jump);
+        	recite.setTag(101,mData.get(position).getRecite().img);
         	recite.setOnClickListener(mReciteClickListener);
         	ImageUtils.setViewPressState(recite);
         return convertView;
@@ -563,6 +564,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	        paramView.addView(img);  
 			ImageLoader.getInstance().displayImage(getItem(paramInt).img,(ImageView)img,options2);
 			img.setTag(getItem(paramInt).jump);
+			img.setTag(101,getItem(paramInt).img);
+			img.setTag(102,getItem(paramInt).title);
 			ImageUtils.setViewPressState(img);
 			img.setOnClickListener(mConsultationClickListener);
 	        return img; 
@@ -581,9 +584,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
     		    switch (type) {
                 case 0://H5形式
                 	if(TextUtils.isEmpty(itme.goodsId)){
-                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title);
+                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title,itme.img);
                 	}else{
-                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId,itme.title);
+                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId,itme.title,itme.img);
                 	}
                     break;
                 case 1: //卡片形式
@@ -609,7 +612,8 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			String url = (String) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), url,null);
+			String img = (String) arg0.getTag(101);
+			GoodsDetailActivity.startActivity((Activity)getContext(), url,null,img);
 		}
 	};
 	
@@ -620,7 +624,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			HomeItem.Item item = (Item) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), item.url,item.goodsId,item.title);
+			GoodsDetailActivity.startActivity((Activity)getContext(), item.url,item.goodsId,item.title,item.img);
 		}
 	};
 	
@@ -632,7 +636,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			String jump = (String) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), jump,null);
+			String title = (String) arg0.getTag(102);
+			String img = (String) arg0.getTag(101);
+			GoodsDetailActivity.startActivity((Activity)getContext(), jump,title,img);
 		}
 	};
 	/**
@@ -646,7 +652,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
 				case 0: //h5
-					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId,itme.title);
+					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId,itme.title,itme.img);
 					break;
 				case 1:
 					JSONObject jsonObject = new JSONObject(itme.list);
@@ -675,7 +681,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
 				case 0: //h5
-					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title);
+					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title,itme.img);
 					break;
 				case 1:
 					JSONObject jsonObject = new JSONObject(itme.list);
@@ -704,7 +710,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	                Integer type = Integer.valueOf(itme.type);
 	                switch (type) {
 	                case 0://H5形式
-	                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title);
+	                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title,itme.img);
 	                    break;
 	                case 1: //卡片形式
 	                        RecommendSharesDetailActivity.startActivity((Activity)getContext(), itme.shareId);

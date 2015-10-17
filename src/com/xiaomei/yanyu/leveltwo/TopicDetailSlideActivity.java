@@ -147,10 +147,11 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
 
             final String link = item.link;
             final String title = item.title;
+            final String img = item.image;
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.startActivity((Activity) v.getContext(), link,title);
+                    GoodsDetailActivity.startActivity((Activity) v.getContext(), link,title,img);
                 }
             });
 

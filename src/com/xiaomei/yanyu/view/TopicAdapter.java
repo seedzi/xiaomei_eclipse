@@ -52,7 +52,7 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             Topic topic = (Topic) parent.getItemAtPosition(position);
             Activity activity = (Activity) view.getContext();
             if (Topic.TYPE_DETAIL.equals(topic.getType())) {
-                GoodsDetailActivity.startActivity(activity, topic.getUrl(),topic.getTitle());
+                GoodsDetailActivity.startActivity(activity, topic.getUrl(),topic.getTitle(),topic.getImageLarge());
             } else if (Topic.TYPE_DISPLAY.equals(topic.getType())) {
                 TopicDetailSlideActivity.startActivity(activity, new Gson().toJson(topic.getInfo()), topic.getTitle(),
                         topic.getInfo().getDes(), topic.getImageLarge(), String.valueOf(topic.getViewCount()));

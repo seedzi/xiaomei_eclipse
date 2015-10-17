@@ -15,7 +15,9 @@ import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.SinaShareContent;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMVideo;
 import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
@@ -37,7 +39,11 @@ public class ShareManager {
 	private String mTargetUrl;
 	private String mTitle;
 	private String mContent;
+	private String mImgUrl;
     private UMSocialService mController = UMServiceFactory.getUMSocialService(Constants.DESCRIPTOR);
+    public UMSocialService getUMSocialService(){
+    	return mController;
+    }
 	/**
 	 * 初始化
 	 * @param ac 当前ac 
@@ -45,11 +51,12 @@ public class ShareManager {
 	 * @param title 分享tilte
 	 * @param content 分享内容
 	 */
-    public void init(Activity ac,String url,String title,String content){
+    public void init(Activity ac,String url,String title,String content,String img){
     	mAc = ac;
     	mTargetUrl = url;
     	mTitle = title;
     	mContent = content;
+    	mImgUrl = img;
     	if(TextUtils.isEmpty(mTitle)){
     		mTitle = "默认";
     	}
@@ -64,7 +71,7 @@ public class ShareManager {
      */
     private void configPlatforms() {
         // 添加新浪SSO授权
-//        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        mController.getConfig().setSsoHandler(new SinaSsoHandler());
         // 添加QQ、QZone平台
         addQQQZonePlatform();
         // 添加微信、微信朋友圈平台
@@ -116,8 +123,12 @@ public class ShareManager {
      * 根据不同的平台设置不同的分享内容</br>
      */
     private void setShareContent() {
-
-        UMImage localImage = new UMImage(mAc, R.drawable.xiaomei_log);
+    	
+        UMImage img = new UMImage(mAc, R.drawable.xiaomei_log);
+        if(!TextUtils.isEmpty(mImgUrl)){
+        	img = new UMImage(mAc,
+        			mImgUrl);
+        }
 
         //微信分享内容设置
         WeiXinShareContent weixinContent = new WeiXinShareContent();
@@ -125,7 +136,7 @@ public class ShareManager {
                 .setShareContent(mContent);
         weixinContent.setTitle(mTitle);
         weixinContent.setTargetUrl(mTargetUrl);
-        weixinContent.setShareMedia(localImage);
+        weixinContent.setShareMedia(img);
         mController.setShareMedia(weixinContent);
 
         // 朋友圈分享内容设置
@@ -133,7 +144,7 @@ public class ShareManager {
         circleMedia
                 .setShareContent(mContent);
         circleMedia.setTitle(mTitle);
-        circleMedia.setShareMedia(localImage);
+        circleMedia.setShareMedia(img);
         circleMedia.setTargetUrl(mTargetUrl);
         mController.setShareMedia(circleMedia);
 
@@ -142,23 +153,24 @@ public class ShareManager {
         qzone.setShareContent(mContent);
         qzone.setTargetUrl(mTargetUrl);
         qzone.setTitle(mTitle);
-        qzone.setShareMedia(localImage);
+        qzone.setShareMedia(img);
         mController.setShareMedia(qzone);
 
         //QQ分享内容设置
         QQShareContent qqShareContent = new QQShareContent();
         qqShareContent.setShareContent(mContent);
         qqShareContent.setTitle(mTitle);
-        qqShareContent.setShareMedia(localImage);
+        qqShareContent.setShareMedia(img);
         qqShareContent.setTargetUrl(mTargetUrl);
         mController.setShareMedia(qqShareContent);
 
 
         //新浪微博分享设置
         SinaShareContent sinaContent = new SinaShareContent();
+        sinaContent.setTargetUrl(mTargetUrl);
         sinaContent
                 .setShareContent(mContent);
-        sinaContent.setShareImage( localImage);
+        sinaContent.setShareImage( img);
         mController.setShareMedia(sinaContent);
 
     }

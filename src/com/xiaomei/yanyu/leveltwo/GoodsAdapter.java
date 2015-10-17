@@ -87,7 +87,7 @@ public class GoodsAdapter extends ArrayAdapter<Goods> {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Goods goods = (Goods) parent.getItemAtPosition(position);
             String goodsId = goods.getId();
-            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId,goods.getTitle());
+            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId,goods.getTitle(),goods.getFileUrl());
         }
         
     }

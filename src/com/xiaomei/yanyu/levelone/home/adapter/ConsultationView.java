@@ -76,6 +76,8 @@ public class ConsultationView extends BaseView {
             ImageLoader.getInstance().displayImage(getItem(paramInt).img,img,options);
             img.setTag(getItem(paramInt).jump);
             ImageUtils.setViewPressState(img);
+            img.setTag(101,getItem(paramInt).title);
+            img.setTag(102,getItem(paramInt).img);
             img.setOnClickListener(mConsultationClickListener);
             return img; 
         }
@@ -85,7 +87,9 @@ public class ConsultationView extends BaseView {
         @Override
         public void onClick(View arg0) {
             String jump = (String) arg0.getTag();
-            GoodsDetailActivity.startActivity(mAc, jump,null);
+            String tilte =  (String) arg0.getTag(101);
+            String img =  (String) arg0.getTag(102);
+            GoodsDetailActivity.startActivity(mAc, jump,tilte,img);
         }
     };
 }

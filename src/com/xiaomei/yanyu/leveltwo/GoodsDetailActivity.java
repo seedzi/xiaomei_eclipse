@@ -8,6 +8,7 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.api.CordovaInterface;
 import org.apache.cordova.api.CordovaPlugin;
 
+import com.umeng.socialize.sso.UMSsoHandler;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
@@ -42,16 +43,20 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
-	public static void startActivity(Activity ac,String url,String tilte){
+	public static void startActivity(Activity ac,String url,String tilte,String imgUrl){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
+		intent.putExtra("title", tilte);
+		intent.putExtra("img", imgUrl);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
-	public static void startActivity(Activity ac,String url,String goodsid,String title){
+	public static void startActivity(Activity ac,String url,String goodsid,String title,String imgUrl){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
+		intent.putExtra("title", title);
+		intent.putExtra("img", imgUrl);
 		intent.putExtra("goodsid", goodsid);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
@@ -74,6 +79,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
     private String mTitle;
     private String mUrl;
     private String mContent;
+    private String mImg;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -82,7 +88,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		initView();
 		initCordova();
 		isCollection(goodsId);
-		ShareManager.getInstance().init(this,mUrl,mTitle, mContent);
+		ShareManager.getInstance().init(this,mUrl,mTitle, mContent,mImg);
 	}
 	
 	/**是否收藏*/
@@ -158,6 +164,8 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 			
 		});
 		mUrl = getIntent().getStringExtra("url");
+		mTitle = getIntent().getStringExtra("title");
+		mImg = getIntent().getStringExtra("img");
         Config.init(this);
         Config.addWhiteListEntry(HttpUrlManager.GOODS_DETAIL_URL, true);
         Config.addWhiteListEntry(HttpUrlManager.MERCHANT_DETAIL_URL, true);
@@ -191,7 +199,6 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	public void setActivityResultCallback(CordovaPlugin plugin) {
 	    this.activityResultCallback = plugin;
 	}
-
 	@Override
 	public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
         this.activityResultCallback = command;
@@ -211,6 +218,11 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	    CordovaPlugin callback = this.activityResultCallback;
 	    if (callback != null) {
 	        callback.onActivityResult(requestCode, resultCode, intent);
+	    }
+	    /**使用SSO授权必须添加如下代码 */  
+	    UMSsoHandler ssoHandler = ShareManager.getInstance().getUMSocialService().getConfig().getSsoHandler(requestCode);
+	    if(ssoHandler != null){
+	       ssoHandler.authorizeCallBack(requestCode, resultCode, intent);
 	    }
 	}
 	

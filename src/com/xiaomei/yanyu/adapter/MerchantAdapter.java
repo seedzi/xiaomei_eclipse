@@ -44,7 +44,7 @@ public class MerchantAdapter extends ArrayAdapter<Merchant> {
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.startActivity((Activity) v.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + merchant.getId(),merchant.getName());
+                GoodsDetailActivity.startActivity((Activity) v.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + merchant.getId(),merchant.getName(),merchant.getImageLarge());
             }
         });
         ImageLoader.getInstance().displayImage(merchant.getImageLarge(), cover, mImageOptions);
@@ -71,7 +71,7 @@ public class MerchantAdapter extends ArrayAdapter<Merchant> {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         	Merchant merchant = (Merchant) parent.getItemAtPosition(position);
-            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + id,merchant.getName());
+            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + id,merchant.getName(),merchant.getImageLarge());
         }
         
     }

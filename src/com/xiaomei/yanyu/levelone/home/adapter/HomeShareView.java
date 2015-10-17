@@ -168,7 +168,7 @@ public class HomeShareView extends BaseView {
                     switch (type) {
                     case 0://H5形式
                     	  String url = "http://z.drxiaomei.com/share.php?shareid=" + itme.shareId;
-                          GoodsDetailActivity.startActivity(mAc,url,itme.title);
+                          GoodsDetailActivity.startActivity(mAc,url,itme.title,itme.img);
                         break;
                     case 1: //卡片形式
                             RecommendSharesDetailActivity.startActivity(mAc, itme.shareId);
