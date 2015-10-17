@@ -146,10 +146,11 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
             UiUtil.findTextViewById(itemView, R.id.price).setText(price);
 
             final String link = item.link;
+            final String title = item.title;
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.startActivity((Activity) v.getContext(), link);
+                    GoodsDetailActivity.startActivity((Activity) v.getContext(), link,title);
                 }
             });
 

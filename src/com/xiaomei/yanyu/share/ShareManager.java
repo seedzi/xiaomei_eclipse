@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.share;
 
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -49,6 +50,12 @@ public class ShareManager {
     	mTargetUrl = url;
     	mTitle = title;
     	mContent = content;
+    	if(TextUtils.isEmpty(mTitle)){
+    		mTitle = "默认";
+    	}
+    	if(TextUtils.isEmpty(mContent)){
+    		mContent = "默认";
+    	}
     	configPlatforms();
     	setShareContent();
     }

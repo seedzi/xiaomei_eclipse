@@ -93,7 +93,7 @@ public class GoodsTopicView extends BaseView implements View.OnClickListener{
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
                 case 0: //h5
-                    GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId);
+                    GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId,itme.title);
                     break;
                 case 1:
                     JSONObject jsonObject = new JSONObject(itme.list);

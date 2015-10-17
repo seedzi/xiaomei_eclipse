@@ -42,7 +42,7 @@ public class RecommendSharesAdapter extends ArrayAdapter<RecommendShares> {
                 int shareType = recommendShares.getShareType();
                 Activity activity = (Activity) v.getContext();
                 if (shareType == RecommendShares.TYPE_DETAIL) {
-                    GoodsDetailActivity.startActivity(activity, recommendShares.getLink());
+                    GoodsDetailActivity.startActivity(activity, recommendShares.getLink(),recommendShares.getShareTitle());
                 } else if (shareType == RecommendShares.TYPE_DISPLAY) {
                     RecommendSharesDetailActivity.startActivity(activity, recommendShares.getId());
                 }

@@ -581,9 +581,9 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
     		    switch (type) {
                 case 0://H5形式
                 	if(TextUtils.isEmpty(itme.goodsId)){
-                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title);
                 	}else{
-                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId);
+                		GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId,itme.title);
                 	}
                     break;
                 case 1: //卡片形式
@@ -609,7 +609,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			String url = (String) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), url);
+			GoodsDetailActivity.startActivity((Activity)getContext(), url,null);
 		}
 	};
 	
@@ -620,7 +620,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			HomeItem.Item item = (Item) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), item.url,item.goodsId);
+			GoodsDetailActivity.startActivity((Activity)getContext(), item.url,item.goodsId,item.title);
 		}
 	};
 	
@@ -632,7 +632,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 		@Override
 		public void onClick(View arg0) {
 			String jump = (String) arg0.getTag();
-			GoodsDetailActivity.startActivity((Activity)getContext(), jump);
+			GoodsDetailActivity.startActivity((Activity)getContext(), jump,null);
 		}
 	};
 	/**
@@ -646,7 +646,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
 				case 0: //h5
-					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId);
+					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.goodsId,itme.title);
 					break;
 				case 1:
 					JSONObject jsonObject = new JSONObject(itme.list);
@@ -675,7 +675,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
 				case 0: //h5
-					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+					GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title);
 					break;
 				case 1:
 					JSONObject jsonObject = new JSONObject(itme.list);
@@ -704,7 +704,7 @@ public class HomeAdapter2 extends ArrayAdapter<Object> implements View.OnClickLi
 	                Integer type = Integer.valueOf(itme.type);
 	                switch (type) {
 	                case 0://H5形式
-	                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url);
+	                      GoodsDetailActivity.startActivity((Activity)getContext(),itme.url,itme.title);
 	                    break;
 	                case 1: //卡片形式
 	                        RecommendSharesDetailActivity.startActivity((Activity)getContext(), itme.shareId);

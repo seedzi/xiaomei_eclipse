@@ -81,7 +81,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
             public void onClick(View v) {
                 Activity activity = (Activity) v.getContext();
                 if (Section.TYPE_DETAIL.equals(section.getType())) {
-                    GoodsDetailActivity.startActivity(activity, entity.getUrl());
+                    GoodsDetailActivity.startActivity(activity, entity.getUrl(),entity.getTitle());
                 } else if (Section.TYPE_DISPLAY.equals(section.getType())) {
                     TopicDetailSlideActivity.startActivity(activity, section.getList_String(), section.getTitle() , section.getDes(), entity.getImg(), section.getViewCount());
                 }
@@ -139,7 +139,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
                 Activity activity = (Activity)v.getContext();
                 Entity entity = section.getList().get(DEFAULT_INDEX);
                 if (Section.TYPE_DETAIL.equals(section.getType())) {
-                    GoodsDetailActivity.startActivity(activity, entity.getUrl());
+                    GoodsDetailActivity.startActivity(activity, entity.getUrl(),entity.getTitle());
                 } else if (Section.TYPE_DISPLAY.equals(section.getType())) {
                     RecommendSharesDetailActivity.startActivity(activity, entity.getShareId());
                 }
@@ -172,7 +172,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.startActivity((Activity) v.getContext(), url);
+                GoodsDetailActivity.startActivity((Activity) v.getContext(), url,null);
             }
         });
     }
@@ -184,7 +184,7 @@ public class HomeAdapter extends ArrayAdapter<Section> {
                 Activity activity = (Activity)v.getContext();
                 Entity entity = section.getList().get(DEFAULT_INDEX);
                 if (Section.TYPE_DETAIL.equals(section.getType())) {
-                    GoodsDetailActivity.startActivity(activity, entity.getUrl());
+                    GoodsDetailActivity.startActivity(activity, entity.getUrl(),entity.getTitle());
                 } else if (Section.TYPE_DISPLAY.equals(section.getType())) {
                     TopicDetailSlideActivity.startActivity(activity, section.getList_String(), section.getTitle() , section.getDes(), entity.getImg(), section.getViewCount());
                 }

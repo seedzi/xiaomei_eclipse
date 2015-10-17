@@ -87,11 +87,11 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
         switch (id) {
         case R.id.item3:
             url = "http://z.drxiaomei.com/m/about.html";
-            GoodsDetailActivity.startActivity(this, url);
+            GoodsDetailActivity.startActivity(this, url,null);
             break;
         case R.id.item1:
             url = "http://z.drxiaomei.com/m/agreement.html";
-            GoodsDetailActivity.startActivity(this, url);
+            GoodsDetailActivity.startActivity(this, url,null);
             break;
         case R.id.item5:
         	showProgressDialog();

@@ -85,7 +85,7 @@ public class ConsultationView extends BaseView {
         @Override
         public void onClick(View arg0) {
             String jump = (String) arg0.getTag();
-            GoodsDetailActivity.startActivity(mAc, jump);
+            GoodsDetailActivity.startActivity(mAc, jump,null);
         }
     };
 }

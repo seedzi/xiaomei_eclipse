@@ -43,7 +43,7 @@ public abstract class BaseView implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         String url = (String) v.getTag();
-        GoodsDetailActivity.startActivity(mAc, url);
+        GoodsDetailActivity.startActivity(mAc, url,null);
     }
 
 }

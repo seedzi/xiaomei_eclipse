@@ -42,14 +42,14 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
-	public static void startActivity(Activity ac,String url){
+	public static void startActivity(Activity ac,String url,String tilte){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
 	
-	public static void startActivity(Activity ac,String url,String goodsid){
+	public static void startActivity(Activity ac,String url,String goodsid,String title){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
 		intent.putExtra("goodsid", goodsid);
@@ -71,6 +71,9 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 
     private ShareDialog mShareDialog;
 	
+    private String mTitle;
+    private String mUrl;
+    private String mContent;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -79,7 +82,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		initView();
 		initCordova();
 		isCollection(goodsId);
-		ShareManager.getInstance().init(this,"http://www.baidu.com", "标题", "内容");
+		ShareManager.getInstance().init(this,mUrl,mTitle, mContent);
 	}
 	
 	/**是否收藏*/
@@ -100,9 +103,9 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 				}
 			}
 		});
-		String title = getIntent().getStringExtra("title");
-		if(!TextUtils.isEmpty(title))
-			mTitleBar.setTitle(title);
+		mTitle = getIntent().getStringExtra("title");
+		if(!TextUtils.isEmpty(mTitle))
+			mTitleBar.setTitle(mTitle);
 			
 		goodsId = getIntent().getStringExtra("goodsid");
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
@@ -154,13 +157,13 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 			
 			
 		});
-		String url = getIntent().getStringExtra("url");
+		mUrl = getIntent().getStringExtra("url");
         Config.init(this);
         Config.addWhiteListEntry(HttpUrlManager.GOODS_DETAIL_URL, true);
         Config.addWhiteListEntry(HttpUrlManager.MERCHANT_DETAIL_URL, true);
         mCordovaWebView.setWebChromeClient(new MyWebChromeClient());
         try {
-            mCordovaWebView.loadUrl(url);
+            mCordovaWebView.loadUrl(mUrl);
         } catch (Exception e) {
         }
 	}

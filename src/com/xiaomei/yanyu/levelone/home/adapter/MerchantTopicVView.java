@@ -78,7 +78,7 @@ public class MerchantTopicVView extends BaseView {
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
                 case 0: //h5
-                    GoodsDetailActivity.startActivity(mAc,itme.url);
+                    GoodsDetailActivity.startActivity(mAc,itme.url,itme.title);
                     break;
                 case 1:
                     JSONObject jsonObject = new JSONObject(itme.list);

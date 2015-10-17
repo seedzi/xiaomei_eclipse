@@ -4,6 +4,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.ImageUtils;
@@ -43,7 +44,7 @@ public class MerchantAdapter extends ArrayAdapter<Merchant> {
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.startActivity((Activity) v.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + merchant.getId());
+                GoodsDetailActivity.startActivity((Activity) v.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + merchant.getId(),merchant.getName());
             }
         });
         ImageLoader.getInstance().displayImage(merchant.getImageLarge(), cover, mImageOptions);
@@ -69,7 +70,8 @@ public class MerchantAdapter extends ArrayAdapter<Merchant> {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + id);
+        	Merchant merchant = (Merchant) parent.getItemAtPosition(position);
+            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.MERCHANT_DETAIL_URL + "?hosp_id=" + id,merchant.getName());
         }
         
     }

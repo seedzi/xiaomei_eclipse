@@ -83,9 +83,9 @@ public class TopicView extends BaseView{
                 switch (type) {
                 case 0://H5形式
                     if(TextUtils.isEmpty(itme.goodsId)){
-                        GoodsDetailActivity.startActivity(mAc,itme.url);
+                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.title);
                     }else{
-                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId);
+                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId,itme.title);
                     }
                     break;
                 case 1: //卡片形式
