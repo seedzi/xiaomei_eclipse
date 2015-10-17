@@ -1,41 +1,26 @@
 package com.xiaomei.yanyu.module.user.center;
 
-import java.util.List;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.leveltwo.GoodsAdapter;
+import com.xiaomei.yanyu.module.user.center.control.SalesControl;
+import com.xiaomei.yanyu.widget.TitleBar;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.bean.Goods;
-import com.xiaomei.yanyu.leveltwo.GoodsAdapter;
-import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
-import com.xiaomei.yanyu.leveltwo.GoodsListActivity;
-import com.xiaomei.yanyu.module.user.center.control.SalesControl;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 public class SalesMessageActivity extends AbstractActivity<SalesControl> implements OnScrollListener,OnRefreshListener{
     
@@ -60,6 +45,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     
     private ViewGroup mRefreshLayout;
     
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_list_layout);
@@ -152,7 +138,6 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         mIsRefresh = false;
         dissProgress();
         mPullToRefreshListView.onRefreshComplete();
-        Toast.makeText(this, "加载成功", 0).show();
     }
     
     public void getGoodsDataAsynExceptionCallBack(){
@@ -168,7 +153,6 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
         mAdapter.addAll(mControl.getModel().getGoodsList());
         mAdapter.notifyDataSetChanged();
         mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
-        Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
     }
     
     public void getGoodsDataMoreAsynExceptionCallBack(){

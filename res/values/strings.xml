@@ -105,7 +105,6 @@
 	<string name="mall_item_nam_7">韩国特色美容</string>  
 	<string name="mall_item_nam_8">激光除毛</string>  
 	<string name="mall_item_nam_9">体形雕塑</string>  
-    <string name="get_data_sucess">数据加载成功</string>
     
     
     	<string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>

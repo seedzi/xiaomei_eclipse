@@ -78,7 +78,8 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
     private FilterAdapter mOriginPlaceAdapter;
     private FilterAdapter mPriceOrderAdapter;
 
-	protected void onCreate(Bundle savedInstanceState) {
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_list_layout);
 		catId = getIntent().getStringExtra("cat_id");
@@ -227,7 +228,6 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mIsRefresh = false;
 		dissProgress();
 		mPullToRefreshListView.onRefreshComplete();
-		Toast.makeText(this, "加载成功", 0).show();
 	}
 	
 	public void getGoodsDataAsynExceptionCallBack(){
@@ -243,7 +243,6 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		mAdapter.addAll(mControl.getModel().getGoodsList());
 		mAdapter.notifyDataSetChanged();
 		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
-		Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
 	}
 	
 	public void getGoodsDataMoreAsynExceptionCallBack(){

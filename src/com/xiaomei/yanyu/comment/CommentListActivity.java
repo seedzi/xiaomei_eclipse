@@ -279,7 +279,9 @@ public class CommentListActivity extends Activity
             if (!append) {
                 dissProgress();
                 mPullToRefreshListView.onRefreshComplete();
-                Toast.makeText(CommentListActivity.this, size > 0 ? "加载完成" : "暂无评论", 0).show();
+                if (size > 0) {
+                    Toast.makeText(CommentListActivity.this, "暂无评论", 0).show();
+                }
                 if (!isInit) {
                     if (isOnFouce) {
                         commentEdit.setFocusable(true);

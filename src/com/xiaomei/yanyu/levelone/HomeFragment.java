@@ -1,33 +1,23 @@
 package com.xiaomei.yanyu.levelone;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.contanier.TabsActivity;
-import com.xiaomei.yanyu.levelone.adapter.HomeAdapter;
-import com.xiaomei.yanyu.levelone.adapter.HomeAdapter2;
 import com.xiaomei.yanyu.levelone.adapter.HomeListManager;
 import com.xiaomei.yanyu.levelone.control.HomeControl;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
 
 @SuppressLint("NewApi")
 public class HomeFragment extends BaseFragment<HomeControl> implements
@@ -148,7 +138,6 @@ public class HomeFragment extends BaseFragment<HomeControl> implements
 //		mAdapter.notifyDataSetChanged();
 		mHomeListManager.setData(mControl.getModel().getList());
 		mScrollView.onRefreshComplete();
-		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
 	public void getHomeListEntityAsynCallBackNull(){

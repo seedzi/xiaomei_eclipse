@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class SharesFragment extends BaseFragment<SharesControl> 
@@ -186,7 +185,6 @@ public class SharesFragment extends BaseFragment<SharesControl>
 	    ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_RECOMMEND_SHARES);
         dissProgress(holder);
 		holder.mPullToRefreshListView.onRefreshComplete();
-		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
 	}
 	
 	public void getJinghuaListDataFromNetAysnExceptionCallBack(){
@@ -216,7 +214,6 @@ public class SharesFragment extends BaseFragment<SharesControl>
         ViewHolder holder = getHolder(SharesPagerAdapter.POSITION_USER_SHARES);
         dissProgress(holder);
         holder.mPullToRefreshListView.onRefreshComplete();
-        Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
     }
     
     public void getGuangchangListDataFromNetAysnExceptionCallBack(){

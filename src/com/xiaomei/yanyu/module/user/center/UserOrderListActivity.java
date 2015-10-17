@@ -1,6 +1,16 @@
 package com.xiaomei.yanyu.module.user.center;
 
-import java.util.List;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.bean.Order;
+import com.xiaomei.yanyu.comment.CommentsActivity;
+import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.util.YanYuUtils;
+import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,31 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.R.id;
-import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
-import com.xiaomei.yanyu.bean.Order;
-import com.xiaomei.yanyu.comment.CommentsActivity;
-import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
-import com.xiaomei.yanyu.module.user.control.UserControl;
-import com.xiaomei.yanyu.util.DateUtils;
-import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.util.UserUtil;
-import com.xiaomei.yanyu.util.YanYuUtils;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.yuekuapp.BaseActivity;
 
 public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 	
@@ -128,7 +115,6 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 	    mAdapter.clear();
 		mAdapter.addAll(mControl.getModel().getOrderList());
 		mAdapter.notifyDataSetChanged();
-		Toast.makeText(UserOrderListActivity.this, "加载成功", 0).show();
 		dissProgress();
 	}
 	

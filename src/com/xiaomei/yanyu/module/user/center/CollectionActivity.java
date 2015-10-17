@@ -164,7 +164,6 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	        mIsRefresh = false;
 	        dissProgress();
 	        mPullToRefreshListView.onRefreshComplete();
-	        Toast.makeText(this, "加载成功", 0).show();
 	        dismissDialog();
 	        mEdit.setEnabled(true);
 	}
@@ -184,7 +183,6 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	        mAdapter.addAll(mControl.getModel().getGoodsList());
 	        mAdapter.notifyDataSetChanged();
 	        mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
-	        Toast.makeText(this, getResources().getString(R.string.get_data_sucess), 0).show();
 	        dismissDialog();
 	        mEdit.setEnabled(true);
 	}

@@ -1,26 +1,24 @@
 package com.xiaomei.yanyu.levelone;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.adapter.MerchantAdapter;
-import com.xiaomei.yanyu.bean.AreaFilterLoader;
 import com.xiaomei.yanyu.bean.Area.Filter;
 import com.xiaomei.yanyu.bean.Area.FilterItem;
+import com.xiaomei.yanyu.bean.AreaFilterLoader;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MerchantControl;
 import com.xiaomei.yanyu.view.FilterAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TopFilter;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.Loader;
-import android.database.DataSetObserver;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -181,7 +179,6 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 		mAdapter.clear();
 		mAdapter.addAll(mControl.getModel().getData());
 		mPullToRefreshListView.onRefreshComplete();
-		Toast.makeText(getActivity(), getResources().getString(R.string.get_data_sucess), 0).show();
 	}
 	
 	public void getMerchantListExceptionCallBack(){
@@ -196,7 +193,6 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
 		mAdapter.addAll(mControl.getModel().getData());
 		mPullToRefreshListView.onRefreshComplete();
-		Toast.makeText(getActivity(), "加载完成", 0).show();
 	}
 	
 	public void getMerchantListMoreExceptionCallBack(){
