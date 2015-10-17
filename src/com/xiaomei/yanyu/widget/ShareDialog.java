@@ -1,6 +1,8 @@
 package com.xiaomei.yanyu.widget;
 
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.share.ShareManager;
 import com.xiaomei.yanyu.util.UiUtil;
 
 import android.content.Context;
@@ -8,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
-public class ShareDialog extends PopupDialog {
+public class ShareDialog extends PopupDialog implements OnItemClickListener{
 
     private View mContent;
 
@@ -31,6 +35,7 @@ public class ShareDialog extends PopupDialog {
     private void initConentView() {
         GridView grid = (GridView)mContent.findViewById(R.id.grid);
         grid.setAdapter(new ShareDialogAdapter());
+        grid.setOnItemClickListener(this);
 
         mContent.findViewById(R.id.cancel).setOnClickListener(mCancelClickListener);
         mContent.setOnClickListener(mCancelClickListener);
@@ -89,5 +94,29 @@ public class ShareDialog extends PopupDialog {
             this.iconRes = iconRes;
         }
     }
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		switch (position) {
+		case 0://微信
+			ShareManager.getInstance().performShare(SHARE_MEDIA.WEIXIN);
+			break;
+		case 1://朋友圈
+			ShareManager.getInstance().performShare(SHARE_MEDIA.WEIXIN_CIRCLE);
+			break;
+		case 2://qq好友
+			ShareManager.getInstance().performShare(SHARE_MEDIA.QQ);
+			break;
+		case 3://q zone
+			ShareManager.getInstance().performShare(SHARE_MEDIA.QZONE);
+			break;
+		case 4://新浪微博
+			
+			break;
+
+		default:
+			break;
+		}
+	}
 }
 

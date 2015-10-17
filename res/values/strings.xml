@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources tools:ignore="MissingTranslation" xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">颜语</string>
 
-    <string name="activity_comment_list">评论</string>
+    <string name="activity_comment_list" >评论</string>
 
     <string name="detail">详情</string>
     <string name="more">更多</string>

@@ -13,6 +13,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
+import com.xiaomei.yanyu.share.ShareManager;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.ShareDialog;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -78,6 +79,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		initView();
 		initCordova();
 		isCollection(goodsId);
+		ShareManager.getInstance().init(this,"http://www.baidu.com", "标题", "内容");
 	}
 	
 	/**是否收藏*/
