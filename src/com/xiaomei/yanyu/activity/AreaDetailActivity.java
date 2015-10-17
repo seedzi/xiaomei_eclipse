@@ -5,10 +5,10 @@ import java.util.Collection;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.alipay.sdk.app.ac;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.PageIndicator;
+import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.adapter.MerchantAdapter;
@@ -25,7 +25,6 @@ import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.leveltwo.GoodsAdapter;
 import com.xiaomei.yanyu.util.IntentUtil;
-import com.xiaomei.yanyu.view.LayoutPagerAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.Activity;
@@ -39,10 +38,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import u.aly.co;
 
 /**
  * Created by sunbreak on 9/4/15.
@@ -53,11 +53,21 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
     private static final int AREA_MERCHANT_LOADER = 2;
 
+    private static final int PAGER_GOODS = 0;
+
     private long mAreaId;
 
     private AreaPagerAdapter mPagerAdaper;
     private GoodsAdapter mGoodsAdapter;
     private MerchantAdapter mMerchantAdapter;
+
+    private ViewPager mViewPager;
+
+    private AreaPagerEntry mGoodsPagerEntry;
+
+    private AreaPagerEntry mMerchantPagerEntry;
+
+    private PageIndicator mIndicator;
 
     public static void startActivity(Activity activity, long id, String name, String image, String description) {
         activity.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
@@ -91,14 +101,20 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
         ImageLoader.getInstance().displayImage(imageUrl, image, options);
         ((TextView) findViewById(R.id.description)).setText(description);
 
-        ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager = (ViewPager)findViewById(R.id.viewpager);
         mPagerAdaper = new AreaPagerAdapter();
-        viewpager.setAdapter(mPagerAdaper);
-        PageIndicator indicator = (PageIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(viewpager);
+        mViewPager.setAdapter(mPagerAdaper);
+        mIndicator = (PageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(mViewPager);
 
         mGoodsAdapter = new GoodsAdapter(this);
         mMerchantAdapter = new MerchantAdapter(this);
+        mGoodsPagerEntry = new AreaPagerEntry(R.string.indicator_area_goods,
+                R.layout.area_goods_list, mGoodsAdapter,
+                new GoodsAdapter.GoodsItemClickListener());
+        mMerchantPagerEntry = new AreaPagerEntry(R.string.indicator_area_merchant,
+                R.layout.area_merchant_list, mMerchantAdapter,
+                new MerchantAdapter.MerchantItemClickListener());
 
         getLoaderManager().initLoader(AREA_GOODS_LOADER, null, this);
         getLoaderManager().initLoader(AREA_MERCHANT_LOADER, null, this);
@@ -121,13 +137,23 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
             case AREA_GOODS_LOADER:
                 if (data != null) {
                     mGoodsAdapter.clear();
-                    mGoodsAdapter.addAll((Collection<? extends Goods>) data);
+                    Collection<? extends Goods> collection = (Collection<? extends Goods>)data;
+                    mGoodsAdapter.addAll(collection);
+                    if (collection.size() > 0 && !mPagerAdaper.constains(mMerchantPagerEntry)) {
+                        mPagerAdaper.add(PAGER_GOODS, mGoodsPagerEntry);
+                        mIndicator.notifyDataSetChanged();
+                    }
                 }
                 break;
             case AREA_MERCHANT_LOADER:
                 if (data != null) {
                     mMerchantAdapter.clear();
-                    mMerchantAdapter.addAll((Collection<? extends Merchant>) data);
+                    Collection<? extends Merchant> collection = (Collection<? extends Merchant>) data;
+                    mMerchantAdapter.addAll(collection);
+                    if (collection.size() > 0 && !mPagerAdaper.constains(mMerchantPagerEntry)) {
+                        mPagerAdaper.add(mMerchantPagerEntry);
+                        mIndicator.notifyDataSetChanged();
+                    }
                 }
                 break;
         }
@@ -210,30 +236,44 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
         }
     }
 
-    public class AreaPagerAdapter extends LayoutPagerAdapter {
-
-        public AreaPagerAdapter() {
-            super(2);
-        }
+    public class AreaPagerAdapter extends ArrayPagerAdapter<AreaPagerEntry> {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            AreaPagerEntry item = getItem(position);
             Context context = container.getContext();
-            int layout = position == 0 ? R.layout.area_goods_list : R.layout.area_merchant_list;
-            View itemView = LayoutInflater.from(context).inflate(layout, container, false);
+            View itemView = LayoutInflater.from(context).inflate(item.layout, container,
+                    false);
 
             ListView listView = (ListView) itemView;
-            listView.setAdapter(position == 0 ? mGoodsAdapter : mMerchantAdapter);
-            listView.setOnItemClickListener(position == 0 ?
-                    new GoodsAdapter.GoodsItemClickListener() :
-                    new MerchantAdapter.MerchantItemClickListener());
+            listView.setAdapter(item.adapter);
+            listView.setOnItemClickListener(item.onItemClickListener);
             container.addView(itemView);
             return itemView;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return getString(position == 0 ? R.string.indicator_area_goods : R.string.indicator_area_merchant);
+            return getString(getItem(position).titleRes);
+        }
+    }
+
+    public static class AreaPagerEntry {
+
+        public int titleRes;
+
+        public int layout;
+
+        public ListAdapter adapter;
+
+        public OnItemClickListener onItemClickListener;
+
+        public AreaPagerEntry(int titleRes, int layout, ListAdapter adapter,
+                OnItemClickListener onItemClickListener) {
+            this.titleRes = titleRes;
+            this.layout = layout;
+            this.adapter = adapter;
+            this.onItemClickListener = onItemClickListener;
         }
     }
 }

@@ -27,6 +27,25 @@ public class ArrayPagerAdapter<T> extends PagerAdapter {
         return view == object;
     }
 
+    public boolean constains(T object) {
+        for (T t : mItems) {
+            if (t == object) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void add(int location, T object) {
+        mItems.add(location, object);
+        notifyDataSetChanged();
+    }
+
+    public void add(T object) {
+        mItems.add(object);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);

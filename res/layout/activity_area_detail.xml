@@ -36,7 +36,7 @@
             android:ellipsize="end" />
     </FrameLayout>
 
-    <com.viewpagerindicator.TabPageIndicator
+    <com.xiaomei.yanyu.widget.TabPageIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_tab_height" />
