@@ -8,28 +8,27 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.api.CordovaInterface;
 import org.apache.cordova.api.CordovaPlugin;
 
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
+import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.ShareDialog;
+import com.xiaomei.yanyu.widget.TitleBar;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
-import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
-import com.xiaomei.yanyu.util.UserUtil;
-import com.xiaomei.yanyu.widget.TitleBar;
 
 public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> implements CordovaInterface,View.OnClickListener{
 	
@@ -68,6 +67,8 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	private View mLoadingView; 
 	
 	private String goodsId;
+
+    private ShareDialog mShareDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +105,20 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		goodsId = getIntent().getStringExtra("goodsid");
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
 		mTitleBar.findViewById(R.id.comment).setVisibility(View.GONE);
-		mTitleBar.findViewById(R.id.share).setVisibility(View.GONE);
+        mTitleBar.findViewById(R.id.share).setVisibility(View.VISIBLE);
+        mTitleBar.findViewById(R.id.share).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mShareDialog.show(v);
+            }
+        });
 		mTitleBar.findViewById(R.id.fav).setVisibility(View.GONE);
 		if(!TextUtils.isEmpty(goodsId)){
 			mTitleBar.findViewById(R.id.fav).setVisibility(View.VISIBLE);
 			mTitleBar.findViewById(R.id.fav).setOnClickListener(this);
 		}
 		mLoadingView = findViewById(R.id.loading_layout);
+        mShareDialog = new ShareDialog(GoodsDetailActivity.this);
 	}
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
         if (url.startsWith("tel:")) { 
@@ -192,7 +200,8 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 	    super.onActivityResult(requestCode, resultCode, intent);
 	    CordovaPlugin callback = this.activityResultCallback;
 	    if (callback != null) {

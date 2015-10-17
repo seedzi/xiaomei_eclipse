@@ -75,6 +75,7 @@
     android:layout_height="wrap_content"        
     android:layout_marginRight="@dimen/item_margin_normal"
     android:background="@drawable/btn_share"
+    android:layout_alignWithParentIfMissing="true"
     android:visibility="gone"/>    
     <ImageButton 
     android:id="@+id/fav"
