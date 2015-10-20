@@ -115,4 +115,10 @@
     <string name="rss_list_time_text_sec" translatable="false">秒前</string>
     <string name="rss_list_time_text_just" tools:ignore="MissingTranslation,MissingTranslation">刚刚</string>
     <string name="date_fromate_anecdote" translatable="false">"yyyy-MM-dd"</string>
+    
+    <string name="share_project_txt">"我发现一个迅速变美的项目"</string>
+    <string name="share_institution_txt">"我发现一个高端专业的医院"</string>
+    <string name="share_action_txt">"我发现一个迅速变美的项目"</string>
+    <string name="share_circles_txt">"我发现一个迅速变美的项目"</string>
+    <string name="share_default_txt">"下载颜语app,马上做女神"</string>
 </resources>
