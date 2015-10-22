@@ -128,8 +128,8 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 			}
 		});
 		mTitle = getIntent().getStringExtra("title");
-		if(!TextUtils.isEmpty(mTitle))
-			mTitleBar.setTitle(mTitle);
+//		if(!TextUtils.isEmpty(mTitle))
+//			mTitleBar.setTitle(mTitle);
 			
 		goodsId = getIntent().getStringExtra("goodsid");
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
