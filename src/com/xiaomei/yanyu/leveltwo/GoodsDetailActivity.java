@@ -21,6 +21,7 @@ import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -159,7 +161,16 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
     }
 	private void initCordova(){
 		mCordovaWebView = (CordovaWebView) findViewById(R.id.tutoria_view);
-		mCordovaWebView.getSettings().setBlockNetworkImage(true);
+		WebSettings settings = mCordovaWebView.getSettings();
+        settings.setBlockNetworkImage(true);
+        String append = "Yanyu";
+        try {
+            String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            append = append + "-" + versionName;
+        } catch (NameNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        settings.setUserAgentString(settings.getUserAgentString() + " " + append);
 		mCordovaWebView.setWebViewClient(new WebViewClient(){
 			@Override
 			public void onPageFinished(WebView view, String url) {
