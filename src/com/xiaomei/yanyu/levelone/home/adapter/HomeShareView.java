@@ -5,6 +5,7 @@ import java.util.List;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -168,7 +169,8 @@ public class HomeShareView extends BaseView {
                     switch (type) {
                     case 0://H5形式
                     	  String url = "http://z.drxiaomei.com/share.php?shareid=" + itme.shareId;
-                          GoodsDetailActivity.startActivity(mAc,url,itme.title,itme.img);
+                    	  String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_circles_txt);
+                          GoodsDetailActivity.startActivity(mAc,url,itme.title,content,itme.img);
                         break;
                     case 1: //卡片形式
                             RecommendSharesDetailActivity.startActivity(mAc, itme.shareId);

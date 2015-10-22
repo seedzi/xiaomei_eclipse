@@ -11,6 +11,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
@@ -151,7 +152,8 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.startActivity((Activity) v.getContext(), link,title,img);
+                    String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
+                    GoodsDetailActivity.startActivity((Activity) v.getContext(), link,title,content,img);
                 }
             });
 

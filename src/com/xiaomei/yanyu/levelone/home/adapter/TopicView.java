@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.util.Constant;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -83,9 +84,11 @@ public class TopicView extends BaseView{
                 switch (type) {
                 case 0://H5形式
                     if(TextUtils.isEmpty(itme.goodsId)){
-                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.title,itme.img);
+                        String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
+                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.title,content,itme.img);
                     }else{
-                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId,itme.title,itme.img);
+                        String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_project_txt);
+                        GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId,itme.title,content,itme.img);
                     }
                     break;
                 case 1: //卡片形式

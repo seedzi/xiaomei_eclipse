@@ -6,9 +6,7 @@ package com.xiaomei.yanyu.api.http;
 
 import android.util.Log;
 
-import com.umeng.socialize.net.utils.BaseNCodec;
 import com.xiaomei.yanyu.DebugRelease;
-import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
 import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;

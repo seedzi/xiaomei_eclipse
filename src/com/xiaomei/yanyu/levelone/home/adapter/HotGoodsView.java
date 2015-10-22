@@ -3,6 +3,7 @@ package com.xiaomei.yanyu.levelone.home.adapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -57,7 +58,8 @@ public class HotGoodsView extends BaseView {
         @Override
         public void onClick(View arg0) {
             HomeItem.Item item = (Item) arg0.getTag();
-            GoodsDetailActivity.startActivity(mAc, item.url,item.goodsId,item.title,item.img);
+            String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_project_txt);
+            GoodsDetailActivity.startActivity(mAc, item.url,item.goodsId,item.title,content,item.img);
         }
     };
 }

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.bean.Topic;
 import com.xiaomei.yanyu.bean.Topic.Segment;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -52,7 +53,8 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             Topic topic = (Topic) parent.getItemAtPosition(position);
             Activity activity = (Activity) view.getContext();
             if (Topic.TYPE_DETAIL.equals(topic.getType())) {
-                GoodsDetailActivity.startActivity(activity, topic.getUrl(),topic.getTitle(),topic.getImageLarge());
+                String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
+                GoodsDetailActivity.startActivity(activity, topic.getUrl(),topic.getTitle(),content,topic.getImageLarge());
             } else if (Topic.TYPE_DISPLAY.equals(topic.getType())) {
                 TopicDetailSlideActivity.startActivity(activity, new Gson().toJson(topic.getInfo()), topic.getTitle(),
                         topic.getInfo().getDes(), topic.getImageLarge(), String.valueOf(topic.getViewCount()));

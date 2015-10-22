@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Goods.Mark;
@@ -87,7 +88,9 @@ public class GoodsAdapter extends ArrayAdapter<Goods> {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Goods goods = (Goods) parent.getItemAtPosition(position);
             String goodsId = goods.getId();
-            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId,goods.getTitle(),goods.getFileUrl());
+            String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_project_txt);
+            GoodsDetailActivity.startActivity((Activity) view.getContext(), HttpUrlManager.GOODS_DETAIL_URL+"?goods_id=" + goodsId, goodsId,goods.getTitle(),
+                    content,goods.getFileUrl());
         }
         
     }

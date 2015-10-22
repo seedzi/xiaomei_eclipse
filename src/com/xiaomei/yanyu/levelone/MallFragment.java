@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.bean.Mall;
 import com.xiaomei.yanyu.comment.CommentListActivity;
 import com.xiaomei.yanyu.contanier.TabsActivity;
@@ -77,7 +78,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mTopIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            	GoodsDetailActivity.startActivity(getActivity(), (String)v.getTag(),(String)v.getTag(101),(String)v.getTag(102));
+                String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_institution_txt);
+            	GoodsDetailActivity.startActivity(getActivity(), (String)v.getTag(),(String)v.getTag(R.id.tag_first),content,(String)v.getTag(R.id.tag_second));
             }
         });
 		ImageUtils.setViewPressState(mTopIcon);
@@ -117,8 +119,8 @@ public class MallFragment extends BaseFragment<MallControl> {
 		mMailAdapter.notifyDataSetChanged();
 		ImageLoader.getInstance().displayImage(mControl.getModel().getHead().getImage(), mTopIcon);
 		mTopIcon.setTag(mControl.getModel().getHead().getLink());
-		mTopIcon.setTag(101, mControl.getModel().getHead().getTitle());
-		mTopIcon.setTag(102, mControl.getModel().getHead().getImage());
+		mTopIcon.setTag(R.id.tag_first, mControl.getModel().getHead().getTitle());
+		mTopIcon.setTag(R.id.tag_second, mControl.getModel().getHead().getImage());
 	}
 	
 	public void getMallListFromNetAsynExceptionCallBack(){

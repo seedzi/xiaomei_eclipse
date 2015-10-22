@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.module.user.center;
 
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.AppUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -82,16 +83,17 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
         String url = "";
         int id = v.getId();
         switch (id) {
         case R.id.item3:
             url = "http://z.drxiaomei.com/m/about.html";
-            GoodsDetailActivity.startActivity(this, url,null,null);
+            GoodsDetailActivity.startActivity(this, url,"关于颜语","关于颜语",null);
             break;
         case R.id.item1:
             url = "http://z.drxiaomei.com/m/agreement.html";
-            GoodsDetailActivity.startActivity(this, url,null,null);
+            GoodsDetailActivity.startActivity(this, url,"用户协议","用户协议",null);
             break;
         case R.id.item5:
         	showProgressDialog();

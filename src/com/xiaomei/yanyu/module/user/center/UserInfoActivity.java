@@ -178,7 +178,7 @@ public class UserInfoActivity extends AbstractActivity<UserCenterControl> implem
              startActivityForResult(intent, 1);
 			break;
 		case R.id.huiyuan_guizhe:
-			GoodsDetailActivity.startActivityWithTitle(this, "http://z.drxiaomei.com/m/rule.html","会员规则");
+			GoodsDetailActivity.startActivity(this, "http://z.drxiaomei.com/m/rule.html","会员规则","会员规则",null);
 			break;
 		default:
 			break;

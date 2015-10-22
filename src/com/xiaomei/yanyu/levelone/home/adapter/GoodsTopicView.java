@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.activity.TopicListActivity;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.bean.HomeItem;
@@ -93,7 +94,8 @@ public class GoodsTopicView extends BaseView implements View.OnClickListener{
                 Integer type = Integer.valueOf(itme.type);
                 switch (type) {
                 case 0: //h5
-                    GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId,itme.title,itme.img);
+                    String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_project_txt);
+                    GoodsDetailActivity.startActivity(mAc,itme.url,itme.goodsId,itme.title,content,itme.img);
                     break;
                 case 1:
                     JSONObject jsonObject = new JSONObject(itme.list);

@@ -23,6 +23,7 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 
 public class ShareManager {
 	
@@ -57,11 +58,12 @@ public class ShareManager {
     	mTitle = title;
     	mContent = content;
     	mImgUrl = img;
+    	
     	if(TextUtils.isEmpty(mTitle)){
-    		mTitle = "默认";
+    		mTitle = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);;
     	}
     	if(TextUtils.isEmpty(mContent)){
-    		mContent = "默认";
+    		mContent = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
     	}
     	configPlatforms();
     	setShareContent();

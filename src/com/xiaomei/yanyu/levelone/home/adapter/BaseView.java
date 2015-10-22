@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.ScreenUtils;
@@ -43,7 +45,9 @@ public abstract class BaseView implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         String url = (String) v.getTag();
-        GoodsDetailActivity.startActivity(mAc, url,null,null);//TODO
+        String title = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
+        String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
+        GoodsDetailActivity.startActivity(mAc, url,null,null,null);//TODO
     }
 
 }

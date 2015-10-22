@@ -6,6 +6,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.util.Constant;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -76,8 +77,8 @@ public class ConsultationView extends BaseView {
             ImageLoader.getInstance().displayImage(getItem(paramInt).img,img,options);
             img.setTag(getItem(paramInt).jump);
             ImageUtils.setViewPressState(img);
-            img.setTag(101,getItem(paramInt).title);
-            img.setTag(102,getItem(paramInt).img);
+            img.setTag(R.id.tag_first,getItem(paramInt).title);
+            img.setTag(R.id.tag_second,getItem(paramInt).img);
             img.setOnClickListener(mConsultationClickListener);
             return img; 
         }
@@ -87,9 +88,10 @@ public class ConsultationView extends BaseView {
         @Override
         public void onClick(View arg0) {
             String jump = (String) arg0.getTag();
-            String tilte =  (String) arg0.getTag(101);
-            String img =  (String) arg0.getTag(102);
-            GoodsDetailActivity.startActivity(mAc, jump,tilte,img);
+            String tilte =  (String) arg0.getTag(R.id.tag_first);
+            String img =  (String) arg0.getTag(R.id.tag_second);
+            String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
+            GoodsDetailActivity.startActivity(mAc, jump,tilte,content,img);
         }
     };
 }

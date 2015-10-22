@@ -2,6 +2,7 @@ package com.xiaomei.yanyu.levelone.adapter;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.leveltwo.RecommendSharesDetailActivity;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -42,7 +43,8 @@ public class RecommendSharesAdapter extends ArrayAdapter<RecommendShares> {
                 int shareType = recommendShares.getShareType();
                 Activity activity = (Activity) v.getContext();
                 if (shareType == RecommendShares.TYPE_DETAIL) {
-                    GoodsDetailActivity.startActivity(activity, recommendShares.getLink(),recommendShares.getShareTitle(),recommendShares.getShareFile());
+                    String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_circles_txt);
+                    GoodsDetailActivity.startActivity(activity, recommendShares.getLink(),recommendShares.getShareTitle(),content,recommendShares.getShareFile());
                 } else if (shareType == RecommendShares.TYPE_DISPLAY) {
                     RecommendSharesDetailActivity.startActivity(activity, recommendShares.getId());
                 }

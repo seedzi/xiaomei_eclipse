@@ -42,20 +42,36 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
-	
-	public static void startActivity(Activity ac,String url,String tilte,String imgUrl){
+	/**
+	 * @param ac
+	 * @param url
+	 * @param tilte
+	 * @param content
+	 * @param imgUrl
+	 */
+	public static void startActivity(Activity ac,String url,String tilte,String content,String imgUrl){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
 		intent.putExtra("title", tilte);
+	    intent.putExtra("content", content);
 		intent.putExtra("img", imgUrl);
 		ac.startActivity(intent);
         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
 	}
-	
-	public static void startActivity(Activity ac,String url,String goodsid,String title,String imgUrl){
+
+	/**
+	 * @param ac
+	 * @param url
+	 * @param goodsid
+	 * @param title
+	 * @param content
+	 * @param imgUrl
+	 */
+	public static void startActivity(Activity ac,String url,String goodsid,String title,String content,String imgUrl){
 		Intent intent = new Intent(ac,GoodsDetailActivity.class);
 		intent.putExtra("url", url);
 		intent.putExtra("title", title);
+		intent.putExtra("content", content);
 		intent.putExtra("img", imgUrl);
 		intent.putExtra("goodsid", goodsid);
 		ac.startActivity(intent);
@@ -166,6 +182,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		mUrl = getIntent().getStringExtra("url");
 		mTitle = getIntent().getStringExtra("title");
 		mImg = getIntent().getStringExtra("img");
+		mContent = getIntent().getStringExtra("content");
         Config.init(this);
         Config.addWhiteListEntry(HttpUrlManager.GOODS_DETAIL_URL, true);
         Config.addWhiteListEntry(HttpUrlManager.MERCHANT_DETAIL_URL, true);
