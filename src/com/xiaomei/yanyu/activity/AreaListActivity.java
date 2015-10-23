@@ -4,49 +4,35 @@
 
 package com.xiaomei.yanyu.activity;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.message.BasicNameValuePair;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.HttpUrlManager;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
-import com.xiaomei.yanyu.api.http.HttpApi;
 import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Area;
-import com.xiaomei.yanyu.bean.AreaFilterLoader;
 import com.xiaomei.yanyu.bean.Area.Filter;
 import com.xiaomei.yanyu.bean.Area.FilterItem;
-import com.xiaomei.yanyu.util.IntentUtil;
+import com.xiaomei.yanyu.bean.AreaFilterLoader;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.view.FilterAdapter;
-import com.xiaomei.yanyu.widget.DropMenu;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.TopFilter;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
@@ -208,7 +194,6 @@ public class AreaListActivity extends Activity implements OnRefreshListener, OnL
                     mSpecialAdapter.clear();
                     mSpecialAdapter.addAll(areaFilters[1].getItems());
                 }
-                mTopFilter.setVisibility(data != null ? View.VISIBLE : View.GONE);
                 break;
         }
     }
