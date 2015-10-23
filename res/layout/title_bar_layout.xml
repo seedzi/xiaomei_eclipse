@@ -51,12 +51,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
     
-<RelativeLayout 
+<LinearLayout 
       android:id="@+id/right_root"
-          android:layout_gravity="center_vertical"
-         android:layout_width="match_parent"
+          android:layout_gravity="right|center_vertical"
+         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:visibility="gone">
 	<ImageButton 
     android:id="@+id/comment"
@@ -79,7 +80,6 @@
     android:visibility="gone"/>    
     <ImageButton 
     android:id="@+id/fav"
-    android:layout_alignParentRight="true"
     android:layout_gravity="center_vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"        
@@ -110,7 +110,7 @@
     android:text="确认"
     android:textColor="#ffffff"
     android:visibility="gone"/>            
-</RelativeLayout>
+</LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
