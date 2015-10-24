@@ -22,8 +22,8 @@
 
     <string name="indicator_recommend_shares">精华</string>
     <string name="indicator_user_shares">广场</string>
-    <string name="indicator_area_goods">热门产品</string>
-    <string name="indicator_area_merchant">热门机构</string>
+    <string name="indicator_area_goods">精选项目</string>
+    <string name="indicator_area_merchant">优质机构</string>
 
     <string name="title_goods_topic">产品专题</string>
     <string name="title_merchant_topic">机构专题</string>
