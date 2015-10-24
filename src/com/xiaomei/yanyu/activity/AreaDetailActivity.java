@@ -139,7 +139,7 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                     mGoodsAdapter.clear();
                     Collection<? extends Goods> collection = (Collection<? extends Goods>)data;
                     mGoodsAdapter.addAll(collection);
-                    if (collection.size() > 0 && !mPagerAdaper.constains(mMerchantPagerEntry)) {
+                    if (collection.size() > 0 && !mPagerAdaper.constains(mGoodsPagerEntry)) {
                         mPagerAdaper.add(PAGER_GOODS, mGoodsPagerEntry);
                         mIndicator.notifyDataSetChanged();
                     }
