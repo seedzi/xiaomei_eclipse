@@ -103,8 +103,8 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goods_detail_layout);
+        initCordova();
 		initView();
-		initCordova();
 		isCollection(goodsId);
 		ShareManager.getInstance().init(this,mUrl,mTitle, mContent,mImg);
 	}
@@ -134,7 +134,8 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		goodsId = getIntent().getStringExtra("goodsid");
 		mTitleBar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
 		mTitleBar.findViewById(R.id.comment).setVisibility(View.GONE);
-        mTitleBar.findViewById(R.id.share).setVisibility(View.VISIBLE);
+        mTitleBar.findViewById(R.id.share)
+                .setVisibility(mContent != null ? View.VISIBLE : View.GONE);
         mTitleBar.findViewById(R.id.share).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

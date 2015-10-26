@@ -6,7 +6,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.ArrayPagerAdapter;
 import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.util.Constant;
 import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
@@ -89,9 +88,7 @@ public class ConsultationView extends BaseView {
         public void onClick(View arg0) {
             String jump = (String) arg0.getTag();
             String tilte =  (String) arg0.getTag(R.id.tag_first);
-            String img =  (String) arg0.getTag(R.id.tag_second);
-            String content = XiaoMeiApplication.getInstance().getResources().getString(R.string.share_default_txt);
-            GoodsDetailActivity.startActivity(mAc, jump,tilte,content,img);
+            GoodsDetailActivity.startActivityWithTitle(mAc, jump, tilte);
         }
     };
 }
