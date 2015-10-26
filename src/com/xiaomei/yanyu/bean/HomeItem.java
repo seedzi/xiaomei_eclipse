@@ -49,6 +49,7 @@ public class HomeItem {
 		public String top_img;
 		public String name;  //名字
 		public String count;
+		public String hosp_count;
 		public String title; 
 		public String comments;
 		public String desc;

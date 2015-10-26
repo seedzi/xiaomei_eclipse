@@ -77,6 +77,7 @@
     <string name="merchant_rate_environment">环境%1$d</string>
 
     <string name="area_goods_count">%1$s个项目</string>
+    <string name="area_merchant_count">%1$s个机构</string>
     <string name="area_special">擅长项目：</string>
 
     <string name="share_comment_hint" tools:ignore="MissingTranslation">请输入</string>

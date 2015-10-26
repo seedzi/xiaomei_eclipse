@@ -7,11 +7,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.activity.AreaDetailActivity;
 import com.xiaomei.yanyu.activity.AreaListActivity;
-import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.HomeItem.Item;
 import com.xiaomei.yanyu.util.ImageLoaderUtil;
 import com.xiaomei.yanyu.util.ImageUtils;
-import com.xiaomei.yanyu.util.IntentUtil;
 
 import android.app.Activity;
 import android.content.Context;
@@ -64,7 +62,8 @@ public class RecommendAreaView extends BaseView {
             imageLoader.displayImage(item.img, image, options);
             setOnAreaClickListener(image, item.cityId, item.city, item.top_img, item.desc);
             ((TextView) areaItemThumb.findViewById(R.id.name)).setText(item.city);
-            ((TextView) areaItemThumb.findViewById(R.id.goods_count)).setText(mAc.getResources().getString(R.string.area_goods_count, item.count));
+            ((TextView)areaItemThumb.findViewById(R.id.goods_count)).setText(
+                    mAc.getResources().getString(R.string.area_merchant_count, item.hosp_count));
         }
         
     	LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth*150/1242);

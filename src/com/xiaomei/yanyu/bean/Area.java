@@ -15,6 +15,7 @@ public class Area {
     private String desc;
     private String special;
     private int count;
+    private int hosp_count;
 
     public long getId() {
         return cityid;
@@ -34,6 +35,10 @@ public class Area {
 
     public int getCount() {
         return count;
+    }
+
+    public int getHospCount() {
+        return hosp_count;
     }
 
     public String getDescription() {
