@@ -49,7 +49,6 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
     private SlidingMenu mSlidingMenu;
     private TextView mTitle;
     private TextView mDescription;
-    private TextView mNumViews;
     private ViewPager mViewPager;
     private TextView mPageIndicator;
 
@@ -73,7 +72,6 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
 
         // Summary
         mTitle = (TextView) findViewById(R.id.detail_title);
-        mNumViews = (TextView) findViewById(R.id.num_views);
         mDescription = (TextView) findViewById(R.id.description);
 
         // Description
@@ -102,7 +100,6 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
 			if(TextUtils.isEmpty(viewcount)){
 				viewcount = "0";
 			}
-			mNumViews.setText(viewcount + "次浏览");
 			ImageLoader.getInstance().displayImage(img_url, mBackground);
 			mPagerAdapter.addAll(data.list);
 			mPagerAdapter.notifyDataSetChanged();
