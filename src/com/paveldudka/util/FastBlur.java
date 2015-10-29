@@ -18,9 +18,14 @@ public class FastBlur {
         float scaleFactor = 1;
         float radius = 20;
         
-            scaleFactor = 4;
-            radius = 4;
+//            scaleFactor = 4;
+//            radius = 4;
+        
+        scaleFactor = 1;
+        radius = 10;
 
+//        scaleFactor = 5;
+//        radius = 2;
 
           Bitmap overlay = Bitmap.createBitmap((int) (bkg.getWidth()/scaleFactor),
           (int) (bkg.getHeight()/scaleFactor), Bitmap.Config.ARGB_8888);
