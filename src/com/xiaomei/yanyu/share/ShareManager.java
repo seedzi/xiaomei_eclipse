@@ -1,13 +1,9 @@
 package com.xiaomei.yanyu.share;
 
 
-import android.app.Activity;
-import android.text.TextUtils;
-import android.widget.Toast;
-
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeConfig;
 import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.bean.StatusCode;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
@@ -15,7 +11,6 @@ import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.SinaShareContent;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMVideo;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
@@ -24,6 +19,9 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
+
+import android.app.Activity;
+import android.text.TextUtils;
 
 public class ShareManager {
 	
@@ -73,7 +71,9 @@ public class ShareManager {
      */
     private void configPlatforms() {
         // 添加新浪SSO授权
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        SocializeConfig config = mController.getConfig();
+        config.setSsoHandler(new SinaSsoHandler());
+        config.closeToast();
         // 添加QQ、QZone平台
         addQQQZonePlatform();
         // 添加微信、微信朋友圈平台
@@ -188,14 +188,6 @@ public class ShareManager {
 					@Override
 					public void onComplete(SHARE_MEDIA platform, int eCode,
 							SocializeEntity entity) {
-						String showText = platform.toString();
-						if (eCode == StatusCode.ST_CODE_SUCCESSED) {
-							showText += "平台分享成功";
-						} else {
-							showText += "平台分享失败";
-						}
-						Toast.makeText(mAc, showText,
-								Toast.LENGTH_SHORT).show();
 					}
 				});
 	}
