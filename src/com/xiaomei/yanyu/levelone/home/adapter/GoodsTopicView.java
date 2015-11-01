@@ -102,7 +102,7 @@ public class GoodsTopicView extends BaseView implements View.OnClickListener{
                     String viewcount = itme.viewcount;
                     String title =itme.title;
                     String des = jsonObject.optString("des");
-                    String img = itme.img;
+                    String img = itme.image;
                     TopicDetailSlideActivity.startActivity(mAc,itme.list, title ,des, img, viewcount);
                     break;
                 default:
