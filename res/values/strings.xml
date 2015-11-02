@@ -7,7 +7,7 @@
 
     <string name="detail">详情</string>
     <string name="more">更多</string>
-    <string name="share">分享</string>
+    <string name="share_dialog_title">分享到</string>
 
     <string name="ren_ming_bi">¥</string>
     <string name="han_yuan">￦</string>
