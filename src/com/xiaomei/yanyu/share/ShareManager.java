@@ -166,13 +166,12 @@ public class ShareManager {
         qqShareContent.setTargetUrl(mTargetUrl);
         mController.setShareMedia(qqShareContent);
 
-
         //新浪微博分享设置
         SinaShareContent sinaContent = new SinaShareContent();
-        sinaContent.setTargetUrl(mTargetUrl);
-        sinaContent
-                .setShareContent(mContent);
-        sinaContent.setShareImage( img);
+        sinaContent.setShareContent(mContent + " " + mTargetUrl);
+        sinaContent.setTitle(mTitle);
+        sinaContent.setShareMedia( img);
+//        sinaContent.setTargetUrl(mTargetUrl);
         mController.setShareMedia(sinaContent);
 
     }
