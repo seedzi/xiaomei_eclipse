@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Process;
+import android.view.KeyEvent;
 import android.view.View;
 
 /**
@@ -73,5 +75,21 @@ public class TabsActivity extends  Activity {
 
     public TitleActionBar getTitleBar() {
         return mTitleBar;
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+    };
+    Handler handler = new Handler();
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        finish();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Process.killProcess(Process.myPid());
+            }
+        }, 200);
+        return super.onKeyUp(keyCode, event);
     }
 }
