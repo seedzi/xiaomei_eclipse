@@ -1,6 +1,7 @@
 package com.xiaomei.yanyu.activity;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.message.BasicNameValuePair;
@@ -168,6 +169,8 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
         private long areaId;
 
+        private List<Goods> data;
+
         public AreaGoodsLoader(Context context, long areaId) {
             super(context);
             this.areaId = areaId;
@@ -181,7 +184,8 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                     new BasicNameValuePair(HttpUtil.QUERY_CURPAGE, "1"),
                     new BasicNameValuePair(HttpUtil.QUERY_PERPAGE, "10"));
             try {
-                return httpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
+                data = httpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
+                return data;
             } catch (XiaoMeiCredentialsException e) {
                 e.printStackTrace();
             } catch (XiaoMeiIOException e) {
@@ -196,6 +200,11 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
         @Override
         protected void onStartLoading() {
+            if (data != null) {
+                deliverResult(data);
+                return;
+            }
+
             forceLoad();
         }
     }
@@ -203,6 +212,8 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
     public static class AreaMerchantLoader extends AsyncTaskLoader<Object> {
 
         private long areaId;
+
+        private List<Merchant> data;
 
         public AreaMerchantLoader(Context context, long areaId) {
             super(context);
@@ -217,7 +228,8 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                     new BasicNameValuePair(HttpUtil.QUERY_CURPAGE, "1"),
                     new BasicNameValuePair(HttpUtil.QUERY_PERPAGE, "10"));
             try {
-                return httpApi.doHttpRequestObject(httpGet, new MerchantBuilder());
+                data = httpApi.doHttpRequestObject(httpGet, new MerchantBuilder());
+                return data;
             } catch (XiaoMeiCredentialsException e) {
                 e.printStackTrace();
             } catch (XiaoMeiIOException e) {
@@ -232,6 +244,11 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
         @Override
         protected void onStartLoading() {
+            if (data != null) {
+                deliverResult(data);
+                return;
+            }
+
             forceLoad();
         }
     }
