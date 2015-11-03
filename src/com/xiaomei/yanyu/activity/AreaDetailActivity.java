@@ -56,6 +56,8 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
 
     private static final int PAGER_GOODS = 0;
 
+    public static final int PAGER_MERCHANT = 1;
+
     private long mAreaId;
 
     private AreaPagerAdapter mPagerAdaper;
@@ -143,6 +145,7 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                     if (collection.size() > 0 && !mPagerAdaper.constains(mGoodsPagerEntry)) {
                         mPagerAdaper.add(PAGER_GOODS, mGoodsPagerEntry);
                         mIndicator.notifyDataSetChanged();
+                        mViewPager.setCurrentItem(0);
                     }
                 }
                 break;
@@ -154,6 +157,7 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
                     if (collection.size() > 0 && !mPagerAdaper.constains(mMerchantPagerEntry)) {
                         mPagerAdaper.add(mMerchantPagerEntry);
                         mIndicator.notifyDataSetChanged();
+                        mViewPager.setCurrentItem(0);
                     }
                 }
                 break;
@@ -266,12 +270,19 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
             listView.setAdapter(item.adapter);
             listView.setOnItemClickListener(item.onItemClickListener);
             container.addView(itemView);
+            itemView.setTag(item.adapter instanceof GoodsAdapter ? PAGER_GOODS : PAGER_MERCHANT);
             return itemView;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return getString(getItem(position).titleRes);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            int tag = (Integer)((View)object).getTag();
+            return getCount() > 1 ? tag : 0;
         }
     }
 
