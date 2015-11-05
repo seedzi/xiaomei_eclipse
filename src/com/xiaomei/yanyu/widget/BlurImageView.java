@@ -28,8 +28,18 @@ public class BlurImageView extends ImageView {
 	    bm = FastBlur.blur(bm, this, getContext());
 //		bm = ImageUtils.blurImages(bm, getContext());
 		super.setImageBitmap(bm);
+		mBitmap = bm;
 	}
 	
-	
+	private Bitmap mBitmap;
+	@Override
+	protected void onDetachedFromWindow() {
+	    super.onDetachedFromWindow();
+	    if(mBitmap!=null){
+	        mBitmap.recycle();
+	    }
+	    mBitmap = null;
+	    System.gc();
+	}
 
 }

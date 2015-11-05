@@ -14,7 +14,6 @@ import android.widget.ImageView;
 public class FastBlur {
     
     public static Bitmap blur(Bitmap bkg, ImageView view,Context context) {
-        long startMs = System.currentTimeMillis();
         float scaleFactor = 1;
         float radius = 20;
         
@@ -34,8 +33,8 @@ public class FastBlur {
         canvas.drawBitmap(bkg, 0, 0, paint);
      
         overlay = FastBlur.doBlur(overlay, (int)radius, true);
-//        view.setImageDrawable(new BitmapDrawable(context.getResources(), overlay));
-//        view.setBackground(new BitmapDrawable(context.getResources(), overlay));
+
+        bkg.recycle();
         return overlay;
     }
 
