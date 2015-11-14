@@ -176,7 +176,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:weightSum="2"
+        android:weightSum="3"
         android:layout_margin="@dimen/activity_horizontal_margin"><!--  -->
         <ImageView 
             android:id="@+id/login_qq"
@@ -191,6 +191,12 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
   			android:src="@drawable/login_weixin"/>
+        <ImageView 
+            android:id="@+id/login_sina"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+  			android:src="@drawable/login_sina"/>
     </LinearLayout> 
     
     <!--  SNS  -->
