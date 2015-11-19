@@ -1,5 +1,7 @@
 package com.xiaomei.yanyu.levelone;
 
+import java.util.List;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -9,6 +11,7 @@ import com.xiaomei.yanyu.adapter.MerchantAdapter;
 import com.xiaomei.yanyu.bean.Area.Filter;
 import com.xiaomei.yanyu.bean.Area.FilterItem;
 import com.xiaomei.yanyu.bean.AreaFilterLoader;
+import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.levelone.control.MerchantControl;
 import com.xiaomei.yanyu.view.FilterAdapter;
@@ -50,6 +53,7 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 
 	private MerchantAdapter mAdapter;
     private ViewGroup mRefreshLayout;
+    private View mNoMoreWarning;
     private FilterAdapter mCountryAdapter;
     private FilterAdapter mSpecialAdapter;
 
@@ -111,6 +115,8 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		mRefreshLayout = (ViewGroup) inflater.inflate(R.layout.pull_to_refresh_footer, null);
+        mNoMoreWarning = inflater.inflate(R.layout.no_more_warning, null);
+        mPullToRefreshListView.getRefreshableView().addFooterView(mNoMoreWarning);
 		
 		mLoadingView = mRootView.findViewById(R.id.loading_layout);
 		
@@ -191,7 +197,10 @@ public class MerchantFragment extends BaseFragment<MerchantControl>
 	public void getMerchantLismListMoreCallBack(){
 		dissProgress();
 		mPullToRefreshListView.getRefreshableView().removeFooterView(mRefreshLayout);
-		mAdapter.addAll(mControl.getModel().getData());
+		List<Merchant> data = mControl.getModel().getData();
+        mAdapter.addAll(data);
+        boolean hasMore = data != null && !data.isEmpty();
+        mNoMoreWarning.setVisibility(hasMore ? View.GONE : View.VISIBLE);
 		mPullToRefreshListView.onRefreshComplete();
 	}
 	
