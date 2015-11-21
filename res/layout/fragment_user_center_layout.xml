@@ -97,29 +97,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
         
-        <include android:id="@+id/line1"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/user_order"  layout="@layout/item_center_user_layout" />
         <!-- 隐藏 -->
-        <include android:id="@+id/line2"  layout="@layout/item_center_user_layout"/>
+        <include android:id="@+id/user_message"  layout="@layout/item_center_user_layout"/>
         
         <!-- 隐藏 -->
 		<View
          	android:layout_width="match_parent"
         	android:layout_height="10dp"/>
         <!-- 隐藏 -->
-        <include android:id="@+id/line3"  layout="@layout/item_center_user_layout" />
-        <include android:id="@+id/line4"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
+        <include android:id="@+id/user_collection"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/user_history"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
         <!-- 隐藏 -->
 
         
-        <include android:id="@+id/line5"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/user_feedback"  layout="@layout/item_center_user_layout" />
         
         		<View
          	android:layout_width="match_parent"
         	android:layout_height="10dp" />
-        <include android:id="@+id/line6"  layout="@layout/item_center_user_layout" />
+        <include android:id="@+id/user_about"  layout="@layout/item_center_user_layout" />
         
         
-        <include android:id="@+id/line7" layout="@layout/item_center_user_layout"/>
+        <include android:id="@+id/our_contact" layout="@layout/item_center_user_layout"/>
     </LinearLayout>
     
     <View

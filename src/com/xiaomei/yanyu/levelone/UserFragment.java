@@ -10,21 +10,19 @@ import com.xiaomei.yanyu.module.user.center.AboutActivity;
 import com.xiaomei.yanyu.module.user.center.CollectionActivity;
 import com.xiaomei.yanyu.module.user.center.FeedbackActivity;
 import com.xiaomei.yanyu.module.user.center.HistoryActivity;
-import com.xiaomei.yanyu.module.user.center.MessageActivity;
 import com.xiaomei.yanyu.module.user.center.UserInfoActivity;
 import com.xiaomei.yanyu.module.user.center.UserMessageActivity;
 import com.xiaomei.yanyu.module.user.center.UserOrderListActivity;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.TitleBar;
 import com.yuekuapp.BaseFragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -39,7 +37,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	
 	private ViewGroup mRootView;
 	
-	private ViewGroup line1,line2,line3,line4,line5,line6,line7;
+	private ViewGroup mUserOrder,mUserMessage,mUserCollection,mUserHistory,mUserFeedback,mUserAbout,mOurContact;
 	
 	private ImageView mUserIconIv;
 	
@@ -81,20 +79,20 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	private void setUpView(){
 		mRootView.findViewById(R.id.user_icon);
 		
-		line1 = (ViewGroup) mRootView.findViewById(R.id.line1);
-		setUpUserItem(line1, getResources().getString(R.string.user_order), this,R.drawable.order);
-		line2 = (ViewGroup) mRootView.findViewById(R.id.line2);
-		setUpUserItem(line2,  getResources().getString(R.string.user_message), this,R.drawable.news);
-		line3 = (ViewGroup) mRootView.findViewById(R.id.line3);
-		setUpUserItem(line3, getResources().getString(R.string.user_collection), this,R.drawable.collection);
-		line4 = (ViewGroup) mRootView.findViewById(R.id.line4);
-		setUpUserItem(line4, getResources().getString(R.string.user_history), this,R.drawable.browsing_history);
-		line5 = (ViewGroup) mRootView.findViewById(R.id.line5);
-		setUpUserItem(line5, getResources().getString(R.string.user_feedback), this,R.drawable.feedback);
-		line6 = (ViewGroup) mRootView.findViewById(R.id.line6);
-		setUpUserItem(line6, getResources().getString(R.string.user_about), this,R.drawable.about_us);
-		line7 = (ViewGroup) mRootView.findViewById(R.id.line7);
-		setUpUserItem(line7, "400-667-0190", this, R.drawable.ouer_dianhua);
+        mUserOrder = (ViewGroup)mRootView.findViewById(R.id.user_order);
+		setUpUserItem(mUserOrder, getResources().getString(R.string.user_order), this,R.drawable.order);
+		mUserMessage = (ViewGroup) mRootView.findViewById(R.id.user_message);
+		setUpUserItem(mUserMessage,  getResources().getString(R.string.user_message), this,R.drawable.news);
+		mUserCollection = (ViewGroup) mRootView.findViewById(R.id.user_collection);
+		setUpUserItem(mUserCollection, getResources().getString(R.string.user_collection), this,R.drawable.collection);
+		mUserHistory = (ViewGroup) mRootView.findViewById(R.id.user_history);
+		setUpUserItem(mUserHistory, getResources().getString(R.string.user_history), this,R.drawable.browsing_history);
+		mUserFeedback = (ViewGroup) mRootView.findViewById(R.id.user_feedback);
+		setUpUserItem(mUserFeedback, getResources().getString(R.string.user_feedback), this,R.drawable.feedback);
+		mUserAbout = (ViewGroup) mRootView.findViewById(R.id.user_about);
+		setUpUserItem(mUserAbout, getResources().getString(R.string.user_about), this,R.drawable.about_us);
+		mOurContact = (ViewGroup) mRootView.findViewById(R.id.our_contact);
+		setUpUserItem(mOurContact, "400-667-0190", this, R.drawable.ouer_dianhua);
 		
 		mUserIconIv = (ImageView) mRootView.findViewById(R.id.user_icon);
 		mUserNameTv = (TextView) mRootView.findViewById(R.id.user_name);
@@ -171,41 +169,41 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 //	        startActivityForResult(intent1, 1);
 			LoginAndRegisterActivity.startActivity(getActivity(), false);
 			break;
-		case R.id.line1:  //我的订单
+		case R.id.my_order:  //我的订单
 			if(UserUtil.getUser()==null){
 				LoginAndRegisterActivity.startActivity(getActivity(), false);
 				return;
 			}
 			UserOrderListActivity.startActivity(getActivity());
 			break;
-		case R.id.line2: //我的消息
+		case R.id.user_message: //我的消息
 			if(UserUtil.getUser()==null){
 				LoginAndRegisterActivity.startActivity(getActivity(), false);
 				return;
 			}
 		    UserMessageActivity.startActivity(getActivity());
 			break;
-		case R.id.line3: //我的收藏
+		case R.id.user_collection: //我的收藏
 			if(UserUtil.getUser()==null){
 				LoginAndRegisterActivity.startActivity(getActivity(), false);
 				return;
 			}
 			CollectionActivity.startActivity(getActivity());
 			break;
-		case R.id.line4: //浏览历史
+		case R.id.user_history: //浏览历史
 			HistoryActivity.startActivity(getActivity());
 			break;
-		case R.id.line5: //意见反馈
+		case R.id.user_feedback: //意见反馈
             if (UserUtil.getUser() == null) {
                 LoginAndRegisterActivity.startActivity(getActivity(), false);
                 return;
             }
             FeedbackActivity.startActivity(getActivity());
 			break;
-		case R.id.line6: //关于我们
+		case R.id.user_about: //关于我们
 			AboutActivity.startActivity(getActivity());
 			break;
-		case R.id.line7: 
+		case R.id.our_contact: 
 			showProgressDialog();
 			break;
 		case R.id.user_info_layout:
