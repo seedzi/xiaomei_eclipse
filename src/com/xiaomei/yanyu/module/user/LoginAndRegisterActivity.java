@@ -29,7 +29,9 @@ import com.umeng.socialize.controller.listener.SocializeListeners.FetchUserListe
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
@@ -352,6 +354,10 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 			setResult(RESULT_OK);
 			finish();
 		}
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(arg0);
+	    if(ssoHandler != null){
+	       ssoHandler.authorizeCallBack(arg0, arg1, arg2);
+	    }
 	}
 	// ===============================  Sns qq登录=======================================
 	private void initSns(){
@@ -364,9 +370,6 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		UMWXHandler wxHandler = new UMWXHandler(LoginAndRegisterActivity.this,"wx67f54f6d2c0d66c8","912a0d27dd139295d96cd4b63977d22c");
 		wxHandler.addToSocialSDK();
 	    
-		// 添加微博平台
-		
-		
 	    mQqLogin = (ImageView) findViewById(R.id.login_qq);
 	    mWeixinLogin = (ImageView) findViewById(R.id.login_weixin);
 	    mSinaLogin = (ImageView) findViewById(R.id.login_sina); 
@@ -552,23 +555,29 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 	private String sex;
 	// ===============================  Sns  微博登录 =======================================	
     private void loginSina(final Context mContext) {
+		mController.getConfig().setSsoHandler(new SinaSsoHandler());
         mController.doOauthVerify(mContext, SHARE_MEDIA.SINA, new UMAuthListener() {
 
             @Override
             public void onStart(SHARE_MEDIA platform) {
-                Toast.makeText(mContext, "start", 0).show();
+		    	android.util.Log.d("111", "授权开始");
+		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(SocializeException e, SHARE_MEDIA platform) {
+            	android.util.Log.d("111", "授权错误 e= " + e.getMessage() + ",code = " + e.getErrorCode());
+		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onComplete(Bundle value, SHARE_MEDIA platform) {
-                Toast.makeText(mContext, "onComplete", 0).show();
+		    	android.util.Log.d("111", "授权完成");
+		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
                 String uid = value.getString("uid");
+                openid = value.getString("openid");
+                access_token = value.getString("access_token");
                 if (!TextUtils.isEmpty(uid)) {
-                	mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.WEIXIN, new UMDataListener() {
+                	mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.SINA, new UMDataListener() {
 						@Override
 						public void onComplete(int status,
 								Map<String, Object> info) {
@@ -576,21 +585,17 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 					                StringBuilder sb = new StringBuilder();
 					                Set<String> keys = info.keySet();
 					                for(String key : keys){
-					                   sb.append(key+"="+info.get(key).toString()+"\r\n");
-					                   if("nickname".equals(key.trim()))
+					                   if("screen_name".equals(key.trim()))
 					                       username = info.get(key).toString();
-					                   else if("headimgurl".equals(key.trim()))
+					                   else if("profile_image_url".equals(key.trim()))
 					                       avatar = info.get(key).toString();
 					                }
-					                Log.d("111",sb.toString());
-					                
 					                new Thread(new Runnable() {
 			                            @Override
 			                            public void run() {
 			                                try {
-			                                    User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "sina", access_token, username, avatar, sex);
+			                                    User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "weibo", access_token, username, avatar, sex);
 			                                    if(user != null && UserUtil.isUserValid(user)){
-			                                        android.util.Log.d("111", "user = " + user);
 			                                        User.save(user);
 			                                        finish();
 			                                    }else{
@@ -616,11 +621,9 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 					            }else{
 					               Log.d("TestData","发生错误："+status);
 					           }
-							
 						}
 						@Override
 						public void onStart() {
-					        Toast.makeText(LoginAndRegisterActivity.this, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
 						}
                 	});
                 } else {
