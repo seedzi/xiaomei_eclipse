@@ -169,7 +169,7 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 //	        startActivityForResult(intent1, 1);
 			LoginAndRegisterActivity.startActivity(getActivity(), false);
 			break;
-		case R.id.my_order:  //我的订单
+        case R.id.user_order: // 我的订单
 			if(UserUtil.getUser()==null){
 				LoginAndRegisterActivity.startActivity(getActivity(), false);
 				return;
