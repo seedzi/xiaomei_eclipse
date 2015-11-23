@@ -99,20 +99,14 @@
 
         <include layout="@layout/list_divider_bar" />
 
+        <include android:id="@+id/user_coupon"  layout="@layout/item_center_user_layout" />
         <include android:id="@+id/user_collection"  layout="@layout/item_center_user_layout" />
         <include android:id="@+id/user_message"  layout="@layout/item_center_user_layout"/>
+        <include android:id="@+id/user_history"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
 
         <include layout="@layout/list_divider_bar" />
-        <!-- 隐藏 -->
-        <include android:id="@+id/user_history"  layout="@layout/item_center_user_layout" android:visibility="gone"/>
-        <!-- 隐藏 -->
 
-        
         <include android:id="@+id/user_feedback"  layout="@layout/item_center_user_layout" />
-        
-        		<View
-         	android:layout_width="match_parent"
-        	android:layout_height="10dp" />
         <include android:id="@+id/user_about"  layout="@layout/item_center_user_layout" />
         
         

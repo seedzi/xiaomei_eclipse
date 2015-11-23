@@ -10,6 +10,7 @@ import com.xiaomei.yanyu.module.user.center.AboutActivity;
 import com.xiaomei.yanyu.module.user.center.CollectionActivity;
 import com.xiaomei.yanyu.module.user.center.FeedbackActivity;
 import com.xiaomei.yanyu.module.user.center.HistoryActivity;
+import com.xiaomei.yanyu.module.user.center.UserCouponListActivity;
 import com.xiaomei.yanyu.module.user.center.UserInfoActivity;
 import com.xiaomei.yanyu.module.user.center.UserMessageActivity;
 import com.xiaomei.yanyu.module.user.center.UserOrderListActivity;
@@ -37,7 +38,14 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 	
 	private ViewGroup mRootView;
 	
-	private ViewGroup mUserOrder,mUserMessage,mUserCollection,mUserHistory,mUserFeedback,mUserAbout,mOurContact;
+	private ViewGroup mUserOrder;
+	private ViewGroup mUserCoupon;
+	private ViewGroup mUserMessage;
+	private ViewGroup mUserCollection;
+	private ViewGroup mUserHistory;
+	private ViewGroup mUserFeedback;
+	private ViewGroup mUserAbout;
+	private ViewGroup mOurContact;
 	
 	private ImageView mUserIconIv;
 	
@@ -81,6 +89,8 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 		
         mUserOrder = (ViewGroup)mRootView.findViewById(R.id.user_order);
 		setUpUserItem(mUserOrder, getResources().getString(R.string.user_order), this,R.drawable.order);
+        mUserCoupon = (ViewGroup)mRootView.findViewById(R.id.user_coupon);
+        setUpUserItem(mUserCoupon, getString(R.string.user_coupon), this, R.drawable.ic_user_coupon);
 		mUserMessage = (ViewGroup) mRootView.findViewById(R.id.user_message);
 		setUpUserItem(mUserMessage,  getResources().getString(R.string.user_message), this,R.drawable.news);
 		mUserCollection = (ViewGroup) mRootView.findViewById(R.id.user_collection);
@@ -176,6 +186,9 @@ public class UserFragment extends BaseFragment<UserControl> implements View.OnCl
 			}
 			UserOrderListActivity.startActivity(getActivity());
 			break;
+        case R.id.user_coupon: // 我的优惠券
+                UserCouponListActivity.startActivity(getActivity());
+                break;
 		case R.id.user_message: //我的消息
 			if(UserUtil.getUser()==null){
 				LoginAndRegisterActivity.startActivity(getActivity(), false);

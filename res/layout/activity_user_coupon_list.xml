@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FilterLinearLayout">
+
+    <include layout="@layout/pull_list_view" />
+
+    <FrameLayout
+        android:id="@+id/check_coupon_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semi_transparent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:paddingLeft="@dimen/content_padding_horizontal"
+            android:paddingRight="@dimen/content_padding_horizontal"
+            android:background="@android:color/white" >
+    
+            <EditText
+                android:id="@+id/coupon_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/check_coupon"
+                android:background="@null" />
+    
+            <Button
+                android:id="@+id/check_coupon"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_check_coupon_bg"
+                android:textSize="@dimen/title_text"
+                android:textColor="@android:color/white"
+                android:text="@string/check_coupon" />
+        </RelativeLayout>
+    </FrameLayout>
+</FrameLayout>

@@ -83,37 +83,40 @@
             android:screenOrientation="portrait">
 		</activity>
 		
-		<!-- 浏览记录 -->
+		<!-- 我的订单 -->
 		<activity 
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.module.user.center.UserOrderListActivity"
             android:screenOrientation="portrait">
 		</activity>
-		<!-- 我的订单 -->
+        <activity
+            android:theme="@style/Theme"
+            android:name="com.xiaomei.yanyu.module.user.center.UserCouponListActivity"
+            android:screenOrientation="portrait" />
+		<!-- 关于 -->
 		<activity 
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.module.user.center.AboutActivity"
             android:screenOrientation="portrait">
 		</activity>
-		<!-- 关于 -->
+		<!-- 我的收藏 -->
 		<activity 
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.module.user.center.CollectionActivity"
             android:screenOrientation="portrait">
 		</activity>
-		<!-- 我的收藏 -->
+		<!-- 我的消息 -->
 		<activity 
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.module.user.center.MessageActivity"
             android:screenOrientation="portrait">
 		</activity>
-		<!-- 我的消息 -->
+		<!-- 我的反馈 -->
 		<activity 
 		    android:theme="@style/activityTheme"
 		    android:name="com.xiaomei.yanyu.module.user.center.FeedbackActivity"
             android:screenOrientation="portrait">
 		</activity>
-		<!-- 我的反馈 -->
 
 		<!-- 订单详情 -->
 				<activity 
