@@ -385,18 +385,14 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		mController.doOauthVerify(mContext, SHARE_MEDIA.QQ, new UMAuthListener() {
 		    @Override
 		    public void onStart(SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权开始");
 		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onError(SocializeException e, SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权错误");
 		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权完成");
-		    	android.util.Log.d("111", "value = " + value);
 		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
 		        openid = value.getString("openid");
 		        access_token = value.getString("access_token");
@@ -428,7 +424,6 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 									try {
 										User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "qq", access_token, username, avatar, sex);
 										if(user != null && UserUtil.isUserValid(user)){
-											android.util.Log.d("111", "user = " + user);
 											User.save(user);
 //											TabsActivity.startActivity(LoginAndRegisterActivity.this);
 											finish();
@@ -469,21 +464,17 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		mController.doOauthVerify(mContext, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
 		    @Override
 		    public void onStart(SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权开始");
 		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onError(SocializeException e, SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权错误 e= " + e.getMessage() + ",code = " + e.getErrorCode());
 		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
 		    }
 		    @Override
 		    public void onComplete(Bundle value, SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权完成");
 		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
                 openid = value.getString("openid");
                 access_token = value.getString("access_token");
-		    	android.util.Log.d("111", "value = " + value);
 		        //获取相关授权信息
 		        mController.getPlatformInfo(LoginAndRegisterActivity.this, SHARE_MEDIA.WEIXIN, new UMDataListener() {
 		    @Override
@@ -502,7 +493,6 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		                   else if("headimgurl".equals(key.trim()))
 		                       avatar = info.get(key).toString();
 		                }
-		                Log.d("111",sb.toString());
 		                
 		                new Thread(new Runnable() {
                             @Override
@@ -510,7 +500,6 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
                                 try {
                                     User user = XiaoMeiApplication.getInstance().getApi().thirdLogin(openid, "weixin", access_token, username, avatar, sex);
                                     if(user != null && UserUtil.isUserValid(user)){
-                                        android.util.Log.d("111", "user = " + user);
                                         User.save(user);
 //                                        TabsActivity.startActivity(LoginAndRegisterActivity.this);
                                         finish();
@@ -560,18 +549,15 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 
             @Override
             public void onStart(SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权开始");
 		        Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(SocializeException e, SHARE_MEDIA platform) {
-            	android.util.Log.d("111", "授权错误 e= " + e.getMessage() + ",code = " + e.getErrorCode());
 		        Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onComplete(Bundle value, SHARE_MEDIA platform) {
-		    	android.util.Log.d("111", "授权完成");
 		        Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT).show();
                 String uid = value.getString("uid");
                 openid = value.getString("openid");
