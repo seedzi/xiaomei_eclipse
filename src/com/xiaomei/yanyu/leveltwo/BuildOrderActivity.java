@@ -23,7 +23,10 @@ import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
-
+/**
+ * 生成订单页
+ * @author huzhi
+ */
 public class BuildOrderActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
     
 
@@ -109,7 +112,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         title = (TextView) findViewById(R.id.item2).findViewById(R.id.title);     
         title.setText("客户电话");
         title = (TextView) findViewById(R.id.item3).findViewById(R.id.title);     
-        title.setText("客户护照");
+        title.setText("护照号");
         mUsername = (EditText) findViewById(R.id.item1).findViewById(R.id.value);     
         mUserMobile = (EditText) findViewById(R.id.item2).findViewById(R.id.value);     
         mUserPassport = (EditText) findViewById(R.id.item3).findViewById(R.id.value);     

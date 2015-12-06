@@ -23,19 +23,18 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.Payment.PayUtils;
-import com.xiaomei.yanyu.Payment.WeiXinPayManager;
 import com.xiaomei.yanyu.Payment.ZhifubaoPayManager;
 import com.xiaomei.yanyu.Payment.ZhifubaoPayManager.CallBack;
 import com.xiaomei.yanyu.bean.Order;
-import com.xiaomei.yanyu.bean.Order2;
-import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
-
+/**
+ * 订单详情页
+ * @author huzhi
+ */
 public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
 	
 	public static boolean STATE_CHANGED = false;

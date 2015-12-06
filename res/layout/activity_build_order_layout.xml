@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff">
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" 
-    android:background="@color/color_background">
+    android:background="#ffffff"><!-- @color/color_background -->
     
     <!-- 防止edittext自动活取焦点 -->
     <LinearLayout
@@ -13,15 +17,99 @@
     </LinearLayout>    
     
     <include android:id="@+id/titlebar"  layout="@layout/title_bar_layout"/>
-        
+            
+            <TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="34dp"
+	    android:paddingLeft="15dp"
+	    android:text="项目信息"
+	    android:textSize="16sp"
+	    android:gravity="left|center_vertical"
+	    android:background="#eeeeee"/>
+	
+	<RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:background="#ffffff">
+        <TextView 
+            android:id="@+id/merchant_name_txt"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#8c8c8c"
+            android:text="机构名称：  "/>
+         <TextView 
+            android:id="@+id/merchant_name"
+            android:layout_toRightOf="@id/merchant_name_txt"
+            
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#8c8c8c"
+            android:text="某一个外壳医院，呵呵呵呵"
+            android:maxLines="1"/><!-- android:layout_toLeftOf="@id/mobile_name_txt" -->
+        <TextView 
+            android:layout_marginTop="5dp"
+            android:id="@+id/mobile_name_txt"
+            android:layout_below="@id/merchant_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#8c8c8c"
+            android:text="机构电话：  "/>
+            
+        <TextView 
+            android:layout_marginTop="5dp"
+            android:id="@+id/merchant_mobile"
+            android:layout_toRightOf="@id/merchant_name_txt"
+            android:layout_below="@id/merchant_name_txt"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#8c8c8c"
+            android:text="1342870367"/><!-- android:layout_alignParentRight="true" -->            
+
+        <TextView 
+            android:layout_marginTop="5dp"
+            android:id="@+id/merchant_location_txt"
+            android:layout_below="@id/mobile_name_txt"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#8c8c8c"
+            android:text="机构地址：  "/>         
+         <TextView 
+             android:layout_marginTop="5dp"
+            android:id="@+id/merchant_location"
+            android:layout_below="@id/mobile_name_txt"
+            android:layout_toRightOf="@id/merchant_location_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#8c8c8c"
+            android:text="首尔首尔首尔"/>            
+    </RelativeLayout>
+    
+	<View
+	    android:layout_marginLeft="15dp"
+	    android:background="#eeeeee"
+	    android:layout_height="1px"
+	    android:layout_width="match_parent"/>
+	    
     <include android:id="@+id/item_goods_layout"  layout="@layout/item_goods_layout"
         />
 
      <View
-         android:layout_marginTop="15dp"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"          
-         />
+       android:layout_marginTop="15dp"
+       android:layout_width="match_parent"
+       android:layout_height="10dp"          
+       android:background="#f2f2f2"/>
     
     <include   android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
     
@@ -29,3 +117,39 @@
     
     <include android:id="@+id/item3" layout="@layout/item_user_order_details_layout"/>
 </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_height="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical">
+         <TextView 
+             android:layout_alignParentRight="true"
+             android:id="@+id/commit_order"
+             android:gravity="center"
+             android:paddingLeft="15dp"
+             android:paddingRight="15dp"
+             android:textSize="17dp"
+             android:text="立即付款"
+             android:textColor="#ffffff"
+             android:layout_height="match_parent"
+             android:layout_width="wrap_content"
+             android:background="#d366f3"/>
+         <TextView 
+             android:layout_alignParentLeft="true"
+             android:id="@+id/amount_money_txt"
+             android:gravity="center"
+             android:layout_height="match_parent"
+             android:layout_width="wrap_content"
+             android:text="总金额："/>
+         <TextView 
+             android:layout_alignParentLeft="true"
+             android:id="@+id/amount_money"
+             android:gravity="center"
+             android:layout_toRightOf="@id/amount_money_txt"
+             android:layout_height="match_parent"
+             android:layout_width="wrap_content"
+             android:text="1000"/>
+    </RelativeLayout>
+</RelativeLayout>
