@@ -7,9 +7,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/list_divider_height"
     android:orientation="vertical">
-
-    <include layout="@layout/list_divider_bar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,6 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:textSize="16sp"
+            android:textColor="@color/coupon_item_text"
             android:text="优惠券" />
 
         <TextView
@@ -32,19 +33,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/coupon_title"
+            android:textSize="10sp"
+            android:textColor="@color/coupon_item_text"
             android:background="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/coupon_money"
+            android:layout_alignBaseline="@+id/coupon_money"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/coupon_item_text"
+            android:text="￥" />
 
         <TextView
             android:id="@+id/coupon_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:textSize="30sp"
+            android:textColor="@color/coupon_item_text" />
 
         <TextView
             android:id="@+id/coupon_term"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:textSize="11sp"
+            android:textColor="@color/color_gray"
             android:background="@null" />
     </RelativeLayout>
 </LinearLayout>

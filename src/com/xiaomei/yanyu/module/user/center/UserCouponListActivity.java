@@ -4,9 +4,9 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -27,9 +27,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class UserCouponListActivity extends Activity implements OnClickListener {
+public class UserCouponListActivity extends Activity
+        implements OnClickListener, OnItemClickListener {
 
     public static void startActivity(Activity ac) {
         Intent intent = new Intent(ac, UserCouponListActivity.class);
@@ -45,8 +48,12 @@ public class UserCouponListActivity extends Activity implements OnClickListener 
     private PullToRefreshListView mPullView;
 
     private View mCheckLayout;
+
     /*vollery请求队列*/
     private RequestQueue mQueue;
+
+    private ListView mListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +71,13 @@ public class UserCouponListActivity extends Activity implements OnClickListener 
         });
 
         mPullView = (PullToRefreshListView)findViewById(R.id.list);
-        ListView listView = mPullView.getRefreshableView();
+        mListView = mPullView.getRefreshableView();
         mAdapter = new CouponAdapter(this);
-        listView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
+        mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         View emptyView = findViewById(R.id.empty);
-        listView.setEmptyView(emptyView);
+        mListView.setEmptyView(emptyView);
 
         mCheckLayout = findViewById(R.id.check_coupon_layout);
         View checkButton = mCheckLayout.findViewById(R.id.check_coupon);
@@ -130,5 +139,9 @@ public class UserCouponListActivity extends Activity implements OnClickListener 
                 // TODO 兑换优惠券
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 }

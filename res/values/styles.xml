@@ -81,6 +81,7 @@
         <item name="android:background">@color/background_dark_gray</item>
         <item name="android:divider">@null</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:listSelector">@android:color/transparent</item>
     </style>
 
     <style name="ListView.Divider">
