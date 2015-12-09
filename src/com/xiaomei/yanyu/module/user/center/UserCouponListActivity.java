@@ -1,13 +1,29 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import org.apache.http.message.BasicNameValuePair;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.adapter.CouponAdapter;
+import com.xiaomei.yanyu.api.BizResult;
+import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Coupon;
+import com.xiaomei.yanyu.util.Security;
+import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,7 +45,8 @@ public class UserCouponListActivity extends Activity implements OnClickListener 
     private PullToRefreshListView mPullView;
 
     private View mCheckLayout;
-
+    /*vollery请求队列*/
+    private RequestQueue mQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +77,50 @@ public class UserCouponListActivity extends Activity implements OnClickListener 
         mAdapter.add(new Coupon());
         mAdapter.add(new Coupon());
         mAdapter.add(new Coupon());
+        mQueue = XiaoMeiApplication.getInstance().getQueue();
+        
+        initData();
     }
 
+    private Listener<String> mRefreshListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                android.util.Log.d("aaa", "response = " + response.toString());
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    mAdapter.clear();
+                    mAdapter.addAll(gson.fromJson(res.getMessage(), Coupon[].class));
+                } 
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            mPullView.onRefreshComplete();
+        }
+    };
+
+    private ErrorListener mRefreshErroListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError arg0) {
+            mPullView.onRefreshComplete();
+        }
+    };
+    
+    private void initData(){
+        mQueue.add(new StringRequest(Request.Method.GET,getListUrl(), mRefreshListener, mRefreshErroListener));
+    }
+    private String getListUrl() {
+        String time = String.valueOf(System.currentTimeMillis()/1000);
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken()),
+                new BasicNameValuePair(HttpUtil.QUERY_UPTIME,time )} ; 
+        return Uri.parse(HttpUrlManager.userPreferentialVolumeUrl()).buildUpon()
+                .appendQueryParameter(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
+                .appendQueryParameter(HttpUtil.QUERY_UPTIME, time)
+                .appendQueryParameter(HttpUtil.QUERY_FIG, Security.get32MD5Str(values))
+                .build().toString();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

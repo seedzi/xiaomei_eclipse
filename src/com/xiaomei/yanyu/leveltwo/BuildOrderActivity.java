@@ -69,6 +69,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     private EditText mUserMobile;
     private EditText mUserPassport;
     
+    private View mDiscountLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,9 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         mUserPassport = (EditText) findViewById(R.id.item3).findViewById(R.id.value);     
         
         goodsId = getIntent().getStringExtra("goods_id");
+        
+        mDiscountLayout = findViewById(R.id.discount_layout);
+        mDiscountLayout.setOnClickListener(this);
     }
     
     private void initData(){
@@ -199,7 +203,9 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
                     mUserPassport.getText().toString());
             finish();
             break;
-
+        case R.id.discount_layout:
+            
+            break;
         default:
             break;
         }

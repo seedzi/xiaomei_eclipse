@@ -183,5 +183,22 @@ public class HttpUrlManager {
         return HOST + "/server/show/user_share_list.php";
     }
     
-}
+    // =========================================================================================
+    // 优惠卷模块
+    // =========================================================================================
+    /**进入优惠卷*/
+    public static String enterPreferentialVolumeUrl(){
+        return HOST + "/server/soupon/add_goods_coupon.php";
+    }
+    /**我的优惠卷*/
+    public static String userPreferentialVolumeUrl(){
+        return HOST + "/server/coupon/user_coupon.php";
+    }
+    /**增加优惠卷*/
+    public static String addPreferentialVolumeUrl(){
+        return HOST + "/server/soupon/add_goods_coupon.php";
+    }
+}   
+
+
 

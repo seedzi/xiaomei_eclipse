@@ -1,8 +1,4 @@
 package com.xiaomei.yanyu.launch;
-
-
-
-import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -20,11 +16,6 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.SharePreferenceKey;
 import com.xiaomei.yanyu.SharePreferenceWrap;
-import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.contanier.TabsActivity;
 import com.xiaomei.yanyu.launch.control.LaunchControl;
 
