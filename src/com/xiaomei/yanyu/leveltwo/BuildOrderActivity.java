@@ -2,6 +2,18 @@ package com.xiaomei.yanyu.leveltwo;
 
 import java.util.List;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.Payment.PayUtils;
+import com.xiaomei.yanyu.activity.OrderCouponActivity;
+import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.User.UserInfo;
+import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
+import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleBar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,17 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.Payment.PayUtils;
-import com.xiaomei.yanyu.bean.Goods;
-import com.xiaomei.yanyu.bean.User.UserInfo;
-import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
-import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
-import com.xiaomei.yanyu.util.UserUtil;
-import com.xiaomei.yanyu.widget.TitleBar;
 /**
  * 生成订单页
  * @author huzhi
@@ -108,6 +109,11 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         mark3 = (TextView)itemGoodsLayout.findViewById(R.id.tag_3);
         priceMarketTv = (TextView) findViewById(R.id.origin_price);
         
+        View couponEntry = findViewById(R.id.item0);
+        couponEntry.findViewById(R.id.icon).setVisibility(View.GONE);
+        ((TextView)couponEntry.findViewById(R.id.title)).setText("优惠券");
+        couponEntry.findViewById(R.id.new_version_prompt).setVisibility(View.GONE);
+        couponEntry.setOnClickListener(this);
         TextView title = (TextView) findViewById(R.id.item1).findViewById(R.id.title);     
         title.setText("客户姓名");
         title = (TextView) findViewById(R.id.item2).findViewById(R.id.title);     
@@ -206,6 +212,9 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         case R.id.discount_layout:
             
             break;
+            case R.id.item0:
+                OrderCouponActivity.startActivity(this, "");
+                break;
         default:
             break;
         }

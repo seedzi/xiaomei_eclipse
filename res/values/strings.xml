@@ -4,6 +4,7 @@
     <string name="app_name">颜语</string>
 
     <string name="activity_comment_list" >评论</string>
+    <string name="activity_order_coupon">优惠折扣</string>
 
     <string name="detail">详情</string>
     <string name="more">更多</string>
@@ -81,6 +82,9 @@
     <string name="area_goods_count">%1$s个项目</string>
     <string name="area_merchant_count">%1$s个机构</string>
     <string name="area_special">擅长项目：</string>
+
+    <string name="coupon">优惠券</string>
+    <string name="coupon_code">优惠码</string>
 
     <string name="share_comment_hint" tools:ignore="MissingTranslation">请输入</string>
     <string name="share_subcomment_hint" tools:ignore="MissingTranslation">"回复 %1$s"</string>
