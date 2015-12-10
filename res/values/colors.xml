@@ -11,6 +11,8 @@
     
      <color name="color_gray">#969696</color>
 
+    <color name="color_gray_light">#b4b4b4</color>
+
      <color name="color_gray_dark">#8c8c8c</color>
      
      <color name="color_white">#FFFFFF</color>

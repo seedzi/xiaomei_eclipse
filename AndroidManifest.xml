@@ -129,7 +129,8 @@
         <!-- 优惠折扣 -->
         <activity
             android:theme="@style/Theme"
-            android:name="com.xiaomei.yanyu.activity.OrderCouponActivity" /> 
+            android:name="com.xiaomei.yanyu.activity.OrderCouponActivity"
+            android:screenOrientation="portrait" /> 
 
 		<!-- 商城 -->
 		<activity 

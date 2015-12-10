@@ -75,6 +75,17 @@
     <style name="Widget">
     </style>
 
+    <style name="SingleLineInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:paddingTop">@dimen/input_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/input_padding_vertical</item>
+        <item name="android:paddingLeft">@dimen/input_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/input_padding_horizontal</item>
+        <item name="android:background">@drawable/input_bg</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="ListView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

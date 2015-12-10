@@ -49,7 +49,12 @@
     
     <dimen name="divider">1px</dimen>
     <dimen name="divider2x">2px</dimen>
-    
+
+    <dimen name="input_height">27dp</dimen>
+    <dimen name="input_padding_horizontal">@dimen/input_bg_radius</dimen>
+    <dimen name="input_padding_vertical">5dp</dimen>
+    <dimen name="input_bg_radius">13.5dp</dimen>
+
     <dimen name="title_bar_button_padding">5dp</dimen>
 
     <dimen name="title_tab_height">48dp</dimen>

@@ -5,9 +5,9 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/color_gray" android:state_enabled="false" />
+    <item android:color="@color/color_gray_light" android:state_enabled="false" />
     <item android:color="@color/color_gray_dark" android:state_pressed="true" />
-    <item android:color="@color/color_gray" android:state_activated="false" />
-    <item android:color="@color/color_gray" android:state_selected="false" />
+    <item android:color="@color/color_gray_light" android:state_activated="false" />
+    <item android:color="@color/color_gray_light" android:state_selected="false" />
     <item android:color="@color/color_gray_dark" />
 </selector>

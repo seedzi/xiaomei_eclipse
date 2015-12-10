@@ -44,7 +44,7 @@
             android:layout_alignBaseline="@+id/coupon_money"
             android:layout_marginRight="5dp"
             android:textColor="@color/coupon_item_text"
-            android:text="￥" />
+            android:text="@string/ren_ming_bi" />
 
         <TextView
             android:id="@+id/coupon_money"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:textSize="11sp"
-            android:textColor="@color/color_gray"
+            android:textColor="@color/color_gray_light"
             android:background="@null" />
     </RelativeLayout>
 </LinearLayout>

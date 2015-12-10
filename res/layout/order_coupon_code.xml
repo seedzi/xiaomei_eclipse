@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_toLeftOf="@+id/confirm"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:hint="输入你的优惠码"
+        style="@style/SingleLineInput" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/input"
+        android:layout_alignBottom="@+id/input"
+        android:gravity="center"
+        android:background="@null"
+        android:textColor="@color/confirm_text"
+        android:text="确定使用" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:text="未知" />
+</RelativeLayout>
