@@ -14,5 +14,6 @@ public class HttpUtil {
     public static final String QUERY_TOKEN = "token";
     public static final String QUERY_FIG = "fig";
     public static final String QUERY_UPTIME = "uptime";
+    public static final String QUERY_CODE = "code";
     private HttpUtil() {}
 }

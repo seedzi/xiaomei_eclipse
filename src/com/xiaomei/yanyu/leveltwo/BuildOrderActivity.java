@@ -89,13 +89,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
                 finish();
             }
         });
-        mTitlebar.findViewById(R.id.right_root).setVisibility(View.VISIBLE);
-        mTitlebar.findViewById(R.id.edit).setVisibility(View.GONE);
-        mTitlebar.findViewById(R.id.fav).setVisibility(View.GONE);
-        mTitlebar.findViewById(R.id.share).setVisibility(View.GONE);
-        mTitlebar.findViewById(R.id.build_order).setVisibility(View.VISIBLE);
-        buildOrder = findViewById(R.id.build_order);
-        buildOrder.setOnClickListener(this);
+        mTitlebar.findViewById(R.id.right_root).setVisibility(View.GONE);
         
         itemGoodsLayout = findViewById(R.id.item_goods_layout);
         iconIv = (ImageView)itemGoodsLayout.findViewById(R.id.icon);
@@ -212,7 +206,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         case R.id.discount_layout:
             
             break;
-            case R.id.item0:
+            case R.id.item0: //优惠卷
                 OrderCouponActivity.startActivity(this, "");
                 break;
         default:

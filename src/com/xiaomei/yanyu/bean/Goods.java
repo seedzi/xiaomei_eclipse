@@ -29,6 +29,8 @@ public class Goods {
 	private String city_name;
 	
 	private List<Mark> goods_mark;
+	
+	private String avail_coupons;
 
 	public String getId() {
 		return id;

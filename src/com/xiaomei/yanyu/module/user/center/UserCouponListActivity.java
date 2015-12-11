@@ -25,9 +25,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -54,6 +57,7 @@ public class UserCouponListActivity extends Activity
 
     private ListView mListView;
 
+    private EditText mCouponNumberEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,15 +91,84 @@ public class UserCouponListActivity extends Activity
         mAdapter.add(new Coupon());
         mAdapter.add(new Coupon());
         mQueue = XiaoMeiApplication.getInstance().getQueue();
-        
+        mCouponNumberEdit = (EditText) findViewById(R.id.coupon_number);
         initData();
     }
 
+
+    
+    private void initData(){
+        mQueue.add(new StringRequest(Request.Method.GET,getListUrl(), mRefreshListener, mRefreshErroListener));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.check_coupon:
+                // TODO 兑换优惠券
+                String number = mCouponNumberEdit.getEditableText().toString();
+                if(!TextUtils.isEmpty(number)){
+                    addCoupon(number);
+                }else{
+                    Toast.makeText(UserCouponListActivity.this, "优惠卷不能为空!", 0).show();
+                }
+                break;
+        }
+    }
+
+    private void addCoupon(String code){
+        mQueue.add(new StringRequest(Request.Method.GET,addCouponUrl(code), mAddCouponListener, mAddCouponErroListener));
+    }
+    
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    }
+    
+    
+    // ============================================================================================
+    // url
+    // ============================================================================================
+    /**
+     * 活取优惠列表的url
+     */
+    private String getListUrl() {
+        String time = String.valueOf(System.currentTimeMillis()/1000);
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken()),
+                new BasicNameValuePair(HttpUtil.QUERY_UPTIME,time )} ; 
+        return Uri.parse(HttpUrlManager.userPreferentialVolumeUrl()).buildUpon()
+                .appendQueryParameter(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
+                .appendQueryParameter(HttpUtil.QUERY_UPTIME, time)
+                .appendQueryParameter(HttpUtil.QUERY_FIG, Security.get32MD5Str(values))
+                .build().toString();
+    }
+    
+    /**
+     * 增加优惠卷url
+     */
+    private String addCouponUrl(String code){
+        String time = String.valueOf(System.currentTimeMillis()/1000);
+        BasicNameValuePair[] values = {
+                new BasicNameValuePair(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken()),
+                new BasicNameValuePair(HttpUtil.QUERY_UPTIME,time ),
+                new BasicNameValuePair(HttpUtil.QUERY_CODE,code )} ; 
+        return Uri.parse(HttpUrlManager.addPreferentialVolumeUrl()).buildUpon()
+                .appendQueryParameter(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
+                .appendQueryParameter(HttpUtil.QUERY_UPTIME, time)
+                .appendQueryParameter(HttpUtil.QUERY_CODE, code)
+                .appendQueryParameter(HttpUtil.QUERY_FIG, Security.get32MD5Str(values))
+                .build().toString();
+    }
+    
+
+
+    // ============================================================================================
+    // 回调接口
+    // ============================================================================================
     private Listener<String> mRefreshListener = new Listener<String>() {
         @Override
         public void onResponse(String response) {
             try {
-                android.util.Log.d("aaa", "response = " + response.toString());
                 Gson gson = new Gson();
                 BizResult res = gson.fromJson(response, BizResult.class);
                 if (res.isSuccess()) {
@@ -108,7 +181,6 @@ public class UserCouponListActivity extends Activity
             mPullView.onRefreshComplete();
         }
     };
-
     private ErrorListener mRefreshErroListener = new ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError arg0) {
@@ -116,32 +188,29 @@ public class UserCouponListActivity extends Activity
         }
     };
     
-    private void initData(){
-        mQueue.add(new StringRequest(Request.Method.GET,getListUrl(), mRefreshListener, mRefreshErroListener));
-    }
-    private String getListUrl() {
-        String time = String.valueOf(System.currentTimeMillis()/1000);
-        BasicNameValuePair[] values = {
-                new BasicNameValuePair(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken()),
-                new BasicNameValuePair(HttpUtil.QUERY_UPTIME,time )} ; 
-        return Uri.parse(HttpUrlManager.userPreferentialVolumeUrl()).buildUpon()
-                .appendQueryParameter(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
-                .appendQueryParameter(HttpUtil.QUERY_UPTIME, time)
-                .appendQueryParameter(HttpUtil.QUERY_FIG, Security.get32MD5Str(values))
-                .build().toString();
-    }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.check_coupon:
-                mTitleBar.setActionVisibility(View.VISIBLE);
-                mCheckLayout.setVisibility(View.GONE);
-                // TODO 兑换优惠券
-                break;
+    private Listener<String> mAddCouponListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Toast.makeText(UserCouponListActivity.this, "添加优惠卷成功!", 0).show();
+            /*
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    mAdapter.clear();
+                    mAdapter.addAll(gson.fromJson(res.getMessage(), Coupon[].class));
+                } 
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            mPullView.onRefreshComplete();
+            */
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    }
+    };
+    private ErrorListener mAddCouponErroListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError arg0) {
+            Toast.makeText(UserCouponListActivity.this, "添加优惠卷失败!", 0).show();
+        }
+    };
 }

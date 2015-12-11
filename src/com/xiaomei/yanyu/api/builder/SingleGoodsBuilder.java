@@ -12,6 +12,7 @@ public class SingleGoodsBuilder extends AbstractJSONBuilder<Goods> {
     @Override
     protected Goods builder(JSONObject jobj) throws JSONException {
         Gson gson = new Gson();
+        android.util.Log.d("aaa", "jobj = " + jobj.toString());
         BizResult bizResult = gson.fromJson(jobj.toString(), BizResult.class);
         if (bizResult.isSuccess()) {
             return gson.fromJson(bizResult.getMessage(), Goods.class);

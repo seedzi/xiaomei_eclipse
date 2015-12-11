@@ -142,7 +142,7 @@ public class HttpUrlManager {
 	}
 	/**获取产品详情*/
 	String goodsDetailUrl(){
-		return HOST + "/server/show/goodsinfo.php";//http://api.drxiaomei.com/server/show/goodsinfo.php?goods_id=45
+		return HOST + "/server/coupon/goods_coupon_info.php";//"/server/show/goodsinfo.php";//http://api.drxiaomei.com/server/show/goodsinfo.php?goods_id=45
 	}
 	/**活取对应商品或者分享评论列表*/
 	String showCommentList(){
@@ -196,6 +196,10 @@ public class HttpUrlManager {
     }
     /**增加优惠卷*/
     public static String addPreferentialVolumeUrl(){
+        return HOST + "/server/coupon/add_coupon.php";
+    }
+    /**增加优惠卷（商品中）*/
+    public static String addPreferentialVolume4GoodsUrl(){
         return HOST + "/server/soupon/add_goods_coupon.php";
     }
 }   
