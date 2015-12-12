@@ -11,6 +11,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/coupon_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
@@ -38,6 +39,7 @@
             android:background="@null" />
 
         <TextView
+            android:id="@+id/ic_concurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/coupon_money"

@@ -7,14 +7,15 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.viewpagerindicator.PageIndicator;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.adapter.ActionCouponAdapter;
 import com.xiaomei.yanyu.adapter.CouponAdapter;
 import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.HttpUrlManager;
@@ -115,7 +116,7 @@ public class OrderCouponActivity extends Activity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mCouponAdapter = new CouponAdapter(getActivity());
+            mCouponAdapter = new ActionCouponAdapter(getActivity());
         }
 
         @Override
@@ -132,6 +133,13 @@ public class OrderCouponActivity extends Activity {
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             initData();
+            mListView.post(new Runnable() {
+                @Override
+                public void run() {
+                    int firstVisiblePosition = mListView.getFirstVisiblePosition();
+                    mListView.setItemChecked(firstVisiblePosition, true);
+                }
+            });
         }
         private void initData(){
             mCouponAdapter.clear();

@@ -19,7 +19,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = convertView != null ? convertView
-                : LayoutInflater.from(getContext()).inflate(R.layout.coupon_list_item, parent, false);
+                : LayoutInflater.from(getContext()).inflate(getItemViewLayout(), parent, false);
         Coupon item = getItem(position);
         UiUtil.findTextViewById(itemView, R.id.coupon_life).setText(item.beg + "-" + item.expire);
         UiUtil.findTextViewById(itemView, R.id.coupon_money).setText(item.discount);
@@ -27,4 +27,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         return itemView;
     }
 
+    protected int getItemViewLayout() {
+        return R.layout.coupon_list_item;
+    }
 }
