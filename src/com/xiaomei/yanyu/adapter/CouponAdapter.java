@@ -21,9 +21,9 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         View itemView = convertView != null ? convertView
                 : LayoutInflater.from(getContext()).inflate(R.layout.coupon_list_item, parent, false);
         Coupon item = getItem(position);
-        UiUtil.findTextViewById(itemView, R.id.coupon_life).setText(item.life);
-        UiUtil.findTextViewById(itemView, R.id.coupon_money).setText(item.money);
-        UiUtil.findTextViewById(itemView, R.id.coupon_term).setText(item.term);
+        UiUtil.findTextViewById(itemView, R.id.coupon_life).setText(item.beg + "-" + item.expire);
+        UiUtil.findTextViewById(itemView, R.id.coupon_money).setText(item.discount);
+        UiUtil.findTextViewById(itemView, R.id.coupon_term).setText(item.display);
         return itemView;
     }
 

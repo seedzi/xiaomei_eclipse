@@ -72,6 +72,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     
     private View mDiscountLayout;
     
+    private TextView mDiscountMoneyTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +123,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         
         mDiscountLayout = findViewById(R.id.discount_layout);
         mDiscountLayout.setOnClickListener(this);
+        mDiscountMoneyTxt = (TextView) findViewById(R.id.discount_money_txt);
     }
     
     private void initData(){
@@ -207,7 +209,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
             
             break;
             case R.id.item0: //优惠卷
-                OrderCouponActivity.startActivity(this, "");
+                OrderCouponActivity.startActivity4Result(this, "");
                 break;
         default:
             break;
@@ -215,5 +217,14 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     }
     
     // =========================================== 业务 =====================================================
-
+    private String mCouponid = "";
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            mCouponid = data.getStringExtra("couponid");
+            String discount = data.getStringExtra("discount");
+            mDiscountMoneyTxt.setText(discount);
+        }
+    }
 }

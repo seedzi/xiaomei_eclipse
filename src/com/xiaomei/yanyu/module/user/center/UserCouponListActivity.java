@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -58,6 +59,9 @@ public class UserCouponListActivity extends Activity
     private ListView mListView;
 
     private EditText mCouponNumberEdit;
+    
+    private boolean isEdit = false;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,7 @@ public class UserCouponListActivity extends Activity
             public void onClick(View v) {
                 mTitleBar.setActionVisibility(View.GONE);
                 mCheckLayout.setVisibility(View.VISIBLE);
+                isEdit = true;
             }
         });
 
@@ -124,6 +129,20 @@ public class UserCouponListActivity extends Activity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
     
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK &&  isEdit){
+            exitEditState();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    
+    private void exitEditState(){
+        mTitleBar.setActionVisibility(View.VISIBLE);
+        mCheckLayout.setVisibility(View.GONE);
+        isEdit = false;
+    }
     
     // ============================================================================================
     // url
@@ -192,19 +211,8 @@ public class UserCouponListActivity extends Activity
         @Override
         public void onResponse(String response) {
             Toast.makeText(UserCouponListActivity.this, "添加优惠卷成功!", 0).show();
-            /*
-            try {
-                Gson gson = new Gson();
-                BizResult res = gson.fromJson(response, BizResult.class);
-                if (res.isSuccess()) {
-                    mAdapter.clear();
-                    mAdapter.addAll(gson.fromJson(res.getMessage(), Coupon[].class));
-                } 
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-            mPullView.onRefreshComplete();
-            */
+            exitEditState();
+            initData();
         }
     };
     private ErrorListener mAddCouponErroListener = new ErrorListener() {

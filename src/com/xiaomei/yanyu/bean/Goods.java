@@ -30,8 +30,8 @@ public class Goods {
 	
 	private List<Mark> goods_mark;
 	
-	private String avail_coupons;
-
+	private List<AvailCoupon> avail_coupons;
+	
 	public String getId() {
 		return id;
 	}
@@ -80,6 +80,10 @@ public class Goods {
 		return city_name;
 	}
 
+	public List<AvailCoupon> getAvailCoupons(){
+	    return avail_coupons;
+	}
+	
 	public List<Mark> getMarks() {
 		return goods_mark;
 	}
@@ -94,5 +98,78 @@ public class Goods {
 		public String getLabel() {
 			return label;
 		}
+	}
+	/*
+    "id": "60",
+    "expire": "2016-04-01",
+    "beg": "2015-10-01",
+    "couponid": "4",
+    "uptime": "2015-12-11 15:02:18",
+    "base": "100",
+    "userid": "19062558",
+    "display": "通用测试优惠劵",
+    "code": "common",
+    "used": "0",
+    "type": "1",
+    "discount": "10"*/
+	private static class AvailCoupon{
+	    private String id;
+	    private String expire;
+	    private String beg;
+	    private String couponid;
+	    private String uptime;
+	    private String base;
+	    private String userid;
+	    private String display;
+	    private String code;
+	    private String used;
+	    private String type;
+	    private String discount;
+	    
+	    public String getId(){
+	        return id;
+	    }
+	    public String getExpire(){
+	        return expire;
+	    }
+	    public String getBeg(){
+	        return beg;
+	    }
+	    
+	    public String getCouponid(){
+	        return couponid;
+	    }
+	    
+	    public String getUptime(){
+	        return uptime;
+	    }
+	    
+	    public String getBase(){
+	        return base;
+	    }
+	    
+	    public String getUserid(){
+	        return userid;
+	    }
+	    
+	    public String getDisplay(){
+	        return display;
+	    }
+	    
+	    public String getCode(){
+	        return code;
+	    }
+	    
+	    public String getUsed(){
+	        return used;
+	    }
+	    
+	    public String getType(){
+	        return type;
+	    }
+	    
+	    public String getDiscount(){
+	        return discount;
+	    }
 	}
 }
