@@ -280,7 +280,7 @@ public class UserCenterControl extends BaseControl {
 	   public void getGoodsFromNetAsyn(String goodsId){
            try {
                 mModel.setGoods(XiaoMeiApplication.getInstance().getApi().getGoodsFromNet(goodsId));
-                android.util.Log.d("111", "goods = " + mModel.getGoods());
+                android.util.Log.d("aaa", "goods = " + mModel.getGoods());
                 sendMessage("getGoodsFromNetAsynCallback");
             } catch (Exception e) {
                 e.printStackTrace();

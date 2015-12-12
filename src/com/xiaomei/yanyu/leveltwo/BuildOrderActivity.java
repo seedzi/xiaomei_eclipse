@@ -1,5 +1,6 @@
 package com.xiaomei.yanyu.leveltwo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,18 +32,6 @@ import android.widget.Toast;
 public class BuildOrderActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
     
 
-    /*
-    holder.iconIv = (ImageView) convertView.findViewById(R.id.icon);
-    holder.titleTv = (TextView) convertView.findViewById(R.id.title);
-    holder.sizeTv = (TextView) convertView.findViewById(R.id.size);
-    holder.hospitalTv = (TextView) convertView.findViewById(R.id.hospital_name);
-    holder.localTv = (TextView) convertView.findViewById(R.id.location);
-    holder.priceTv = (TextView) convertView.findViewById(R.id.price);
-    holder.localTv = (TextView) convertView.findViewById(R.id.location);
-            holder.mark1 = (TextView) convertView.findViewById(R.id.tag_1);
-                holder.mark2 = (TextView) convertView.findViewById(R.id.tag_2);
-                holder.mark3 = (TextView) convertView.findViewById(R.id.tag_3);
-*/
     public static void startActivity(Activity ac,String goodsId){
         Intent intent = new Intent(ac,BuildOrderActivity.class);
         intent.putExtra("goods_id", goodsId);
@@ -52,13 +41,9 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     
     private ImageView iconIv; 
     private TextView titleTv;
-    private TextView sizeTv;
     private TextView hospitalTv;
     private TextView localTv;
     private TextView priceTv;
-    private TextView mark1;
-    private TextView mark2 ;
-    private TextView mark3;
     private TextView priceMarketTv ;
     private View buildOrder;
     private View itemGoodsLayout;
@@ -73,6 +58,9 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     private View mDiscountLayout;
     
     private TextView mDiscountMoneyTxt;
+    private TextView merchantMobile;
+    
+    private View commitOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,22 +81,13 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         mTitlebar.findViewById(R.id.right_root).setVisibility(View.GONE);
         
         itemGoodsLayout = findViewById(R.id.item_goods_layout);
-        iconIv = (ImageView)itemGoodsLayout.findViewById(R.id.icon);
-        titleTv = (TextView)itemGoodsLayout.findViewById(R.id.title);
-        sizeTv = (TextView)itemGoodsLayout.findViewById(R.id.size);
-        hospitalTv = (TextView)itemGoodsLayout.findViewById(R.id.hospital_name);
-        localTv = (TextView)itemGoodsLayout.findViewById(R.id.location);
-        priceTv = (TextView)itemGoodsLayout.findViewById(R.id.price);
-        mark1 = (TextView)itemGoodsLayout.findViewById(R.id.tag_1);
-        mark2 = (TextView)itemGoodsLayout.findViewById(R.id.tag_2);
-        mark3 = (TextView)itemGoodsLayout.findViewById(R.id.tag_3);
+        iconIv = (ImageView)itemGoodsLayout.findViewById(R.id.goods_icon);
+        titleTv = (TextView)itemGoodsLayout.findViewById(R.id.goods_name);
+        hospitalTv = (TextView)findViewById(R.id.merchant_name);
+        localTv = (TextView)findViewById(R.id.merchant_location);
+        priceTv = (TextView)itemGoodsLayout.findViewById(R.id.order_amount);
         priceMarketTv = (TextView) findViewById(R.id.origin_price);
         
-        View couponEntry = findViewById(R.id.item0);
-        couponEntry.findViewById(R.id.icon).setVisibility(View.GONE);
-        ((TextView)couponEntry.findViewById(R.id.title)).setText("优惠券");
-        couponEntry.findViewById(R.id.new_version_prompt).setVisibility(View.GONE);
-        couponEntry.setOnClickListener(this);
         TextView title = (TextView) findViewById(R.id.item1).findViewById(R.id.title);     
         title.setText("客户姓名");
         title = (TextView) findViewById(R.id.item2).findViewById(R.id.title);     
@@ -124,6 +103,10 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         mDiscountLayout = findViewById(R.id.discount_layout);
         mDiscountLayout.setOnClickListener(this);
         mDiscountMoneyTxt = (TextView) findViewById(R.id.discount_money_txt);
+        merchantMobile = (TextView) findViewById(R.id.merchant_mobile);
+        
+        commitOrder = findViewById(R.id.commit_order);
+        commitOrder.setOnClickListener(this);
     }
     
     private void initData(){
@@ -141,16 +124,17 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         
         ImageLoader.getInstance().displayImage(goods.getFileUrl(),iconIv );
         titleTv .setText(goods.getTitle());
-        sizeTv.setText("销量" + goods.getSales());
         hospitalTv.setText(goods.getHospName());
         priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
         localTv.setText(goods.getCityName());
         priceMarketTv.setText("原价"+goods.getPriceMarket()+"元");
+        merchantMobile.setText(goods.getHospTel());
         
         List<Goods.Mark> marks = goods.getMarks();
         int i = 0;
         GradientDrawable shapeDrawable  = null;
         if(marks!=null){
+        	/*
             for(Goods.Mark mark:marks){
                 switch (i) {
                 case 0:
@@ -181,7 +165,15 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
                     break;
                 }
                 i++;
-            }
+            }*/
+        }
+        
+        if(goods.getAvailCoupons()==null || goods.getAvailCoupons().size()==0){
+        	mDiscountMoneyTxt.setText("无优惠卷可用，请填写优惠码");
+        	mDiscountMoneyTxt.setTextColor(Color.parseColor("#ffffff"));
+        }else{
+        	mDiscountMoneyTxt.setText("有"+goods.getAvailCoupons().size() + "张优惠卷可用");
+        	mDiscountMoneyTxt.setTextColor(Color.parseColor("#d366f3"));
         }
     }
 
@@ -193,7 +185,11 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-        case R.id.build_order:
+        case R.id.discount_layout:
+         	//优惠卷
+            OrderCouponActivity.startActivity4Result(this, "",(ArrayList)mControl.getModel().getGoods().getAvailCoupons());
+            break;
+        case R.id.commit_order:
             if(!PayUtils.checkoutInputData(mUsername.getText().toString(),
                     mUserMobile.getText().toString(), 
                     mUserPassport.getText().toString())){
@@ -204,13 +200,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
                     .getText().toString(), mUserMobile.getText().toString(),
                     mUserPassport.getText().toString());
             finish();
-            break;
-        case R.id.discount_layout:
-            
-            break;
-            case R.id.item0: //优惠卷
-                OrderCouponActivity.startActivity4Result(this, "");
-                break;
+        	break;
         default:
             break;
         }

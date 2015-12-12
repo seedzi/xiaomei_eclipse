@@ -1,5 +1,8 @@
 package com.xiaomei.yanyu.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.message.BasicNameValuePair;
 
 import com.android.volley.Request;
@@ -39,8 +42,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OrderCouponActivity extends Activity {
 
@@ -50,8 +55,11 @@ public class OrderCouponActivity extends Activity {
                 R.anim.activity_slid_in_from_right);
     }
     
-    public static void startActivity4Result(Activity ac, String couponId) {
-        ac.startActivityForResult(new Intent(ac, OrderCouponActivity.class).putExtra("couponId", couponId),1);
+    public static void startActivity4Result(Activity ac, String couponId,ArrayList<Coupon> data) {
+    	Intent intent = new Intent(ac, OrderCouponActivity.class);
+    	intent.putExtra("couponId", couponId);
+    	intent.putExtra("data", data);
+        ac.startActivityForResult(intent,1);
         ac.overridePendingTransition(R.anim.activity_slid_out_no_change,
                 R.anim.activity_slid_in_from_right);
     }
@@ -126,51 +134,34 @@ public class OrderCouponActivity extends Activity {
             initData();
         }
         private void initData(){
-            mQueue.add(new StringRequest(Request.Method.GET,getListUrl(), mRefreshListener, mRefreshErroListener));
+            mCouponAdapter.clear();
+            mCouponAdapter.addAll((ArrayList<Coupon>)getIntent().getSerializableExtra("data"));
         }
-        
-        private Listener<String> mRefreshListener = new Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Gson gson = new Gson();
-                    BizResult res = gson.fromJson(response, BizResult.class);
-                    if (res.isSuccess()) {
-                        mCouponAdapter.clear();
-                        mCouponAdapter.addAll(gson.fromJson(res.getMessage(), Coupon[].class));
-                    } 
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
-        };
-        private ErrorListener mRefreshErroListener = new ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError arg0) {
-            }
-        };
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
-            Intent intent = new Intent();  
-            String couponid = mCouponAdapter.getItem(position).couponid;
+        	String couponid = mCouponAdapter.getItem(position).couponid;
             String discount = mCouponAdapter.getItem(position).discount;
-            intent.putExtra("couponid", couponid);
-            intent.putExtra("discount",discount);
-            setResult(RESULT_OK, intent);  
-            finish();
+            getResult2Back(couponid, discount);
         }
     }
 
-
+    private void getResult2Back(String couponid,String discount ){
+        Intent intent = new Intent();  
+        
+        intent.putExtra("couponid", couponid);
+        intent.putExtra("discount",discount);
+        setResult(RESULT_OK, intent);  
+        finish();
+    }
     
     /**
      * @author sunbreak 优惠码页面
      */
     private class CouponCodeFragment extends Fragment implements TextWatcher, OnClickListener {
 
-        private TextView mInput;
+        private EditText mInput;
         private Button mConfirm;
         private TextView mInfo;
 
@@ -178,7 +169,7 @@ public class OrderCouponActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.order_coupon_code, container, false);
-            mInput = (TextView)root.findViewById(R.id.input);
+            mInput = (EditText)root.findViewById(R.id.input);
             mConfirm = (Button)root.findViewById(R.id.confirm);
             mInfo = (TextView)root.findViewById(R.id.info);
 
@@ -193,6 +184,11 @@ public class OrderCouponActivity extends Activity {
             switch (v.getId()) {
                 case R.id.confirm:
                     // TODO 检查优惠码可用
+                	if(TextUtils.isEmpty(mInput.getText().toString())){
+                		Toast.makeText(OrderCouponActivity.this, "优惠卷不能为空！", 0).show();
+                		return;
+                	}
+                	mQueue.add(new StringRequest(Request.Method.GET,addCouponUrl(mInput.getText().toString()), mListener, mErroListener));
                     break;
             }
         }
@@ -209,6 +205,37 @@ public class OrderCouponActivity extends Activity {
         @Override
         public void afterTextChanged(Editable s) {
         }
+        private Listener<String> mListener = new Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            	BizResult res = null;
+                try {
+                    Gson gson = new Gson();
+                    res = gson.fromJson(response, BizResult.class);
+                    if (res.isSuccess()) {
+                    	Coupon coupon = gson.fromJson(res.getMessage(), Coupon.class);
+                        getResult2Back(coupon.couponid, coupon.discount);
+                        return;
+                    } 
+                } catch (Exception e) {
+                }
+                String msg = res.getMessage().toString();
+                if(TextUtils.isEmpty(msg)){
+                	msg = "添加优惠码失败";
+                }
+                msg.replaceAll("\"", "");
+            	Toast.makeText(OrderCouponActivity.this, msg, 0).show();
+            	mConfirm.setEnabled(false);
+            }
+        };
+        private ErrorListener mErroListener = new ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError arg0) {
+            	Toast.makeText(OrderCouponActivity.this, "添加优惠码失败", 0).show();
+            	mConfirm.setEnabled(false);
+            }
+        };
+
     }
     
     
@@ -216,19 +243,19 @@ public class OrderCouponActivity extends Activity {
     // url
     // ============================================================================================
     /**
-     * 活取优惠列表的url
+     * 获取新增优惠卷的入口
      */
-    private String getListUrl() {
+    private String addCouponUrl(String code){
         String time = String.valueOf(System.currentTimeMillis()/1000);
         BasicNameValuePair[] values = {
                 new BasicNameValuePair(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken()),
-                new BasicNameValuePair(HttpUtil.QUERY_UPTIME,time )} ; 
-        return Uri.parse(HttpUrlManager.userPreferentialVolumeUrl()).buildUpon()
+                new BasicNameValuePair(HttpUtil.QUERY_UPTIME,time ),
+                new BasicNameValuePair(HttpUtil.QUERY_CODE, code)} ; 
+        return Uri.parse(HttpUrlManager.addPreferentialVolumeUrl()).buildUpon()
                 .appendQueryParameter(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
                 .appendQueryParameter(HttpUtil.QUERY_UPTIME, time)
+                .appendQueryParameter(HttpUtil.QUERY_CODE, code)
                 .appendQueryParameter(HttpUtil.QUERY_FIG, Security.get32MD5Str(values))
                 .build().toString();
     }
-    
-
 }

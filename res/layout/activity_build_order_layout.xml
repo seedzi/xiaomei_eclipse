@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:textSize="15sp"
             android:textColor="#8c8c8c"
-            android:text="1342870367"/><!-- android:layout_alignParentRight="true" -->            
+            android:text="1870367"/><!-- android:layout_alignParentRight="true" -->            
 
         <TextView 
             android:layout_marginTop="5dp"
@@ -96,9 +96,21 @@
             android:text="首尔首尔首尔"/>            
     </RelativeLayout>
     
-	    
-    <include android:id="@+id/item_goods_layout"  layout="@layout/item_goods_layout"
-        />
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:background="#eeeeee"/>    
+    <include android:id="@+id/item_goods_layout"  layout="@layout/item_goods_for_coupon_layout"/>
+
+    	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:background="#eeeeee"/>     
+    
      <RelativeLayout
     android:id="@+id/discount_layout"
     android:layout_width="match_parent" 
@@ -121,6 +133,7 @@
         android:layout_marginRight="15dp"
         android:gravity="center_vertical"
         android:textColor="#d366f3"
+        android:drawableRight="@drawable/arrow_right"
         android:text=""/>
 </RelativeLayout>
      <TextView
@@ -129,12 +142,8 @@
        android:paddingLeft="15dp"
         android:gravity="left|center_vertical"
        android:text="客户信息"        
-       android:drawableRight="@drawable/discount_enter_icon"
        android:background="#eeeeee"/>
      
-
-    
-    <include   android:id="@+id/item0" layout="@layout/item_center_user_layout"/>
 
     <include   android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
     

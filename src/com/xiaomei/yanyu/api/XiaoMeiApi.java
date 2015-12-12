@@ -168,6 +168,7 @@ public class XiaoMeiApi {
                 values[1],
                 values[2],
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+        android.util.Log.d("aaa", "url = " +         httpGet.getURI().toString());
         return mHttpApi.doHttpRequestObject(httpGet, new SingleGoodsBuilder());
     }
 	
