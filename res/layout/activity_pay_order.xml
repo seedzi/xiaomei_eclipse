@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2015 Xiamei Inc. All rights reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="@dimen/preference_padding_horizontal"
+        android:paddingRight="@dimen/preference_padding_horizontal"
+        android:background="@color/color_white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="订单金额" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/preference_category_height"
+        android:paddingLeft="@dimen/preference_padding_horizontal"
+        android:paddingRight="@dimen/preference_padding_horizontal"
+        android:gravity="left|center_vertical"
+        android:text="@string/pay_type" />
+
+    <!-- 微信支付 -->
+    <include 
+        android:id="@+id/wechat_payment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/payment_selection_layout_height"
+        layout="@layout/payment_selection" />
+
+    <!-- 支付宝 -->
+    <include 
+        android:id="@+id/alipay_payment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/payment_selection_layout_height"
+        layout="@layout/payment_selection" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/round_rectangle_large_height"
+        android:layout_marginLeft="@dimen/preference_padding_horizontal"
+        android:layout_marginRight="@dimen/preference_padding_horizontal"
+        android:background="@drawable/btn_round_rectangle_large_bg"
+        android:textColor="@color/color_white"
+        android:text="确定付款" />
+</LinearLayout>

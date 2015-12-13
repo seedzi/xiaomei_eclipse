@@ -13,6 +13,7 @@
     </LinearLayout>
     
     <include layout="@layout/title_bar_layout"/>
+
 <ScrollView 
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
@@ -167,113 +168,11 @@
         android:gravity="right"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/>
-    
-<RelativeLayout 
-    android:id="@+id/pay_title_layout"
-    android:layout_width="match_parent"
-    android:layout_height="46dp">
-    <TextView 
-        android:layout_margin="10dp"
-        android:id="@+id/title"
-        android:textSize="16sp"
-        android:textColor="#646464"
-        android:layout_alignParentLeft="true"
-        android:text="@string/pay_type"
-        android:layout_centerVertical="true"
-    	android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
-    
-    <View 
-        android:id="@+id/pay_divild"
-        android:layout_alignParentBottom="true"
-        android:background="#e2e2e2"
-    	android:layout_height="1px"        
-        android:layout_width="match_parent"/>
-</RelativeLayout>
-    
-	<LinearLayout 
-	   android:id="@+id/pay_layout"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical" 
-       android:background="@color/color_white">
-    <!-- 微信支付 -->
-	    <RelativeLayout
-	        android:id="@+id/pay_weixin"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" 
-	        android:padding="15dp">
-	        <ImageView 
-	        android:id="@+id/pay_icon_weixin"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 	            
-	        android:src="@drawable/weixing"/>
-			<TextView 
-			    android:layout_marginLeft="5dp"
-			    android:layout_toRightOf="@id/pay_icon_weixin"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="@string/pay_weixin"/>	        
-			<TextView 
-			    android:layout_marginLeft="5dp"
-			    android:layout_toRightOf="@id/pay_icon_weixin"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_alignBottom="@id/pay_icon_weixin"
-			    android:text="@string/pay_weixin_safety"/>
-	        <ImageView 
-	            android:layout_alignParentRight="true"
-	            android:layout_centerVertical="true"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" 	            
-		        android:src="@drawable/arrow_right"/>
-	    </RelativeLayout>
-		    
-	    <View 
-	        android:layout_marginLeft="15dp"
-	        android:background="#e2e2e2"
-	    	android:layout_height="1px"        
-	    	android:visibility="gone"
-	        android:layout_width="match_parent"/>
-		    
-	        <!-- 支付宝支付 -->
-	    
-	      <RelativeLayout
-	        android:id="@+id/pay_zhifubao"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" 
-	        android:padding="15dp">
-	        <ImageView 
-	        android:id="@+id/pay_icon_zhifubao"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 	            
-	        android:src="@drawable/zhifubao"/>
-			<TextView 
-			    android:layout_marginLeft="5dp"
-			    android:layout_toRightOf="@id/pay_icon_zhifubao"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="@string/pay_zhifubao"/>	        
-			<TextView 
-			    android:layout_marginLeft="5dp"
-			    android:layout_toRightOf="@id/pay_icon_zhifubao"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_alignBottom="@id/pay_icon_zhifubao"
-			    android:text="@string/pay_zhifubao_safety"/>
-	        <ImageView 
-	            android:layout_alignParentRight="true"
-	            android:layout_centerVertical="true"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" 	            
-		        android:src="@drawable/arrow_right"/>
-	    </RelativeLayout>
-	</LinearLayout>
-	
-	
 
+    <include layout="@layout/payment_info_bottom_layout" />
 </LinearLayout>
 </ScrollView>
+
 	<include  android:id="@+id/loading_layout"
 	    layout="@layout/loading_layout"
 	    android:visibility="visible"/>

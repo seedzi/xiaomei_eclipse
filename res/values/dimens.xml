@@ -50,10 +50,17 @@
     <dimen name="divider">1px</dimen>
     <dimen name="divider2x">2px</dimen>
 
+    <!-- Preference -->
+    <dimen name="preference_padding_horizontal">15dp</dimen>
+    <dimen name="preference_category_height">46dp</dimen>
+
     <dimen name="input_height">27dp</dimen>
     <dimen name="input_padding_horizontal">@dimen/input_bg_radius</dimen>
     <dimen name="input_padding_vertical">5dp</dimen>
     <dimen name="input_bg_radius">13.5dp</dimen>
+
+    <dimen name="round_rectangle_large_radius">20dp</dimen>
+    <dimen name="round_rectangle_large_height">40dp</dimen>
 
     <dimen name="title_bar_button_padding">5dp</dimen>
 
@@ -93,6 +100,8 @@
     <dimen name="detail_item_content_padding_horizontal">10dp</dimen>
     <dimen name="detail_item_content_padding_vertical">25dp</dimen>
     <dimen name="shares_detail_summary_space_vertical">28dp</dimen>
+
+    <dimen name="payment_selection_layout_height">58dp</dimen>
 
     <!-- Text size -->
     <dimen name="text_size_normal">16sp</dimen>

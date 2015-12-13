@@ -215,6 +215,11 @@
             android:theme="@style/activityTheme"
             android:name=".leveltwo.BuildOrderActivity"
             android:screenOrientation="portrait"/>
+        <!-- 支付订单 -->
+        <activity 
+            android:theme="@style/Theme"
+            android:name=".activity.PayOrderActivity"
+            android:screenOrientation="portrait"/>
         <!-- 测试的test Activity -->
 		<activity
 		    android:name="com.xiaomei.yanyu.levelone.TestActivity" 

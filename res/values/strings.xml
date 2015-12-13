@@ -55,7 +55,7 @@
     
     <string name="order_details">订单详情</string>
     
-    <string name="pay_type">支付方式</string>  
+    <string name="pay_type">选择付款方式</string>  
     
     <string name="pay_weixin">微信支付</string>  
     

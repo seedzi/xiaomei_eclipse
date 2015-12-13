@@ -2,35 +2,33 @@ package com.xiaomei.yanyu.module.user.center;
 
 import java.util.List;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
-import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.Payment.PayUtils;
-import com.xiaomei.yanyu.Payment.ZhifubaoPayManager;
-import com.xiaomei.yanyu.Payment.ZhifubaoPayManager.CallBack;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.activity.PayOrderActivity;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 /**
  * 订单详情页
  * @author huzhi
@@ -71,9 +69,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		 ac.overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_in_from_right);
 	}
 	
-	/**标识是从支付宝支付还是从微信支付*/
-	private boolean isPay4WeiXin = false;
-	
 	private TitleBar mTitlBar;
 	
 	private TextView mobileTv; //电话号码
@@ -83,12 +78,12 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private TextView goodsPriceTv; //商品价格
 	private TextView goodsTypeTv; //商品类型
 	private ImageView goodsIconIv; //产品icon
-	private View payWeixin;
-	private View payZhifubao;
 	
 	private EditText orderNameEd; //客户姓名
 	private EditText orderMobile; //客户电话
 	private EditText orderPassport; //客户护照
+
+    private Button mActionButton;
 //	private Order order;
 //	private Order.DataDetail.GoodsInfo goodsInfo ;
 	
@@ -99,8 +94,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private String passport;//护照
 	private String username; // 姓名
 	private String mobile;//手机号
-	
-	private ProgressDialog mProgressDialog;
 	
 	// =============================================================================================
 	/**未付款*/
@@ -146,20 +139,21 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		goodsPriceTv = (TextView) findViewById(R.id.goods_price);
 		goodsTypeTv = (TextView) findViewById(R.id.goods_type);
 		goodsIconIv = (ImageView) findViewById(R.id.goods_icon);
-		payWeixin = findViewById(R.id.pay_weixin);
-		payWeixin.setOnClickListener(this);
-		payZhifubao = findViewById(R.id.pay_zhifubao);
-		payZhifubao.setOnClickListener(this);
 		
 		orderNameEd = (EditText) findViewById(R.id.item4).findViewById(R.id.value);
 		orderMobile = (EditText) findViewById(R.id.item5).findViewById(R.id.value);
 		orderPassport = (EditText) findViewById(R.id.item6).findViewById(R.id.value);
+
+        mActionButton = (Button)findViewById(R.id.action_button);
+        mActionButton.setText("立即付款");
+        mActionButton.setOnClickListener(this);
 	}
 	
 	private int[] res = new int[]{R.id.item1,R.id.item2,R.id.item3,R.id.item4,R.id.item5,R.id.item6};
 	
 	private void initData(){
 		Order order = mControl.getModel().getOrder();
+        Button actionButton = (Button)findViewById(R.id.action);
 	    if(order!=null){   //我的订单页进入
 	    	android.util.Log.d("111", "我的订单页进入");
 	        goodsId = order.getDataList().getGoodsId();
@@ -262,16 +256,10 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	}
 	
 	private void hidePay(){
-		findViewById(R.id.pay_title_layout).setVisibility(View.GONE);
-		findViewById(R.id.pay_divild).setVisibility(View.GONE);
-		findViewById(R.id.pay_layout).setVisibility(View.GONE);
 		findViewById(R.id.order_status).setVisibility(View.VISIBLE);
 	}
 	
 	private void showPay(){
-		findViewById(R.id.pay_title_layout).setVisibility(View.VISIBLE);
-		findViewById(R.id.pay_divild).setVisibility(View.VISIBLE);
-		findViewById(R.id.pay_layout).setVisibility(View.VISIBLE);
 		findViewById(R.id.order_status).setVisibility(View.GONE);
 	}
 	
@@ -299,17 +287,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		Order order = mControl.getModel().getOrder();
 		attachData2UI(order);
 		setStatus(order);
-	}
-	
-	/*微信支付的回调*/
-	public void getPayWechatInfoCallBack(){
-		mControl.payWechat(this);
-		dismissDialog();
-	}
-	/*微信支付异常的回调*/
-	public void getPayWechatInfoExceptionCallBack(){
-		dismissDialog();
-		Toast.makeText(this, "支付失败", 0).show();
 	}
 	
 	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info,boolean enable,int i){
@@ -347,43 +324,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		rootView.setVisibility(View.GONE);
 	}
 	
-	public void updateUserOrder2ServerAsynCallBack(){
-		
-		Order order = mControl.getModel().getOrder();
-		if(!isPay4WeiXin){
-			ZhifubaoPayManager.getInstance().setCurrentActivity(this);
-			ZhifubaoPayManager.getInstance().setCallBack(new CallBack() {
-				@Override
-				public void successCallBack() {
-					setEditEnable(false);
-					TextView tv = (TextView) findViewById(R.id.order_status);
-					hidePay();
-					tv.setText("申请退款");
-					tv.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							showCancelOrderDialog();
-						}
-					});
-					STATE_CHANGED = true;
-					dismissDialog();
-				}
-				@Override
-				public void failureCallBack() {
-					dismissDialog();
-				}
-			});
-			ZhifubaoPayManager.getInstance().pay(order.getDataList().getGoodsName(),order.getDataList().getGoodsName(),order.getDataList().getGoodsPay(),order.getDataList().getId());
-		}else{
-			mControl.getPayWechatInfo(order.getDataList().getId(), UserUtil.getUser().getToken());
-		}
-	}
-	
-	public void updateUserOrder2ServerAsynExceptionCallBack(){
-		dismissDialog();
-		Toast.makeText(this, "订单支付失败", 0).show();
-	}
-	
 	// ====================================  Progress =========================================================
 	private void showProgress(){
 		mLoadingView.setVisibility(View.VISIBLE);
@@ -398,24 +338,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		rootView.setVisibility(View.VISIBLE);
 	}
 	
-	// =========================================== ProgressDialog ==========================================
-	
-	private void showProgressDialog(String message){
-		if(mProgressDialog!=null && mProgressDialog.isShowing())
-			mProgressDialog.dismiss();
-		mProgressDialog = new ProgressDialog(this);
-		mProgressDialog.setCancelable(true);
-		mProgressDialog.setTitle("提示");
-		mProgressDialog.setMessage(message);
-		mProgressDialog.setCancelable(false);
-		mProgressDialog.show();
-	}
-	
-	private void dismissDialog(){
-		if(mProgressDialog!=null && mProgressDialog.isShowing())
-			mProgressDialog.dismiss();
-	}
-	
 	// ====================================  Pay =========================================================
 	/**
 	 * 1.检查用户输入
@@ -426,37 +348,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
-		case R.id.pay_weixin:
-			isPay4WeiXin = true;
-		    if(!PayUtils.checkoutInputData(orderNameEd.getText().toString(),
-		            orderMobile.getText().toString(), 
-		            orderPassport.getText().toString())){
-		        Toast.makeText(this, "请您完整的输入您的信息", 0).show();
-		        return;
-		    }
-		    showProgressDialog("订单提交中...");
-		    mControl.updateUserOrder2ServerAsyn(mControl.getModel().getOrder().getDataList().getId(),orderNameEd.getText().toString(),
-		            goodsId, 
-		            orderPassport.getText().toString(),
-		            orderMobile.getText().toString()
-		            );
-			break;
-		case R.id.pay_zhifubao: //支付宝支付
-			isPay4WeiXin = false;
-		    if(!PayUtils.checkoutInputData(orderNameEd.getText().toString(),
-		            orderMobile.getText().toString(), 
-		            orderPassport.getText().toString())){mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId()); 
-		        Toast.makeText(this, "请您完整的输入您的信息", 0).show();
-		        return;
-		    }
-		    showProgressDialog("订单提交中...");
-		    mControl.updateUserOrder2ServerAsyn(mControl.getModel().getOrder().getDataList().getId(),orderNameEd.getText().toString(),
-		            goodsId, 
-		            orderPassport.getText().toString(),
-		            orderMobile.getText().toString()
-		            );
-		default:
-			break;
+            case R.id.action_button:
+                PayOrderActivity.startActivity(this, mControl.getModel().getOrder());
+                break;
 		}
 	}
 	
