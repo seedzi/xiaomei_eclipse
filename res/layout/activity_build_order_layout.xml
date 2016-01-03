@@ -145,58 +145,37 @@
        android:background="#eeeeee"/>
      
 
-    <include   android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item2" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item3" layout="@layout/item_user_order_details_layout"/>
+    <LinearLayout
+        android:id="@+id/order_info_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle|end"
+        android:divider="@drawable/divider"
+        android:dividerPadding="15dp"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/item1"
+            layout="@layout/value_preference" />
+
+        <include
+            android:id="@+id/item2"
+            layout="@layout/value_preference" />
+
+        <include
+            android:id="@+id/item3"
+            layout="@layout/value_preference" />
+    </LinearLayout>
 </LinearLayout>
 
 
 
-    <RelativeLayout
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
+    <FrameLayout
+        android:id="@+id/payment_info_bottom_layout"
         android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:gravity="center_vertical">
-         <TextView 
-             android:layout_alignParentRight="true"
-             android:id="@+id/commit_order"
-             android:gravity="center"
-             android:paddingLeft="15dp"
-             android:paddingRight="15dp"
-             android:textSize="17dp"
-             android:text="立即付款"
-             android:textColor="#ffffff"
-             android:layout_height="match_parent"
-             android:layout_width="wrap_content"
-             android:background="#d366f3"/>
-         <TextView 
-             android:layout_marginLeft="15dp"
-             android:layout_alignParentLeft="true"
-             android:id="@+id/amount_money_txt"
-             android:gravity="center"
-             android:layout_height="match_parent"
-             android:layout_width="wrap_content"
-             android:text="总金额："/>
-         <TextView 
-             android:id="@+id/amount_money"
-             android:gravity="center"
-             android:layout_toRightOf="@id/amount_money_txt"
-             android:layout_height="match_parent"
-             android:layout_width="wrap_content"
-             android:textColor="#d366f3"
-             android:text="1000"/>
-         <TextView 
-             android:id="@+id/discount_money"
-             android:gravity="center"
-             android:layout_toRightOf="@id/amount_money"
-             android:layout_height="match_parent"
-             android:layout_width="wrap_content"
-             android:textColor="#acacac"
-             android:layout_marginLeft="6dp"
-             android:textSize="12sp"
-             android:text="已优惠500"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <include layout="@layout/payment_info_bottom_layout" />
+    </FrameLayout>
 </RelativeLayout>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
     android:background="@color/color_background">
     
     <!-- 防止edittext自动活取焦点 -->
@@ -18,6 +17,8 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_below="@+id/titlebar"
+    android:layout_above="@+id/payment_info_bottom_layout"
     android:background="@color/color_background">
 <LinearLayout 
     android:layout_width="match_parent"
@@ -96,7 +97,7 @@
             android:text="首尔首尔首尔"/>            
     </RelativeLayout>
    	
-    <RelativeLayout 
+    <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
@@ -144,18 +145,15 @@
              android:visibility="gone"/>
 
     </RelativeLayout>
-    
-    <include android:id="@+id/item1" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item2" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item3" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item4" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item5" layout="@layout/item_user_order_details_layout"/>
-    
-    <include android:id="@+id/item6" layout="@layout/item_user_order_details_layout"/>
+
+    <LinearLayout
+        android:id="@+id/order_info_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle|end"
+        android:divider="@drawable/divider"
+        android:dividerPadding="15dp"
+        android:orientation="vertical" />
    
     <TextView 
         android:id="@+id/order_status"
@@ -168,12 +166,19 @@
         android:gravity="right"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/>
-
-    <include layout="@layout/payment_info_bottom_layout" />
 </LinearLayout>
 </ScrollView>
 
+    <FrameLayout
+        android:id="@+id/payment_info_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <include layout="@layout/payment_info_bottom_layout" />
+    </FrameLayout>
+
 	<include  android:id="@+id/loading_layout"
 	    layout="@layout/loading_layout"
-	    android:visibility="visible"/>
-	</LinearLayout>
+	    android:visibility="gone"/>
+</RelativeLayout>

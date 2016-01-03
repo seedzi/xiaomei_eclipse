@@ -10,8 +10,10 @@
     <string name="more">更多</string>
     <string name="share_dialog_title">分享到</string>
 
+    <string name="price">￥ %1$d</string>
     <string name="ren_ming_bi">¥</string>
     <string name="han_yuan">￦</string>
+    <string name="discount_money">已优惠￥%1$d</string>
 
     <string name="fragment_home">首页</string>
     <string name="fragment_mall">分类</string>
@@ -35,6 +37,7 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="check_coupon">兑换</string>
+    <string name="pay">立即付款</string>
     
     <string name="user_order">我的订单</string>
     <string name="user_coupon">我的优惠券</string>

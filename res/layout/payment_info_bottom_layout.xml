@@ -10,23 +10,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
         android:text="总金额：" />
     <TextView
         android:id="@+id/money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/money_title" />
+        android:layout_toRightOf="@+id/money_title"
+        android:textColor="@color/color_main" />
     <TextView
         android:id="@+id/discount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/money" />
+        android:layout_toRightOf="@+id/money"
+        android:layout_marginLeft="12dp"
+        android:textSize="12sp" />
+
     <Button
         android:id="@+id/action_button"
         android:layout_width="113dp"
         android:layout_height="45dp"
         android:background="@color/color_main"
+        android:textColor="@color/color_white"
         android:layout_alignParentRight="true" />
 </RelativeLayout>

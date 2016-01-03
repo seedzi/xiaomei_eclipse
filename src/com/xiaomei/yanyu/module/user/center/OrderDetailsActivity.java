@@ -1,16 +1,20 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.activity.OrderCouponActivity;
 import com.xiaomei.yanyu.activity.PayOrderActivity;
 import com.xiaomei.yanyu.bean.Order;
+import com.xiaomei.yanyu.bean.Order.DataDetail.OrderInfo;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.widget.ValuePreference;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,11 +25,10 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,10 +82,15 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private TextView goodsTypeTv; //商品类型
 	private ImageView goodsIconIv; //产品icon
 	
-	private EditText orderNameEd; //客户姓名
-	private EditText orderMobile; //客户电话
-	private EditText orderPassport; //客户护照
+    private ValuePreference orderPreserve; // 预约时间
+    private ValuePreference orderNameEd; // 客户姓名
+    private ValuePreference orderMobile; // 客户电话
+    private ValuePreference orderPassport; // 客户护照
+    private ValuePreference orderCoupon; // 优惠折扣
 
+    private TextView mMoneyView;
+
+    private TextView mDiscountView;
     private Button mActionButton;
 //	private Order order;
 //	private Order.DataDetail.GoodsInfo goodsInfo ;
@@ -94,7 +102,10 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private String passport;//护照
 	private String username; // 姓名
 	private String mobile;//手机号
-	
+	private String mCouponId; // 优惠券ID
+
+    private int mDiscountMoney; // 优惠金额
+
 	// =============================================================================================
 	/**未付款*/
 	private final int ORDER_NO_PAY = 1;
@@ -140,12 +151,10 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		goodsTypeTv = (TextView) findViewById(R.id.goods_type);
 		goodsIconIv = (ImageView) findViewById(R.id.goods_icon);
 		
-		orderNameEd = (EditText) findViewById(R.id.item4).findViewById(R.id.value);
-		orderMobile = (EditText) findViewById(R.id.item5).findViewById(R.id.value);
-		orderPassport = (EditText) findViewById(R.id.item6).findViewById(R.id.value);
-
+        mMoneyView = (TextView)findViewById(R.id.money);
+        mDiscountView = (TextView)findViewById(R.id.discount);
         mActionButton = (Button)findViewById(R.id.action_button);
-        mActionButton.setText("立即付款");
+        mActionButton.setText(R.string.pay);
         mActionButton.setOnClickListener(this);
 	}
 	
@@ -168,6 +177,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, username,mobile,passport);
 	        showProgress();
 	    }
+        mControl.getGoodsFromNetAsyn(goodsId);
 	}
 
 	/**
@@ -187,16 +197,49 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         merchantNameTv.setText(hospInfo.getHospName());
         merchantLocationTv.setText(hospInfo.getAddr());
         mobileTv.setText(hospInfo.getTel());
+        mDiscountView.setText(
+                mDiscountMoney > 0 ? getString(R.string.discount_money, mDiscountMoney) : null);
+        int payMoney = Integer.valueOf(orderDataList.getGoodsPay()) - mDiscountMoney;
+        mMoneyView.setText(getString(R.string.ren_ming_bi) + String.valueOf(payMoney));
         
         List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
-        int i = 0;
-        for(Order.DataDetail.OrderInfo info:orderInfos){
-        	if(i<3){
-        		initItem((ViewGroup)findViewById(res[i]), info,false,i);
-        	}else{
-        		initItem((ViewGroup)findViewById(res[i]), info,true,i);
-        	}
-            i++;
+        ViewGroup infoListLayout = (ViewGroup)findViewById(R.id.order_info_list_layout);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        int size = orderInfos.size();
+        for (int i = 0; i < size; i++) {
+            ValuePreference preference = (ValuePreference)inflater
+                    .inflate(R.layout.value_preference, infoListLayout, false);
+            infoListLayout.addView(preference);
+            OrderInfo info = orderInfos.get(i);
+            preference.setTitle(info.getTitle());
+            preference.setValue("0".equals(info.getValue()) ? null : info.getValue());
+            preference.setEditable(false);
+            switch (i) {
+                case 1:
+                    preference.setId(R.id.item2);
+                    preference.setOnClickListener(this);
+                    orderPreserve = preference;
+                    break;
+                case 2:
+                    preference.setEditable(true);
+                    preference.setHint("请输入姓名");
+                    orderNameEd = preference;
+                    break;
+                case 3:
+                    preference.setEditable(true);
+                    preference.setHint("请输入电话");
+                    orderMobile = preference;
+                    break;
+                case 4:
+                    preference.setEditable(true);
+                    preference.setHint("请输入护照号");
+                    orderPassport = preference;
+                    break;
+                case 5:
+                    preference.setId(R.id.item6);
+                    preference.setOnClickListener(this);
+                    orderCoupon = preference;
+            }
         }
 	}
 	/**
@@ -264,9 +307,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	}
 	
 	private void setEditEnable(boolean enable){
-		orderNameEd.setEnabled(enable);
-		orderMobile.setEnabled(enable);
-		orderPassport.setEnabled(enable);
+        orderNameEd.setEditable(enable);
+        orderMobile.setEditable(enable);
+        orderPassport.setEditable(enable);
 	}
 	
 	// ====================================  CallBack =========================================================
@@ -289,41 +332,19 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		setStatus(order);
 	}
 	
-	private void initItem(ViewGroup viewItem , Order.DataDetail.OrderInfo info,boolean enable,int i){
-		android.util.Log.d("111", "info = "+info);
-		TextView title = (TextView) viewItem.findViewById(R.id.title);
-		EditText value = (EditText) viewItem.findViewById(R.id.value);
-		title.setText(info.getTitle());
-		value.setEnabled(enable);
-		
-		if(i==3){ //客户姓名
-			if(TextUtils.isEmpty(info.getValue())){
-				value.setHint("请输入姓名");
-			}else{
-				value.setText(info.getValue());
-			}
-		}else if(i==4){ //客户电话
-			if(TextUtils.isEmpty(info.getValue())||"0".equals(info.getValue())){
-				value.setHint("请输入电话");
-			}else{
-				value.setText(info.getValue());
-			}
-		}else if(i==5){ //护照号
-			if(TextUtils.isEmpty(info.getValue())||"0".equals(info.getValue())){
-				value.setHint("请输入护照号");
-			}else{
-				value.setText(info.getValue());
-			}
-		}else{
-			value.setText(info.getValue());
-		}
-	}
-	
-	public void addUserOrderAsynExceptionCallBack(){
+    public void addUserOrderAsynExceptionCallBack() {
 		Toast.makeText(this, "订单生成失败", 0).show();
 		rootView.setVisibility(View.GONE);
 	}
 	
+    public void getGoodsFromNetAsynCallback() {
+
+    }
+
+    public void getGoodsFromNetAsynExceptionCallback() {
+
+    }
+
 	// ====================================  Progress =========================================================
 	private void showProgress(){
 		mLoadingView.setVisibility(View.VISIBLE);
@@ -351,6 +372,13 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
             case R.id.action_button:
                 PayOrderActivity.startActivity(this, mControl.getModel().getOrder());
                 break;
+            case R.id.item2:
+                // TODO 预约
+                break;
+            case R.id.item6:
+                // 优惠券
+                OrderCouponActivity.startActivity4Result(this, "",(ArrayList)mControl.getModel().getGoods().getAvailCoupons());
+                break;
 		}
 	}
 	
@@ -365,7 +393,13 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 				tv.setOnClickListener(null);
 			}
 			break;
-
+		    case OrderCouponActivity.REQUEST_COUPON:
+		        if (resultCode == RESULT_OK) {
+                    mCouponId = data.getStringExtra("couponid");
+                    mDiscountMoney = Integer.valueOf(data.getStringExtra("discount"));
+                    orderCoupon.setValue(String.valueOf(mDiscountMoney));
+		        }
+		        break;
 		default:
 			break;
 		}

@@ -14,6 +14,7 @@ import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.widget.ValuePreference;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,7 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,23 +45,27 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     private TextView hospitalTv;
     private TextView localTv;
     private TextView priceTv;
-    private TextView priceMarketTv ;
     private View buildOrder;
     private View itemGoodsLayout;
     
     private String goodsId; //产品id
+    private Goods goods; // 产品id
+
     private TitleBar mTitlebar;
     
-    private EditText mUsername;
-    private EditText mUserMobile;
-    private EditText mUserPassport;
+    private ValuePreference mUsername;
+    private ValuePreference mUserMobile;
+    private ValuePreference mUserPassport;
     
     private View mDiscountLayout;
     
     private TextView mDiscountMoneyTxt;
     private TextView merchantMobile;
     
-    private View commitOrder;
+    private TextView mMoneyView;
+    private TextView mDiscountView;
+    private Button commitOrder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,17 +91,13 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         hospitalTv = (TextView)findViewById(R.id.merchant_name);
         localTv = (TextView)findViewById(R.id.merchant_location);
         priceTv = (TextView)itemGoodsLayout.findViewById(R.id.order_amount);
-        priceMarketTv = (TextView) findViewById(R.id.origin_price);
         
-        TextView title = (TextView) findViewById(R.id.item1).findViewById(R.id.title);     
-        title.setText("客户姓名");
-        title = (TextView) findViewById(R.id.item2).findViewById(R.id.title);     
-        title.setText("客户电话");
-        title = (TextView) findViewById(R.id.item3).findViewById(R.id.title);     
-        title.setText("护照号");
-        mUsername = (EditText) findViewById(R.id.item1).findViewById(R.id.value);     
-        mUserMobile = (EditText) findViewById(R.id.item2).findViewById(R.id.value);     
-        mUserPassport = (EditText) findViewById(R.id.item3).findViewById(R.id.value);     
+        mUsername = (ValuePreference)findViewById(R.id.item1);
+        mUsername.setTitle("客户姓名");
+        mUserMobile = (ValuePreference)findViewById(R.id.item2);
+        mUserMobile.setTitle("客户电话");
+        mUserPassport = (ValuePreference)findViewById(R.id.item3);
+        mUserPassport.setTitle("护照号");
         
         goodsId = getIntent().getStringExtra("goods_id");
         
@@ -104,8 +105,12 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         mDiscountLayout.setOnClickListener(this);
         mDiscountMoneyTxt = (TextView) findViewById(R.id.discount_money_txt);
         merchantMobile = (TextView) findViewById(R.id.merchant_mobile);
-        
-        commitOrder = findViewById(R.id.commit_order);
+
+        View paymentLayout = findViewById(R.id.payment_info_bottom_layout);
+        mMoneyView = (TextView)paymentLayout.findViewById(R.id.money);
+        mDiscountView = (TextView)paymentLayout.findViewById(R.id.discount);
+        commitOrder = (Button)paymentLayout.findViewById(R.id.action_button);
+        commitOrder.setText(R.string.pay);
         commitOrder.setOnClickListener(this);
     }
     
@@ -116,19 +121,20 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     // =========================================== CallBack =====================================================
     public void getGoodsFromNetAsynCallback(){
         UserInfo userInfo = UserUtil.getUser().getUserInfo();
-        mUsername.setText(userInfo.getUsername());
-        mUserMobile.setText(userInfo.getMobile());
-        mUserPassport.setText(userInfo.getIdcard());
+        mUsername.setValue(userInfo.getUsername());
+        mUserMobile.setValue(userInfo.getMobile());
+        mUserPassport.setValue(userInfo.getIdcard());
         
-        Goods goods = mControl.getModel().getGoods();
+        goods = mControl.getModel().getGoods();
         
         ImageLoader.getInstance().displayImage(goods.getFileUrl(),iconIv );
         titleTv .setText(goods.getTitle());
         hospitalTv.setText(goods.getHospName());
-        priceTv.setText(getResources().getString(R.string.ren_ming_bi)+" "+ goods.getPriceXm());
+        priceTv.setText(getString(R.string.price, Integer.valueOf(goods.getPriceXm())));
         localTv.setText(goods.getCityName());
-        priceMarketTv.setText("原价"+goods.getPriceMarket()+"元");
         merchantMobile.setText(goods.getHospTel());
+        mMoneyView.setText(
+                getString(R.string.price, Integer.valueOf(goods.getPriceXm()) - mDiscount));
         
         List<Goods.Mark> marks = goods.getMarks();
         int i = 0;
@@ -189,18 +195,17 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
          	//优惠卷
             OrderCouponActivity.startActivity4Result(this, "",(ArrayList)mControl.getModel().getGoods().getAvailCoupons());
             break;
-        case R.id.commit_order:
-            if(!PayUtils.checkoutInputData(mUsername.getText().toString(),
-                    mUserMobile.getText().toString(), 
-                    mUserPassport.getText().toString())){
-                Toast.makeText(this, "请您完整的输入您的信息", 0).show();
-                return;
-            }
-            OrderDetailsActivity.startActivity(this, goodsId, mUsername
-                    .getText().toString(), mUserMobile.getText().toString(),
-                    mUserPassport.getText().toString());
-            finish();
-        	break;
+            case R.id.action_button:
+                String name = mUsername.getValue().toString();
+                String mobile = mUserMobile.getValue().toString();
+                String passport = mUserPassport.getValue().toString();
+                if (!PayUtils.checkoutInputData(name, mobile, passport)) {
+                    Toast.makeText(this, "请您完整的输入您的信息", 0).show();
+                    return;
+                }
+                OrderDetailsActivity.startActivity(this, goodsId, name, mobile, passport);
+                finish();
+                break;
         default:
             break;
         }
@@ -208,13 +213,22 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
     
     // =========================================== 业务 =====================================================
     private String mCouponid = "";
+
+    private int mDiscount;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == RESULT_OK){
+        if (requestCode == OrderCouponActivity.REQUEST_COUPON && resultCode == RESULT_OK) {
             mCouponid = data.getStringExtra("couponid");
-            String discount = data.getStringExtra("discount");
-            mDiscountMoneyTxt.setText(discount);
+            mDiscount = Integer.valueOf(data.getStringExtra("discount"));
+            mDiscountMoneyTxt.setText(String.valueOf(mDiscount));
+            mDiscountView
+                    .setText(mDiscount > 0 ? getString(R.string.discount_money, mDiscount) : null);
+            if (goods != null) {
+                mMoneyView.setText(
+                        getString(R.string.price, Integer.valueOf(goods.getPriceXm()) - mDiscount));
+            }
         }
     }
 }

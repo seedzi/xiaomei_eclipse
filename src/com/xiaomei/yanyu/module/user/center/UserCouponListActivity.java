@@ -30,10 +30,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class UserCouponListActivity extends Activity
         implements OnClickListener, OnItemClickListener {
@@ -92,9 +92,6 @@ public class UserCouponListActivity extends Activity
         View checkButton = mCheckLayout.findViewById(R.id.check_coupon);
         checkButton.setOnClickListener(this);
 
-        mAdapter.add(new Coupon());
-        mAdapter.add(new Coupon());
-        mAdapter.add(new Coupon());
         mQueue = XiaoMeiApplication.getInstance().getQueue();
         mCouponNumberEdit = (EditText) findViewById(R.id.coupon_number);
         initData();

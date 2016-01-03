@@ -1,7 +1,6 @@
 package com.xiaomei.yanyu.activity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -50,6 +49,8 @@ import android.widget.Toast;
 
 public class OrderCouponActivity extends Activity {
 
+    public static final int REQUEST_COUPON = 0;
+
     public static void startActivity(Activity ac, String couponId) {
         ac.startActivity(new Intent(ac, OrderCouponActivity.class).putExtra("couponId", couponId));
         ac.overridePendingTransition(R.anim.activity_slid_out_no_change,
@@ -60,7 +61,7 @@ public class OrderCouponActivity extends Activity {
     	Intent intent = new Intent(ac, OrderCouponActivity.class);
     	intent.putExtra("couponId", couponId);
     	intent.putExtra("data", data);
-        ac.startActivityForResult(intent,1);
+        ac.startActivityForResult(intent, REQUEST_COUPON);
         ac.overridePendingTransition(R.anim.activity_slid_out_no_change,
                 R.anim.activity_slid_in_from_right);
     }

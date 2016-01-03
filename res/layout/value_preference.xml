@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xiaomei.yanyu.widget.ValuePreference xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:background="@color/color_white" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="@style/TextAppearance.Preference" />
+
+    <EditText
+        android:id="@+id/value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/title"
+        android:gravity="right"
+        android:background="@null"
+        android:textAppearance="@style/TextAppearance.Preference.Value" />
+</com.xiaomei.yanyu.widget.ValuePreference>
