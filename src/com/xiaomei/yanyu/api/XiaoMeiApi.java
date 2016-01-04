@@ -12,24 +12,17 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.api.builder.AddUserOrderBuilder;
-import com.xiaomei.yanyu.api.builder.HomeBuilder;
-import com.xiaomei.yanyu.api.builder.RecommendSharesBuilder;
-import com.xiaomei.yanyu.api.builder.RecommendSharesDetailBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
-import com.xiaomei.yanyu.api.builder.MerchantBuilder;
+import com.xiaomei.yanyu.api.builder.HomeBuilder;
 import com.xiaomei.yanyu.api.builder.ListCommentBuilder;
 import com.xiaomei.yanyu.api.builder.ListOrderBuilder;
-import com.xiaomei.yanyu.api.builder.LoginOutBuilder;
 import com.xiaomei.yanyu.api.builder.MallListBuilder;
+import com.xiaomei.yanyu.api.builder.MerchantBuilder;
 import com.xiaomei.yanyu.api.builder.NetResultBuilder;
-import com.xiaomei.yanyu.api.builder.OrderCommentBuilder;
+import com.xiaomei.yanyu.api.builder.RecommendSharesBuilder;
+import com.xiaomei.yanyu.api.builder.RecommendSharesDetailBuilder;
 import com.xiaomei.yanyu.api.builder.SectionBuilder;
 import com.xiaomei.yanyu.api.builder.SingleGoodsBuilder;
 import com.xiaomei.yanyu.api.builder.UploadFIleBuilder;
@@ -50,23 +43,22 @@ import com.xiaomei.yanyu.bean.CommentItem;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.bean.HomeItem;
-import com.xiaomei.yanyu.bean.LoginResult;
 import com.xiaomei.yanyu.bean.Mall;
 import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
-import com.xiaomei.yanyu.bean.Order2;
 import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.bean.RecommendSharesDetail;
 import com.xiaomei.yanyu.bean.Section;
 import com.xiaomei.yanyu.bean.User;
-import com.xiaomei.yanyu.bean.UserShare;
-import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.bean.UserMessage;
+import com.xiaomei.yanyu.bean.UserShare;
 import com.xiaomei.yanyu.bean.WechatBean;
 import com.xiaomei.yanyu.util.FileUtils;
 import com.xiaomei.yanyu.util.Security;
 import com.xiaomei.yanyu.util.UserUtil;
+
+import android.content.Context;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -492,54 +484,43 @@ public class XiaoMeiApi {
 	/**
 	 * 新增订单接口
 	 */
-	public Order addUserOrder(String userid,String goodsId,String username,String mobile,String passport,String token,String action)
+    public Order addUserOrder(String userid, String goodsId, String username, String mobile,
+            String passport, String counponId, String token, String action)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
+        NameValuePair[] signedValues = AbstractHttpApi.signValuePairs(
+                new BasicNameValuePair("userid", userid),
 				new BasicNameValuePair("goods_id", goodsId),
 				new BasicNameValuePair("username", username),
 				new BasicNameValuePair("mobile", mobile),
 				new BasicNameValuePair("passport", passport),
+                new BasicNameValuePair("couponid", counponId),
 				new BasicNameValuePair("action",action),
 				new BasicNameValuePair("token", token),
-				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.addUserOrderUrl(),
-				values[0],
-				values[1],
-				values[2],
-				values[3],
-				values[4],
-				values[5],
-				values[6],
-				values[7],
-				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+                new BasicNameValuePair("uptime",
+                        String.valueOf(System.currentTimeMillis() / 1000)));
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.COUPON_ORDER, signedValues);
 		return mHttpApi.doHttpRequestObject(httpPost, new AddUserOrderBuilder());
 	}
 	
 	/**
-	 * 新增订单接口
-	 */
-	public Order updateUserOrder(String orderId,String userid,String goodsId,String username,String mobile,String passport,String token,String action)
+     * 修改订单接口
+     */
+    public Order updateUserOrder(String orderId, String userid, String goodsId, String username,
+            String mobile, String passport, String counponId, String token, String action)
 		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
+        NameValuePair[] signedValues = AbstractHttpApi.signValuePairs(
+                new BasicNameValuePair("userid", userid),
 				new BasicNameValuePair("orderid", orderId),
 				new BasicNameValuePair("goods_id", goodsId),
 				new BasicNameValuePair("username", username),
 				new BasicNameValuePair("mobile", mobile),
 				new BasicNameValuePair("passport", passport),
+                new BasicNameValuePair("couponid", counponId),
 				new BasicNameValuePair("action",action),
 				new BasicNameValuePair("token", token),
-				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.addUserOrderUrl(),
-				values[0],
-				values[1],
-				values[2],
-				values[3],
-				values[4],
-				values[5],
-				values[6],
-				values[7],
-				values[8],
-				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
+                new BasicNameValuePair("uptime",
+                        String.valueOf(System.currentTimeMillis() / 1000)));
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.COUPON_ORDER, signedValues);
 		return mHttpApi.doHttpRequestObject(httpPost, new AddUserOrderBuilder());
 	}
 	
@@ -551,7 +532,7 @@ public class XiaoMeiApi {
 		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
 				new BasicNameValuePair("token", token),
 				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-		HttpPost httpPost = mHttpApi.createHttpPost(urlManager.getUserOrderUrl(),
+        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.MY_COUPON_ORDER,
 				values[0],
 				values[1],
 				values[2],

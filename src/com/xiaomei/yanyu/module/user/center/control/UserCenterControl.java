@@ -4,28 +4,24 @@ import java.util.List;
 
 import org.apache.cordova.api.LOG;
 
-import android.app.Activity;
-import android.text.TextUtils;
-
 import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.Payment.WeiXinPayManager;
-import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.User;
-import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.User.UserInfo;
+import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.WechatBean;
 import com.xiaomei.yanyu.module.user.model.UserModel;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.yuekuapp.BaseControl;
 import com.yuekuapp.annotations.AsynMethod;
 import com.yuekuapp.proxy.MessageProxy;
+
+import android.app.Activity;
+import android.text.TextUtils;
 
 public class UserCenterControl extends BaseControl {
 	
@@ -48,12 +44,14 @@ public class UserCenterControl extends BaseControl {
 	}
 	
 	@AsynMethod
-	public void addUserOrderAsyn(User user,String goodsId, String username,String mobile,String passport){
+    public void addUserOrderAsyn(User user, String goodsId, String username, String mobile,
+            String passport, String couponId) {
 		UserInfo userInfo = user.getUserInfo();
 		String userid = userInfo.getUserid();
 		String token = user.getToken();
 		try {
-			Order order = XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId, username, mobile, passport, token,"add");
+            Order order = XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId,
+                    username, mobile, passport, couponId, token, "add");
 			if(DebugRelease.isDebug)
 			    android.util.Log.d("111", "order = " + order);
 			mModel.setOrder(order);
@@ -68,7 +66,8 @@ public class UserCenterControl extends BaseControl {
 	}
 	
     @AsynMethod
-    public void updateUserOrder2ServerAsyn(String orderId,String username, String goodsId, String passport,String mobile) {
+    public void updateUserOrder2ServerAsyn(String orderId, String username, String goodsId,
+            String passport, String mobile, String couponId) {
         if(DebugRelease.isDebug)
             android.util.Log.d("111", "orderId = " + orderId);
         String token = UserUtil.getUser().getToken();
@@ -77,7 +76,8 @@ public class UserCenterControl extends BaseControl {
            Order order = XiaoMeiApplication
                     .getInstance()
                     .getApi()
-                    .updateUserOrder(orderId,userid, goodsId, username, mobile, passport,
+.updateUserOrder(orderId, userid,
+                    goodsId, username, mobile, passport, couponId,
                             token,"update");
            if(order!=null){
         	   mModel.setOrder(order);

@@ -150,7 +150,7 @@ public class OrderCouponActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
-        	String couponid = mCouponAdapter.getItem(position).couponid;
+            String couponid = mCouponAdapter.getItem(position).id;
             String discount = mCouponAdapter.getItem(position).discount;
             getResult2Back(couponid, discount);
         }

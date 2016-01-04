@@ -9,6 +9,9 @@ public class HttpUrlManager {
 	private static final String SERVER = HOST + "/server";
 	
     private static final String ACTION = SERVER + "/action";
+
+    // 优惠券的新版接口
+    private static final String COUPON = SERVER + "/coupon";
 	
 	/**产品详情*/
 	public static String GOODS_DETAIL_URL  = "http://z.drxiaomei.com/goods.php";
@@ -30,6 +33,12 @@ public class HttpUrlManager {
     public static final String AREA_MERCHANT_LIST = BEE + "/city_hosp.php";
     public static final String GOODS_TOPIC_LIST = BEE + "/hist_prod.php";;
     public static final String MERCHANT_TOPIC_LIST = BEE + "/hist_hosp.php";;
+
+    // 获取用户订单列表
+    public static final String MY_COUPON_ORDER = COUPON + "/my_coupon_order.php";
+
+    // 新增/修改用户订单
+    public static final String COUPON_ORDER = COUPON + "/coupon_order.php";
 
     static{
 		if(DebugRelease.isDebug){

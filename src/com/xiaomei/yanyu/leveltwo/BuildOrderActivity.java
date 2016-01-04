@@ -203,7 +203,8 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
                     Toast.makeText(this, "请您完整的输入您的信息", 0).show();
                     return;
                 }
-                OrderDetailsActivity.startActivity(this, goodsId, name, mobile, passport);
+                OrderDetailsActivity.startActivity(this, goodsId, name, mobile, passport,
+                        mCouponid);
                 finish();
                 break;
         default:

@@ -62,12 +62,14 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	 * @param context
 	 * @param goodsId  商品id
 	 */
-	public static void startActivity(Activity ac,String goodsId,String username,String mobile,String passport){
+    public static void startActivity(Activity ac, String goodsId, String username, String mobile,
+            String passport, String couponId) {
 		Intent intent = new Intent(ac,OrderDetailsActivity.class);
 		 intent.putExtra("goods_id", goodsId);
 	      intent.putExtra("username", username);
 	      intent.putExtra("mobile", mobile);
 	      intent.putExtra("passport", passport);
+        intent.putExtra("coupon_id", couponId);
 		 ac.startActivity(intent);
 		 ac.overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_in_from_right);
 	}
@@ -174,7 +176,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	        username = getIntent().getStringExtra("username");
 	        mobile = getIntent().getStringExtra("mobile");
 	        passport = getIntent().getStringExtra("passport");
-	        mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, username,mobile,passport);
+            mCouponId = getIntent().getStringExtra("coupon_id");
+            mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, username, mobile, passport,
+                    mCouponId);
 	        showProgress();
 	    }
         mControl.getGoodsFromNetAsyn(goodsId);
