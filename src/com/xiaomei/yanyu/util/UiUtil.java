@@ -1,6 +1,5 @@
 package com.xiaomei.yanyu.util;
 
-import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.xiaomei.yanyu.R;
 
 import android.app.Activity;
@@ -75,5 +74,10 @@ public class UiUtil {
     public static void hideSoftInput(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+    }
+
+    public static void overridePendingTransition(Activity activity) {
+        activity.overridePendingTransition(R.anim.activity_slid_out_no_change,
+                R.anim.activity_slid_in_from_right);
     }
 }

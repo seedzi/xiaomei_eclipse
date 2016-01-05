@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.xiaomei.yanyu.util.DateUtils;
+
 /*
 {
     "data_detail": {
@@ -154,25 +156,55 @@ public class Order implements Serializable{
 		}
 		
 		public static class OrderInfo implements Serializable{
-			private String value;
+		    public static final String[] sTitles = new String[]{
+		            "订单号","预约日期","客户姓名","客户电话","护照号","优惠折扣","支付日期"
+		    };
+
+            public static final int TYPE_ORDER_ID = 0;
+            public static final int TYPE_PRESERVE_DATE = 1;
+            public static final int TYPE_USER_NAME = 2;
+            public static final int TYPE_MOBILE = 3;
+            public static final int TYPE_PASSPORT = 4;
+            public static final int TYPE_COUPON_ID = 5;
+            public static final int TYPE_PAYMENT_DATE = 6;
+
+            private String value;
 			private String title;
+			private int type = -1;
 			public String getValue() {
 				return value;
 			}
 			public void setValue(String value) {
 				this.value = value;
 			}
+            public String getDisplayValue() {
+                if (type == TYPE_PRESERVE_DATE || type == TYPE_PAYMENT_DATE) {
+                    return (value != null && !value.isEmpty()) ?
+                            DateUtils.formateDate(value) : value;
+                }
+                return "0".equals(value) ? null : value;
+            }
 			public String getTitle() {
 				return title;
 			}
 			public void setTitle(String title) {
 				this.title = title;
+                for (int i = 0; i < sTitles.length; i++) {
+                    if (sTitles[i].equals(title)) {
+                        type = i;
+                        break;
+                    }
+                }
 			}
+
+            public int getType() {
+                return type;
+            }
+
 			@Override
 			public String toString() {
 				return "OrderInfo [value=" + value + ", title=" + title + "]";
 			}
-			
 		}
 		
 		public static class HospInfo implements Serializable{
@@ -209,6 +241,15 @@ public class Order implements Serializable{
 			return "DataDetail [goodsInfo=" + goodsInfo + ", orderInfos="
 					+ orderInfos + ", hospInfo=" + hospInfo + "]";
 		}
+
+        public OrderInfo findOrderInfo(int type) {
+            for (OrderInfo orderInfo : orderInfos) {
+                if (orderInfo.type == type) {
+                    return orderInfo;
+                }
+            }
+            return null;
+        }
 		
 		
 	}

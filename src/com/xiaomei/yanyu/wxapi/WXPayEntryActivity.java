@@ -11,9 +11,9 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.Payment.WeiXinPayManager;
+import com.xiaomei.yanyu.activity.ResultActivity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,8 +60,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 		String msg = "支付失败";
 		switch (resp.errCode) {
         case 0:
-            msg = "支付成功";
-            break;
+                ResultActivity.showPaymentResult(this, null, true);
         case -1:
             msg = "支付失败";
             

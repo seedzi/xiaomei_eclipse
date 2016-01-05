@@ -220,6 +220,11 @@
             android:theme="@style/Theme"
             android:name=".activity.PayOrderActivity"
             android:screenOrientation="portrait"/>
+        <!-- 结果页面 -->
+        <activity 
+            android:theme="@style/Theme"
+            android:name=".activity.ResultActivity"
+            android:screenOrientation="portrait"/>
         <!-- 测试的test Activity -->
 		<activity
 		    android:name="com.xiaomei.yanyu.levelone.TestActivity" 

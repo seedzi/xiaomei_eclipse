@@ -13,12 +13,28 @@ import android.text.TextUtils;
 
 public class DateUtils {
 	
-	public static String formateDate(long time){
+    private static final long DATE_QUERY_FACTOR = 1000;
+
+    public static String formateDate(long time) {
 		android.util.Log.d("111", "time = " + time + ",System = " + System.currentTimeMillis());
 		SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd"); //格式化当前系统日期
 		String dateTime = dateFm.format(time);
 		return dateTime;
 	}
+
+    public static String formateDate(String queryParameter) {
+        return formateDate(Long.valueOf(queryParameter) * DATE_QUERY_FACTOR);
+    }
+
+    public static String formatQueryParameter(long timeMillis) {
+        return String.valueOf(timeMillis / DATE_QUERY_FACTOR);
+    }
+
+    public static long getTimeInMillis(int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, monthOfYear, dayOfMonth);
+        return calendar.getTimeInMillis();
+    }
 
 	public static String getTextByTime(Context context, Long time,
             int formatId) {

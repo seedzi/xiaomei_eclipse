@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/preserve_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:gravity="center"
+        android:textColor="#8ab6ff"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/view_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#aaaaaa"
+            android:text="@string/view_order"
+            android:background="@null" />
+
+        <Space
+            android:layout_width="108dp"
+            android:layout_height="1dp"/>
+
+        <Button
+            android:id="@+id/view_main_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8ab6ff"
+            android:text="@string/view_main_page"
+            android:background="@null" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textColor="#cdcdcd"
+        android:text="@string/waring_reset_preserve" />
+
+    <Button
+        android:id="@+id/consult_online"
+        style="@style/Widget.Button.Single"
+        android:layout_marginTop="12dp"
+        android:text="@string/consult_online" />
+</LinearLayout>

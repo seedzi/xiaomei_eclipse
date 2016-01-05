@@ -106,6 +106,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private String mobile;//手机号
 	private String mCouponId; // 优惠券ID
 
+    private int mPayMoney; // 支付金额
     private int mDiscountMoney; // 优惠金额
 
 	// =============================================================================================
@@ -203,43 +204,42 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         mobileTv.setText(hospInfo.getTel());
         mDiscountView.setText(
                 mDiscountMoney > 0 ? getString(R.string.discount_money, mDiscountMoney) : null);
-        int payMoney = Integer.valueOf(orderDataList.getGoodsPay()) - mDiscountMoney;
-        mMoneyView.setText(getString(R.string.ren_ming_bi) + String.valueOf(payMoney));
+        mPayMoney = Integer.valueOf(orderDataList.getGoodsPay()) - mDiscountMoney;
+        mMoneyView.setText(getString(R.string.price, mPayMoney));
         
         List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
         ViewGroup infoListLayout = (ViewGroup)findViewById(R.id.order_info_list_layout);
         LayoutInflater inflater = LayoutInflater.from(this);
         int size = orderInfos.size();
-        for (int i = 0; i < size; i++) {
+        for (OrderInfo info : orderInfos) {
             ValuePreference preference = (ValuePreference)inflater
                     .inflate(R.layout.value_preference, infoListLayout, false);
             infoListLayout.addView(preference);
-            OrderInfo info = orderInfos.get(i);
             preference.setTitle(info.getTitle());
-            preference.setValue("0".equals(info.getValue()) ? null : info.getValue());
+            preference.setValue(info.getDisplayValue());
             preference.setEditable(false);
-            switch (i) {
-                case 1:
+            switch (info.getType()) {
+                case OrderInfo.TYPE_PRESERVE_DATE:
                     preference.setId(R.id.item2);
                     preference.setOnClickListener(this);
                     orderPreserve = preference;
                     break;
-                case 2:
+                case OrderInfo.TYPE_USER_NAME:
                     preference.setEditable(true);
                     preference.setHint("请输入姓名");
                     orderNameEd = preference;
                     break;
-                case 3:
+                case OrderInfo.TYPE_MOBILE:
                     preference.setEditable(true);
                     preference.setHint("请输入电话");
                     orderMobile = preference;
                     break;
-                case 4:
+                case OrderInfo.TYPE_PASSPORT:
                     preference.setEditable(true);
                     preference.setHint("请输入护照号");
                     orderPassport = preference;
                     break;
-                case 5:
+                case OrderInfo.TYPE_COUPON_ID:
                     preference.setId(R.id.item6);
                     preference.setOnClickListener(this);
                     orderCoupon = preference;
@@ -374,7 +374,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		int id = v.getId();
 		switch (id) {
             case R.id.action_button:
-                PayOrderActivity.startActivity(this, mControl.getModel().getOrder());
+                PayOrderActivity.startActivity(this, mControl.getModel().getOrder(), mPayMoney);
                 break;
             case R.id.item2:
                 // TODO 预约

@@ -26,7 +26,8 @@
             android:id="@+id/money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical" />
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/color_main" />
     </FrameLayout>
 
     <TextView
