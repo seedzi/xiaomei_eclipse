@@ -1,6 +1,12 @@
 package com.xiaomei.yanyu.module.user.center;
 
-import java.util.List;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.bean.UserMessage;
+import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,25 +18,15 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.bean.UserMessage;
-import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
-import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class MessageActivity extends AbstractActivity<UserCenterControl> implements OnScrollListener{
 	
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,MessageActivity.class);
 		ac.startActivity(intent);
-		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private TitleBar mTitleBar;

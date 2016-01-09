@@ -12,7 +12,6 @@ import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
-import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -36,7 +35,7 @@ public class RecommendSharesDetailActivity extends Activity implements LoaderMan
 		Intent intent = new Intent(ac,RecommendSharesDetailActivity.class);
 		intent.putExtra("id", id);
 		ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private static final int SHARES_DETAIL_LOADER = 0;

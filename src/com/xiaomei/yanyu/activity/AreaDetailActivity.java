@@ -26,6 +26,7 @@ import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.leveltwo.GoodsAdapter;
 import com.xiaomei.yanyu.util.IntentUtil;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.Activity;
@@ -73,12 +74,12 @@ public class AreaDetailActivity extends Activity implements LoaderCallbacks<Obje
     private PageIndicator mIndicator;
 
     public static void startActivity(Activity activity, long id, String name, String image, String description) {
-        activity.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
         activity.startActivity(new Intent(activity, AreaDetailActivity.class)
                 .putExtra(IntentUtil.EXTRA_AREA_ID, id)
                 .putExtra(IntentUtil.EXTRA_AREA_NAME, name)
                 .putExtra(IntentUtil.EXTRA_AREA_IMAGE, image)
                 .putExtra(IntentUtil.EXTRA_AREA_DESCRIPTION, description));
+        UiUtil.overridePendingTransition(activity);
     }
 
     @Override

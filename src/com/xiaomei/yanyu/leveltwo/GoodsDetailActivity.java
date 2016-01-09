@@ -15,6 +15,7 @@ import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
 import com.xiaomei.yanyu.module.user.LoginAndRegisterActivity;
 import com.xiaomei.yanyu.share.ShareManager;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.ShareDialog;
 import com.xiaomei.yanyu.widget.TitleBar;
@@ -42,7 +43,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		intent.putExtra("url", url);
 		intent.putExtra("title", title);
 		ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	/**
 	 * @param ac
@@ -58,7 +59,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 	    intent.putExtra("content", content);
 		intent.putExtra("img", imgUrl);
 		ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 
 	/**
@@ -77,7 +78,7 @@ public class GoodsDetailActivity extends AbstractActivity<LeveltwoControl> imple
 		intent.putExtra("img", imgUrl);
 		intent.putExtra("goodsid", goodsid);
 		ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private CordovaWebView mCordovaWebView;

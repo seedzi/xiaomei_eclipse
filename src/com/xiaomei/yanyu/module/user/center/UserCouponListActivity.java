@@ -18,6 +18,7 @@ import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Coupon;
 import com.xiaomei.yanyu.util.Security;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
@@ -41,8 +42,7 @@ public class UserCouponListActivity extends Activity
     public static void startActivity(Activity ac) {
         Intent intent = new Intent(ac, UserCouponListActivity.class);
         ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right,
-                R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
     }
 
     private CouponAdapter mAdapter;

@@ -12,6 +12,7 @@ import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.ValuePreference;
@@ -37,7 +38,7 @@ public class BuildOrderActivity extends AbstractActivity<UserCenterControl> impl
         Intent intent = new Intent(ac,BuildOrderActivity.class);
         intent.putExtra("goods_id", goodsId);
         ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_in_from_right);
+        UiUtil.overridePendingTransition(ac);
     }
     
     private ImageView iconIv; 

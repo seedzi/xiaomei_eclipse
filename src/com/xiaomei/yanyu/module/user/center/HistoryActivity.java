@@ -1,6 +1,10 @@
 package com.xiaomei.yanyu.module.user.center;
 
-import java.util.List;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.bean.HistroyItem;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,23 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.bean.HistroyItem;
-import com.xiaomei.yanyu.widget.TitleBar;
 
 public class HistoryActivity extends AbstractActivity {
 	
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,HistoryActivity.class);
 		ac.startActivity(intent);
-		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 
 	private TitleBar mTitleBar;

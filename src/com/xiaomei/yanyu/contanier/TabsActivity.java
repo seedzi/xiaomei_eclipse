@@ -3,6 +3,7 @@ package com.xiaomei.yanyu.contanier;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.Activity;
@@ -22,7 +23,7 @@ public class TabsActivity extends  Activity {
     public static void startActivity(Activity ac){
         Intent intent = new Intent(ac,TabsActivity.class);
         ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
     }
 
     private TitleActionBar mTitleBar;
@@ -77,6 +78,7 @@ public class TabsActivity extends  Activity {
         return mTitleBar;
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     };

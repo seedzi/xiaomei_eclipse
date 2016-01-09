@@ -40,7 +40,7 @@ public class TopicDetailSlideActivity extends Activity implements ViewPager.OnPa
 		intent.putExtra("img_url", img_url);
 		intent.putExtra("viewcount", viewcount);
 		ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private TitleActionBar mTitleBar;	

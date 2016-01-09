@@ -4,6 +4,29 @@ package com.xiaomei.yanyu.module.user;
 import java.util.Map;
 import java.util.Set;
 
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.xiaomei.yanyu.AbstractActivity;
+import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.bean.User;
+import com.xiaomei.yanyu.module.user.control.UserControl;
+import com.xiaomei.yanyu.util.InputUtils;
+import com.xiaomei.yanyu.util.MobileUtil;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.util.YanYuUtils;
+import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.widget.TitleBar.Listener;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,35 +44,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeUser;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.FetchUserListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.umeng.socialize.sso.UMSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.xiaomei.yanyu.R;
-import com.xiaomei.yanyu.AbstractActivity;
-import com.xiaomei.yanyu.XiaoMeiApplication;
-import com.xiaomei.yanyu.api.exception.XiaoMeiCredentialsException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiIOException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiJSONException;
-import com.xiaomei.yanyu.api.exception.XiaoMeiOtherException;
-import com.xiaomei.yanyu.bean.User;
-import com.xiaomei.yanyu.contanier.TabsActivity;
-import com.xiaomei.yanyu.module.user.control.UserControl;
-import com.xiaomei.yanyu.util.InputUtils;
-import com.xiaomei.yanyu.util.MobileUtil;
-import com.xiaomei.yanyu.util.UserUtil;
-import com.xiaomei.yanyu.util.YanYuUtils;
-import com.xiaomei.yanyu.widget.TitleBar;
-import com.xiaomei.yanyu.widget.TitleBar.Listener;
-
 
 public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
 		implements Listener,View.OnClickListener{
@@ -65,12 +59,13 @@ public class LoginAndRegisterActivity extends AbstractActivity<UserControl>
         Intent intent = new Intent(ac,LoginAndRegisterActivity.class);
         intent.putExtra("is_login", isLogin);
         ac.startActivity(intent);
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
     }
     
     private final int REFRESH_TIEM = 1;
 	private Handler mHandler = new Handler(){
-		public void handleMessage(Message msg) {
+		@Override
+        public void handleMessage(Message msg) {
 			switch (msg.arg1) {
 			case REFRESH_TIEM:
 				if(msg.arg2<=0){

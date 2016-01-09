@@ -43,7 +43,7 @@ public class CollectionActivity extends AbstractActivity<UserCenterControl> impl
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,CollectionActivity.class);
 		ac.startActivity(intent);
-		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 
 	private boolean showEdite = false ;

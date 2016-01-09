@@ -7,6 +7,7 @@ import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.leveltwo.GoodsAdapter;
 import com.xiaomei.yanyu.module.user.center.control.SalesControl;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
@@ -27,7 +28,7 @@ public class SalesMessageActivity extends AbstractActivity<SalesControl> impleme
     public static void startActivity(Activity ac){
         Intent intent = new Intent(ac,SalesMessageActivity.class);
         ac.startActivity(intent);
-         ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
     }
 
     private TitleBar mTitleBar;

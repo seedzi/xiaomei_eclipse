@@ -77,7 +77,7 @@ public class UiUtil {
     }
 
     public static void overridePendingTransition(Activity activity) {
-        activity.overridePendingTransition(R.anim.activity_slid_out_no_change,
-                R.anim.activity_slid_in_from_right);
+        activity.overridePendingTransition(R.anim.activity_slid_in_from_right,
+                R.anim.activity_slid_out_no_change);
     }
 }

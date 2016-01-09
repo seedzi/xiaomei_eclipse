@@ -12,6 +12,7 @@ import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order.DataDetail.OrderInfo;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.ValuePreference;
@@ -71,7 +72,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	      intent.putExtra("passport", passport);
         intent.putExtra("coupon_id", couponId);
 		 ac.startActivity(intent);
-		 ac.overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_in_from_right);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private TitleBar mTitlBar;

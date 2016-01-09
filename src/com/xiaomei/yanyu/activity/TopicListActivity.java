@@ -17,6 +17,7 @@ import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.api.util.Constant;
 import com.xiaomei.yanyu.bean.Topic;
 import com.xiaomei.yanyu.util.IntentUtil;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.view.TopicAdapter;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
@@ -31,10 +32,10 @@ import android.widget.ListView;
 public class TopicListActivity extends Activity implements OnRefreshListener, OnLastItemVisibleListener {
 
     public static void startActivity(Activity ac, String title, String url) {
-        ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
         ac.startActivity(new Intent(ac, TopicListActivity.class)
                 .putExtra(IntentUtil.EXTRA_TITLE, title)
                 .putExtra(IntentUtil.EXTRA_URL, url));
+        UiUtil.overridePendingTransition(ac);
     }
 
     private String mUrl;

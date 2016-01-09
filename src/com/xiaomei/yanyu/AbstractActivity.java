@@ -1,21 +1,18 @@
 package com.xiaomei.yanyu;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.umeng.analytics.MobclickAgent;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.yuekuapp.BaseActivity;
+import com.yuekuapp.BaseControl;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
-
-import com.umeng.analytics.MobclickAgent;
-import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
-import com.yuekuapp.BaseActivity;
-import com.yuekuapp.BaseControl;
 
 /**
  * Created by huzhi on 15-2-17.
@@ -74,7 +71,7 @@ public class AbstractActivity<T extends BaseControl> extends BaseActivity<T>{
     public void finish() {
     	super.finish();
     	if(useAnimation)
-    		overridePendingTransition(R.anim.activity_slid_out_no_change, R.anim.activity_slid_out_from_left);
+            UiUtil.overridePendingTransition(this);
     }
     
 	// ===========================  Toast ====================================

@@ -5,6 +5,7 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.leveltwo.GoodsDetailActivity;
 import com.xiaomei.yanyu.util.AppUtil;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 
 import android.app.Activity;
@@ -26,7 +27,7 @@ public class AboutActivity extends AbstractActivity implements View.OnClickListe
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,AboutActivity.class);
 		ac.startActivity(intent);
-		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private TitleBar mTitleBar;

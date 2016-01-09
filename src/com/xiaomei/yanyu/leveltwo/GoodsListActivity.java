@@ -9,6 +9,7 @@ import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.bean.GoodsOption;
 import com.xiaomei.yanyu.leveltwo.control.LeveltwoControl;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.TopFilter;
 
@@ -48,7 +49,7 @@ public class GoodsListActivity extends AbstractActivity<LeveltwoControl> impleme
 		intent.putExtra("cat_id", catId);
 		intent.putExtra("title", title);
 		ac.startActivity(intent);
-		 ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 
 	private TitleBar mTitleBar;

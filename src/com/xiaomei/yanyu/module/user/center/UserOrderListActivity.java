@@ -29,7 +29,7 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,UserOrderListActivity.class);
 		ac.startActivity(intent);
-		ac.overridePendingTransition(R.anim.activity_slid_in_from_right, R.anim.activity_slid_out_no_change);
+        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private TitleBar  mTitleBar;

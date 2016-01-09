@@ -21,6 +21,7 @@ import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Coupon;
 import com.xiaomei.yanyu.util.Security;
+import com.xiaomei.yanyu.util.UiUtil;
 import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleActionBar;
 
@@ -53,8 +54,7 @@ public class OrderCouponActivity extends Activity {
 
     public static void startActivity(Activity ac, String couponId) {
         ac.startActivity(new Intent(ac, OrderCouponActivity.class).putExtra("couponId", couponId));
-        ac.overridePendingTransition(R.anim.activity_slid_out_no_change,
-                R.anim.activity_slid_in_from_right);
+        UiUtil.overridePendingTransition(ac);
     }
     
     public static void startActivity4Result(Activity ac, String couponId,ArrayList<Coupon> data) {
@@ -62,8 +62,7 @@ public class OrderCouponActivity extends Activity {
     	intent.putExtra("couponId", couponId);
     	intent.putExtra("data", data);
         ac.startActivityForResult(intent, REQUEST_COUPON);
-        ac.overridePendingTransition(R.anim.activity_slid_out_no_change,
-                R.anim.activity_slid_in_from_right);
+        UiUtil.overridePendingTransition(ac);
     }
     
     /*vollery请求队列*/
