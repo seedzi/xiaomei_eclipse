@@ -85,7 +85,7 @@
 		
 		<!-- 我的订单 -->
 		<activity 
-		    android:theme="@style/activityTheme"
+		    android:theme="@style/Theme"
 		    android:name="com.xiaomei.yanyu.module.user.center.UserOrderListActivity"
             android:screenOrientation="portrait">
 		</activity>

@@ -1,30 +1,44 @@
 package com.xiaomei.yanyu.module.user.center;
 
+import java.util.Map;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.api.BizResult;
+import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.api.http.HttpUtil;
 import com.xiaomei.yanyu.bean.Order;
+import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.comment.CommentsActivity;
-import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
 import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.util.YanYuUtils;
-import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
+public class UserOrderListActivity extends Activity
+        implements OnRefreshListener<ListView> {
 	
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,UserOrderListActivity.class);
@@ -32,98 +46,110 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
         UiUtil.overridePendingTransition(ac);
 	}
 	
-	private TitleBar  mTitleBar;
+    private TitleActionBar mTitleActionBar;
 	
-	private PullToRefreshListView mPullToRefreshListView;
+	private PullToRefreshListView mPullView;
 	
 	private OrderAdapter mAdapter;
 	
 	private View mEmptyView;
+
+    private View mLoadingView;
 	
+    private RequestQueue mQueue;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_order_layout);
 		setUpView();
-		initData();
+
+        mQueue = XiaoMeiApplication.getInstance().getQueue();
+
+        mPullView.setRefreshing(false);
+        showLoading();
 	}
 	
-	@Override
+    @Override
 	public void onResume() {
 		super.onResume();
         if(OrderDetailsActivity.STATE_CHANGED){
-        	initData();
+            mPullView.setRefreshing();
         	OrderDetailsActivity.STATE_CHANGED = false;
         }
 	}
 	
 	private void setUpView(){
-		mTitleBar = (TitleBar) findViewById(R.id.titlebar);
-		mTitleBar.setTitle(getResources().getString(R.string.user_order));
-		mTitleBar.setBackListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+        mTitleActionBar = new TitleActionBar(getActionBar());
+        mTitleActionBar.setTitle(R.string.user_order);
 		
-		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.list);
+		mPullView = (PullToRefreshListView) findViewById(R.id.list);
+        mPullView.setOnRefreshListener(this);
 		mAdapter = new OrderAdapter(this);
-		mPullToRefreshListView.getRefreshableView().setAdapter(mAdapter);
-		mPullToRefreshListView.setPullToRefreshEnabled(false);
-		mLoadingView = findViewById(R.id.loading_layout);
+		mPullView.getRefreshableView().setAdapter(mAdapter);
+        mPullView.setEmptyView(findViewById(R.id.empty_layout));
 		
 		mEmptyView= findViewById(R.id.empty_view);
+        mLoadingView = findViewById(R.id.loading_view);
 	}
 	
-	private void initData(){
-		showProgress();
-		mControl.getUserOrdersAsyn();
-	}
-	// =============================================== ProgressDialog  =================================================
-	private View mLoadingView; 
-	private void showProgress(){
-		mLoadingView.setVisibility(View.VISIBLE);
-		AnimationDrawable animationDrawable =  (AnimationDrawable) ((ImageView)mLoadingView.findViewById(R.id.iv)).getDrawable();
-		if(!animationDrawable.isRunning())
-			animationDrawable.start();
-		mPullToRefreshListView.setVisibility(View.GONE);
-		mEmptyView.setVisibility(View.GONE);
-	}
-	
-	private void dissProgress(){
-		mLoadingView.setVisibility(View.GONE);
-		mPullToRefreshListView.setVisibility(View.VISIBLE);
-		mEmptyView.setVisibility(View.GONE);
-	}
-	
-	private void showEmpty(){
-		mLoadingView.setVisibility(View.GONE);
-		mPullToRefreshListView.setVisibility(View.GONE);
-		mEmptyView.setVisibility(View.VISIBLE);
-		if(!YanYuUtils.isConnect(this)){
-			((TextView)mEmptyView.findViewById(R.id.txt)).setText("网络不给力哦！");
-			((TextView)mEmptyView.findViewById(R.id.sub_txt)).setText("");
-		}else{
-			((TextView)mEmptyView.findViewById(R.id.txt)).setText("暂无订单记录");
-			((TextView)mEmptyView.findViewById(R.id.sub_txt)).setText("去看看分类商铺吧");
-		}
-	}
-	
-	// =============================================== CallBack  =================================================
-	public void getUserOrdersAsynCallBack(){
-	    mAdapter.clear();
-		mAdapter.addAll(mControl.getModel().getOrderList());
-		mAdapter.notifyDataSetChanged();
-		dissProgress();
-	}
-	
-	public void getUserOrdersAsynExceptionCallBack(){
-		dissProgress();
-		showEmpty();
-	}
-	
-	
+    // 仅在首次加载时显示
+    private void showLoading() {
+        mEmptyView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading() {
+        mEmptyView.setVisibility(View.VISIBLE);
+        mLoadingView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        mQueue.add(
+                new StringRequest(formatObjectListUrl(), mRefreshListener, mRefreshErroListener));
+    }
+
+    private String formatObjectListUrl() {
+        User user = UserUtil.getUser();
+        Map<String, String> params = HttpUtil.queryBuilder()
+                .put(HttpUtil.QUERY_USERID, user.getUserInfo().getUserid())
+                .put(HttpUtil.QUERY_TOKEN, user.getToken())
+                .put(HttpUtil.QUERY_UPTIME, DateUtils.formatQueryParameter(System.currentTimeMillis()))
+                .build();
+        return HttpUtil.buildUri(HttpUrlManager.MY_COUPON_ORDER, HttpUtil.signParams(params))
+                .toString();
+    }
+
+    private Listener<String> mRefreshListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    Order[] orders = gson.fromJson(res.getMessage(), Order[].class);
+                    if (orders != null) {
+                        mAdapter.clear();
+                        mAdapter.addAll(orders);
+                    }
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            mPullView.onRefreshComplete();
+            hideLoading();
+        }
+    };
+
+    private ErrorListener mRefreshErroListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError arg0) {
+            mPullView.onRefreshComplete();
+            hideLoading();
+        }
+    };
+
 	private class OrderAdapter extends ArrayAdapter<Order> {
 		
 		public OrderAdapter(Context context) {
@@ -182,7 +208,7 @@ public class UserOrderListActivity extends AbstractActivity<UserCenterControl> {
 		switch (requestCode) {
 		case 1:
 			if(resultCode == RESULT_OK){
-				initData();
+                    mPullView.setRefreshing();
 			}
 			break;
 

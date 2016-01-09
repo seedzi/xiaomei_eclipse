@@ -6,8 +6,6 @@
     android:orientation="vertical" 
     android:background="@color/color_background">
     
-    <include layout="@layout/title_bar_layout"/>
-    
     <FrameLayout 
         android:layout_gravity="center"
         android:layout_width="match_parent"
@@ -22,12 +20,16 @@
 	    ptr:ptrMode="pullDownFromTop"
 	    android:visibility="visible"/> 
     
-	    <include  android:id="@+id/loading_layout"
-        layout="@layout/loading_layout"
-        android:visibility="visible"/>
-	    
-	<include  android:id="@+id/empty_view"
-	    layout="@layout/order_no_data_layout"
-	    android:visibility="gone"/> 	
+    <FrameLayout
+        android:id="@+id/empty_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include  android:id="@+id/empty_view"
+            layout="@layout/order_no_data_layout"/>
+
+        <include android:id="@+id/loading_view"
+            layout="@layout/loading_layout" />
+    </FrameLayout> 	
 	        </FrameLayout>
 </LinearLayout>

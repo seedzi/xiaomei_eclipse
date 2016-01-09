@@ -65,29 +65,29 @@ import com.xiaomei.yanyu.util.DateUtils;
 public class Order implements Serializable{
 	
 	
-	private DataList dataList;
+	private DataList data_list;
 	
-	private DataDetail dataDetail;
+	private DataDetail data_detail;
 	
 	public DataList getDataList() {
-		return dataList;
+		return data_list;
 	}
 
 	public void setDataList(DataList dataList) {
-		this.dataList = dataList;
+		this.data_list = dataList;
 	}
 
 	public DataDetail getDataDetail() {
-		return dataDetail;
+		return data_detail;
 	}
 
 	public void setDataDetail(DataDetail dataDetail) {
-		this.dataDetail = dataDetail;
+		this.data_detail = dataDetail;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [dataList=" + dataList + ", dataDetail=" + dataDetail
+		return "Order [dataList=" + data_list + ", dataDetail=" + data_detail
 				+ "]";
 	}
 
@@ -96,60 +96,64 @@ public class Order implements Serializable{
 	/**订单详情信息*/
 	public static class DataDetail implements Serializable{
 		
-		private GoodsInfo goodsInfo;
-		private List<OrderInfo> orderInfos;
-		private HospInfo hospInfo;
+		private GoodsInfo goods_info;
+
+        private List<OrderInfo> order_info;
+
+        private HospInfo hosp_info;
 		
 		public GoodsInfo getGoodsInfo() {
-			return goodsInfo;
+			return goods_info;
 		}
 
 		public void setGoodsInfo(GoodsInfo goodsInfo) {
-			this.goodsInfo = goodsInfo;
+			this.goods_info = goodsInfo;
 		}
 
 		public List<OrderInfo> getOrderInfos() {
-			return orderInfos;
+            return order_info;
 		}
 
 		public void setOrderInfos(List<OrderInfo> orderInfos) {
-			this.orderInfos = orderInfos;
+            this.order_info = orderInfos;
 		}
 
 		public HospInfo getHospInfo() {
-			return hospInfo;
+            return hosp_info;
 		}
 
 		public void setHospInfo(HospInfo hospInfo) {
-			this.hospInfo = hospInfo;
+            this.hosp_info = hospInfo;
 		}
 
 		public static class GoodsInfo implements Serializable{
-			private String orderAmount;
-			private String goodsName;
-			private String goodsImg;
+            private String goods_pay;
+
+            private String goods_name;
+
+            private String goods_img;
 			public String getOrderAmount() {
-				return orderAmount;
+                return goods_pay;
 			}
 			public void setOrderAmount(String orderAmount) {
-				this.orderAmount = orderAmount;
+                this.goods_pay = orderAmount;
 			}
 			public String getGoodsName() {
-				return goodsName;
+                return goods_name;
 			}
 			public void setGoodsName(String goodsName) {
-				this.goodsName = goodsName;
+                this.goods_name = goodsName;
 			}
 			public String getGoodsImg() {
-				return goodsImg;
+                return goods_img;
 			}
 			public void setGoodsImg(String goodsImg) {
-				this.goodsImg = goodsImg;
+                this.goods_img = goodsImg;
 			}
 			@Override
 			public String toString() {
-				return "GoodsInfo [orderAmount=" + orderAmount + ", goodsName="
-						+ goodsName + ", goodsImg=" + goodsImg + "]";
+                return "GoodsInfo [orderAmount=" + goods_pay + ", goodsName=" + goods_name
+                        + ", goodsImg=" + goods_img + "]";
 			}
 			
 			
@@ -208,14 +212,14 @@ public class Order implements Serializable{
 		}
 		
 		public static class HospInfo implements Serializable{
-            private String hospName;
+            private String hosp_name;
             private String addr;
             private String tel;
 			public String getHospName() {
-				return hospName;
+                return hosp_name;
 			}
 			public void setHospName(String hospName) {
-				this.hospName = hospName;
+                this.hosp_name = hospName;
 			}
 			public String getAddr() {
 				return addr;
@@ -231,19 +235,20 @@ public class Order implements Serializable{
 			}
 			@Override
 			public String toString() {
-				return "HospInfo [hospName=" + hospName + ", addr=" + addr
+                return "HospInfo [hospName=" + hosp_name + ", addr=" + addr
 						+ ", tel=" + tel + "]";
 			}
 		}
 
 		@Override
 		public String toString() {
-			return "DataDetail [goodsInfo=" + goodsInfo + ", orderInfos="
-					+ orderInfos + ", hospInfo=" + hospInfo + "]";
+			return "DataDetail [goodsInfo=" + goods_info + ", orderInfos="
+ + order_info
+                    + ", hospInfo=" + hosp_info + "]";
 		}
 
         public OrderInfo findOrderInfo(int type) {
-            for (OrderInfo orderInfo : orderInfos) {
+            for (OrderInfo orderInfo : order_info) {
                 if (orderInfo.type == type) {
                     return orderInfo;
                 }
@@ -270,13 +275,13 @@ public class Order implements Serializable{
 		private String orderAmount;
 		private String username;
 		private String status;
-		private String orderNum;
-		private String goodsId;
+		private String order_num;
+		private String goods_id;
 		private String createdate;
-		private String goodsName;
-		private String hospName;
-		private String goodsImg;
-		private String goodsPay;
+		private String goods_name;
+		private String hosp_name;
+		private String goods_img;
+		private String goods_pay;
 		private String city;
 		public String getId() {
 			return id;
@@ -308,16 +313,16 @@ public class Order implements Serializable{
 			this.status = status;
 		}
 		public String getOrderNum() {
-			return orderNum;
+			return order_num;
 		}
 		public void setOrderNum(String orderNum) {
-			this.orderNum = orderNum;
+			this.order_num = orderNum;
 		}
 		public String getGoodsId() {
-			return goodsId;
+			return goods_id;
 		}
 		public void setGoodsId(String goodsId) {
-			this.goodsId = goodsId;
+			this.goods_id = goodsId;
 		}
 		public String getCreatedate() {
 			return createdate;
@@ -326,22 +331,22 @@ public class Order implements Serializable{
 			this.createdate = createdate;
 		}
 		public String getGoodsName() {
-			return goodsName;
+			return goods_name;
 		}
 		public void setGoodsName(String goodsName) {
-			this.goodsName = goodsName;
+			this.goods_name = goodsName;
 		}
 		public String getHospName() {
-			return hospName;
+			return hosp_name;
 		}
 		public void setHospName(String hospName) {
-			this.hospName = hospName;
+			this.hosp_name = hospName;
 		}
 		public String getGoodsImg() {
-			return goodsImg;
+			return goods_img;
 		}
 		public void setGoodsImg(String goodsImg) {
-			this.goodsImg = goodsImg;
+			this.goods_img = goodsImg;
 		}
 		public String getCity() {
 			return city;
@@ -350,19 +355,19 @@ public class Order implements Serializable{
 			this.city = city;
 		}
 		public String getGoodsPay() {
-			return goodsPay;
+			return goods_pay;
 		}
 		public void setGoodsPay(String goodsPay) {
-			this.goodsPay = goodsPay;
+			this.goods_pay = goodsPay;
 		}
 		@Override
 		public String toString() {
 			return "DataList [id=" + id + ", orderAmount=" + orderAmount
 					+ ", username=" + username + ", status=" + status
-					+ ", orderNum=" + orderNum + ", goodsId=" + goodsId
-					+ ", createdate=" + createdate + ", goodsName=" + goodsName
-					+ ", hospName=" + hospName + ", goodsImg=" + goodsImg
-					+ ", goodsPay=" + goodsPay + ", city=" + city + "]";
+					+ ", orderNum=" + order_num + ", goodsId=" + goods_id
+					+ ", createdate=" + createdate + ", goodsName=" + goods_name
+					+ ", hospName=" + hosp_name + ", goodsImg=" + goods_img
+					+ ", goodsPay=" + goods_pay + ", city=" + city + "]";
 		}
 	}
 	

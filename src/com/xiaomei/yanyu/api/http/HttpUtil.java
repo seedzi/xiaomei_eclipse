@@ -1,10 +1,13 @@
 package com.xiaomei.yanyu.api.http;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+
+import android.net.Uri;
 
 public class HttpUtil {
 
@@ -37,6 +40,16 @@ public class HttpUtil {
 
     private HttpUtil() {}
 
+    public static Uri buildUri(String url, Map<String, String> params) {
+        Uri.Builder builder = Uri.parse(url).buildUpon();
+        if (params != null) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.appendQueryParameter(entry.getKey(), entry.getValue()).build();
+            }
+        }
+        return builder.build();
+    }
+
     public static Map<String, String> signParams(Map<String, String> unsigned) {
         if (unsigned == null || unsigned.isEmpty()) {
             return null;
@@ -62,5 +75,24 @@ public class HttpUtil {
             map.put(pair.getName(), pair.getValue());
         }
         return map;
+    }
+
+    public static QueryBuilder queryBuilder() {
+        return new QueryBuilder();
+    }
+
+    public static class QueryBuilder {
+        private final Map<String, String> map = new HashMap<String, String>();
+
+        public QueryBuilder put(String key, String value) {
+            if (key != null && value != null) {
+                map.put(key, value);
+            }
+            return this;
+        }
+
+        public Map<String, String> build() {
+            return Collections.unmodifiableMap(map);
+        }
     }
 }
