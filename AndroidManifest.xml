@@ -212,7 +212,7 @@
             android:screenOrientation="portrait"/>
         <!-- 生成订单 -->
         <activity 
-            android:theme="@style/activityTheme"
+            android:theme="@style/Theme"
             android:name=".leveltwo.BuildOrderActivity"
             android:screenOrientation="portrait"/>
         <!-- 支付订单 -->

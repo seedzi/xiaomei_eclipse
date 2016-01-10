@@ -34,6 +34,8 @@ public class HttpUrlManager {
     public static final String GOODS_TOPIC_LIST = BEE + "/hist_prod.php";;
     public static final String MERCHANT_TOPIC_LIST = BEE + "/hist_hosp.php";;
 
+    // 产品详情页(含优惠券信息)
+    public static final String GOODS_COUPON_INFO = COUPON + "/goods_coupon_info.php";
     // 获取用户订单列表
     public static final String MY_COUPON_ORDER = COUPON + "/my_coupon_order.php";
 

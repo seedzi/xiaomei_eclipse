@@ -5,6 +5,7 @@
 
     <string name="activity_comment_list" >评论</string>
     <string name="activity_order_coupon">优惠折扣</string>
+    <string name="activity_build_order">生成订单</string>
 
     <string name="detail">详情</string>
     <string name="more">更多</string>
