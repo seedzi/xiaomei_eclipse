@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.util.DateUtils;
 
 /*
@@ -160,21 +161,21 @@ public class Order implements Serializable{
 		}
 		
 		public static class OrderInfo implements Serializable{
-		    public static final String[] sTitles = new String[]{
-		            "订单号","预约日期","客户姓名","客户电话","护照号","优惠折扣","支付日期"
-		    };
 
-            public static final int TYPE_ORDER_ID = 0;
-            public static final int TYPE_PRESERVE_DATE = 1;
-            public static final int TYPE_USER_NAME = 2;
-            public static final int TYPE_MOBILE = 3;
-            public static final int TYPE_PASSPORT = 4;
-            public static final int TYPE_COUPON_ID = 5;
-            public static final int TYPE_PAYMENT_DATE = 6;
+            public static final Type[] sTypes = new Type[] {
+                    Type.ORDER_ID,
+                    Type.PRESERVE_DATE,
+                    Type.USER_NAME,
+                    Type.MOBILE,
+                    Type.PASSPORT,
+                    Type.COUPON_ID,
+                    Type.PAYMENT_DATE,
+            };
 
             private String value;
 			private String title;
-			private int type = -1;
+            private Type type;
+
 			public String getValue() {
 				return value;
 			}
@@ -182,7 +183,7 @@ public class Order implements Serializable{
 				this.value = value;
 			}
             public String getDisplayValue() {
-                if (type == TYPE_PRESERVE_DATE || type == TYPE_PAYMENT_DATE) {
+                if (type == Type.PRESERVE_DATE || type == Type.PAYMENT_DATE) {
                     return (value != null && !value.isEmpty()) ?
                             DateUtils.formateDate(value) : value;
                 }
@@ -193,21 +194,49 @@ public class Order implements Serializable{
 			}
 			public void setTitle(String title) {
 				this.title = title;
-                for (int i = 0; i < sTitles.length; i++) {
-                    if (sTitles[i].equals(title)) {
-                        type = i;
-                        break;
-                    }
-                }
 			}
 
-            public int getType() {
+            public Type getType() {
+                if (type == null) {
+                    for (Type t : sTypes) {
+                        if (t.title.equals(title)) {
+                            type = t;
+                            break;
+                        }
+                    }
+                }
                 return type;
             }
 
 			@Override
 			public String toString() {
 				return "OrderInfo [value=" + value + ", title=" + title + "]";
+			}
+			
+			public static enum Type {
+			    ORDER_ID(R.id.preference_order_id, "订单号", false),
+			    PRESERVE_DATE(R.id.preference_preserve_date, "预约日期", false),
+			    USER_NAME(R.id.preference_user_name, "客户姓名", R.string.preference_user_name_hint, true),
+			    MOBILE(R.id.preference_mobile, "客户电话", R.string.preference_mobile_hint, true),
+			    PASSPORT(R.id.preference_passport, "护照号", R.string.preference_passport_hint, true),
+			    COUPON_ID(R.id.preference_coupon_id, "优惠折扣", false),
+			    PAYMENT_DATE(R.id.preference_payment_date, "支付日期", false);
+
+                public final int id;
+                public final String title;
+                public final int hintRes;
+			    public final boolean editable;
+			    
+                Type(int id, String title, boolean editable) {
+                    this(id, title, 0, editable);
+			    }
+                
+                Type(int id, String title, int hintRes, boolean editable) {
+                    this.id = id;
+                    this.title = title;
+                    this.hintRes = hintRes;
+                    this.editable = editable;
+                }
 			}
 		}
 		
@@ -247,7 +276,7 @@ public class Order implements Serializable{
                     + ", hospInfo=" + hosp_info + "]";
 		}
 
-        public OrderInfo findOrderInfo(int type) {
+        public OrderInfo findOrderInfo(OrderInfo.Type type) {
             for (OrderInfo orderInfo : order_info) {
                 if (orderInfo.type == type) {
                     return orderInfo;

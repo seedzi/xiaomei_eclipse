@@ -67,6 +67,10 @@
     
     <string name="order_details">订单详情</string>
     
+    <string name="preference_user_name_hint">请输入姓名</string>
+    <string name="preference_mobile_hint">请输入电话</string>
+    <string name="preference_passport_hint">请输入护照号</string>
+    
     <string name="pay_type">选择付款方式</string>  
     
     <string name="pay_weixin">微信支付</string>  

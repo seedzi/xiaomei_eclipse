@@ -14,6 +14,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
+import com.xiaomei.yanyu.activity.PayOrderActivity;
 import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.http.HttpUtil;
@@ -32,13 +33,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class UserOrderListActivity extends Activity
-        implements OnRefreshListener<ListView> {
+        implements OnRefreshListener<ListView>, OnItemClickListener {
 	
 	public static void startActivity(Activity ac){
 		Intent intent = new Intent(ac,UserOrderListActivity.class);
@@ -50,6 +53,8 @@ public class UserOrderListActivity extends Activity
 	
 	private PullToRefreshListView mPullView;
 	
+    private ListView mListView;
+
 	private OrderAdapter mAdapter;
 	
 	private View mEmptyView;
@@ -85,8 +90,10 @@ public class UserOrderListActivity extends Activity
 		
 		mPullView = (PullToRefreshListView) findViewById(R.id.list);
         mPullView.setOnRefreshListener(this);
+        mListView = mPullView.getRefreshableView();
+        mListView.setOnItemClickListener(this);
 		mAdapter = new OrderAdapter(this);
-		mPullView.getRefreshableView().setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
         mPullView.setEmptyView(findViewById(R.id.empty_layout));
 		
 		mEmptyView= findViewById(R.id.empty_view);
@@ -102,6 +109,12 @@ public class UserOrderListActivity extends Activity
     private void hideLoading() {
         mEmptyView.setVisibility(View.VISIBLE);
         mLoadingView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Order order = mAdapter.getItem(position);
+        OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
     }
 
     @Override
@@ -192,7 +205,9 @@ public class UserOrderListActivity extends Activity
                         if (order.getDataList().getStatus().equals("4")) {
                             CommentsActivity.startActivity4Result(UserOrderListActivity.this, order);
                         } else {
-                            OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
+                            // TODO 计算优惠券的金额
+                            PayOrderActivity.startActivity(UserOrderListActivity.this, order,
+                                    Integer.valueOf(order.getDataList().getGoodsPay()));
                         }
                     }
                 });

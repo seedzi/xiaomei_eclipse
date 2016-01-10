@@ -118,9 +118,9 @@ public class ResultActivity extends Activity implements OnDateSetListener {
         params.put(HttpUtil.QUERY_GOODS_ID, dataList.getGoodsId());
         params.put(HttpUtil.QUERY_ORDERID, dataList.getId());
         params.put(HttpUtil.QUERY_SUBDATE, DateUtils.formatQueryParameter(preserveDate));
-        params.put(HttpUtil.QUERY_MOBILE, dataDetail.findOrderInfo(OrderInfo.TYPE_MOBILE).getValue());
-        params.put(HttpUtil.QUERY_PASSPORT, dataDetail.findOrderInfo(OrderInfo.TYPE_PASSPORT).getValue());
-        params.put(HttpUtil.QUERY_COUPONID, dataDetail.findOrderInfo(OrderInfo.TYPE_COUPON_ID).getValue());
+        params.put(HttpUtil.QUERY_MOBILE, dataDetail.findOrderInfo(OrderInfo.Type.MOBILE).getValue());
+        params.put(HttpUtil.QUERY_PASSPORT, dataDetail.findOrderInfo(OrderInfo.Type.PASSPORT).getValue());
+        params.put(HttpUtil.QUERY_COUPONID, dataDetail.findOrderInfo(OrderInfo.Type.COUPON_ID).getValue());
         params.put(HttpUtil.QUERY_ACTION, HttpUtil.ACTION_UPDATE);
         params.put(HttpUtil.QUERY_TOKEN, user.getToken());
         params.put(HttpUtil.QUERY_UPTIME, DateUtils.formatQueryParameter(System.currentTimeMillis()));

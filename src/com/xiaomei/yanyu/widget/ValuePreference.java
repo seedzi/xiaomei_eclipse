@@ -57,4 +57,8 @@ public class ValuePreference extends RelativeLayout {
     public void setHint(CharSequence hint) {
         mValue.setHint(hint);
     }
+
+    public void setHint(int resid) {
+        mValue.setHint(resid);
+    }
 }

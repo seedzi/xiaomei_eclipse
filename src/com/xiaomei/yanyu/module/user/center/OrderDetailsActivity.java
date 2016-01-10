@@ -155,6 +155,40 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		goodsTypeTv = (TextView) findViewById(R.id.goods_type);
 		goodsIconIv = (ImageView) findViewById(R.id.goods_icon);
 		
+        ViewGroup infoListLayout = (ViewGroup)findViewById(R.id.order_info_list_layout);
+        LayoutInflater inflater = getLayoutInflater();
+		for (OrderInfo.Type type : OrderInfo.sTypes) {
+            ValuePreference preference = (ValuePreference)inflater
+                    .inflate(R.layout.value_preference, infoListLayout, false);
+            infoListLayout.addView(preference);
+            preference.setId(type.id);
+            preference.setTitle(type.title);
+            if (type.hintRes != 0) {
+                preference.setHint(type.hintRes);
+            }
+            preference.setEditable(type.editable);
+            preference.setOnClickListener(this);
+            switch (type) {
+                case PRESERVE_DATE:
+                    preference.setOnClickListener(this);
+                    orderPreserve = preference;
+                    break;
+                case USER_NAME:
+                    orderNameEd = preference;
+                    break;
+                case MOBILE:
+                    orderMobile = preference;
+                    break;
+                case PASSPORT:
+                    orderPassport = preference;
+                    break;
+                case COUPON_ID:
+                    preference.setOnClickListener(this);
+                    orderCoupon = preference;
+                    break;
+            }
+        }
+
         mMoneyView = (TextView)findViewById(R.id.money);
         mDiscountView = (TextView)findViewById(R.id.discount);
         mActionButton = (Button)findViewById(R.id.action_button);
@@ -209,42 +243,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         mMoneyView.setText(getString(R.string.price, mPayMoney));
         
         List<Order.DataDetail.OrderInfo> orderInfos = orderDataDetail.getOrderInfos();
-        ViewGroup infoListLayout = (ViewGroup)findViewById(R.id.order_info_list_layout);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        int size = orderInfos.size();
         for (OrderInfo info : orderInfos) {
-            ValuePreference preference = (ValuePreference)inflater
-                    .inflate(R.layout.value_preference, infoListLayout, false);
-            infoListLayout.addView(preference);
-            preference.setTitle(info.getTitle());
+            ValuePreference preference = (ValuePreference)findViewById(info.getType().id);
             preference.setValue(info.getDisplayValue());
-            preference.setEditable(false);
-            switch (info.getType()) {
-                case OrderInfo.TYPE_PRESERVE_DATE:
-                    preference.setId(R.id.item2);
-                    preference.setOnClickListener(this);
-                    orderPreserve = preference;
-                    break;
-                case OrderInfo.TYPE_USER_NAME:
-                    preference.setEditable(true);
-                    preference.setHint("请输入姓名");
-                    orderNameEd = preference;
-                    break;
-                case OrderInfo.TYPE_MOBILE:
-                    preference.setEditable(true);
-                    preference.setHint("请输入电话");
-                    orderMobile = preference;
-                    break;
-                case OrderInfo.TYPE_PASSPORT:
-                    preference.setEditable(true);
-                    preference.setHint("请输入护照号");
-                    orderPassport = preference;
-                    break;
-                case OrderInfo.TYPE_COUPON_ID:
-                    preference.setId(R.id.item6);
-                    preference.setOnClickListener(this);
-                    orderCoupon = preference;
-            }
         }
 	}
 	/**
@@ -377,10 +378,10 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
             case R.id.action_button:
                 PayOrderActivity.startActivity(this, mControl.getModel().getOrder(), mPayMoney);
                 break;
-            case R.id.item2:
+            case R.id.preference_preserve_date:
                 // TODO 预约
                 break;
-            case R.id.item6:
+            case R.id.preference_coupon_id:
                 // 优惠券
                 OrderCouponActivity.startActivity4Result(this, "",(ArrayList)mControl.getModel().getGoods().getAvailCoupons());
                 break;
