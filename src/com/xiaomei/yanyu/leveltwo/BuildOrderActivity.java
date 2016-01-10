@@ -17,7 +17,10 @@ import com.xiaomei.yanyu.activity.OrderCouponActivity;
 import com.xiaomei.yanyu.api.BizResult;
 import com.xiaomei.yanyu.api.HttpUrlManager;
 import com.xiaomei.yanyu.api.http.HttpUtil;
+import com.xiaomei.yanyu.api.http.StringPostRequest;
 import com.xiaomei.yanyu.bean.Goods;
+import com.xiaomei.yanyu.bean.Order;
+import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.module.user.center.OrderDetailsActivity;
 import com.xiaomei.yanyu.util.DateUtils;
@@ -116,22 +119,14 @@ public class BuildOrderActivity extends Activity implements View.OnClickListener
         mMoneyView = (TextView)paymentLayout.findViewById(R.id.money);
         mDiscountView = (TextView)paymentLayout.findViewById(R.id.discount);
         commitOrder = (Button)paymentLayout.findViewById(R.id.action_button);
-        commitOrder.setText(R.string.pay);
+        commitOrder.setText(R.string.build_order);
         commitOrder.setOnClickListener(this);
     }
     
     private void initData(){
         mQueue = XiaoMeiApplication.getInstance().getQueue();
-        mQueue.add(new StringRequest(getGoodsUrl(), mGetGoodsListenr, mGetGoodsErroListener));
-    }
-
-    private String getGoodsUrl() {
-        Map<String, String> params = HttpUtil.queryBuilder()
-                .put(HttpUtil.QUERY_GOODS_ID, goodsId)
-                .put(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
-                .put(HttpUtil.QUERY_UPTIME, DateUtils.formatQueryParameter(System.currentTimeMillis()))
-                .build();
-        return HttpUtil.buildUri(HttpUrlManager.GOODS_COUPON_INFO, HttpUtil.signParams(params)).toString();
+        String url = XiaoMeiApplication.getInstance().getApi().getGoodsDetailUrl(goodsId);
+        mQueue.add(new StringRequest(url, mGetGoodsListenr, mGetGoodsErroListener));
     }
 
     private Listener<String> mGetGoodsListenr = new Listener<String>() {
@@ -193,15 +188,60 @@ public class BuildOrderActivity extends Activity implements View.OnClickListener
                     Toast.makeText(this, "请您完整的输入您的信息", 0).show();
                     return;
                 }
-                OrderDetailsActivity.startActivity(this, goodsId, name, mobile, passport,
-                        mCouponid);
-                finish();
+                requestAddOrder(goods.getId(), name, mobile, passport, mCouponid);
                 break;
         default:
             break;
         }
     }
     
+    private void requestAddOrder(String goodsId, String name, String mobile, String passport,
+            String couponId) {
+        UiUtil.showProgressDialog(this);
+        User user = UserUtil.getUser();
+        Map<String, String> params = HttpUtil.queryBuilder().put(HttpUtil.QUERY_GOODS_ID, goodsId)
+                .put(HttpUtil.QUERY_USERID, user.getUserInfo().getUserid())
+                .put(HttpUtil.QUERY_USERNAME, user.getUserInfo().getUsername())
+                .put(HttpUtil.QUERY_MOBILE, mobile).put(HttpUtil.QUERY_PASSPORT, passport)
+                .put(HttpUtil.QUERY_COUPONID, couponId)
+                .put(HttpUtil.QUERY_ACTION, HttpUtil.ACTION_ADD)
+                .put(HttpUtil.QUERY_TOKEN, user.getToken()).put(HttpUtil.QUERY_UPTIME,
+                        DateUtils.formatQueryParameter(System.currentTimeMillis()))
+                .build();
+        mQueue.add(new StringPostRequest(HttpUrlManager.COUPON_ORDER, HttpUtil.signParams(params),
+                mAddOrderListener, mAddOrderErrorListener));
+    }
+
+    private Listener<String> mAddOrderListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            UiUtil.dismissProgressDialog(BuildOrderActivity.this);
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    Order order = gson.fromJson(res.getMessage(), Order.class);
+                    if (order != null) {
+                        OrderDetailsActivity.startActivity(BuildOrderActivity.this, order);
+                        finish();
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            UiUtil.showToast(BuildOrderActivity.this, R.string.warning_build_order_fail);
+        }
+    };
+
+    private ErrorListener mAddOrderErrorListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            UiUtil.dismissProgressDialog(BuildOrderActivity.this);
+            UiUtil.showToast(BuildOrderActivity.this, R.string.warning_build_order_fail);
+        }
+    };
+
     // =========================================== 业务 =====================================================
     private String mCouponid = "";
 
@@ -213,7 +253,7 @@ public class BuildOrderActivity extends Activity implements View.OnClickListener
         if (requestCode == OrderCouponActivity.REQUEST_COUPON && resultCode == RESULT_OK) {
             mCouponid = data.getStringExtra("couponid");
             mDiscount = Integer.valueOf(data.getStringExtra("discount"));
-            mDiscountMoneyTxt.setText(String.valueOf(mDiscount));
+            mDiscountMoneyTxt.setText(getString(R.string.discount_money, mDiscount));
             mDiscountView
                     .setText(mDiscount > 0 ? getString(R.string.discount_money, mDiscount) : null);
             if (goods != null) {

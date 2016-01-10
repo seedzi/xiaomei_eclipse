@@ -1,8 +1,11 @@
 package com.xiaomei.yanyu.util;
 
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.widget.ProgressDialogFragment;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Handler;
 import android.util.SparseArray;
@@ -91,5 +94,23 @@ public class UiUtil {
             }
         }
         view.setEnabled(enabled);
+    }
+
+    public static void showProgressDialog(Activity activity) {
+        FragmentManager fm = activity.getFragmentManager();
+        String tag = ProgressDialogFragment.TAG;
+        ProgressDialogFragment fragment = (ProgressDialogFragment)fm.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new ProgressDialogFragment();
+        }
+        fragment.show(fm, tag);
+    }
+
+    public static void dismissProgressDialog(Activity activity) {
+        FragmentManager fm = activity.getFragmentManager();
+        ProgressDialogFragment fragment = (ProgressDialogFragment)fm.findFragmentByTag(ProgressDialogFragment.TAG);
+        if (fragment != null) {
+            fragment.dismiss();
+        }
     }
 }

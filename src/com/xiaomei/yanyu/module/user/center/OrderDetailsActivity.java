@@ -3,21 +3,27 @@ package com.xiaomei.yanyu.module.user.center;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
+import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.activity.OrderCouponActivity;
 import com.xiaomei.yanyu.activity.PayOrderActivity;
+import com.xiaomei.yanyu.api.BizResult;
+import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order.DataDetail.OrderInfo;
 import com.xiaomei.yanyu.comment.CommentsActivity;
 import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
-import com.xiaomei.yanyu.util.UiUtil;
-import com.xiaomei.yanyu.util.UserUtil;
 import com.xiaomei.yanyu.widget.TitleBar;
 import com.xiaomei.yanyu.widget.ValuePreference;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -41,12 +47,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	
 	public static boolean STATE_CHANGED = false;
 	
-	@Deprecated
-	public static void startActivity(Context context){
-		Intent intent = new Intent(context,OrderDetailsActivity.class);
-		context.startActivity(intent);
-	}
-
 	
 	/**
 	 * 我的订单页面进入
@@ -57,22 +57,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		Intent intent = new Intent(context,OrderDetailsActivity.class);
 		intent.putExtra("order", order);
 		context.startActivity(intent);
-	}
-	/**
-	 * 产品页面进入
-	 * @param context
-	 * @param goodsId  商品id
-	 */
-    public static void startActivity(Activity ac, String goodsId, String username, String mobile,
-            String passport, String couponId) {
-		Intent intent = new Intent(ac,OrderDetailsActivity.class);
-		 intent.putExtra("goods_id", goodsId);
-	      intent.putExtra("username", username);
-	      intent.putExtra("mobile", mobile);
-	      intent.putExtra("passport", passport);
-        intent.putExtra("coupon_id", couponId);
-		 ac.startActivity(intent);
-        UiUtil.overridePendingTransition(ac);
 	}
 	
 	private TitleBar mTitlBar;
@@ -95,13 +79,14 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 
     private TextView mDiscountView;
     private Button mActionButton;
-//	private Order order;
-//	private Order.DataDetail.GoodsInfo goodsInfo ;
-	
+
 	private View rootView;
 	private View mLoadingView; 
-	
-	private String goodsId; //产品id
+
+    private RequestQueue mQueue;
+
+    private Order mOrder;
+    private Goods mGoods;
 	private String passport;//护照
 	private String username; // 姓名
 	private String mobile;//手机号
@@ -127,8 +112,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Order order = (Order) getIntent().getSerializableExtra("order");
-		mControl.getModel().setOrder(order);
+        mOrder = (Order)getIntent().getSerializableExtra("order");
 		setContentView(R.layout.activity_user_order_details_layout);
 		setUpView();
 		initData();
@@ -199,25 +183,12 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	private int[] res = new int[]{R.id.item1,R.id.item2,R.id.item3,R.id.item4,R.id.item5,R.id.item6};
 	
 	private void initData(){
-		Order order = mControl.getModel().getOrder();
-        Button actionButton = (Button)findViewById(R.id.action);
-	    if(order!=null){   //我的订单页进入
-	    	android.util.Log.d("111", "我的订单页进入");
-	        goodsId = order.getDataList().getGoodsId();
-	        attachData2UI(order);
-	        setStatus(order);
-	    }else{ //产品页进入
-	    	android.util.Log.d("111", "产品页进入");
-	        goodsId = getIntent().getStringExtra("goods_id");
-	        username = getIntent().getStringExtra("username");
-	        mobile = getIntent().getStringExtra("mobile");
-	        passport = getIntent().getStringExtra("passport");
-            mCouponId = getIntent().getStringExtra("coupon_id");
-            mControl.addUserOrderAsyn(UserUtil.getUser(), goodsId, username, mobile, passport,
-                    mCouponId);
-	        showProgress();
-	    }
-        mControl.getGoodsFromNetAsyn(goodsId);
+        mQueue = XiaoMeiApplication.getInstance().getQueue();
+        String url = XiaoMeiApplication.getInstance().getApi()
+                .getGoodsDetailUrl(mOrder.getDataList().getGoodsId());
+        mQueue.add(new StringRequest(url, mGetGoodsListenr, mGetGoodsErroListener));
+        attachData2UI(mOrder);
+        setStatus(mOrder);
 	}
 
 	/**
@@ -251,7 +222,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	/**
 	 * 根据order的状态设置数据
 	 */
-	private void setStatus(Order order){
+    private void setStatus(final Order order) {
 		TextView tv = (TextView) findViewById(R.id.order_status);
 		int status = Integer.valueOf(order.getDataList().getStatus());
 		switch (status) {
@@ -284,7 +255,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 			tv.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					CommentsActivity.startActivity4Result(OrderDetailsActivity.this,mControl.getModel().getOrder());
+                        CommentsActivity.startActivity4Result(OrderDetailsActivity.this, order);
 				}
 			});
 			break;
@@ -318,6 +289,27 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         orderPassport.setEditable(enable);
 	}
 	
+    private Listener<String> mGetGoodsListenr = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    mGoods = gson.fromJson(res.getMessage(), Goods.class);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private ErrorListener mGetGoodsErroListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+
+        }
+    };
 	// ====================================  CallBack =========================================================
 	public void cancelUserOrderUrlCallBack(){ 
 		TextView tv = (TextView) findViewById(R.id.order_status);
@@ -331,26 +323,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		Toast.makeText(this, "网络异常", 0).show();
 	}
 	
-	public void addUserOrderAsynCallBack(){
-		dissProgress();
-		Order order = mControl.getModel().getOrder();
-		attachData2UI(order);
-		setStatus(order);
-	}
-	
-    public void addUserOrderAsynExceptionCallBack() {
-		Toast.makeText(this, "订单生成失败", 0).show();
-		rootView.setVisibility(View.GONE);
-	}
-	
-    public void getGoodsFromNetAsynCallback() {
-
-    }
-
-    public void getGoodsFromNetAsynExceptionCallback() {
-
-    }
-
 	// ====================================  Progress =========================================================
 	private void showProgress(){
 		mLoadingView.setVisibility(View.VISIBLE);
@@ -376,14 +348,14 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		int id = v.getId();
 		switch (id) {
             case R.id.action_button:
-                PayOrderActivity.startActivity(this, mControl.getModel().getOrder(), mPayMoney);
+                PayOrderActivity.startActivity(this, mOrder, mPayMoney);
                 break;
             case R.id.preference_preserve_date:
                 // TODO 预约
                 break;
             case R.id.preference_coupon_id:
                 // 优惠券
-                OrderCouponActivity.startActivity4Result(this, "",(ArrayList)mControl.getModel().getGoods().getAvailCoupons());
+                OrderCouponActivity.startActivity4Result(this, "",(ArrayList)mGoods.getAvailCoupons());
                 break;
 		}
 	}
@@ -419,7 +391,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                mControl.cancelUserOrderUrl(mControl.getModel().getOrder().getDataList().getId()); 
+                mControl.cancelUserOrderUrl(mOrder.getDataList().getId()); 
             }
         });
         builder.setNegativeButton("取消", new OnClickListener() {

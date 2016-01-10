@@ -38,6 +38,8 @@ public class HttpUtil {
 
     public static final String ACTION_UPDATE = "update";
 
+    public static final String ACTION_ADD = "add";
+
     private HttpUtil() {}
 
     public static Uri buildUri(String url, Map<String, String> params) {

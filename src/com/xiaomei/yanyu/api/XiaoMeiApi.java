@@ -12,7 +12,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import com.xiaomei.yanyu.api.builder.AddUserOrderBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
 import com.xiaomei.yanyu.api.builder.HomeBuilder;
@@ -24,7 +23,6 @@ import com.xiaomei.yanyu.api.builder.NetResultBuilder;
 import com.xiaomei.yanyu.api.builder.RecommendSharesBuilder;
 import com.xiaomei.yanyu.api.builder.RecommendSharesDetailBuilder;
 import com.xiaomei.yanyu.api.builder.SectionBuilder;
-import com.xiaomei.yanyu.api.builder.SingleGoodsBuilder;
 import com.xiaomei.yanyu.api.builder.UploadFIleBuilder;
 import com.xiaomei.yanyu.api.builder.UserLoginBuilder;
 import com.xiaomei.yanyu.api.builder.UserMsgBuilder;
@@ -54,6 +52,7 @@ import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.UserShare;
 import com.xiaomei.yanyu.bean.WechatBean;
+import com.xiaomei.yanyu.util.DateUtils;
 import com.xiaomei.yanyu.util.FileUtils;
 import com.xiaomei.yanyu.util.Security;
 import com.xiaomei.yanyu.util.UserUtil;
@@ -146,22 +145,13 @@ public class XiaoMeiApi {
 	}
 	
 	   /**获取单条商品信息*/
-    public Goods getGoodsFromNet(String goodsId)
-            throws XiaoMeiCredentialsException, XiaoMeiIOException,
-            XiaoMeiJSONException, XiaoMeiOtherException {
-        BasicNameValuePair[] values = {
-                new BasicNameValuePair("token", UserUtil.getUser().getToken()),
-                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000)),
-                new BasicNameValuePair("goods_id", goodsId)
-               
-        };
-        HttpGet httpGet = mHttpApi.createHttpGet(urlManager.goodsDetailUrl(),
-                values[0],
-                values[1],
-                values[2],
-                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-        android.util.Log.d("aaa", "url = " +         httpGet.getURI().toString());
-        return mHttpApi.doHttpRequestObject(httpGet, new SingleGoodsBuilder());
+    public String getGoodsDetailUrl(String goodsId) {
+        Map<String, String> params = HttpUtil.queryBuilder().put(HttpUtil.QUERY_GOODS_ID, goodsId)
+                .put(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken()).put(HttpUtil.QUERY_UPTIME,
+                        DateUtils.formatQueryParameter(System.currentTimeMillis()))
+                .build();
+        return HttpUtil.buildUri(HttpUrlManager.GOODS_COUPON_INFO, HttpUtil.signParams(params))
+                .toString();
     }
 	
 	/**商品分类列表*/
@@ -479,49 +469,6 @@ public class XiaoMeiApi {
                 values[2],
                 new BasicNameValuePair("fig", Security.get32MD5Str(values)));
         return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
-	}
-	
-	/**
-	 * 新增订单接口
-	 */
-    public Order addUserOrder(String userid, String goodsId, String username, String mobile,
-            String passport, String counponId, String token, String action)
-		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-        NameValuePair[] signedValues = AbstractHttpApi.signValuePairs(
-                new BasicNameValuePair("userid", userid),
-				new BasicNameValuePair("goods_id", goodsId),
-				new BasicNameValuePair("username", username),
-				new BasicNameValuePair("mobile", mobile),
-				new BasicNameValuePair("passport", passport),
-                new BasicNameValuePair("couponid", counponId),
-				new BasicNameValuePair("action",action),
-				new BasicNameValuePair("token", token),
-                new BasicNameValuePair("uptime",
-                        String.valueOf(System.currentTimeMillis() / 1000)));
-        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.COUPON_ORDER, signedValues);
-		return mHttpApi.doHttpRequestObject(httpPost, new AddUserOrderBuilder());
-	}
-	
-	/**
-     * 修改订单接口
-     */
-    public Order updateUserOrder(String orderId, String userid, String goodsId, String username,
-            String mobile, String passport, String counponId, String token, String action)
-		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-        NameValuePair[] signedValues = AbstractHttpApi.signValuePairs(
-                new BasicNameValuePair("userid", userid),
-				new BasicNameValuePair("orderid", orderId),
-				new BasicNameValuePair("goods_id", goodsId),
-				new BasicNameValuePair("username", username),
-				new BasicNameValuePair("mobile", mobile),
-				new BasicNameValuePair("passport", passport),
-                new BasicNameValuePair("couponid", counponId),
-				new BasicNameValuePair("action",action),
-				new BasicNameValuePair("token", token),
-                new BasicNameValuePair("uptime",
-                        String.valueOf(System.currentTimeMillis() / 1000)));
-        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.COUPON_ORDER, signedValues);
-		return mHttpApi.doHttpRequestObject(httpPost, new AddUserOrderBuilder());
 	}
 	
 	/**

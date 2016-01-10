@@ -5,7 +5,8 @@
 
     <string name="activity_comment_list" >评论</string>
     <string name="activity_order_coupon">优惠折扣</string>
-    <string name="activity_build_order">生成订单</string>
+    <string name="build_order">提交订单</string>
+    <string name="activity_build_order">@string/build_order</string>
 
     <string name="detail">详情</string>
     <string name="more">更多</string>
@@ -67,6 +68,7 @@
     <string name="order_code">订单号:%1$s</string>
     
     <string name="order_details">订单详情</string>
+    <string name="warning_build_order_fail">生成订单失败！</string>
     
     <string name="preference_user_name_hint">请输入姓名</string>
     <string name="preference_mobile_hint">请输入电话</string>

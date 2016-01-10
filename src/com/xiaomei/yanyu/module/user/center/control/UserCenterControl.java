@@ -11,7 +11,6 @@ import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.NetResult;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.User;
-import com.xiaomei.yanyu.bean.User.UserInfo;
 import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.WechatBean;
 import com.xiaomei.yanyu.module.user.model.UserModel;
@@ -43,57 +42,6 @@ public class UserCenterControl extends BaseControl {
 		} 
 	}
 	
-	@AsynMethod
-    public void addUserOrderAsyn(User user, String goodsId, String username, String mobile,
-            String passport, String couponId) {
-		UserInfo userInfo = user.getUserInfo();
-		String userid = userInfo.getUserid();
-		String token = user.getToken();
-		try {
-            Order order = XiaoMeiApplication.getInstance().getApi().addUserOrder(userid, goodsId,
-                    username, mobile, passport, couponId, token, "add");
-			if(DebugRelease.isDebug)
-			    android.util.Log.d("111", "order = " + order);
-			mModel.setOrder(order);
-			if(order == null )
-				sendMessage("addUserOrderAsynExceptionCallBack");
-			else
-				sendMessage("addUserOrderAsynCallBack");
-		} catch (Exception e) {
-			e.printStackTrace();
-			sendMessage("addUserOrderAsynExceptionCallBack");
-		} 
-	}
-	
-    @AsynMethod
-    public void updateUserOrder2ServerAsyn(String orderId, String username, String goodsId,
-            String passport, String mobile, String couponId) {
-        if(DebugRelease.isDebug)
-            android.util.Log.d("111", "orderId = " + orderId);
-        String token = UserUtil.getUser().getToken();
-        String userid = UserUtil.getUser().getUserInfo().getUserid();
-        try {
-           Order order = XiaoMeiApplication
-                    .getInstance()
-                    .getApi()
-.updateUserOrder(orderId, userid,
-                    goodsId, username, mobile, passport, couponId,
-                            token,"update");
-           if(order!=null){
-        	   mModel.setOrder(order);
-        	   sendMessage("updateUserOrder2ServerAsynCallBack");
-           } else{
-        	   sendMessage("updateUserOrder2ServerAsynExceptionCallBack");
-           }
-        } catch (Exception e) {
-            e.printStackTrace();
-            if(DebugRelease.isDebug)
-                android.util.Log.d("111", "e = " + e.getMessage());
-            sendMessage("updateUserOrder2ServerAsynExceptionCallBack");
-        }
-    }
-	
-
 	@AsynMethod
 	public void loginOutAsyn(){
 		try {
@@ -276,15 +224,4 @@ public class UserCenterControl extends BaseControl {
 			e.printStackTrace();
 		}
 	  }
-       @AsynMethod	   
-	   public void getGoodsFromNetAsyn(String goodsId){
-           try {
-                mModel.setGoods(XiaoMeiApplication.getInstance().getApi().getGoodsFromNet(goodsId));
-                android.util.Log.d("aaa", "goods = " + mModel.getGoods());
-                sendMessage("getGoodsFromNetAsynCallback");
-            } catch (Exception e) {
-                e.printStackTrace();
-                sendMessage("getGoodsFromNetAsynExceptionCallback");
-            } 
-       }
 }
