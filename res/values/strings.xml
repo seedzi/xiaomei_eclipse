@@ -101,6 +101,12 @@
 
     <string name="coupon">优惠券</string>
     <string name="coupon_code">优惠码</string>
+    <string name="coupon_life">%1$s - %2$s</string>
+    <string name="coupon_term">满%1$s减%2$s</string>
+    <string name="coupon_status_enabled">待使用</string>
+    <string name="coupon_status_not_begin">即将可用</string>
+    <string name="coupon_status_used">已使用</string>
+    <string name="coupon_status_expired">已过期</string>
 
     <string name="share_comment_hint" tools:ignore="MissingTranslation">请输入</string>
     <string name="share_subcomment_hint" tools:ignore="MissingTranslation">"回复 %1$s"</string>

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,5 +80,16 @@ public class UiUtil {
     public static void overridePendingTransition(Activity activity) {
         activity.overridePendingTransition(R.anim.activity_slid_in_from_right,
                 R.anim.activity_slid_out_no_change);
+    }
+
+    public static void setViewEnabled(View view, boolean enabled) {
+        if (view instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup)view;
+            int count = parent.getChildCount();
+            for (int i = 0; i < count; i++) {
+                setViewEnabled(parent.getChildAt(i), enabled);
+            }
+        }
+        view.setEnabled(enabled);
     }
 }

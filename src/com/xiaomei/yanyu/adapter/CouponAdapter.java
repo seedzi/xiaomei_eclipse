@@ -18,12 +18,19 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Context context = getContext();
         View itemView = convertView != null ? convertView
-                : LayoutInflater.from(getContext()).inflate(getItemViewLayout(), parent, false);
+                : LayoutInflater.from(context).inflate(getItemViewLayout(), parent, false);
         Coupon item = getItem(position);
-        UiUtil.findTextViewById(itemView, R.id.coupon_life).setText(item.beg + "-" + item.expire);
+        boolean enabled = item.status == Coupon.STATUS_ENABLED;
+        UiUtil.setViewEnabled(itemView, enabled);
+        UiUtil.findTextViewById(itemView, R.id.coupon_display).setText(item.display);
+        UiUtil.findTextViewById(itemView, R.id.coupon_life)
+                .setText(context.getString(R.string.coupon_life, item.beg, item.expire));
         UiUtil.findTextViewById(itemView, R.id.coupon_money).setText(item.discount);
-        UiUtil.findTextViewById(itemView, R.id.coupon_term).setText(item.display);
+        UiUtil.findTextViewById(itemView, R.id.coupon_term)
+                .setText(context.getString(R.string.coupon_term, item.base, item.discount));
+        UiUtil.findTextViewById(itemView, R.id.coupon_status).setText(item.getStatusDisplayRes());
         return itemView;
     }
 

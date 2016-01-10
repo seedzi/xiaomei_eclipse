@@ -21,10 +21,11 @@ public class ActionCouponAdapter extends CouponAdapter {
                 .setBackgroundResource(R.drawable.action_coupon_list_item_bg);
         ColorStateList actionTextColor = getContext().getResources()
                 .getColorStateList(R.color.action_coupon_item_text);
-        UiUtil.findTextViewById(itemView, R.id.coupon_title).setTextColor(actionTextColor);
+        UiUtil.findTextViewById(itemView, R.id.coupon_display).setTextColor(actionTextColor);
         UiUtil.findTextViewById(itemView, R.id.coupon_life).setTextColor(actionTextColor);
         UiUtil.findTextViewById(itemView, R.id.coupon_money).setTextColor(actionTextColor);
         UiUtil.findTextViewById(itemView, R.id.ic_concurrency).setTextColor(actionTextColor);
+        UiUtil.findTextViewById(itemView, R.id.coupon_status).setVisibility(View.GONE);
         return itemView;
     }
 

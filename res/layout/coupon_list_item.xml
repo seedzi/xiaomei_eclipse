@@ -21,19 +21,18 @@
         android:background="@drawable/coupon_list_item_bg">
 
         <TextView
-            android:id="@+id/coupon_title"
+            android:id="@+id/coupon_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
             android:textSize="16sp"
-            android:textColor="@color/coupon_item_text"
-            android:text="优惠券" />
+            android:textColor="@color/coupon_item_text" />
 
         <TextView
             android:id="@+id/coupon_life"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/coupon_title"
+            android:layout_below="@id/coupon_display"
             android:textSize="10sp"
             android:textColor="@color/coupon_item_text"
             android:background="@null" />
@@ -64,5 +63,15 @@
             android:textSize="11sp"
             android:textColor="@color/color_gray_light"
             android:background="@null" />
+
+        <TextView
+            android:id="@+id/coupon_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@null"
+            android:textSize="16sp"
+            android:textColor="@color/coupon_item_text" />
     </RelativeLayout>
 </LinearLayout>
