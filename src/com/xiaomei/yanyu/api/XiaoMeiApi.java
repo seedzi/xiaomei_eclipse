@@ -16,7 +16,6 @@ import com.xiaomei.yanyu.api.builder.GoodsBuilder;
 import com.xiaomei.yanyu.api.builder.GoodsOptionBuilder;
 import com.xiaomei.yanyu.api.builder.HomeBuilder;
 import com.xiaomei.yanyu.api.builder.ListCommentBuilder;
-import com.xiaomei.yanyu.api.builder.ListOrderBuilder;
 import com.xiaomei.yanyu.api.builder.MallListBuilder;
 import com.xiaomei.yanyu.api.builder.MerchantBuilder;
 import com.xiaomei.yanyu.api.builder.NetResultBuilder;
@@ -44,7 +43,6 @@ import com.xiaomei.yanyu.bean.HomeItem;
 import com.xiaomei.yanyu.bean.Mall;
 import com.xiaomei.yanyu.bean.Merchant;
 import com.xiaomei.yanyu.bean.NetResult;
-import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.RecommendShares;
 import com.xiaomei.yanyu.bean.RecommendSharesDetail;
 import com.xiaomei.yanyu.bean.Section;
@@ -450,41 +448,6 @@ public class XiaoMeiApi {
 					values[4],
 					new BasicNameValuePair("fig", Security.get32MD5Str(values)));
 			 return mHttpApi.doHttpRequestObject(httpGet, new GoodsBuilder());
-	}
-	
-	// ========================================================================================
-	// 订单getUserFav()
-	// ========================================================================================
-	/**
-	 * 取消订单
-	 */
-	public NetResult cancelUserOrderUrl(String orderid)
-	    throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-        BasicNameValuePair[] values = {new BasicNameValuePair("orderid", orderid) ,
-                new BasicNameValuePair("token", UserUtil.getUser().getToken()),
-                new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.cancelUserOrderUrl(),
-                values[0],
-                values[1],
-                values[2],
-                new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-        return mHttpApi.doHttpRequestObject(httpPost, new NetResultBuilder());
-	}
-	
-	/**
-	 * 获取用户订单列表接口
-	 */
-	public List<Order> getUserOrderList(String userid,String token)
-		throws XiaoMeiCredentialsException,XiaoMeiIOException,XiaoMeiJSONException ,XiaoMeiOtherException {
-		BasicNameValuePair[] values = {new BasicNameValuePair("userid", userid),
-				new BasicNameValuePair("token", token),
-				new BasicNameValuePair("uptime", String.valueOf(System.currentTimeMillis()/1000))} ; 
-        HttpPost httpPost = mHttpApi.createHttpPost(urlManager.MY_COUPON_ORDER,
-				values[0],
-				values[1],
-				values[2],
-				new BasicNameValuePair("fig", Security.get32MD5Str(values)));
-		return mHttpApi.doHttpRequestObject(httpPost, new ListOrderBuilder());
 	}
 	
 	// ========================================================================================

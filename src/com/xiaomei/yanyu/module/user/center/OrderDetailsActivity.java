@@ -1,7 +1,9 @@
 package com.xiaomei.yanyu.module.user.center;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -10,22 +12,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xiaomei.yanyu.AbstractActivity;
 import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.activity.OrderCouponActivity;
 import com.xiaomei.yanyu.activity.PayOrderActivity;
 import com.xiaomei.yanyu.api.BizResult;
+import com.xiaomei.yanyu.api.HttpUrlManager;
+import com.xiaomei.yanyu.api.http.HttpUtil;
+import com.xiaomei.yanyu.api.http.StringPostRequest;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.Order.DataDetail.OrderInfo;
 import com.xiaomei.yanyu.comment.CommentsActivity;
-import com.xiaomei.yanyu.module.user.center.control.UserCenterControl;
-import com.xiaomei.yanyu.widget.TitleBar;
+import com.xiaomei.yanyu.util.DateUtils;
+import com.xiaomei.yanyu.util.UiUtil;
+import com.xiaomei.yanyu.util.UserUtil;
+import com.xiaomei.yanyu.widget.TitleActionBar;
 import com.xiaomei.yanyu.widget.ValuePreference;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -38,12 +44,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 /**
  * 订单详情页
  * @author huzhi
  */
-public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> implements View.OnClickListener{
+public class OrderDetailsActivity extends Activity implements View.OnClickListener {
 	
 	public static boolean STATE_CHANGED = false;
 	
@@ -58,9 +63,17 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		intent.putExtra("order", order);
 		context.startActivity(intent);
 	}
-	
-	private TitleBar mTitlBar;
-	
+
+    private static final Map<Integer, String> sStatusAction = new HashMap<Integer, String>() {
+        {
+            put(Order.STATUS_NO_PAY, "取消订单");
+            put(Order.STATUS_FINISH_PAY, "申请退款");
+            put(Order.STATUS_FINISH, "去评论");
+        }
+    };
+
+    private TitleActionBar mTitleActionBar;
+
 	private TextView mobileTv; //电话号码
 	private TextView merchantNameTv;  //机构名字
 	private TextView merchantLocationTv; //机构地址
@@ -95,20 +108,6 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
     private int mPayMoney; // 支付金额
     private int mDiscountMoney; // 优惠金额
 
-	// =============================================================================================
-	/**未付款*/
-	private final int ORDER_NO_PAY = 1;
-	/**已付款*/
-	private final int ORDER_FINISH_PAY = 2;
-	/**退款申请中*/
-	private final int ORDER_CANCEL = 3;
-	/**交易完成*/
-	private final int ORDER_FINISH = 4;
-	/**评论完成*/
-	private final int ORDER_COMMENT_FINISH = 5;
-	/**退款已完成*/
-	private final int ORDER_CANEL_FINISH = 6;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -119,14 +118,11 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	}
 	
 	private void setUpView(){
-		mTitlBar = (TitleBar) findViewById(R.id.titlebar);
-		mTitlBar.setTitle(getResources().getString(R.string.order_details));
-		mTitlBar.setBackListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+        mTitleActionBar = new TitleActionBar(getActionBar());
+        mTitleActionBar.setTitle(R.string.order_details);
+        mTitleActionBar.setActionTextColor(getResources().getColor(R.color.color_gray));
+        mTitleActionBar
+                .setActionTextSize(getResources().getDimensionPixelOffset(R.dimen.action_text));
 		
 		rootView = findViewById(R.id.root_layout);
 		mLoadingView = findViewById(R.id.loading_layout);
@@ -186,9 +182,9 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         mQueue = XiaoMeiApplication.getInstance().getQueue();
         String url = XiaoMeiApplication.getInstance().getApi()
                 .getGoodsDetailUrl(mOrder.getDataList().getGoodsId());
-        mQueue.add(new StringRequest(url, mGetGoodsListenr, mGetGoodsErroListener));
+        mQueue.add(new StringRequest(url, mGetGoodsListenr, mErroListener));
         attachData2UI(mOrder);
-        setStatus(mOrder);
+        setStatus(mOrder.getDataList().getStatus());
 	}
 
 	/**
@@ -222,71 +218,48 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 	/**
 	 * 根据order的状态设置数据
 	 */
-    private void setStatus(final Order order) {
-		TextView tv = (TextView) findViewById(R.id.order_status);
-		int status = Integer.valueOf(order.getDataList().getStatus());
-		switch (status) {
-		case ORDER_NO_PAY:
-			showPay();
-			setEditEnable(true);
-			break;
-		case ORDER_FINISH_PAY:
-			hidePay();
-			tv.setText("申请退款");
-			tv.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					showCancelOrderDialog();
-					// 临时测试
-//					CommentsActivity.startActivity(OrderDetailsActivity.this,mControl.getModel().getOrder());
-				}
-			});
-			setEditEnable(false);
-			break;
-		case ORDER_CANCEL:
-			hidePay();
-			tv.setText("退款审核中");
-			setEditEnable(false);
-			break;
-		case ORDER_FINISH:
-			hidePay();
-			tv.setText("去评论");
-			setEditEnable(false);
-			tv.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-                        CommentsActivity.startActivity4Result(OrderDetailsActivity.this, order);
-				}
-			});
-			break;
-		case ORDER_COMMENT_FINISH:
-			hidePay();
-			tv.setText("交易完成");
-			setEditEnable(false);
-			findViewById(R.id.order_status).setVisibility(View.GONE);
-			break;
-		case ORDER_CANEL_FINISH:
-			hidePay();
-			tv.setText("退款完成");
-			setEditEnable(false);
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private void hidePay(){
-		findViewById(R.id.order_status).setVisibility(View.VISIBLE);
-	}
-	
-	private void showPay(){
-		findViewById(R.id.order_status).setVisibility(View.GONE);
+    private void setStatus(final int status) {
+        setEditEnable(status == Order.STATUS_NO_PAY);
+        mTitleActionBar.setOnActionClickListener(null);
+        String action = sStatusAction.get(status);
+        mTitleActionBar
+                .setTextAction(action != null ? action : mOrder.getDataList().getStatusText());
+        mTitleActionBar.setActionVisibility(
+                status == Order.STATUS_COMMENT_FINISH ? View.GONE : View.VISIBLE);
+        switch (status) {
+            case Order.STATUS_NO_PAY:
+                mTitleActionBar.setOnActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDeleteOrderDialog();
+                    }
+                });
+                break;
+            case Order.STATUS_FINISH_PAY:
+                mTitleActionBar.setOnActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showCancelOrderDialog();
+                    }
+                });
+                break;
+            case Order.STATUS_FINISH:
+                mTitleActionBar.setOnActionClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommentsActivity.startActivity4Result(OrderDetailsActivity.this, mOrder);
+                    }
+                });
+                break;
+        }
 	}
 	
 	private void setEditEnable(boolean enable){
         orderNameEd.setEditable(enable);
         orderMobile.setEditable(enable);
         orderPassport.setEditable(enable);
+        findViewById(R.id.payment_info_bottom_layout)
+                .setVisibility(enable ? View.VISIBLE : View.GONE);
 	}
 	
     private Listener<String> mGetGoodsListenr = new Listener<String>() {
@@ -304,24 +277,12 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
         }
     };
 
-    private ErrorListener mGetGoodsErroListener = new ErrorListener() {
+    private ErrorListener mErroListener = new ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-
+            UiUtil.postToast(OrderDetailsActivity.this, R.string.warning_network_unavailable);
         }
     };
-	// ====================================  CallBack =========================================================
-	public void cancelUserOrderUrlCallBack(){ 
-		TextView tv = (TextView) findViewById(R.id.order_status);
-		tv.setText("退款审核中");
-		setEditEnable(false);
-		Toast.makeText(this, "退款审核中", 0).show();
-		STATE_CHANGED = true;
-	}
-	
-	public void cancelUserOrderUrlExceptionCallBack(){
-		Toast.makeText(this, "网络异常", 0).show();
-	}
 	
 	// ====================================  Progress =========================================================
 	private void showProgress(){
@@ -366,9 +327,7 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		switch (requestCode) {
 		case 1:
 			if(resultCode == RESULT_OK){
-				TextView tv = (TextView) findViewById(R.id.order_status);
-				tv.setText("已评论");
-				tv.setOnClickListener(null);
+                    setStatus(Order.STATUS_COMMENT_FINISH);
 			}
 			break;
 		    case OrderCouponActivity.REQUEST_COUPON:
@@ -383,24 +342,91 @@ public class OrderDetailsActivity extends AbstractActivity<UserCenterControl> im
 		}
 	}
 	
-	private void showCancelOrderDialog(){
-		AlertDialog.Builder builder = new Builder(this);
-        builder.setMessage("您确认申请退款吗?");
-        builder.setTitle("提示");
-        builder.setPositiveButton("确认", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                mControl.cancelUserOrderUrl(mOrder.getDataList().getId()); 
-            }
-        });
-        builder.setNegativeButton("取消", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
+    private void showDeleteOrderDialog() {
+        new AlertDialog.Builder(this).setMessage(R.string.warning_message_delete_order)
+                .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteOrder();
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton(R.string.not_delete_order, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
 
-	}
+    private void deleteOrder() {
+        String url = HttpUrlManager.DELETE_ORDER;
+        Map<String, String> params = HttpUtil.queryBuilder()
+                .put(HttpUtil.QUERY_ORDERID, mOrder.getDataList().getId())
+                .put(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
+                .put(HttpUtil.QUERY_UPTIME, DateUtils.formatQueryParameter(System.currentTimeMillis()))
+                .build();
+        mQueue.add(new StringPostRequest(url, HttpUtil.signParams(params), mDeleteOrderListener,
+                mErroListener));
+    }
+
+    private Listener<String> mDeleteOrderListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    finish();
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            UiUtil.postToast(OrderDetailsActivity.this, R.string.error_delete_order);
+        }
+    };
+
+    private void showCancelOrderDialog() {
+        new AlertDialog.Builder(this).setMessage(R.string.warning_message_cancel_order)
+                .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cancelOrder();
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton(R.string.not_cancel_order, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    private void cancelOrder() {
+        String url = HttpUrlManager.CANCLE_ORDER;
+        Map<String, String> params = HttpUtil.queryBuilder()
+                .put(HttpUtil.QUERY_ORDERID, mOrder.getDataList().getId())
+                .put(HttpUtil.QUERY_TOKEN, UserUtil.getUser().getToken())
+                .put(HttpUtil.QUERY_UPTIME, DateUtils.formatQueryParameter(System.currentTimeMillis()))
+                .build();
+        mQueue.add(new StringPostRequest(url, HttpUtil.signParams(params), mCancelOrderListener,
+                mErroListener));
+    }
+
+    private Listener<String> mCancelOrderListener = new Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                Gson gson = new Gson();
+                BizResult res = gson.fromJson(response, BizResult.class);
+                if (res.isSuccess()) {
+                    finish();
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            UiUtil.postToast(OrderDetailsActivity.this, R.string.error_cancel_order);
+        }
+    };
 }

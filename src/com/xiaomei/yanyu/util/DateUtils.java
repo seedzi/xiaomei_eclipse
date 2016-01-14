@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import com.xiaomei.yanyu.R;
 
@@ -13,8 +14,6 @@ import android.text.TextUtils;
 
 public class DateUtils {
 	
-    private static final long DATE_QUERY_FACTOR = 1000;
-
     public static String formateDate(long time) {
 		android.util.Log.d("111", "time = " + time + ",System = " + System.currentTimeMillis());
 		SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd"); //格式化当前系统日期
@@ -23,11 +22,17 @@ public class DateUtils {
 	}
 
     public static String formateDate(String queryParameter) {
-        return formateDate(Long.valueOf(queryParameter) * DATE_QUERY_FACTOR);
+        try {
+            Long seconds = Long.valueOf(queryParameter);
+            return formateDate(TimeUnit.SECONDS.toMillis(seconds));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String formatQueryParameter(long timeMillis) {
-        return String.valueOf(timeMillis / DATE_QUERY_FACTOR);
+        return String.valueOf(TimeUnit.MILLISECONDS.toSeconds(timeMillis));
     }
 
     public static long getTimeInMillis(int year, int monthOfYear, int dayOfMonth) {

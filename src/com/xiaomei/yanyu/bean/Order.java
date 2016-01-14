@@ -65,7 +65,39 @@ import com.xiaomei.yanyu.util.DateUtils;
 */
 public class Order implements Serializable{
 	
-	
+    /** 未付款 */
+    public final static int STATUS_NO_PAY = 1;
+
+    /** 已付款 */
+    public final static int STATUS_FINISH_PAY = 2;
+
+    /** 退款申请中 */
+    public final static int STATUS_CANCEL = 3;
+
+    /** 交易完成 */
+    public final static int STATUS_FINISH = 4;
+
+    /** 评论完成 */
+    public final static int STATUS_COMMENT_FINISH = 5;
+
+    /** 退款已完成 */
+    public final static int STATUS_CANEL_FINISH = 6;
+
+    /** 已取消（未付款） */
+    public final static int STATUS_DELETED = 7;
+
+    private static final Map<Integer, String> sStatusMap = new HashMap<Integer, String>() {
+        {
+            put(STATUS_NO_PAY, "未付款");
+            put(STATUS_FINISH_PAY, "已付款");
+            put(STATUS_CANCEL, "退款审核中");
+            put(STATUS_FINISH, "已消费");
+            put(STATUS_COMMENT_FINISH, "交易结束");
+            put(STATUS_CANEL_FINISH, "退款完成");
+            put(STATUS_DELETED, "已取消");
+        }
+    };
+
 	private DataList data_list;
 	
 	private DataDetail data_detail;
@@ -290,20 +322,11 @@ public class Order implements Serializable{
 
 	/**我的订单列表信息*/
 	public static class DataList implements Serializable{
-	    
-	    private static final Map<String, String> sStatusMap = new HashMap<String, String>() {{
-	        put("1", "未付款");
-	        put("2", "已付款");
-	        put("3", "退款审核中");
-	        put("4", "已消费");
-	        put("5", "交易结束");
-	        put("6", "退款完成");
-	    }};
-	    
+
 		private String id;
 		private String orderAmount;
 		private String username;
-		private String status;
+		private int status;
 		private String order_num;
 		private String goods_id;
 		private String createdate;
@@ -330,15 +353,16 @@ public class Order implements Serializable{
 		public void setUsername(String username) {
 			this.username = username;
 		}
-		public String getStatus() {
+
+        public int getStatus() {
 			return status;
 		}
 		
 		public String getStatusText() {
 		    return sStatusMap.get(getStatus());
 		}
-		
-		public void setStatus(String status) {
+
+        public void setStatus(int status) {
 			this.status = status;
 		}
 		public String getOrderNum() {
@@ -399,6 +423,4 @@ public class Order implements Serializable{
 					+ ", goodsPay=" + goods_pay + ", city=" + city + "]";
 		}
 	}
-	
-	
 }

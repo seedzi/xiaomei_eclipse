@@ -113,7 +113,7 @@ public class UserOrderListActivity extends Activity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Order order = mAdapter.getItem(position);
+        Order order = mAdapter.getItem(position - mListView.getHeaderViewsCount());
         OrderDetailsActivity.startActivity(UserOrderListActivity.this, order);
     }
 
@@ -191,9 +191,10 @@ public class UserOrderListActivity extends Activity
 				UiUtil.findTextViewById(itemView, R.id.city).setText(dataList.getCity());
 				UiUtil.findTextViewById(itemView, R.id.hosp_name).setText(dataList.getHospName());
 				
-				int status = Integer.valueOf(dataList.getStatus());
+                int status = dataList.getStatus();
 				UiUtil.findTextViewById(itemView, R.id.status).setText(dataList.getStatusText());
-				String payString = status == 1 ? "立即付款" : status == 4 ? "去评论" : "订单详情";
+                String payString = status == Order.STATUS_NO_PAY ? "立即付款"
+                        : status == Order.STATUS_FINISH ? "去评论" : "订单详情";
 				int background = status == 1 || status == 4 ? R.drawable.payment_selector : R.drawable.payment_over;
 				TextView payButton = UiUtil.findTextViewById(itemView, R.id.pay_button);
                 payButton.setText(payString);
@@ -202,7 +203,7 @@ public class UserOrderListActivity extends Activity
                 payButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (order.getDataList().getStatus().equals("4")) {
+                        if (order.getDataList().getStatus() == Order.STATUS_FINISH) {
                             CommentsActivity.startActivity4Result(UserOrderListActivity.this, order);
                         } else {
                             // TODO 计算优惠券的金额

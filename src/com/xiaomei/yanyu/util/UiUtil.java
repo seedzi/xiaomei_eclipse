@@ -4,7 +4,6 @@ import com.xiaomei.yanyu.R;
 import com.xiaomei.yanyu.widget.ProgressDialogFragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Handler;
@@ -38,7 +37,16 @@ public class UiUtil {
             }
         });
     }
-    
+
+    public static void postToast(final Context context, final int res) {
+        new Handler(context.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                showToast(context, res);
+            }
+        });
+    }
+
     public static <T extends View> T findById(View parent, int id) {
         try {
             SparseArray<View> holder = (SparseArray<View>) parent.getTag();

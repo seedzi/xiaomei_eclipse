@@ -2,14 +2,11 @@ package com.xiaomei.yanyu.module.user.center.control;
 
 import java.util.List;
 
-import org.apache.cordova.api.LOG;
-
 import com.xiaomei.yanyu.DebugRelease;
 import com.xiaomei.yanyu.XiaoMeiApplication;
 import com.xiaomei.yanyu.Payment.WeiXinPayManager;
 import com.xiaomei.yanyu.bean.Goods;
 import com.xiaomei.yanyu.bean.NetResult;
-import com.xiaomei.yanyu.bean.Order;
 import com.xiaomei.yanyu.bean.User;
 import com.xiaomei.yanyu.bean.UserMessage;
 import com.xiaomei.yanyu.bean.WechatBean;
@@ -56,35 +53,6 @@ public class UserCenterControl extends BaseControl {
 			e.printStackTrace();
 			sendMessage("loginOutAsynExceptionCallBack");
 		} 				
-	}
-	
-	@AsynMethod
-	public void getUserOrdersAsyn(){
-		try {
-			List<Order> orderList = XiaoMeiApplication.getInstance().getApi().getUserOrderList(UserUtil.getUser().getUserInfo().getUserid(), UserUtil.getUser().getToken());
-			if(DebugRelease.isDebug)
-			    LOG.d("111", "size = " + orderList.size());
-			mModel.setOrderList(orderList);
-			sendMessage("getUserOrdersAsynCallBack");
-		} catch (Exception e) {
-			e.printStackTrace();
-			sendMessage("getUserOrdersAsynExceptionCallBack");
-		}
-	}
-	
-	@AsynMethod
-	public void cancelUserOrderUrl(String orderid){
-	    try {
-	    	NetResult netResult = XiaoMeiApplication.getInstance().getApi().cancelUserOrderUrl(orderid);
-	    	if(netResult!=null && "0".equals(netResult.getCode())){ //取消订单成功
-	    		sendMessage("cancelUserOrderUrlCallBack"); 
-	    	}else{
-	    		sendMessage("cancelUserOrderUrlExceptionCallBack");
-	    	}
-        } catch (Exception e) {
-            e.printStackTrace();
-            sendMessage("cancelUserOrderUrlExceptionCallBack");
-        } 
 	}
 	
 	public UserModel getModel(){

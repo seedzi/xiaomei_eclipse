@@ -49,8 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="12sp"
-            android:text="美哈哈"/>         
+            android:textSize="12sp" />
                       
         <TextView 
             android:id="@+id/create_time"
@@ -61,8 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:textSize="12sp"
-            android:layout_marginRight="@dimen/item_margin_normal"
-            android:text="刚刚"/>                
+            android:layout_marginRight="@dimen/item_margin_normal" />
             
     </RelativeLayout>
     
@@ -94,8 +92,7 @@
             android:layout_height="wrap_content"
             android:textColor="#333333" 
             android:textSize="15sp"
-            android:maxLines="1"
-            android:text="suhu尚惠"/>
+            android:maxLines="1" />
         
         <TextView 
             android:id="@+id/hosp_name"
@@ -106,8 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="12sp"
-            android:textColor="#aaaaaa"
-            android:text="content"/>
+            android:textColor="#aaaaaa" />
         <TextView 
             android:id="@+id/city"
             android:layout_marginTop="7dp"
@@ -117,8 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="#aaaaaa"
-            android:textSize="12sp"
-            android:text="shouer"/>    
+            android:textSize="12sp"/>    
          <TextView 
             android:id="@+id/status"
             android:layout_marginLeft="@dimen/item_margin_small"
@@ -127,8 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:textSize="12sp"
-            android:textColor="#aaaaaa"
-            android:text="未付款"/>       
+            android:textColor="#aaaaaa"/>       
             
            <TextView 
             android:id="@+id/order_amount"
@@ -138,8 +132,7 @@
             android:layout_height="wrap_content"
             android:textColor="#d366f3" 
             android:textSize="16sp"
-            android:layout_alignBaseline="@id/status"
-            android:text="￥ 599"/>                
+            android:layout_alignBaseline="@id/status" />
     </RelativeLayout>
     
         <View 
@@ -156,7 +149,6 @@
         android:paddingBottom="10dp">
         <TextView 
             android:id="@+id/pay_button"
-            android:text="立即付款"
             android:textColor="#ffffff"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
@@ -169,7 +161,6 @@
         <TextView 
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/pay_button"
-            android:text="取消订单"
             android:textSize="15sp"
             android:textColor="@color/color_payment_cancel"
             android:layout_height="wrap_content"

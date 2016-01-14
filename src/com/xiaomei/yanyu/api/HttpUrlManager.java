@@ -21,7 +21,13 @@ public class HttpUrlManager {
 	public static String COMMENT_DETAIL_URL = HOST +"/share-comment.php";//http://drxiaomei.duapp.com/share-comment.php?itemid=跟上美丽圈ID
 	
 	public static String UPDATE_USER_ICON = HOST + "/server/action/upoadAvatar.php";
-	
+
+    // 取消用户订单
+    public static final String DELETE_ORDER = ACTION + "/delOrder.php";
+
+    // 申请订单退款
+    public static final String CANCLE_ORDER = ACTION + "/cancleOrder.php";
+
 	public static String ADD_LIKE = ACTION +  "/addlike.php";
 	
 	public static String DEL_LIKE = ACTION +  "/dellike.php";
@@ -131,10 +137,6 @@ public class HttpUrlManager {
 	String addUserOrderUrl(){
 		return HOST + "/server/action/order.php";
 	}
-	/**取消用户订单*/
-    String cancelUserOrderUrl(){
-        return HOST + "/server/action/cancleOrder.php";
-    }
 	/**用户消息*/
 	String getUserMsgUrl(){
 		return HOST + "/server/show/myMsg.php";

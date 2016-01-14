@@ -10,6 +10,7 @@ import com.xiaomei.yanyu.util.UiUtil;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,9 @@ import android.widget.TextView;
  * Created by sunbreak on 7/19/15.
  */
 public class TitleActionBar {
+
+    private int mTextColor;
+    private int mTextSizePx;
 
     private final TextView title;
     private final View home;
@@ -76,11 +80,30 @@ public class TitleActionBar {
     public void setTextAction(int textRes) {
         Button button = (Button) showButton(R.layout.action_bar_button);
         button.setText(textRes);
+        setTextStyle(button);
     }
 
     public void setTextAction(CharSequence text) {
         Button button = (Button) showButton(R.layout.action_bar_button);
         button.setText(text);
+        setTextStyle(button);
+    }
+
+    private void setTextStyle(TextView textView) {
+        if (mTextColor != 0) {
+            textView.setTextColor(mTextColor);
+        }
+        if (mTextSizePx > 0) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSizePx);
+        }
+    }
+
+    public void setActionTextColor(int textColor) {
+        mTextColor = textColor;
+    }
+
+    public void setActionTextSize(int textSizePx) {
+        mTextSizePx = textSizePx;
     }
 
     private View showButton(int layout) {

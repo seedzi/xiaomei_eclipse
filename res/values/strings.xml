@@ -69,6 +69,12 @@
     
     <string name="order_details">订单详情</string>
     <string name="warning_build_order_fail">生成订单失败！</string>
+    <string name="warning_message_delete_order">亲，你确定要取消吗？</string>
+    <string name="not_delete_order">不取消了</string>
+    <string name="error_delete_order">订单取消失败</string>
+    <string name="warning_message_cancel_order">亲，你确定要退款吗？</string>
+    <string name="not_cancel_order">不退款了</string>
+    <string name="error_cancel_order">申请退款失败</string>
     
     <string name="preference_user_name_hint">请输入姓名</string>
     <string name="preference_mobile_hint">请输入电话</string>

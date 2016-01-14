@@ -119,14 +119,14 @@
 		</activity>
 
 		<!-- 订单详情 -->
-				<activity 
-		    android:theme="@style/activityTheme"
-		    android:name="com.xiaomei.yanyu.module.user.center.OrderDetailsActivity">
+        <activity
+            android:name="com.xiaomei.yanyu.module.user.center.OrderDetailsActivity"
             android:screenOrientation="portrait"
-            		    <data android:scheme="wx67f54f6d2c0d66c8"/>
-		</activity>
+            android:theme="@style/Theme" >
+            <data android:scheme="wx67f54f6d2c0d66c8" />
+        </activity>
 
-        <!-- 优惠折扣 -->
+<!-- 优惠折扣 -->
         <activity
             android:theme="@style/Theme"
             android:name="com.xiaomei.yanyu.activity.OrderCouponActivity"

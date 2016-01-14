@@ -113,6 +113,7 @@
     <dimen name="user_shares_action_text">11sp</dimen>
 
     <dimen name="title_text">20sp</dimen>
+    <dimen name="action_text">16sp</dimen>
 
     <dimen name="goods_info_text">13sp</dimen>
     
